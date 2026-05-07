@@ -10,8 +10,8 @@ Status: `[ ]` = pending · `[x]` = done · `[~]` = in progress
 - [x] Create `docs/PLAN.md` (architecture, project structure, model specs, phases)
 - [x] Create `docs/TODO.md` (this file)
 - [x] Edit `config/setup.json` with all correct values (frequencies, noise presets, window sizes, training params)
-- [ ] Create `.gitignore` (exclude `__pycache__`, `*.pyc`, `outputs/figures/`, `outputs/results/`, `.venv/`)
-- [ ] Create `outputs/.gitkeep`, `outputs/figures/`, `outputs/results/`
+- [x] Create `.gitignore` (exclude `__pycache__`, `*.pyc`, `outputs/figures/`, `outputs/results/`, `.venv/`)
+- [x] Create `outputs/.gitkeep`, `outputs/figures/`, `outputs/results/`
 - [ ] Run `uv add torch numpy scipy matplotlib seaborn pandas`
 - [ ] Run `uv add --dev pytest pytest-cov ruff`
 
