@@ -1,18 +1,36 @@
 {
   "signal": {
-    "frequencies": [1, 2, 5, 10],
+    "frequencies": [
+      1,
+      2,
+      5,
+      10
+    ],
     "amplitude": 1.0,
     "phase": 0,
     "duration": 10,
     "sample_rate": 1000
   },
   "noise": {
-    "low":  {"alpha": 0.05, "beta": 0.05},
-    "med":  {"alpha": 0.1,  "beta": 0.1},
-    "high": {"alpha": 0.3,  "beta": 0.3}
+    "low": {
+      "alpha": 0.05,
+      "beta": 0.05
+    },
+    "med": {
+      "alpha": 0.1,
+      "beta": 0.1
+    },
+    "high": {
+      "alpha": 0.3,
+      "beta": 0.3
+    }
   },
   "data": {
-    "window_sizes": [5, 10, 20],
+    "window_sizes": [
+      5,
+      10,
+      20
+    ],
     "default_window": 10,
     "train_ratio": 0.8,
     "seed": 42
@@ -23,7 +41,7 @@
     "fc_hidden": 256
   },
   "training": {
-    "epochs": 50,
+    "epochs": 100,
     "batch_size": 64,
     "lr": 0.001
   }

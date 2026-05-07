@@ -83,4 +83,4 @@ def save_results(results: List[ExperimentResult], path: str) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w") as f:
         json.dump([asdict(r) for r in results], f, indent=2)
-    print(f"Saved {len(results)} results → {path}")
+    print(f"Saved {len(results)} results -> {path}")

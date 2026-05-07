@@ -9,7 +9,8 @@ from src.sdk.models.lstm import SignalLSTM
 from src.services.train import train_model
 
 # ══ CHANGE THIS to run for a different signal ══════════════════════════════════
-SIGNAL_TO_EXTRACT = 1   # 0=S1  1=S2  2=S3  3=S4
+import os as _os
+SIGNAL_TO_EXTRACT = int(_os.environ.get("SIGNAL_TO_EXTRACT", 1))  # 0=S1 1=S2 2=S3 3=S4
 # ══════════════════════════════════════════════════════════════════════════════
 
 W = 10

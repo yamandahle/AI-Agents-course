@@ -12,9 +12,9 @@ venv/
 # uv
 .uv/
 
-# Outputs (generated at runtime)
-outputs/figures/
-outputs/results/
+# Cache directories
+.pytest_cache/
+.ruff_cache/
 
 # Jupyter
 .ipynb_checkpoints/

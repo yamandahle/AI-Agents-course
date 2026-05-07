@@ -69,30 +69,46 @@ class SineDataset(Dataset):
         np.random.seed(config["data"]["seed"])
 
         gen = SignalGenerator(config)
+        W = window_size
+        n = len(gen.t)
+        n_wins = n - W
 
+        # Normalize clean signals
         clean_sigs = []
         for i in range(NUM_SIGNALS):
             sig = gen.clean(i)
             norm = float(np.max(np.abs(sig))) or 1.0
             clean_sigs.append(sig / norm)
-
         clean_s5 = gen.clean_s5()
         norm_s5 = float(np.max(np.abs(clean_s5))) or 1.0
 
-        n = len(gen.t)
-        inputs, targets = [], []
+        # All t-windows at once: (n_wins, W)
+        t_wins = np.lib.stride_tricks.sliding_window_view(gen.t, W)[:n_wins]
 
+        # One sigma per window, broadcast over W: (n_wins, 1)
+        sigmas = np.random.normal(0, 1, n_wins).astype(np.float32)[:, np.newaxis]
+
+        # Vectorised noisy S5: (n_wins, W)
+        noisy_s5 = np.zeros((n_wins, W), dtype=np.float32)
+        for i in range(NUM_SIGNALS):
+            noisy_s5 += ((gen.A + alpha * sigmas) * np.sin(
+                2 * np.pi * gen.freqs[i] * t_wins + gen.phases[i] + beta * sigmas
+            )).astype(np.float32)
+        noisy_s5 /= norm_s5  # (n_wins, W)
+
+        all_inputs, all_targets = [], []
         for sig_idx in range(NUM_SIGNALS):
             one_hot = np.zeros(NUM_SIGNALS, dtype=np.float32)
             one_hot[sig_idx] = 1.0
-            for i in range(n - window_size):
-                noisy_win = gen.noisy_s5_window(i, window_size, alpha, beta) / norm_s5
-                clean_win = clean_sigs[sig_idx][i:i + window_size]
-                inputs.append(np.concatenate([one_hot, noisy_win.astype(np.float32)]))
-                targets.append(clean_win.astype(np.float32))
+            one_hot_tiled = np.tile(one_hot, (n_wins, 1))            # (n_wins, 4)
+            all_inputs.append(np.concatenate([one_hot_tiled, noisy_s5], axis=1))  # (n_wins, W+4)
+            all_targets.append(
+                np.lib.stride_tricks.sliding_window_view(clean_sigs[sig_idx], W)
+                [:n_wins].astype(np.float32)
+            )
 
-        self.X = torch.tensor(np.array(inputs), dtype=torch.float32)
-        self.Y = torch.tensor(np.array(targets), dtype=torch.float32)
+        self.X = torch.tensor(np.concatenate(all_inputs, axis=0), dtype=torch.float32)
+        self.Y = torch.tensor(np.concatenate(all_targets, axis=0), dtype=torch.float32)
 
     def __len__(self) -> int:
         return len(self.X)
