@@ -6,6 +6,9 @@ Status: `[ ]` = pending · `[x]` = done · `[~]` = in progress
 
 ## Phase 1 — Infrastructure & Config
 
+- [x] Create `docs/PRD.md` (requirements, signals, models, experiment matrix, KPIs)
+- [x] Create `docs/PLAN.md` (architecture, project structure, model specs, phases)
+- [x] Create `docs/TODO.md` (this file)
 - [x] Edit `config/setup.json` with all correct values (frequencies, noise presets, window sizes, training params)
 - [ ] Create `.gitignore` (exclude `__pycache__`, `*.pyc`, `outputs/figures/`, `outputs/results/`, `.venv/`)
 - [ ] Create `outputs/.gitkeep`, `outputs/figures/`, `outputs/results/`
@@ -63,7 +66,7 @@ Status: `[ ]` = pending · `[x]` = done · `[~]` = in progress
 
 - [ ] Create `src/services/experiment_runner.py`:
   - [ ] Cartesian product loop: 5 signals × 3 noise levels × 3 window sizes × 3 models = 135 runs
-  - [ ] Load all params from `configs/*.json`
+  - [ ] Load all params from `config/setup.json`
   - [ ] Save each run result to list
 - [ ] Create `src/services/results_collector.py`:
   - [ ] ExperimentResult dataclass (signal, noise, window, model, train_losses, val_losses, best_mse, best_epoch)
