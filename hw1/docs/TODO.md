@@ -76,7 +76,7 @@ Status: `[ ]` = pending · `[x]` = done · `[~]` = in progress
 
 ## Phase 6 — Reporting & Visualizations
 
-- [x] `run_all.py` generates all 17 figures via `run_all.py`:
+- [x] `run_all.py` generates all 17 figures:
 
   **Signal inspection**
   - [x] `signals_overview.png` — all 4 sinusoids + S5 mixture on 2-panel figure
