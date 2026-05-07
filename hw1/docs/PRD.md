@@ -132,6 +132,7 @@ Output: (W,)  e.g. (10,)
 
 ## 6. Success Criteria (KPIs)
 
+### Quality Gates
 | Criterion | Requirement |
 |-----------|-------------|
 | All models train | No NaN loss on any signal/noise/window combo |
@@ -141,6 +142,13 @@ Output: (W,)  e.g. (10,)
 | Comparison table | 45 rows (signal × noise × window), 3 model columns |
 | Test coverage | ≥ 85% via pytest-cov |
 | Linting | 0 Ruff errors |
+
+### MSE Targets (best-case, low noise, W=10)
+| Model | Target MSE |
+|-------|-----------|
+| FC    | < 0.005   |
+| RNN   | < 0.002   |
+| LSTM  | < 0.001   |
 
 ---
 
