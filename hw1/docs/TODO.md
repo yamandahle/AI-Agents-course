@@ -6,10 +6,7 @@ Status: `[ ]` = pending · `[x]` = done · `[~]` = in progress
 
 ## Phase 1 — Infrastructure & Config
 
-- [ ] Create `configs/signals.json` (frequencies, amplitude, phase, duration, sample_rate)
-- [ ] Create `configs/noise.json` (low/med/high alpha+beta presets)
-- [ ] Create `configs/training.json` (epochs, batch_size, lr, window_sizes, train_ratio, seed)
-- [ ] Create `configs/models.json` (hidden_size, num_layers, fc_hidden)
+- [x] Edit `config/setup.json` with all correct values (frequencies, noise presets, window sizes, training params)
 - [ ] Create `.gitignore` (exclude `__pycache__`, `*.pyc`, `outputs/figures/`, `outputs/results/`, `.venv/`)
 - [ ] Create `outputs/.gitkeep`, `outputs/figures/`, `outputs/results/`
 - [ ] Run `uv add torch numpy scipy matplotlib seaborn pandas`
@@ -146,5 +143,5 @@ Status: `[ ]` = pending · `[x]` = done · `[~]` = in progress
 - [ ] `outputs/results/results.json` exists with 135 entries
 - [ ] At least 1 reconstruction plot per model saved in `outputs/figures/`
 - [ ] No `plt.show()` anywhere in source
-- [ ] No hardcoded values — everything from `configs/*.json`
+- [ ] No hardcoded values — everything from `config/setup.json`
 - [ ] All source files strictly under 150 lines
