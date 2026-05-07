@@ -4,9 +4,9 @@ from src.sdk.models.base import BaseModel
 NUM_SIGNALS = 5
 
 
-class MLP(BaseModel):
+class FC(BaseModel):
     """
-    MLP for signal reconstruction.
+    Fully Connected network for signal reconstruction.
     Input:  (W+5,) = [one_hot(5,), noisy_window(W,)]
     Output: (W,)   = reconstructed clean window
     """
