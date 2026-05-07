@@ -130,6 +130,31 @@ def recon_at_noise(model, alpha, beta):
             preds.append(model(x).squeeze().numpy())
     return np.concatenate(noisy_disp), np.concatenate(preds)
 
+def eval_mse_at_noise(model, alpha, beta):
+    """MSE over N_WINS windows at a given noise level."""
+    np.random.seed(config["data"]["seed"] + 2)
+    model.eval()
+    preds = []
+    with torch.no_grad():
+        for i in range(N_WINS):
+            win = gen.noisy_s5_window(i * W, W, alpha, beta) / norms[4]
+            x = torch.cat([one_hot_t,
+                           torch.tensor(win, dtype=torch.float32)]).unsqueeze(0)
+            preds.append(model(x).squeeze().numpy())
+    return float(np.mean((np.concatenate(preds) - clean_recon) ** 2))
+
+# ── evaluate MSE at all 3 noise levels ───────────────────────────────────────
+noise_mses = {name: {} for name in MCOL}
+print(f"\nVal MSE by noise level — {NAMES[SIGNAL_TO_EXTRACT]}, W={W}")
+print(f"{'Model':<8} {'LOW':>10} {'MED':>10} {'HIGH':>10}")
+for name, res in results.items():
+    row = f"{name:<8}"
+    for level, nc in noise_levels:
+        mse = eval_mse_at_noise(res["model"], nc["alpha"], nc["beta"])
+        noise_mses[name][level] = mse
+        row += f" {mse:>10.6f}"
+    print(row)
+
 # ── FIGURE 3: reconstruction — 3 models × 3 noise levels ─────────────────────
 fig, axes = plt.subplots(3, 3, figsize=(18, 11), sharex=True, sharey=True)
 fig.patch.set_facecolor(BG)
@@ -173,16 +198,25 @@ plt.tight_layout()
 plt.savefig(f"outputs/figures/{SIG}_loss_curves.png", facecolor=BG)
 plt.close(); print(f"Saved: {SIG}_loss_curves.png")
 
-# ── FIGURE 5: MSE bar chart ───────────────────────────────────────────────────
-fig, ax = plt.subplots(figsize=(7, 5))
+# ── FIGURE 5: MSE grouped bar chart — models × noise levels ──────────────────
+x = np.arange(len(MCOL))
+width = 0.25
+level_colors = {"low": "#4a9eff", "med": "#ffaa33", "high": "#ff4455"}
+
+fig, ax = plt.subplots(figsize=(10, 5))
 fig.patch.set_facecolor(BG); style(ax)
-mses = [results[n]["best_val_mse"] for n in MCOL]
-bars = ax.bar(list(MCOL), mses, color=list(MCOL.values()), width=0.5)
-for bar, val in zip(bars, mses):
-    ax.text(bar.get_x() + bar.get_width()/2, val * 1.1,
-            f"{val:.5f}", ha="center", color="white", fontsize=10)
-ax.set_title(f"Best Val MSE — {NAMES[SIGNAL_TO_EXTRACT]}, Low Noise, W={W}", fontsize=12)
+for i, (level, _) in enumerate(noise_levels):
+    mses = [noise_mses[n][level] for n in MCOL]
+    bars = ax.bar(x + i * width, mses, width,
+                  label=f"{level.upper()} noise", color=level_colors[level], alpha=0.85)
+    for bar, val in zip(bars, mses):
+        ax.text(bar.get_x() + bar.get_width() / 2, val * 1.12,
+                f"{val:.4f}", ha="center", color="white", fontsize=8, rotation=45)
+ax.set_xticks(x + width)
+ax.set_xticklabels(list(MCOL))
+ax.set_title(f"Val MSE by Noise Level — {NAMES[SIGNAL_TO_EXTRACT]}, W={W}", fontsize=12)
 ax.set_ylabel("MSE"); ax.set_yscale("log")
+ax.legend(facecolor=BG, labelcolor="white")
 ax.grid(True, axis="y", which="both", alpha=0.2, color="gray")
 plt.tight_layout()
 plt.savefig(f"outputs/figures/{SIG}_mse_bar.png", facecolor=BG)
