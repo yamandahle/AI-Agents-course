@@ -19,14 +19,14 @@ Status: `[ ]` = pending · `[x]` = done · `[~]` = in progress
 
 ## Phase 2 — Data Service
 
-- [ ] Fix `src/services/data_generator.py`:
-  - [ ] Add S5 signal (sum of S1+S2+S3+S4)
-  - [ ] Change one-hot encoding size from 4 → 5
-  - [ ] Ensure σ is re-sampled fresh per window (not per full signal)
-  - [ ] Normalize signals to [-1, 1] before windowing
-- [ ] Add sliding window builder (stride=1, outputs `(W+5,)` input + `(W,)` target pairs)
-- [ ] Add train/test split (80/20, all 5 signals in both splits, seed=42)
-- [ ] Write `tests/unit/test_signals.py` (signal shapes, S5 formula, noise formula)
+- [x] Fix `src/services/data_generator.py`:
+  - [x] Add S5 signal (sum of S1+S2+S3+S4)
+  - [x] Change one-hot encoding size from 4 → 5
+  - [x] Ensure σ is re-sampled fresh per window (not per full signal)
+  - [x] Normalize signals to [-1, 1] before windowing
+- [x] Add sliding window builder (stride=1, outputs `(W+5,)` input + `(W,)` target pairs)
+- [x] Add train/test split (80/20, all 5 signals in both splits, seed=42)
+- [x] Write `tests/unit/test_signals.py` (signal shapes, S5 formula, noise formula)
 
 ---
 

@@ -1,72 +1,93 @@
 import numpy as np
 import torch
-from typing import Tuple, List
+from torch.utils.data import Dataset, random_split
+from typing import Tuple
+
+NUM_SIGNALS = 5  # S1, S2, S3, S4, S5
+
 
 class SignalGenerator:
-    """Generates 1000Hz signals based on PRD mathematical foundations."""
-    
+    """Generates clean and noisy sine wave signals per PRD spec."""
+
     def __init__(self, config: dict):
-        self.fs = config["signal"]["sampling_rate_hz"]
-        self.duration = config["signal"]["duration_seconds"]
-        self.freqs = config["signal"]["frequencies_hz"]
-        self.sigma = config["signal"]["noise"]["sigma"]
-        self.sigma_2 = config["signal"]["noise"]["sigma_2"]
-        self.window_size = config["data"]["window_size"]
+        sig = config["signal"]
+        self.freqs = sig["frequencies"]
+        self.A = sig["amplitude"]
+        self.phase = sig["phase"]
+        self.t = np.linspace(
+            0, sig["duration"],
+            int(sig["sample_rate"] * sig["duration"]), endpoint=False
+        )
 
-    def generate_signal(self, freq_idx: int) -> np.ndarray:
-        """
-        Implements: (A ± sigma)(sin(2pi * f * t + phi + sigma_2))
-        """
+    def clean(self, freq_idx: int) -> np.ndarray:
+        """Returns full clean signal. freq_idx=4 → S5 (sum of S1–S4)."""
+        if freq_idx == 4:
+            return sum(
+                self.A * np.sin(2 * np.pi * f * self.t + self.phase)
+                for f in self.freqs
+            )
         f = self.freqs[freq_idx]
-        t = np.linspace(0, self.duration, int(self.fs * self.duration), endpoint=False)
-        phi = np.random.uniform(0, 2 * np.pi)
-        
-        # Amplitude noise (A=1)
-        amp_noise = 1.0 + np.random.normal(0, self.sigma, t.shape)
-        # Phase noise
-        phase_noise = np.random.normal(0, self.sigma_2, t.shape)
-        
-        signal = amp_noise * np.sin(2 * np.pi * f * t + phi + phase_noise)
-        return signal
+        return self.A * np.sin(2 * np.pi * f * self.t + self.phase)
 
-    def create_dataset(self) -> Tuple[torch.Tensor, torch.Tensor]:
-        """Creates a balanced dataset with 1-hot frequency encoding."""
-        all_x, all_y = [], []
-        
-        for idx in range(len(self.freqs)):
-            signal = self.generate_signal(idx)
-            x, y = self._window_signal(signal, idx)
-            all_x.append(x)
-            all_y.append(y)
-            
-        return torch.cat(all_x), torch.cat(all_y)
+    def noisy_window(self, freq_idx: int, start: int, W: int,
+                     alpha: float, beta: float) -> np.ndarray:
+        """
+        y_noisy = (A + alpha*σ) * sin(2π*f*t + phase + beta*σ)
+        σ ~ N(0,1) re-sampled once per window.
+        """
+        t_win = self.t[start:start + W]
+        sigma = float(np.random.normal(0, 1))
+        if freq_idx == 4:
+            return sum(
+                (self.A + alpha * sigma) * np.sin(
+                    2 * np.pi * f * t_win + self.phase + beta * sigma
+                ) for f in self.freqs
+            )
+        f = self.freqs[freq_idx]
+        return (self.A + alpha * sigma) * np.sin(
+            2 * np.pi * f * t_win + self.phase + beta * sigma
+        )
 
-    def _window_signal(self, signal: np.ndarray, freq_idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
-        """Creates 10-sample context windows with 1-hot encoding."""
-        num_windows = len(signal) - self.window_size
-        x_windows, y_targets = [], []
-        
-        # 1-hot encoding for frequency
-        one_hot = np.zeros(len(self.freqs))
-        one_hot[freq_idx] = 1.0
-        
-        for i in range(num_windows):
-            window = signal[i : i + self.window_size]
-            target = signal[i + self.window_size]
-            
-            # Concatenate window (10) + 1-hot (4) = 14 features
-            features = np.concatenate([window, one_hot])
-            x_windows.append(features)
-            y_targets.append(target)
-            
-        return (torch.tensor(np.array(x_windows), dtype=torch.float32), 
-                torch.tensor(np.array(y_targets), dtype=torch.float32).view(-1, 1))
 
-if __name__ == "__main__":
-    import json
-    with open("config/setup.json", "r") as f:
-        conf = json.load(f)
-    gen = SignalGenerator(conf)
-    x, y = gen.create_dataset()
-    print(f"Dataset created. X shape: {x.shape}, Y shape: {y.shape}")
-    # X shape should be (approx 40000, 14) -> 4 freqs * (10000 - 10) windows
+class SineDataset(Dataset):
+    """Windowed sine dataset: input (W+5,), target (W,)."""
+
+    def __init__(self, config: dict, noise_level: str, window_size: int):
+        noise = config["noise"][noise_level]
+        alpha, beta = noise["alpha"], noise["beta"]
+        np.random.seed(config["data"]["seed"])
+
+        gen = SignalGenerator(config)
+        inputs, targets = [], []
+
+        for sig_idx in range(NUM_SIGNALS):
+            clean_full = gen.clean(sig_idx)
+            norm = float(np.max(np.abs(clean_full))) or 1.0
+            clean_norm = clean_full / norm
+
+            one_hot = np.zeros(NUM_SIGNALS, dtype=np.float32)
+            one_hot[sig_idx] = 1.0
+
+            for i in range(len(clean_norm) - window_size):
+                noisy_win = gen.noisy_window(sig_idx, i, window_size, alpha, beta) / norm
+                clean_win = clean_norm[i:i + window_size]
+                inputs.append(np.concatenate([one_hot, noisy_win]))
+                targets.append(clean_win)
+
+        self.X = torch.tensor(np.array(inputs), dtype=torch.float32)
+        self.Y = torch.tensor(np.array(targets), dtype=torch.float32)
+
+    def __len__(self) -> int:
+        return len(self.X)
+
+    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
+        return self.X[idx], self.Y[idx]
+
+
+def build_datasets(config: dict, noise_level: str,
+                   window_size: int) -> Tuple[Dataset, Dataset]:
+    """Returns (train_dataset, test_dataset) with 80/20 split."""
+    full = SineDataset(config, noise_level, window_size)
+    n_train = int(len(full) * config["data"]["train_ratio"])
+    generator = torch.Generator().manual_seed(config["data"]["seed"])
+    return random_split(full, [n_train, len(full) - n_train], generator=generator)
