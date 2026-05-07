@@ -1,14 +1,14 @@
 import torch.nn as nn
 from src.sdk.models.base import BaseModel
 
-NUM_SIGNALS = 5
+NUM_SIGNALS = 4
 
 
 class FC(BaseModel):
     """
-    Fully Connected network for signal reconstruction.
-    Input:  (W+5,) = [one_hot(5,), noisy_window(W,)]
-    Output: (W,)   = reconstructed clean window
+    Fully Connected network for source separation.
+    Input:  (W+4,) = [one_hot(4,), noisy_S5_window(W,)]
+    Output: (W,)   = reconstructed clean individual signal window
     """
 
     def __init__(self, window_size: int, hidden: int = 256):

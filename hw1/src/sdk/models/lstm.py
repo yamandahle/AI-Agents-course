@@ -2,14 +2,14 @@ import torch
 import torch.nn as nn
 from src.sdk.models.base import BaseModel
 
-NUM_SIGNALS = 5
+NUM_SIGNALS = 4
 
 
 class SignalLSTM(BaseModel):
     """
-    LSTM for signal reconstruction.
-    one_hot → Linear(5, hidden) → h0 and c0
-    Input sequence: noisy_window reshaped to (batch, W, 1)
+    LSTM for source separation.
+    one_hot → Linear(4, hidden) → h0 and c0
+    Input sequence: noisy_S5_window reshaped to (batch, W, 1)
     Output: (W,) via last output step
     """
 
@@ -22,7 +22,7 @@ class SignalLSTM(BaseModel):
         self.fc = nn.Linear(hidden_size, window_size)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        one_hot = x[:, :NUM_SIGNALS]                # (batch, 5)
+        one_hot = x[:, :NUM_SIGNALS]                # (batch, 4)
         window = x[:, NUM_SIGNALS:].unsqueeze(-1)   # (batch, W, 1)
 
         h0 = self.h0_proj(one_hot).unsqueeze(0).expand(self.num_layers, -1, -1).contiguous()
