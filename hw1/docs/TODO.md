@@ -32,20 +32,20 @@ Status: `[ ]` = pending · `[x]` = done · `[~]` = in progress
 
 ## Phase 3 — SDK Models
 
-- [ ] Create `src/sdk/models/base.py` (abstract BaseModel: fit, predict, save, load)
-- [ ] Fix `src/sdk/models/mlp.py`:
-  - [ ] Input shape `(W+5,)` — concatenation of one-hot + noisy window
-  - [ ] Output shape `(W,)` — not 1 sample
-  - [ ] Architecture: `Linear(W+5, 256) → ReLU → Linear(256, 256) → ReLU → Linear(256, W)`
-- [ ] Fix `src/sdk/models/rnn.py`:
-  - [ ] one-hot → `Linear(5, 128)` → h0 shape `(2, batch, 128)`
-  - [ ] `RNN(input_size=1, hidden_size=128, num_layers=2, batch_first=True)`
-  - [ ] last hidden state → `Linear(128, W)` → output `(W,)`
-- [ ] Fix `src/sdk/models/lstm.py`:
-  - [ ] one-hot → `Linear(5, 128)` → h0 and c0
-  - [ ] `LSTM(input_size=1, hidden_size=128, num_layers=2, batch_first=True)`
-  - [ ] last output step → `Linear(128, W)` → output `(W,)`
-- [ ] Write `tests/unit/test_models.py` (forward pass shapes for all 3 models)
+- [x] Create `src/sdk/models/base.py` (abstract BaseModel: fit, predict, save, load)
+- [x] Fix `src/sdk/models/mlp.py`:
+  - [x] Input shape `(W+5,)` — concatenation of one-hot + noisy window
+  - [x] Output shape `(W,)` — not 1 sample
+  - [x] Architecture: `Linear(W+5, 256) → ReLU → Linear(256, 256) → ReLU → Linear(256, W)`
+- [x] Fix `src/sdk/models/rnn.py`:
+  - [x] one-hot → `Linear(5, 128)` → h0 shape `(2, batch, 128)`
+  - [x] `RNN(input_size=1, hidden_size=128, num_layers=2, batch_first=True)`
+  - [x] last hidden state → `Linear(128, W)` → output `(W,)`
+- [x] Fix `src/sdk/models/lstm.py`:
+  - [x] one-hot → `Linear(5, 128)` → h0 and c0
+  - [x] `LSTM(input_size=1, hidden_size=128, num_layers=2, batch_first=True)`
+  - [x] last output step → `Linear(128, W)` → output `(W,)`
+- [x] Write `tests/unit/test_models.py` (forward pass shapes for all 3 models)
 
 ---
 

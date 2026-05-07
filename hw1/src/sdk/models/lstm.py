@@ -1,22 +1,32 @@
 import torch
 import torch.nn as nn
+from src.sdk.models.base import BaseModel
 
-class SignalLSTM(nn.Module):
+NUM_SIGNALS = 5
+
+
+class SignalLSTM(BaseModel):
     """
-    Long Short-Term Memory network implementing the gated memory formula.
-    Concept: y = f_w(x) + memory (Cell State & Hidden State).
+    LSTM for signal reconstruction.
+    one_hot → Linear(5, hidden) → h0 and c0
+    Input sequence: noisy_window reshaped to (batch, W, 1)
+    Output: (W,) via last output step
     """
-    def __init__(self, input_size: int = 14, hidden_size: int = 256, num_layers: int = 2):
+
+    def __init__(self, window_size: int, hidden_size: int = 128, num_layers: int = 2):
         super().__init__()
-        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)
-        self.fc = nn.Linear(hidden_size, 1)
+        self.num_layers = num_layers
+        self.h0_proj = nn.Linear(NUM_SIGNALS, hidden_size)
+        self.c0_proj = nn.Linear(NUM_SIGNALS, hidden_size)
+        self.lstm = nn.LSTM(1, hidden_size, num_layers, batch_first=True)
+        self.fc = nn.Linear(hidden_size, window_size)
 
-    def forward(self, x):
-        # Reshape (batch, 14) to (batch, 1, 14)
-        if x.dim() == 2:
-            x = x.unsqueeze(1)
-            
-        # out: (batch, seq, hidden), (h, c): Hidden and Cell states (memory)
-        out, _ = self.lstm(x)
-        
-        return self.fc(out[:, -1, :])
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        one_hot = x[:, :NUM_SIGNALS]                # (batch, 5)
+        window = x[:, NUM_SIGNALS:].unsqueeze(-1)   # (batch, W, 1)
+
+        h0 = self.h0_proj(one_hot).unsqueeze(0).expand(self.num_layers, -1, -1).contiguous()
+        c0 = self.c0_proj(one_hot).unsqueeze(0).expand(self.num_layers, -1, -1).contiguous()
+
+        out, _ = self.lstm(window, (h0, c0))        # out: (batch, W, hidden)
+        return self.fc(out[:, -1, :])               # (batch, W)

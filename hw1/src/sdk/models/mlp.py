@@ -1,22 +1,26 @@
 import torch.nn as nn
+from src.sdk.models.base import BaseModel
 
-class MLP(nn.Module):
+NUM_SIGNALS = 5
+
+
+class MLP(BaseModel):
     """
-    Multi-Layer Perceptron for signal reconstruction.
-    Features: 10 context samples + 4 one-hot frequency encoding bits.
+    MLP for signal reconstruction.
+    Input:  (W+5,) = [one_hot(5,), noisy_window(W,)]
+    Output: (W,)   = reconstructed clean window
     """
-    def __init__(self, input_size: int = 14, layers: list = [128, 256, 128]):
+
+    def __init__(self, window_size: int, hidden: int = 256):
         super().__init__()
+        input_size = window_size + NUM_SIGNALS
         self.net = nn.Sequential(
-            nn.Linear(input_size, layers[0]),
+            nn.Linear(input_size, hidden),
             nn.ReLU(),
-            nn.Linear(layers[0], layers[1]),
+            nn.Linear(hidden, hidden),
             nn.ReLU(),
-            nn.Linear(layers[1], layers[2]),
-            nn.ReLU(),
-            nn.Linear(layers[2], 1)
+            nn.Linear(hidden, window_size)
         )
 
     def forward(self, x):
-        """Standard feed-forward pass."""
         return self.net(x)
