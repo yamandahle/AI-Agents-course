@@ -12,8 +12,8 @@ Status: `[ ]` = pending · `[x]` = done · `[~]` = in progress
 - [x] Edit `config/setup.json` with all correct values (frequencies, noise presets, window sizes, training params)
 - [x] Create `.gitignore` (exclude `__pycache__`, `*.pyc`, `outputs/figures/`, `outputs/results/`, `.venv/`)
 - [x] Create `outputs/.gitkeep`, `outputs/figures/`, `outputs/results/`
-- [ ] Run `uv add torch numpy scipy matplotlib seaborn pandas`
-- [ ] Run `uv add --dev pytest pytest-cov ruff`
+- [x] Run `uv add torch numpy scipy matplotlib seaborn pandas`
+- [x] Run `uv add --dev pytest pytest-cov ruff`
 
 ---
 
