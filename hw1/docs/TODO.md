@@ -51,14 +51,14 @@ Status: `[ ]` = pending · `[x]` = done · `[~]` = in progress
 
 ## Phase 4 — Training Pipeline
 
-- [ ] Fix `src/services/train.py`:
-  - [ ] Loss: MSE
-  - [ ] Optimizer: Adam, lr=0.001
-  - [ ] Epochs: 50, batch size: 64
-  - [ ] Target shape `(W,)` not scalar
-  - [ ] Record train loss + val loss per epoch
-  - [ ] Track best validation MSE + best epoch
-- [ ] Write `tests/unit/test_trainer.py` (train 1 epoch, loss decreases, shapes correct)
+- [x] Fix `src/services/train.py`:
+  - [x] Loss: MSE
+  - [x] Optimizer: Adam, lr=0.001
+  - [x] Epochs: 50, batch size: 64
+  - [x] Target shape `(W,)` not scalar
+  - [x] Record train loss + val loss per epoch
+  - [x] Track best validation MSE + best epoch
+- [x] Write `tests/unit/test_trainer.py` (train 1 epoch, loss decreases, shapes correct)
 
 ---
 
