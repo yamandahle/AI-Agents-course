@@ -1,7 +1,6 @@
 import os
 import matplotlib.pyplot as plt
 import numpy as np
-import torch
 
 class ResearchVisualizer:
     """Visualizes model performance and signal reconstruction results."""

@@ -1,42 +1,48 @@
 {
   "signal": {
-    "sampling_rate_hz": 1000,
-    "duration_seconds": 10,
-    "frequencies_hz": [5, 50, 150, 450],
-    "noise": {
-      "sigma": 0.1,
-      "sigma_2": 0.05
+    "frequencies": [
+      1,
+      2,
+      5,
+      10
+    ],
+    "amplitude": 1.0,
+    "phase": 0,
+    "duration": 10,
+    "sample_rate": 1000
+  },
+  "noise": {
+    "low": {
+      "alpha": 0.05,
+      "beta": 0.05
+    },
+    "med": {
+      "alpha": 0.1,
+      "beta": 0.1
+    },
+    "high": {
+      "alpha": 0.3,
+      "beta": 0.3
     }
   },
   "data": {
-    "window_size": 10,
-    "train_split": 0.8,
-    "val_split": 0.1,
-    "test_split": 0.1
+    "window_sizes": [
+      5,
+      10,
+      20
+    ],
+    "default_window": 10,
+    "train_ratio": 0.8,
+    "seed": 42
   },
   "models": {
-    "mlp": {
-      "layers": [128, 256, 128],
-      "activation": "relu",
-      "dropout": 0.1
-    },
-    "rnn": {
-      "num_layers": 2,
-      "hidden_units": 128,
-      "dropout": 0.1,
-      "state_formula": "y = f_w(x) + memory"
-    },
-    "lstm": {
-      "num_layers": 2,
-      "hidden_units": 256,
-      "dropout": 0.1,
-      "state_formula": "y = f_w(x) + memory"
-    }
+    "hidden_size": 128,
+    "num_layers": 2,
+    "fc_hidden": 256
   },
   "training": {
-    "batch_size": 64,
     "epochs": 100,
-    "learning_rate": 0.001,
-    "patience": 10
+    "batch_size": 64,
+    "lr": 0.001
   }
 }

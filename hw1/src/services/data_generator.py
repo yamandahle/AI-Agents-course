@@ -1,72 +1,126 @@
 import numpy as np
 import torch
-from typing import Tuple, List
+from torch.utils.data import Dataset, random_split
+from typing import Tuple
+
+NUM_SIGNALS = 4  # S1, S2, S3, S4 (S5 = mixture, always the model input)
+
 
 class SignalGenerator:
-    """Generates 1000Hz signals based on PRD mathematical foundations."""
-    
+    """Generates clean and noisy signals for source separation.
+
+    Task: given noisy S5 window + one_hot(4) → reconstruct clean Si window.
+    """
+
     def __init__(self, config: dict):
-        self.fs = config["signal"]["sampling_rate_hz"]
-        self.duration = config["signal"]["duration_seconds"]
-        self.freqs = config["signal"]["frequencies_hz"]
-        self.sigma = config["signal"]["noise"]["sigma"]
-        self.sigma_2 = config["signal"]["noise"]["sigma_2"]
-        self.window_size = config["data"]["window_size"]
+        sig = config["signal"]
+        self.freqs = sig["frequencies"]   # [1, 2, 5, 10]
+        self.A = sig["amplitude"]
+        n = int(sig["sample_rate"] * sig["duration"])
+        self.t = np.linspace(0, sig["duration"], n, endpoint=False)
+        # Deterministic phases φ ~ Uniform(0, 2π), isolated from global seed
+        rng = np.random.default_rng(config.get("data", {}).get("seed", 42))
+        self.phases = rng.uniform(0, 2 * np.pi, NUM_SIGNALS)
 
-    def generate_signal(self, freq_idx: int) -> np.ndarray:
+    def clean(self, sig_idx: int) -> np.ndarray:
+        """Clean individual signal Si (sig_idx 0–3)."""
+        f = self.freqs[sig_idx]
+        return self.A * np.sin(2 * np.pi * f * self.t + self.phases[sig_idx])
+
+    def clean_s5(self) -> np.ndarray:
+        """Clean mixture S5 = S1 + S2 + S3 + S4."""
+        return sum(self.clean(i) for i in range(NUM_SIGNALS))
+
+    def noisy_s5_window(self, start: int, W: int,
+                        alpha: float, beta: float) -> np.ndarray:
+        """Noisy S5 window — model input.
+        y_noisy = Σᵢ (A + alpha*σ) * sin(2π*fᵢ*t + φᵢ + beta*σ)
+        σ ~ N(0,1) re-sampled once per window.
         """
-        Implements: (A ± sigma)(sin(2pi * f * t + phi + sigma_2))
-        """
-        f = self.freqs[freq_idx]
-        t = np.linspace(0, self.duration, int(self.fs * self.duration), endpoint=False)
-        phi = np.random.uniform(0, 2 * np.pi)
-        
-        # Amplitude noise (A=1)
-        amp_noise = 1.0 + np.random.normal(0, self.sigma, t.shape)
-        # Phase noise
-        phase_noise = np.random.normal(0, self.sigma_2, t.shape)
-        
-        signal = amp_noise * np.sin(2 * np.pi * f * t + phi + phase_noise)
-        return signal
+        t_win = self.t[start:start + W]
+        sigma = float(np.random.normal(0, 1))
+        return sum(
+            (self.A + alpha * sigma) * np.sin(
+                2 * np.pi * self.freqs[i] * t_win + self.phases[i] + beta * sigma
+            )
+            for i in range(NUM_SIGNALS)
+        )
 
-    def create_dataset(self) -> Tuple[torch.Tensor, torch.Tensor]:
-        """Creates a balanced dataset with 1-hot frequency encoding."""
-        all_x, all_y = [], []
-        
-        for idx in range(len(self.freqs)):
-            signal = self.generate_signal(idx)
-            x, y = self._window_signal(signal, idx)
-            all_x.append(x)
-            all_y.append(y)
-            
-        return torch.cat(all_x), torch.cat(all_y)
+    def noisy_window(self, sig_idx: int, start: int, W: int,
+                     alpha: float, beta: float) -> np.ndarray:
+        """Noisy window of a single signal (visualization only)."""
+        t_win = self.t[start:start + W]
+        sigma = float(np.random.normal(0, 1))
+        f = self.freqs[sig_idx]
+        return (self.A + alpha * sigma) * np.sin(
+            2 * np.pi * f * t_win + self.phases[sig_idx] + beta * sigma
+        )
 
-    def _window_signal(self, signal: np.ndarray, freq_idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
-        """Creates 10-sample context windows with 1-hot encoding."""
-        num_windows = len(signal) - self.window_size
-        x_windows, y_targets = [], []
-        
-        # 1-hot encoding for frequency
-        one_hot = np.zeros(len(self.freqs))
-        one_hot[freq_idx] = 1.0
-        
-        for i in range(num_windows):
-            window = signal[i : i + self.window_size]
-            target = signal[i + self.window_size]
-            
-            # Concatenate window (10) + 1-hot (4) = 14 features
-            features = np.concatenate([window, one_hot])
-            x_windows.append(features)
-            y_targets.append(target)
-            
-        return (torch.tensor(np.array(x_windows), dtype=torch.float32), 
-                torch.tensor(np.array(y_targets), dtype=torch.float32).view(-1, 1))
 
-if __name__ == "__main__":
-    import json
-    with open("config/setup.json", "r") as f:
-        conf = json.load(f)
-    gen = SignalGenerator(conf)
-    x, y = gen.create_dataset()
-    print(f"Dataset created. X shape: {x.shape}, Y shape: {y.shape}")
-    # X shape should be (approx 40000, 14) -> 4 freqs * (10000 - 10) windows
+class SineDataset(Dataset):
+    """Source separation dataset.
+    Input:  (W+4,) = [one_hot(4)] + [noisy_S5_window(W)]
+    Target: (W,)   = clean individual signal window
+    """
+
+    def __init__(self, config: dict, noise_level: str, window_size: int):
+        noise = config["noise"][noise_level]
+        alpha, beta = noise["alpha"], noise["beta"]
+        np.random.seed(config["data"]["seed"])
+
+        gen = SignalGenerator(config)
+        W = window_size
+        n = len(gen.t)
+        n_wins = n - W
+
+        # Normalize clean signals
+        clean_sigs = []
+        for i in range(NUM_SIGNALS):
+            sig = gen.clean(i)
+            norm = float(np.max(np.abs(sig))) or 1.0
+            clean_sigs.append(sig / norm)
+        clean_s5 = gen.clean_s5()
+        norm_s5 = float(np.max(np.abs(clean_s5))) or 1.0
+
+        # All t-windows at once: (n_wins, W)
+        t_wins = np.lib.stride_tricks.sliding_window_view(gen.t, W)[:n_wins]
+
+        # One sigma per window, broadcast over W: (n_wins, 1)
+        sigmas = np.random.normal(0, 1, n_wins).astype(np.float32)[:, np.newaxis]
+
+        # Vectorised noisy S5: (n_wins, W)
+        noisy_s5 = np.zeros((n_wins, W), dtype=np.float32)
+        for i in range(NUM_SIGNALS):
+            noisy_s5 += ((gen.A + alpha * sigmas) * np.sin(
+                2 * np.pi * gen.freqs[i] * t_wins + gen.phases[i] + beta * sigmas
+            )).astype(np.float32)
+        noisy_s5 /= norm_s5  # (n_wins, W)
+
+        all_inputs, all_targets = [], []
+        for sig_idx in range(NUM_SIGNALS):
+            one_hot = np.zeros(NUM_SIGNALS, dtype=np.float32)
+            one_hot[sig_idx] = 1.0
+            one_hot_tiled = np.tile(one_hot, (n_wins, 1))            # (n_wins, 4)
+            all_inputs.append(np.concatenate([one_hot_tiled, noisy_s5], axis=1))  # (n_wins, W+4)
+            all_targets.append(
+                np.lib.stride_tricks.sliding_window_view(clean_sigs[sig_idx], W)
+                [:n_wins].astype(np.float32)
+            )
+
+        self.X = torch.tensor(np.concatenate(all_inputs, axis=0), dtype=torch.float32)
+        self.Y = torch.tensor(np.concatenate(all_targets, axis=0), dtype=torch.float32)
+
+    def __len__(self) -> int:
+        return len(self.X)
+
+    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
+        return self.X[idx], self.Y[idx]
+
+
+def build_datasets(config: dict, noise_level: str,
+                   window_size: int) -> Tuple[Dataset, Dataset]:
+    """Returns (train_dataset, test_dataset) with 80/20 split."""
+    full = SineDataset(config, noise_level, window_size)
+    n_train = int(len(full) * config["data"]["train_ratio"])
+    generator = torch.Generator().manual_seed(config["data"]["seed"])
+    return random_split(full, [n_train, len(full) - n_train], generator=generator)
