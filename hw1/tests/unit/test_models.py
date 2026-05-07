@@ -12,7 +12,7 @@ W_SIZES = [5, 10, 20]
 @pytest.mark.parametrize("W", W_SIZES)
 def test_fc_output_shape(W):
     model = FC(window_size=W)
-    x = torch.randn(BATCH, W + 5)
+    x = torch.randn(BATCH, W + 4)
     out = model(x)
     assert out.shape == (BATCH, W)
 
@@ -20,7 +20,7 @@ def test_fc_output_shape(W):
 @pytest.mark.parametrize("W", W_SIZES)
 def test_rnn_output_shape(W):
     model = SignalRNN(window_size=W)
-    x = torch.randn(BATCH, W + 5)
+    x = torch.randn(BATCH, W + 4)
     out = model(x)
     assert out.shape == (BATCH, W)
 
@@ -28,7 +28,7 @@ def test_rnn_output_shape(W):
 @pytest.mark.parametrize("W", W_SIZES)
 def test_lstm_output_shape(W):
     model = SignalLSTM(window_size=W)
-    x = torch.randn(BATCH, W + 5)
+    x = torch.randn(BATCH, W + 4)
     out = model(x)
     assert out.shape == (BATCH, W)
 
@@ -51,7 +51,7 @@ def test_fc_save_load(tmp_path):
     model.save(path)
     model2 = FC(window_size=10)
     model2.load(path)
-    x = torch.randn(4, 15)
+    x = torch.randn(4, 14)
     torch.testing.assert_close(model(x), model2(x))
 
 
@@ -61,7 +61,7 @@ def test_rnn_save_load(tmp_path):
     model.save(path)
     model2 = SignalRNN(window_size=10)
     model2.load(path)
-    x = torch.randn(4, 15)
+    x = torch.randn(4, 14)
     torch.testing.assert_close(model(x), model2(x))
 
 
@@ -71,13 +71,13 @@ def test_lstm_save_load(tmp_path):
     model.save(path)
     model2 = SignalLSTM(window_size=10)
     model2.load(path)
-    x = torch.randn(4, 15)
+    x = torch.randn(4, 14)
     torch.testing.assert_close(model(x), model2(x))
 
 
 @pytest.mark.parametrize("W", W_SIZES)
 def test_models_no_nan(W):
-    x = torch.randn(BATCH, W + 5)
+    x = torch.randn(BATCH, W + 4)
     for model in [FC(W), SignalRNN(W), SignalLSTM(W)]:
         out = model(x)
         assert not torch.isnan(out).any()

@@ -33,7 +33,7 @@ def test_clean_s1_to_s4_are_sine(gen):
 
 
 def test_s5_is_sum_of_s1_to_s4(gen):
-    s5 = gen.clean(4)
+    s5 = gen.clean_s5()
     expected = sum(gen.clean(i) for i in range(4))
     np.testing.assert_allclose(s5, expected, rtol=1e-5)
 
@@ -51,9 +51,9 @@ def test_noisy_window_differs_from_clean(gen, config):
     assert not np.allclose(clean_win, noisy_win)
 
 
-def test_noisy_window_s5_shape(gen, config):
+def test_noisy_s5_window_shape(gen, config):
     W = config["data"]["default_window"]
-    noisy = gen.noisy_window(4, 0, W, alpha=0.1, beta=0.1)
+    noisy = gen.noisy_s5_window(0, W, alpha=0.1, beta=0.1)
     assert noisy.shape == (W,)
 
 
