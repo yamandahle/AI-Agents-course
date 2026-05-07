@@ -113,35 +113,48 @@ n_per_sig = len(val_ds.dataset) // 4
 sig_start = SIGNAL_TO_EXTRACT * n_per_sig
 
 clean_recon = np.concatenate([val_ds.dataset[sig_start + i*W][1].numpy() for i in range(N_WINS)])
-noisy_recon = np.concatenate([val_ds.dataset[sig_start + i*W][0][4:].numpy() for i in range(N_WINS)])
 
-preds = {}
-for name, res in results.items():
-    res["model"].eval()
-    p = []
+one_hot_t = torch.zeros(4); one_hot_t[SIGNAL_TO_EXTRACT] = 1.0
+
+def recon_at_noise(model, alpha, beta):
+    """Inference on fresh noisy S5 windows at a given noise level."""
+    np.random.seed(config["data"]["seed"] + 1)
+    model.eval()
+    noisy_disp, preds = [], []
     with torch.no_grad():
         for i in range(N_WINS):
-            x, _ = val_ds.dataset[sig_start + i * W]
-            p.append(res["model"](x.unsqueeze(0)).squeeze().numpy())
-    preds[name] = np.concatenate(p)
+            win = gen.noisy_s5_window(i * W, W, alpha, beta) / norms[4]
+            noisy_disp.append(win)
+            x = torch.cat([one_hot_t,
+                           torch.tensor(win, dtype=torch.float32)]).unsqueeze(0)
+            preds.append(model(x).squeeze().numpy())
+    return np.concatenate(noisy_disp), np.concatenate(preds)
 
-# ── FIGURE 3: reconstruction — one subplot per model ─────────────────────────
-fig, axes = plt.subplots(3, 1, figsize=(14, 11), sharex=True)
+# ── FIGURE 3: reconstruction — 3 models × 3 noise levels ─────────────────────
+fig, axes = plt.subplots(3, 3, figsize=(18, 11), sharex=True, sharey=True)
 fig.patch.set_facecolor(BG)
-fig.suptitle(f"Reconstruction — {NAMES[SIGNAL_TO_EXTRACT]}, Low Noise, W={W}",
-             fontsize=13, color="white")
+fig.suptitle(
+    f"Reconstruction — {NAMES[SIGNAL_TO_EXTRACT]}, W={W}  (trained on Low Noise)",
+    fontsize=13, color="white")
 
-for ax, name in zip(axes, ["FC", "RNN", "LSTM"]):
-    style(ax)
-    ax.scatter(t_wins, noisy_recon, color="gray", s=3, alpha=0.35, label="Noisy input", zorder=2)
-    ax.plot(t_wins, clean_recon, color="limegreen", lw=2, label="Clean target", zorder=4)
-    ax.plot(t_wins, preds[name], color=MCOL[name], lw=1.8, ls="--",
-            label=f"{name} prediction", zorder=3)
-    ax.set_title(f"{name}   best val MSE = {results[name]['best_val_mse']:.6f}", fontsize=11)
-    ax.set_ylabel("Amplitude")
-    ax.legend(facecolor=BG, labelcolor="white", markerscale=4)
-    ax.grid(True, alpha=0.2, color="gray")
-axes[-1].set_xlabel("Time (s)")
+for row, name in enumerate(["FC", "RNN", "LSTM"]):
+    for col, (level, nc) in enumerate(noise_levels):
+        ax = axes[row][col]
+        style(ax)
+        noisy_disp, pred = recon_at_noise(results[name]["model"], nc["alpha"], nc["beta"])
+        ax.scatter(t_wins, noisy_disp, color="gray", s=2, alpha=0.3, zorder=2)
+        ax.plot(t_wins, clean_recon, color="limegreen", lw=1.8, label="Clean target", zorder=4)
+        ax.plot(t_wins, pred, color=MCOL[name], lw=1.5, ls="--",
+                label=f"{name} pred", zorder=3)
+        if row == 0:
+            ax.set_title(f"{level.upper()} noise  (α={nc['alpha']})", fontsize=10)
+        if col == 0:
+            ax.set_ylabel(f"{name}\nAmplitude", fontsize=9)
+        if row == 2:
+            ax.set_xlabel("Time (s)")
+        ax.legend(facecolor=BG, labelcolor="white", markerscale=3, fontsize=7)
+        ax.grid(True, alpha=0.2, color="gray")
+
 plt.tight_layout()
 plt.savefig(f"outputs/figures/{SIG}_reconstruction.png", facecolor=BG)
 plt.close(); print(f"Saved: {SIG}_reconstruction.png")
