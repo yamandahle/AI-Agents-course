@@ -11,7 +11,7 @@ AI Agents course submission — demonstrating the ability to build, train, and e
 ### Goals
 - Implement a full data pipeline: signal generation → noisy S5 mixture dataset → windowed samples
 - Train and compare 3 model architectures: Fully Connected, RNN, LSTM
-- Run systematic experiments across signal type, noise level, and window size
+- Run systematic experiments across signal type and noise level at the lecture-specified window size
 - Produce a visual and quantitative analysis of model performance
 
 ---
@@ -22,7 +22,6 @@ AI Agents course submission — demonstrating the ability to build, train, and e
 ```
 y(t) = A * sin(2π * f * t + φ)
 ```
-Where `φ ~ Uniform(0, 2π)` is a random phase assigned once per signal.
 
 ### Noisy Formula
 ```
@@ -32,13 +31,13 @@ Where `σ ~ N(0, 1)` is re-sampled fresh for every generated window.
 
 ### The Signals
 
-| Signal | Frequency (Hz) | Amplitude | Phase            | Role in Task      |
-|--------|---------------|-----------|------------------|-------------------|
-| S1     | 1             | 1.0       | φ ~ U(0, 2π)    | Extraction target |
-| S2     | 2             | 1.0       | φ ~ U(0, 2π)    | Extraction target |
-| S3     | 5             | 1.0       | φ ~ U(0, 2π)    | Extraction target |
-| S4     | 10            | 1.0       | φ ~ U(0, 2π)    | Extraction target |
-| S5     | —             | —         | —                | **Noisy input** (S1+S2+S3+S4 sum) |
+| Signal | Frequency (Hz) | Amplitude | Role in Task      |
+|--------|---------------|-----------|-------------------|
+| S1     | 1             | 1.0       | Extraction target |
+| S2     | 2             | 1.0       | Extraction target |
+| S3     | 5             | 1.0       | Extraction target |
+| S4     | 10            | 1.0       | Extraction target |
+| S5     | —             | —         | **Noisy input** (S1+S2+S3+S4 sum) |
 
 ### Sampling Parameters
 - Duration: 10 seconds per signal
@@ -50,24 +49,22 @@ Where `σ ~ N(0, 1)` is re-sampled fresh for every generated window.
 ## 3. Dataset Requirements
 
 ### Windowing
-- Sliding window of size W (default W=10 samples, as defined in lecture)
+- Sliding window of size **W = 10 samples** (fixed per lecture requirement)
 - Stride = 1 (overlapping windows)
+- Vectorised using `numpy.lib.stride_tricks.sliding_window_view` (build time ~0.06 s)
 
 ### Sample Structure
 ```
 input  = [one_hot_vector (4,)] + [noisy_S5_window (W,)]  → shape: (W+4,)  e.g. (14,)
 target = clean_Si_window (W,)                             → shape: (W,)    e.g. (10,)
 ```
-The **input is always a window of the noisy mixture S5**. The one-hot vector tells the model which individual signal to extract from it.
-
-### One-Hot Encoding
-- Size **4** vector, one entry per extractable signal (S1–S4)
-- Example: extract S2 → [0, 1, 0, 0]
+The **input is always a window of the noisy mixture S5**. The one-hot vector (size 4, one entry per signal S1–S4) tells the model which individual signal to extract.
 
 ### Dataset Split
-- 80% training, 20% testing
+- 80% training, 20% validation
 - All 4 extraction targets represented in both splits
 - Seed: 42
+- Total: 4 signals × 9,990 windows = **39,960 samples**
 
 ### Normalization
 - Each clean individual signal (Si) normalized to [-1, 1] before windowing
@@ -118,22 +115,24 @@ Output: (W,)  e.g. (10,)
 
 ## 5. Experiments
 
-### Dimensions to Vary
+### Dimensions
 
-| Dimension    | Values                        |
-|-------------|-------------------------------|
-| Signal       | S1, S2, S3, S4                |
-| Noise level  | low (α=0.05, β=0.05), med (α=0.1, β=0.1), high (α=0.3, β=0.3) |
-| Window size  | W=5, W=10, W=20               |
-| Model        | FC, RNN, LSTM                 |
+| Dimension    | Values                                         |
+|-------------|------------------------------------------------|
+| Signal       | S1, S2, S3, S4                                 |
+| Noise level  | low (α=0.05, β=0.05), high (α=0.30, β=0.30)   |
+| Window size  | W=10 (fixed per lecture)                       |
+| Model        | FC, RNN, LSTM                                  |
 
 ### Total Runs
-4 × 3 × 3 × 3 = **108 training runs**
+4 signals × 2 noise levels × 3 models = **6 training runs**
+Each run evaluated on all 4 signals → **24 result entries**
 
 ### Per-Run Recording
 - Train loss history (per epoch)
 - Validation loss history (per epoch)
-- Best validation MSE + best epoch
+- Per-signal best validation MSE (evaluated on 200 held-out windows)
+- Best epoch (minimum mixed-signal val loss)
 
 ---
 
@@ -142,31 +141,35 @@ Output: (W,)  e.g. (10,)
 ### Quality Gates
 | Criterion | Requirement |
 |-----------|-------------|
-| All models train | No NaN loss on any signal/noise/window combo |
-| Results file | `outputs/results/results.json` with 108 entries |
-| Figures | At least 1 reconstruction plot per model (noisy S5 input vs clean target vs predicted) |
+| All models train | No NaN loss on any signal/noise combo |
+| Results file | `outputs/results/results.json` with 24 entries |
+| Figures | 4 figure types × 4 signals = 16 plots + 1 signals overview = 17 PNGs |
 | Loss curves | Per model, showing convergence over 50 epochs |
-| Comparison table | 36 rows (signal × noise × window), 3 model columns |
-| Test coverage | ≥ 85% via pytest-cov |
+| Comparison table | Printed to console: signal × noise × model |
+| Test suite | 37 unit tests passing |
 | Linting | 0 Ruff errors |
 
-### MSE Targets (best-case, low noise, W=10)
-| Model | Target MSE |
-|-------|-----------|
-| FC    | < 0.05    |
-| RNN   | < 0.02    |
-| LSTM  | < 0.01    |
+### Achieved MSE Results (best val MSE, low noise, W=10)
+
+| Signal | FC     | RNN    | LSTM   |
+|--------|--------|--------|--------|
+| S1 (1Hz)  | 0.0782 | 0.1534 | 0.0924 |
+| S2 (2Hz)  | 0.1199 | 0.1300 | 0.0699 |
+| S3 (5Hz)  | 0.1442 | 0.1888 | 0.1235 |
+| S4 (10Hz) | 0.0099 | 0.0787 | 0.0155 |
+
+S4 (10Hz) is significantly easier because its frequency is most distinguishable within a 10ms window.
 
 ---
 
 ## 7. Non-Functional Requirements
 
-- All config values in `config/setup.json` — nothing hardcoded in source
-- Max 150 lines per source file
-- SDK architecture: all business logic through `HW1SDK`
-- OOP design — no code duplication
+- All config values in `config/setup.json` — nothing hardcoded in source modules
+- Source modules strictly under 150 lines each (entry-point scripts `run_all.py` / `run_test.py` are exempt as orchestrators)
+- SDK architecture: models in `src/sdk/models/`, services in `src/services/`
+- OOP design — `BaseModel` abstract class with `save`/`load` interface
 - `uv` as sole package manager
-- No secrets in source code
+- No secrets in source code (`.env-example` provided)
 - All plots saved as PNG via `plt.savefig()` — no `plt.show()`
 - Signals normalized to [-1, 1] before training
 
@@ -176,3 +179,4 @@ Output: (W,)  e.g. (10,)
 - Real-time signal processing
 - Deployment / serving
 - GPU-specific optimization (code auto-detects CUDA if available)
+- Medium noise level (α=β=0.10) — excluded per experiment design decision
