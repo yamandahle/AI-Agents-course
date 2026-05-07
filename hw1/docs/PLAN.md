@@ -5,7 +5,7 @@
 - **File Limit:** Every source file MUST be under 150 lines
 - **Context Window:** 10-sample sliding window (default W=10, experiments: W=5, W=10, W=20)
 - **Package Manager:** `uv` only — no pip
-- **Config:** All parameters in `configs/*.json` — nothing hardcoded in source
+- **Config:** All parameters in `config/setup.json` — nothing hardcoded in source
 - **Seed:** 42 for all random operations
 
 ---
@@ -34,11 +34,8 @@ hw1/
 ├── .python-version              (3.11)
 ├── .gitignore
 │
-├── configs/                     (all parameters — nothing hardcoded)
-│   ├── signals.json             (frequencies, amplitude, phase, duration, sample_rate)
-│   ├── noise.json               (low/med/high alpha+beta presets)
-│   ├── training.json            (epochs, batch_size, lr, window_sizes, train_ratio, seed)
-│   └── models.json              (hidden_size, num_layers, fc_hidden)
+├── config/
+│   └── setup.json  ✅           (all parameters: signals, noise, data, models, training)
 │
 ├── docs/
 │   ├── PRD.md   ✅
@@ -100,7 +97,7 @@ External Consumers (tests / main.py / notebooks)
     lstm, base)  erator              _runner
                    |                    |
                    v                    v
-              configs/*.json    outputs/results/
+           config/setup.json    outputs/results/
                                   results.json
 ```
 
@@ -151,30 +148,21 @@ All saved to `outputs/results/results.json`.
 
 ---
 
-## 7. Configuration Files
+## 7. Configuration File
 
-**configs/signals.json**
+**config/setup.json** (single file, all parameters)
 ```json
-{ "frequencies": [1, 2, 5, 10], "amplitude": 1.0, "phase": 0,
-  "duration": 10, "sample_rate": 1000 }
-```
-
-**configs/noise.json**
-```json
-{ "low":  {"alpha": 0.05, "beta": 0.05},
-  "med":  {"alpha": 0.1,  "beta": 0.1},
-  "high": {"alpha": 0.3,  "beta": 0.3} }
-```
-
-**configs/training.json**
-```json
-{ "epochs": 50, "batch_size": 64, "lr": 0.001,
-  "window_sizes": [5, 10, 20], "train_ratio": 0.8, "seed": 42 }
-```
-
-**configs/models.json**
-```json
-{ "hidden_size": 128, "num_layers": 2, "fc_hidden": 256 }
+{
+  "signal":   { "frequencies": [1,2,5,10], "amplitude": 1.0, "phase": 0,
+                "duration": 10, "sample_rate": 1000 },
+  "noise":    { "low":  {"alpha": 0.05, "beta": 0.05},
+                "med":  {"alpha": 0.1,  "beta": 0.1},
+                "high": {"alpha": 0.3,  "beta": 0.3} },
+  "data":     { "window_sizes": [5,10,20], "default_window": 10,
+                "train_ratio": 0.8, "seed": 42 },
+  "models":   { "hidden_size": 128, "num_layers": 2, "fc_hidden": 256 },
+  "training": { "epochs": 50, "batch_size": 64, "lr": 0.001 }
+}
 ```
 
 ---
@@ -182,7 +170,7 @@ All saved to `outputs/results/results.json`.
 ## 8. Implementation Phases
 
 ### Phase 1 — Infrastructure & Config
-- Create `configs/*.json` (4 files)
+- Edit `config/setup.json` with correct values ✅
 - Create `.gitignore`, `outputs/.gitkeep`
 - Install all dependencies via `uv add`
 
