@@ -117,7 +117,7 @@ uv run python run_all.py
 ```
 
 This single command runs the full pipeline sequentially:
-1. Trains all 6 model combinations (2 noise levels × 3 architectures), 50 epochs each
+1. Trains all 6 model combinations (2 noise levels × 3 architectures), 100 epochs each
 2. Saves each trained model to `outputs/models/`
 3. Evaluates per-signal MSE on 200 windows
 4. Saves `outputs/results/results.json` (24 entries)
@@ -316,6 +316,14 @@ Values are **per-signal validation MSE** — MSE computed on 200 held-out window
 
 Bold = best model for that signal/noise combination.
 
+### Model Winner Heatmap
+
+![Winner heatmap](outputs/figures/winner_heatmap.png)
+
+The heatmap summarises which architecture wins each signal/noise cell at a glance.
+**FC** (blue) dominates at high noise and for S1/S4. **LSTM** (magenta) wins most low-noise mid-frequency cells (S2, S3). **RNN** (orange) does not win any cell — it is always beaten by FC or LSTM.
+This single figure replaces four separate per-signal bar charts and makes the noise-sensitivity pattern immediately visible.
+
 > **Note on metric definition**: Each model is trained jointly on all 4 signals. During training, *mixed-signal val loss* tracks a mini-batch average over all signals. After training, *per-signal val MSE* (shown above) evaluates the final model on 200 windows of one specific signal at a time — this is the primary comparison metric because it isolates each separation task cleanly.
 
 ---
@@ -374,6 +382,35 @@ Noise roughly **doubles MSE** from low to high for FC and LSTM, but has a more s
 
 RNN degrades less in relative terms because it was already performing poorly at low noise — there is less room to fall. LSTM and FC degrade similarly, but LSTM loses its advantage at high noise.
 
+### 8.6 FFT Spectral Analysis — What the Frequency Domain Reveals
+
+The FFT plots (`Sx_fft_comparison.png`) confirm that models are genuinely performing **source separation**, not just smoothing the input.
+
+![S4 FFT comparison](outputs/figures/S4_fft_comparison.png)
+
+Key observations from the frequency domain:
+- **Clean target** (green): a single sharp spike at the signal's frequency (e.g., 10Hz for S4). This is the ideal output.
+- **Noisy S5 input** (red dashed): energy spread across all four frequencies (1, 2, 5, 10Hz), with added broadband noise from amplitude/phase jitter.
+- **FC prediction** (blue dash-dot): a sharp peak at the correct frequency, closely matching the clean target. FC effectively learns to cancel the other three frequencies.
+- **LSTM prediction** (magenta dash-dot): similarly sharp peak, often slightly cleaner than FC on mid-range signals (S2, S3) where temporal periodicity matters.
+- **RNN prediction** (orange dash-dot): peak is at the correct frequency but broader and shorter — the model partially suppresses unwanted frequencies but retains more residual energy, confirming its weaker separation.
+
+The FFT test is a stricter quality check than MSE alone: a model could achieve low MSE by outputting a flat zero signal (which would have zero FFT energy everywhere). A sharp FFT peak at the target frequency proves the model reconstructed the waveform's *oscillation*, not just its *mean*.
+
+### 8.7 RNN Epochs Experiment — More Training Helps, But Not Enough
+
+![RNN epochs comparison](outputs/figures/rnn_epochs_comparison.png)
+
+This experiment trains a fresh RNN for 100 epochs and compares its loss curve against FC and LSTM (both also trained for 100 epochs).
+
+Key findings:
+- **RNN-100ep** achieves lower loss than RNN at epoch 50, confirming it has not converged by the halfway point — it is still learning.
+- **LSTM converges in ~20–30 epochs** and plateaus far below the RNN at 100 epochs. LSTM's gating mechanism gives it a much steeper initial descent.
+- **FC** converges quickly and plateaus at a competitive level. Its loss curve is the flattest after epoch ~40, meaning more epochs would not help FC further.
+- The **gap between RNN-100ep and LSTM** is still large. This is the critical finding: the problem with vanilla RNN is not insufficient training time — it is the architectural limitation of vanishing gradients. No amount of extra epochs will give RNN the cell-state memory that LSTM has.
+
+**Conclusion**: if you only have budget for 50 epochs, LSTM is the clear choice. If you have budget for 200+ epochs, RNN can close some of the gap, but LSTM remains superior.
+
 ---
 
 ## 9. Reconstruction Figures
@@ -392,7 +429,9 @@ RNN degrades less in relative terms because it was already performing poorly at 
 
 *FC converges fastest and plateaus earliest. LSTM converges more slowly but reaches a lower floor. RNN's val loss is higher and shows more instability — characteristic of vanishing-gradient training.*
 
-![S1 MSE bar](outputs/figures/S1_mse_bar.png)
+![S1 FFT comparison](outputs/figures/S1_fft_comparison.png)
+
+*All three models recover the 1Hz spike from the noisy mixture. FC and LSTM produce tight peaks; RNN's peak is slightly broader, indicating residual energy at other frequencies.*
 
 ---
 
@@ -408,7 +447,9 @@ RNN degrades less in relative terms because it was already performing poorly at 
 
 ![S2 loss curves](outputs/figures/S2_loss_curves.png)
 
-![S2 MSE bar](outputs/figures/S2_mse_bar.png)
+![S2 FFT comparison](outputs/figures/S2_fft_comparison.png)
+
+*LSTM's FFT peak at 2Hz is the sharpest of the three models, matching its lowest MSE on S2.*
 
 ---
 
@@ -424,7 +465,7 @@ RNN degrades less in relative terms because it was already performing poorly at 
 
 ![S3 loss curves](outputs/figures/S3_loss_curves.png)
 
-![S3 MSE bar](outputs/figures/S3_mse_bar.png)
+![S3 FFT comparison](outputs/figures/S3_fft_comparison.png)
 
 ---
 
@@ -442,7 +483,9 @@ RNN degrades less in relative terms because it was already performing poorly at 
 
 *FC and LSTM converge sharply within the first 20 epochs. RNN converges much more slowly and plateaus higher.*
 
-![S4 MSE bar](outputs/figures/S4_mse_bar.png)
+![S4 FFT comparison](outputs/figures/S4_fft_comparison.png)
+
+*S4 produces the cleanest FFT result of all signals. FC's peak at 10Hz is nearly indistinguishable from the clean target — consistent with its MSE of 0.0099.*
 
 ---
 
@@ -498,21 +541,24 @@ uv run ruff check src/
 
 ### Test Coverage
 
-The project includes **37 unit tests** across three test modules:
+The project includes **55 unit tests** across five test modules with **97% line coverage**:
 
 | Module | Tests | What is covered |
 |--------|-------|----------------|
-| `tests/unit/test_signals.py` | 13 | `SignalGenerator`, `SineDataset`, `build_datasets` |
-| `tests/unit/test_models.py`  | 18 | FC / RNN / LSTM output shapes, save/load, no-NaN |
-| `tests/unit/test_trainer.py` |  6 | training loop keys, loss length, loss decrease, best epoch |
+| `tests/unit/test_signals.py`           | 13 | `SignalGenerator`, `SineDataset`, `build_datasets` |
+| `tests/unit/test_models.py`            | 18 | FC / RNN / LSTM output shapes, save/load, no-NaN |
+| `tests/unit/test_trainer.py`           |  6 | training loop keys, loss length, loss decrease, best epoch |
+| `tests/unit/test_experiment_runner.py` | 10 | `ExperimentResult`, `save_results`, `_per_signal_mse`, `run_experiments` (mocked) |
+| `tests/unit/test_visualizer.py`        |  8 | `ResearchVisualizer` all methods, `hw1.hello()` |
 
-All 37 tests pass. Code quality: **0 Ruff errors**.
+All 55 tests pass. Code quality: **0 Ruff errors**.
 
 ### Quality Gates
 
 | Gate | Status |
 |------|--------|
-| All 37 unit tests pass | PASS |
+| All 55 unit tests pass | PASS |
+| Test coverage ≥85% (actual: 97%) | PASS |
 | Ruff linting (0 errors) | PASS |
 | No hardcoded hyperparameters | PASS |
 | `uv` only (no pip install) | PASS |
@@ -528,30 +574,37 @@ hw1/
 ├── src/
 │   ├── sdk/
 │   │   └── models/
-│   │       ├── base.py        # BaseModel: abstract save/load interface
-│   │       ├── fc.py          # Fully-connected model
-│   │       ├── rnn.py         # Vanilla RNN model
-│   │       └── lstm.py        # LSTM model
+│   │       ├── base.py           # BaseModel: abstract save/load interface
+│   │       ├── fc.py             # Fully-connected model
+│   │       ├── rnn.py            # Vanilla RNN model
+│   │       └── lstm.py           # LSTM model
 │   └── services/
-│       ├── data_generator.py  # Vectorised dataset builder (SignalGenerator + SineDataset)
-│       ├── train.py           # Training loop (Adam + MSE + best-epoch tracking)
-│       ├── experiment_runner.py # ExperimentResult dataclass + save_results
-│       └── research_visualizer.py # Legacy visualizer (research use)
+│       ├── data_generator.py     # Vectorised dataset builder (SignalGenerator + SineDataset)
+│       ├── train.py              # Training loop (Adam + MSE + best-epoch tracking)
+│       ├── experiment_runner.py  # ExperimentResult dataclass + save_results
+│       ├── figure_plotter.py     # Per-signal figure helpers (clean/noisy, recon, FFT, heatmap)
+│       └── research_visualizer.py # General-purpose visualizer
 ├── tests/
 │   ├── unit/
-│   │   ├── test_signals.py    # 13 tests: data generation and dataset
-│   │   ├── test_models.py     # 18 tests: model shapes, save/load, NaN
-│   │   └── test_trainer.py    #  6 tests: training loop correctness
+│   │   ├── test_signals.py           # 13 tests: data generation and dataset
+│   │   ├── test_models.py            # 18 tests: model shapes, save/load, NaN
+│   │   ├── test_trainer.py           #  6 tests: training loop correctness
+│   │   ├── test_experiment_runner.py # 10 tests: ExperimentResult, save, MSE eval
+│   │   └── test_visualizer.py        #  8 tests: ResearchVisualizer methods
 │   └── integration/           # Integration test stubs
 ├── docs/
 │   ├── PRD.md                 # Product requirements and success criteria
 │   ├── PLAN.md                # Architecture, SDK diagram, data flow, ADRs
-│   └── TODO.md                # Phased task checklist
+│   ├── TODO.md                # Phased task checklist
+│   └── PROMPT_LOG.md          # AI prompt engineering log (Section 8.3 compliance)
 ├── outputs/
-│   ├── figures/               # 17 PNG plots (generated by run_all.py)
+│   ├── figures/               # 19 PNG plots (generated by run_all.py)
+│   ├── models/                # Trained model weights (.pt files)
 │   └── results/
 │       └── results.json       # 24 experiment results
 ├── run_all.py                 # Single entry point: train + evaluate + save + plot
+├── run_figures.py             # Regenerate all 19 figures without retraining (~10 s)
+├── run_rnn_epochs.py          # RNN 50 vs 100 epochs comparison experiment
 ├── run_test.py                # Single-signal quick demo
 ├── pyproject.toml             # uv-managed dependencies
 └── .env-example               # Environment variable template
