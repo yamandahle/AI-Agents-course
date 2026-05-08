@@ -14,6 +14,7 @@ class SignalRNN(BaseModel):
     """
 
     def __init__(self, window_size: int, hidden_size: int = 128, num_layers: int = 2):
+        """Build RNN with one-hot projection to h0; output size = window_size."""
         super().__init__()
         self.num_layers = num_layers
         self.h0_proj = nn.Linear(NUM_SIGNALS, hidden_size)
@@ -21,6 +22,7 @@ class SignalRNN(BaseModel):
         self.fc = nn.Linear(hidden_size, window_size)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """Encode one-hot into h0, run RNN over noisy window, decode last hidden state."""
         one_hot = x[:, :NUM_SIGNALS]                # (batch, 4)
         window = x[:, NUM_SIGNALS:].unsqueeze(-1)   # (batch, W, 1)
 

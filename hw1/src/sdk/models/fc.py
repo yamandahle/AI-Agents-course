@@ -12,6 +12,7 @@ class FC(BaseModel):
     """
 
     def __init__(self, window_size: int, hidden: int = 256):
+        """Build three-layer MLP; input_size = window_size + 4 one-hot features."""
         super().__init__()
         input_size = window_size + NUM_SIGNALS
         self.net = nn.Sequential(
@@ -23,4 +24,5 @@ class FC(BaseModel):
         )
 
     def forward(self, x):
+        """Map flat input vector (W+4,) → clean signal window (W,)."""
         return self.net(x)

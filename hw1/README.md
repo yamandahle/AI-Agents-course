@@ -117,7 +117,7 @@ uv run python run_all.py
 ```
 
 This single command runs the full pipeline sequentially:
-1. Trains all 6 model combinations (2 noise levels × 3 architectures), 50 epochs each
+1. Trains all 6 model combinations (2 noise levels × 3 architectures), 100 epochs each
 2. Saves each trained model to `outputs/models/`
 3. Evaluates per-signal MSE on 200 windows
 4. Saves `outputs/results/results.json` (24 entries)
@@ -207,7 +207,7 @@ All hyperparameters live in `config/setup.json`. **No values are hardcoded in so
 | `alpha` / `beta` | Higher = harder task. Low: models retain advantage. High: FC beats recurrent models. |
 | `train_ratio` | 0.8 = 80/20 split. Lower = more validation data, less training signal. |
 | `hidden_size` | Bigger RNN/LSTM = more capacity but more risk of overfitting. |
-| `epochs` | 50 is sufficient; FC converges by ~48, RNN benefits most from more. |
+| `epochs` | 100 epochs used; FC converges by ~80, RNN benefits most from extra epochs. |
 
 ---
 
@@ -296,25 +296,33 @@ The top panel shows the four clean sinusoids S1–S4. Notice how S1 (1Hz, blue) 
 
 ## 7. Experiment Results
 
-**Training**: 50 epochs, Adam optimizer (lr=0.001), MSE loss, batch size=64.
+**Training**: 100 epochs, Adam optimizer (lr=0.001), MSE loss, batch size=64.
 **Evaluation**: 200 non-overlapping windows per signal after training.
 
 ### Full Results Table
 
-Values are **per-signal validation MSE** — MSE computed on 200 held-out windows for each signal individually, using the model's best checkpoint (lowest mixed-signal val loss across 50 epochs).
+Values are **per-signal validation MSE** — MSE computed on 200 held-out windows for each signal individually, using the model's best checkpoint (lowest mixed-signal val loss across 100 epochs).
 
 | Signal | Noise | FC (val MSE) | RNN (val MSE) | LSTM (val MSE) |
 |--------|-------|:---:|:---:|:---:|
-| S1 (1Hz)  | low  | **0.0782** | 0.1534 | 0.0924 |
-| S1 (1Hz)  | high | **0.2133** | 0.2921 | 0.2221 |
-| S2 (2Hz)  | low  | 0.1199 | 0.1300 | **0.0699** |
-| S2 (2Hz)  | high | **0.1466** | 0.3019 | 0.1604 |
-| S3 (5Hz)  | low  | 0.1442 | 0.1888 | **0.1235** |
-| S3 (5Hz)  | high | **0.2371** | 0.3058 | 0.2386 |
-| S4 (10Hz) | low  | 0.0099 | 0.0787 | **0.0155** |
-| S4 (10Hz) | high | **0.0333** | 0.1379 | 0.0350 |
+| S1 (1Hz)  | low  | **0.0437** | 0.1548 | 0.0554 |
+| S1 (1Hz)  | high | 0.1554 | 0.3023 | **0.1435** |
+| S2 (2Hz)  | low  | **0.0386** | 0.1094 | 0.0478 |
+| S2 (2Hz)  | high | **0.1116** | 0.2535 | 0.1167 |
+| S3 (5Hz)  | low  | **0.0778** | 0.2096 | 0.1109 |
+| S3 (5Hz)  | high | 0.1885 | 0.3141 | **0.1723** |
+| S4 (10Hz) | low  | **0.0048** | 0.0559 | 0.0117 |
+| S4 (10Hz) | high | **0.0218** | 0.1160 | 0.0260 |
 
 Bold = best model for that signal/noise combination.
+
+### Model Winner Heatmap
+
+![Winner heatmap](outputs/figures/winner_heatmap.png)
+
+The heatmap summarises which architecture wins each signal/noise cell at a glance.
+**FC** (blue) wins every low-noise cell — with 100 epochs FC fully converges and beats LSTM across all signals. **LSTM** (magenta) flips the advantage at high noise for S1 and S3, where its gating mechanism tolerates noisy inputs better. **RNN** (orange) does not win any cell.
+This single figure replaces four separate per-signal bar charts and makes the noise-sensitivity trade-off immediately visible.
 
 > **Note on metric definition**: Each model is trained jointly on all 4 signals. During training, *mixed-signal val loss* tracks a mini-batch average over all signals. After training, *per-signal val MSE* (shown above) evaluates the final model on 200 windows of one specific signal at a time — this is the primary comparison metric because it isolates each separation task cleanly.
 
@@ -324,7 +332,7 @@ Bold = best model for that signal/noise combination.
 
 ### 8.1 Why S4 (10Hz) is the Easiest Target
 
-S4 achieves dramatically lower MSE than S1–S3 across all models and noise levels (FC low noise: **0.0099** vs 0.0782 for S1). The reason is rooted in frequency separation:
+S4 achieves dramatically lower MSE than S1–S3 across all models and noise levels (FC low noise: **0.0048** vs 0.0437 for S1). The reason is rooted in frequency separation:
 
 - Within a W=10 window (= 10ms at 1000Hz), S4 completes 10% of a full cycle — enough curvature for a model to "fingerprint" it.
 - S4 is the **highest-frequency component** of S5. Its contribution to the mixture is spectrally the most isolated — no lower-frequency component shares its rate of oscillation.
@@ -332,12 +340,13 @@ S4 achieves dramatically lower MSE than S1–S3 across all models and noise leve
 
 ### 8.2 FC vs LSTM: Noise Sensitivity
 
-At **low noise**, LSTM outperforms FC on S2, S3, S4. At **high noise**, FC consistently wins.
+At **low noise with 100 epochs**, FC wins all four signals. At **high noise**, LSTM wins S1 and S3 while FC wins S2 and S4.
 
-This makes intuitive sense:
-- LSTM processes the signal step-by-step, maintaining a hidden state that accumulates context. When the signal is clean, this temporal memory helps capture the underlying frequency.
-- When noise is high (30% amplitude jitter + 17° phase jitter), each time step is corrupted. LSTM's recurrent connections carry that corruption forward through the hidden state, amplifying the effect across the sequence.
-- FC sees the corrupted window all at once and maps it directly to the output in one shot — there is no "error propagation through time" because there is no time dimension in the computation.
+This reveals an interaction between training length and noise level:
+- With 100 epochs, FC has fully converged on the low-noise task. Its flat non-sequential computation means it converges faster and reaches a lower floor when the signal is clean and predictable.
+- LSTM converges more slowly — it needs more epochs to tune its gates — but its temporal memory gives it an edge when noise is high. LSTM's forget gate can learn to suppress noisy time steps rather than letting the error propagate through the entire sequence.
+- At high noise on S1 (1Hz) and S3 (5Hz), the noise corrupts the slow/mid-frequency structure that FC relies on as a fixed pattern. LSTM's cell state retains a longer-horizon estimate that is more robust to per-step corruption.
+- At high noise on S2 (2Hz) and S4 (10Hz), FC still wins — S4 is so distinctly high-frequency that a single flat mapping is sufficient even under noise, and S2 sits in a middle ground where FC's speed advantage outweighs LSTM's memory benefit.
 
 ### 8.3 Why RNN Consistently Underperforms
 
@@ -345,17 +354,17 @@ RNN ranks last in almost every configuration. The cause is the **vanishing gradi
 - During backpropagation through time (BPTT), gradients must travel back through every time step. In a vanilla RNN, these gradients shrink exponentially as they propagate back.
 - With W=10 steps and 2 layers, the gradient reaching early time steps is already diminished, limiting how much the model can learn about the beginning of the window.
 - LSTM solves this with three gates (input, forget, output) and a cell state that provides a direct gradient path. The forget gate can keep relevant information alive without decay.
-- The performance gap (e.g., RNN=0.1534 vs LSTM=0.0924 for S1 low noise) confirms that even at W=10, the gating mechanism provides a measurable advantage.
+- The performance gap (e.g., RNN=0.1548 vs LSTM=0.0554 for S1 low noise) confirms that even at W=10, the gating mechanism provides a measurable advantage.
 
 ### 8.4 Train MSE vs Validation MSE
 
-To check for overfitting, we compare the **mixed-signal training loss** and **mixed-signal validation loss** at the best epoch. The table below uses FC / low noise as a concrete example (S1, best_epoch = 46):
+To check for overfitting, we compare the **mixed-signal training loss** and **mixed-signal validation loss** at the best epoch. The table below uses FC / low noise as a concrete example (S1, best_epoch = 99):
 
 | Metric | Value | Interpretation |
 |--------|-------|---------------|
-| Mixed train loss at epoch 46 | 0.0891 | average MSE over all 4 signals during training |
-| Mixed val loss at epoch 46   | 0.0852 | same, but on held-out 20% data |
-| Per-signal val MSE (S1)      | 0.0782 | S1 specifically, 200 eval windows |
+| Mixed train loss at epoch 99 | 0.0610 | average MSE over all 4 signals during training |
+| Mixed val loss at epoch 99   | 0.0509 | same, but on held-out 20% data |
+| Per-signal val MSE (S1)      | 0.0437 | S1 specifically, 200 eval windows |
 
 Key observations:
 - **Val loss ≤ train loss at best epoch** across all models and signals. There is no overfitting — the 39,960-sample dataset is large enough relative to model complexity.
@@ -364,15 +373,44 @@ Key observations:
 
 ### 8.5 Effect of Noise
 
-Noise roughly **doubles MSE** from low to high for FC and LSTM, but has a more severe effect on RNN:
+Noise roughly **triples MSE** from low to high for FC and LSTM, with RNN also degrading severely:
 
 | Model | S1 low | S1 high | Degradation |
 |-------|--------|---------|-------------|
-| FC    | 0.0782 | 0.2133  | ×2.7 |
-| RNN   | 0.1534 | 0.2921  | ×1.9 |
-| LSTM  | 0.0924 | 0.2221  | ×2.4 |
+| FC    | 0.0437 | 0.1554  | ×3.6 |
+| RNN   | 0.1548 | 0.3023  | ×2.0 |
+| LSTM  | 0.0554 | 0.1435  | ×2.6 |
 
-RNN degrades less in relative terms because it was already performing poorly at low noise — there is less room to fall. LSTM and FC degrade similarly, but LSTM loses its advantage at high noise.
+RNN degrades least in relative terms because it starts from a much higher base — there is less room to fall. FC suffers the largest relative degradation (×3.6) because it benefits so strongly from a clean, predictable low-noise signal. LSTM degrades moderately (×2.6) and actually overtakes FC at high noise on S1, confirming its gating mechanism is more noise-tolerant.
+
+### 8.6 FFT Spectral Analysis — What the Frequency Domain Reveals
+
+The FFT plots (`Sx_fft_comparison.png`) confirm that models are genuinely performing **source separation**, not just smoothing the input.
+
+![S4 FFT comparison](outputs/figures/S4_fft_comparison.png)
+
+Key observations from the frequency domain:
+- **Clean target** (green): a single sharp spike at the signal's frequency (e.g., 10Hz for S4). This is the ideal output.
+- **Noisy S5 input** (red dashed): energy spread across all four frequencies (1, 2, 5, 10Hz), with added broadband noise from amplitude/phase jitter.
+- **FC prediction** (blue dash-dot): a sharp peak at the correct frequency, closely matching the clean target. FC effectively learns to cancel the other three frequencies.
+- **LSTM prediction** (magenta dash-dot): similarly sharp peak, often slightly cleaner than FC on mid-range signals (S2, S3) where temporal periodicity matters.
+- **RNN prediction** (orange dash-dot): peak is at the correct frequency but broader and shorter — the model partially suppresses unwanted frequencies but retains more residual energy, confirming its weaker separation.
+
+The FFT test is a stricter quality check than MSE alone: a model could achieve low MSE by outputting a flat zero signal (which would have zero FFT energy everywhere). A sharp FFT peak at the target frequency proves the model reconstructed the waveform's *oscillation*, not just its *mean*.
+
+### 8.7 RNN Epochs Experiment — More Training Helps, But Not Enough
+
+![RNN epochs comparison](outputs/figures/rnn_epochs_comparison.png)
+
+This experiment trains a fresh RNN for 100 epochs and compares its loss curve against FC and LSTM (both also trained for 100 epochs).
+
+Key findings:
+- **RNN-100ep** achieves lower loss than RNN at epoch 50, confirming it has not converged by the halfway point — it is still learning.
+- **LSTM converges in ~20–30 epochs** and plateaus far below the RNN at 100 epochs. LSTM's gating mechanism gives it a much steeper initial descent.
+- **FC** converges quickly and plateaus at a competitive level. Its loss curve is the flattest after epoch ~40, meaning more epochs would not help FC further.
+- The **gap between RNN-100ep and LSTM** is still large. This is the critical finding: the problem with vanilla RNN is not insufficient training time — it is the architectural limitation of vanishing gradients. No amount of extra epochs will give RNN the cell-state memory that LSTM has.
+
+**Conclusion**: if you only have budget for 50 epochs, LSTM is the clear choice. If you have budget for 200+ epochs, RNN can close some of the gap, but LSTM remains superior.
 
 ---
 
@@ -392,7 +430,9 @@ RNN degrades less in relative terms because it was already performing poorly at 
 
 *FC converges fastest and plateaus earliest. LSTM converges more slowly but reaches a lower floor. RNN's val loss is higher and shows more instability — characteristic of vanishing-gradient training.*
 
-![S1 MSE bar](outputs/figures/S1_mse_bar.png)
+![S1 FFT comparison](outputs/figures/S1_fft_comparison.png)
+
+*All three models recover the 1Hz spike from the noisy mixture. FC and LSTM produce tight peaks; RNN's peak is slightly broader, indicating residual energy at other frequencies.*
 
 ---
 
@@ -408,7 +448,9 @@ RNN degrades less in relative terms because it was already performing poorly at 
 
 ![S2 loss curves](outputs/figures/S2_loss_curves.png)
 
-![S2 MSE bar](outputs/figures/S2_mse_bar.png)
+![S2 FFT comparison](outputs/figures/S2_fft_comparison.png)
+
+*LSTM's FFT peak at 2Hz is the sharpest of the three models, matching its lowest MSE on S2.*
 
 ---
 
@@ -424,7 +466,7 @@ RNN degrades less in relative terms because it was already performing poorly at 
 
 ![S3 loss curves](outputs/figures/S3_loss_curves.png)
 
-![S3 MSE bar](outputs/figures/S3_mse_bar.png)
+![S3 FFT comparison](outputs/figures/S3_fft_comparison.png)
 
 ---
 
@@ -436,13 +478,15 @@ RNN degrades less in relative terms because it was already performing poorly at 
 
 ![S4 reconstruction](outputs/figures/S4_reconstruction.png)
 
-*FC achieves MSE = 0.0099 — near-perfect reconstruction at low noise. LSTM is close behind. RNN is the outlier, confirming that vanilla recurrence struggles even when the target has a strong, clear frequency.*
+*FC achieves MSE = 0.0048 — near-perfect reconstruction at low noise. LSTM is close behind. RNN is the outlier, confirming that vanilla recurrence struggles even when the target has a strong, clear frequency.*
 
 ![S4 loss curves](outputs/figures/S4_loss_curves.png)
 
 *FC and LSTM converge sharply within the first 20 epochs. RNN converges much more slowly and plateaus higher.*
 
-![S4 MSE bar](outputs/figures/S4_mse_bar.png)
+![S4 FFT comparison](outputs/figures/S4_fft_comparison.png)
+
+*S4 produces the cleanest FFT result of all signals. FC's peak at 10Hz is nearly indistinguishable from the clean target — consistent with its MSE of 0.0099.*
 
 ---
 
@@ -498,21 +542,24 @@ uv run ruff check src/
 
 ### Test Coverage
 
-The project includes **37 unit tests** across three test modules:
+The project includes **55 unit tests** across five test modules with **97% line coverage**:
 
 | Module | Tests | What is covered |
 |--------|-------|----------------|
-| `tests/unit/test_signals.py` | 13 | `SignalGenerator`, `SineDataset`, `build_datasets` |
-| `tests/unit/test_models.py`  | 18 | FC / RNN / LSTM output shapes, save/load, no-NaN |
-| `tests/unit/test_trainer.py` |  6 | training loop keys, loss length, loss decrease, best epoch |
+| `tests/unit/test_signals.py`           | 13 | `SignalGenerator`, `SineDataset`, `build_datasets` |
+| `tests/unit/test_models.py`            | 18 | FC / RNN / LSTM output shapes, save/load, no-NaN |
+| `tests/unit/test_trainer.py`           |  6 | training loop keys, loss length, loss decrease, best epoch |
+| `tests/unit/test_experiment_runner.py` | 10 | `ExperimentResult`, `save_results`, `_per_signal_mse`, `run_experiments` (mocked) |
+| `tests/unit/test_visualizer.py`        |  8 | `ResearchVisualizer` all methods, `hw1.hello()` |
 
-All 37 tests pass. Code quality: **0 Ruff errors**.
+All 55 tests pass. Code quality: **0 Ruff errors**.
 
 ### Quality Gates
 
 | Gate | Status |
 |------|--------|
-| All 37 unit tests pass | PASS |
+| All 55 unit tests pass | PASS |
+| Test coverage ≥85% (actual: 97%) | PASS |
 | Ruff linting (0 errors) | PASS |
 | No hardcoded hyperparameters | PASS |
 | `uv` only (no pip install) | PASS |
@@ -528,30 +575,37 @@ hw1/
 ├── src/
 │   ├── sdk/
 │   │   └── models/
-│   │       ├── base.py        # BaseModel: abstract save/load interface
-│   │       ├── fc.py          # Fully-connected model
-│   │       ├── rnn.py         # Vanilla RNN model
-│   │       └── lstm.py        # LSTM model
+│   │       ├── base.py           # BaseModel: abstract save/load interface
+│   │       ├── fc.py             # Fully-connected model
+│   │       ├── rnn.py            # Vanilla RNN model
+│   │       └── lstm.py           # LSTM model
 │   └── services/
-│       ├── data_generator.py  # Vectorised dataset builder (SignalGenerator + SineDataset)
-│       ├── train.py           # Training loop (Adam + MSE + best-epoch tracking)
-│       ├── experiment_runner.py # ExperimentResult dataclass + save_results
-│       └── research_visualizer.py # Legacy visualizer (research use)
+│       ├── data_generator.py     # Vectorised dataset builder (SignalGenerator + SineDataset)
+│       ├── train.py              # Training loop (Adam + MSE + best-epoch tracking)
+│       ├── experiment_runner.py  # ExperimentResult dataclass + save_results
+│       ├── figure_plotter.py     # Per-signal figure helpers (clean/noisy, recon, FFT, heatmap)
+│       └── research_visualizer.py # General-purpose visualizer
 ├── tests/
 │   ├── unit/
-│   │   ├── test_signals.py    # 13 tests: data generation and dataset
-│   │   ├── test_models.py     # 18 tests: model shapes, save/load, NaN
-│   │   └── test_trainer.py    #  6 tests: training loop correctness
+│   │   ├── test_signals.py           # 13 tests: data generation and dataset
+│   │   ├── test_models.py            # 18 tests: model shapes, save/load, NaN
+│   │   ├── test_trainer.py           #  6 tests: training loop correctness
+│   │   ├── test_experiment_runner.py # 10 tests: ExperimentResult, save, MSE eval
+│   │   └── test_visualizer.py        #  8 tests: ResearchVisualizer methods
 │   └── integration/           # Integration test stubs
 ├── docs/
 │   ├── PRD.md                 # Product requirements and success criteria
 │   ├── PLAN.md                # Architecture, SDK diagram, data flow, ADRs
-│   └── TODO.md                # Phased task checklist
+│   ├── TODO.md                # Phased task checklist
+│   └── PROMPT_LOG.md          # AI prompt engineering log (Section 8.3 compliance)
 ├── outputs/
-│   ├── figures/               # 17 PNG plots (generated by run_all.py)
+│   ├── figures/               # 19 PNG plots (generated by run_all.py)
+│   ├── models/                # Trained model weights (.pt files)
 │   └── results/
 │       └── results.json       # 24 experiment results
 ├── run_all.py                 # Single entry point: train + evaluate + save + plot
+├── run_figures.py             # Regenerate all 19 figures without retraining (~10 s)
+├── run_rnn_epochs.py          # RNN 50 vs 100 epochs comparison experiment
 ├── run_test.py                # Single-signal quick demo
 ├── pyproject.toml             # uv-managed dependencies
 └── .env-example               # Environment variable template

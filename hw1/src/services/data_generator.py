@@ -13,6 +13,7 @@ class SignalGenerator:
     """
 
     def __init__(self, config: dict):
+        """Read signal parameters from config and pre-compute the time axis and random phases."""
         sig = config["signal"]
         self.freqs = sig["frequencies"]   # [1, 2, 5, 10]
         self.A = sig["amplitude"]
@@ -64,6 +65,7 @@ class SineDataset(Dataset):
     """
 
     def __init__(self, config: dict, noise_level: str, window_size: int):
+        """Build all windows for all 4 signals using vectorised stride_tricks."""
         noise = config["noise"][noise_level]
         alpha, beta = noise["alpha"], noise["beta"]
         np.random.seed(config["data"]["seed"])
@@ -111,9 +113,11 @@ class SineDataset(Dataset):
         self.Y = torch.tensor(np.concatenate(all_targets, axis=0), dtype=torch.float32)
 
     def __len__(self) -> int:
+        """Return total number of (input, target) window pairs across all signals."""
         return len(self.X)
 
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
+        """Return the (input, target) pair at position idx."""
         return self.X[idx], self.Y[idx]
 
 

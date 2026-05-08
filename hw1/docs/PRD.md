@@ -176,16 +176,17 @@ Output: `outputs/figures/winner_heatmap.png` (1 plot)
 | Test suite | 37 unit tests passing |
 | Linting | 0 Ruff errors |
 
-### Achieved MSE Results (best val MSE, low noise, W=10)
+### Achieved MSE Results (best val MSE, low noise, W=10, 100 epochs)
 
 | Signal | FC     | RNN    | LSTM   |
 |--------|--------|--------|--------|
-| S1 (1Hz)  | 0.0782 | 0.1534 | 0.0924 |
-| S2 (2Hz)  | 0.1199 | 0.1300 | 0.0699 |
-| S3 (5Hz)  | 0.1442 | 0.1888 | 0.1235 |
-| S4 (10Hz) | 0.0099 | 0.0787 | 0.0155 |
+| S1 (1Hz)  | **0.0437** | 0.1548 | 0.0554 |
+| S2 (2Hz)  | **0.0386** | 0.1094 | 0.0478 |
+| S3 (5Hz)  | **0.0778** | 0.2096 | 0.1109 |
+| S4 (10Hz) | **0.0048** | 0.0559 | 0.0117 |
 
 S4 (10Hz) is significantly easier because its frequency is most distinguishable within a 10ms window.
+With 100 epochs, FC wins all low-noise signals; LSTM gains the edge at high noise for S1 and S3.
 
 ---
 

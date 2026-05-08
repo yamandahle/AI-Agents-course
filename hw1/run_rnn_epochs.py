@@ -19,6 +19,7 @@ BG, PANEL = "#1a1a2e", "#16213e"
 
 
 def style(ax):
+    """Apply dark-theme styling to a matplotlib Axes."""
     ax.set_facecolor(PANEL); ax.tick_params(colors="white")
     ax.xaxis.label.set_color("white"); ax.yaxis.label.set_color("white")
     ax.title.set_color("white")
@@ -26,6 +27,7 @@ def style(ax):
 
 
 def main():
+    """Load saved loss histories, train RNN-100ep, and save the comparison plot."""
     os.makedirs(FIGS_DIR, exist_ok=True)
 
     with open("config/setup.json") as f:
@@ -39,6 +41,7 @@ def main():
         all_results = json.load(f)
 
     def get_val_losses(model_name):
+        """Return val_losses list for the first matching model/noise entry."""
         for r in all_results:
             if r["model"] == model_name and r["noise_level"] == NOISE:
                 return r["val_losses"]
