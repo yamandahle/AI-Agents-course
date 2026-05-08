@@ -1,28 +1,24 @@
 import json
 import torch
 import numpy as np
-from src.services.data_generator import SignalGenerator
+from src.services.data_generator import SignalGenerator, build_datasets
 from src.services.train import train_model
-from src.sdk.models.fc import SignalFC
+from src.sdk.models.fc import FC
 from src.sdk.models.rnn import SignalRNN
 from src.sdk.models.lstm import SignalLSTM
 
 def run_stress_experiment(name, alpha, beta, base_conf):
     print(f"\n>>> Running Stress Test: {name} (alpha={alpha}, beta={beta})")
     
-    # Override config
-    conf = base_conf.copy()
-    conf["noise"]["high"]["alpha"] = alpha
-    conf["noise"]["high"]["beta"] = beta
+    # deep copy and inject stress levels
+    conf = json.loads(json.dumps(base_conf))
+    conf["noise"]["stress"] = {"alpha": alpha, "beta": beta}
+    conf["training"]["epochs"] = 30 # Reduce to 30 for speed in stress test
     
-    gen = SignalGenerator(conf)
-    # Using 'high' noise setting logic but with our custom values
-    # Note: data_generator.py in merged state might need high-level selection
-    # We'll generate data manually to ensure alpha/beta are used
-    x, y = gen.create_dataset() # Assuming it pulls from high/med/low logic
+    train_ds, val_ds = build_datasets(conf, noise_level="stress", window_size=10)
     
     models = {
-        "FC": SignalFC(window_size=10),
+        "FC": FC(window_size=10),
         "RNN": SignalRNN(window_size=10),
         "LSTM": SignalLSTM(window_size=10)
     }
@@ -30,8 +26,8 @@ def run_stress_experiment(name, alpha, beta, base_conf):
     results = {}
     for m_name, model in models.items():
         print(f"  Training {m_name}...")
-        final_mse = train_model(model, x, y, epochs=50)
-        results[m_name] = final_mse
+        history = train_model(model, train_ds, val_ds, conf)
+        results[m_name] = history["best_val_mse"]
     return results
 
 if __name__ == "__main__":
