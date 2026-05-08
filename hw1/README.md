@@ -207,7 +207,7 @@ All hyperparameters live in `config/setup.json`. **No values are hardcoded in so
 | `alpha` / `beta` | Higher = harder task. Low: models retain advantage. High: FC beats recurrent models. |
 | `train_ratio` | 0.8 = 80/20 split. Lower = more validation data, less training signal. |
 | `hidden_size` | Bigger RNN/LSTM = more capacity but more risk of overfitting. |
-| `epochs` | 50 is sufficient; FC converges by ~48, RNN benefits most from more. |
+| `epochs` | 100 epochs used; FC converges by ~80, RNN benefits most from extra epochs. |
 
 ---
 
@@ -296,23 +296,23 @@ The top panel shows the four clean sinusoids S1–S4. Notice how S1 (1Hz, blue) 
 
 ## 7. Experiment Results
 
-**Training**: 50 epochs, Adam optimizer (lr=0.001), MSE loss, batch size=64.
+**Training**: 100 epochs, Adam optimizer (lr=0.001), MSE loss, batch size=64.
 **Evaluation**: 200 non-overlapping windows per signal after training.
 
 ### Full Results Table
 
-Values are **per-signal validation MSE** — MSE computed on 200 held-out windows for each signal individually, using the model's best checkpoint (lowest mixed-signal val loss across 50 epochs).
+Values are **per-signal validation MSE** — MSE computed on 200 held-out windows for each signal individually, using the model's best checkpoint (lowest mixed-signal val loss across 100 epochs).
 
 | Signal | Noise | FC (val MSE) | RNN (val MSE) | LSTM (val MSE) |
 |--------|-------|:---:|:---:|:---:|
-| S1 (1Hz)  | low  | **0.0782** | 0.1534 | 0.0924 |
-| S1 (1Hz)  | high | **0.2133** | 0.2921 | 0.2221 |
-| S2 (2Hz)  | low  | 0.1199 | 0.1300 | **0.0699** |
-| S2 (2Hz)  | high | **0.1466** | 0.3019 | 0.1604 |
-| S3 (5Hz)  | low  | 0.1442 | 0.1888 | **0.1235** |
-| S3 (5Hz)  | high | **0.2371** | 0.3058 | 0.2386 |
-| S4 (10Hz) | low  | 0.0099 | 0.0787 | **0.0155** |
-| S4 (10Hz) | high | **0.0333** | 0.1379 | 0.0350 |
+| S1 (1Hz)  | low  | **0.0437** | 0.1548 | 0.0554 |
+| S1 (1Hz)  | high | 0.1554 | 0.3023 | **0.1435** |
+| S2 (2Hz)  | low  | **0.0386** | 0.1094 | 0.0478 |
+| S2 (2Hz)  | high | **0.1116** | 0.2535 | 0.1167 |
+| S3 (5Hz)  | low  | **0.0778** | 0.2096 | 0.1109 |
+| S3 (5Hz)  | high | 0.1885 | 0.3141 | **0.1723** |
+| S4 (10Hz) | low  | **0.0048** | 0.0559 | 0.0117 |
+| S4 (10Hz) | high | **0.0218** | 0.1160 | 0.0260 |
 
 Bold = best model for that signal/noise combination.
 
@@ -321,8 +321,8 @@ Bold = best model for that signal/noise combination.
 ![Winner heatmap](outputs/figures/winner_heatmap.png)
 
 The heatmap summarises which architecture wins each signal/noise cell at a glance.
-**FC** (blue) dominates at high noise and for S1/S4. **LSTM** (magenta) wins most low-noise mid-frequency cells (S2, S3). **RNN** (orange) does not win any cell — it is always beaten by FC or LSTM.
-This single figure replaces four separate per-signal bar charts and makes the noise-sensitivity pattern immediately visible.
+**FC** (blue) wins every low-noise cell — with 100 epochs FC fully converges and beats LSTM across all signals. **LSTM** (magenta) flips the advantage at high noise for S1 and S3, where its gating mechanism tolerates noisy inputs better. **RNN** (orange) does not win any cell.
+This single figure replaces four separate per-signal bar charts and makes the noise-sensitivity trade-off immediately visible.
 
 > **Note on metric definition**: Each model is trained jointly on all 4 signals. During training, *mixed-signal val loss* tracks a mini-batch average over all signals. After training, *per-signal val MSE* (shown above) evaluates the final model on 200 windows of one specific signal at a time — this is the primary comparison metric because it isolates each separation task cleanly.
 
@@ -332,7 +332,7 @@ This single figure replaces four separate per-signal bar charts and makes the no
 
 ### 8.1 Why S4 (10Hz) is the Easiest Target
 
-S4 achieves dramatically lower MSE than S1–S3 across all models and noise levels (FC low noise: **0.0099** vs 0.0782 for S1). The reason is rooted in frequency separation:
+S4 achieves dramatically lower MSE than S1–S3 across all models and noise levels (FC low noise: **0.0048** vs 0.0437 for S1). The reason is rooted in frequency separation:
 
 - Within a W=10 window (= 10ms at 1000Hz), S4 completes 10% of a full cycle — enough curvature for a model to "fingerprint" it.
 - S4 is the **highest-frequency component** of S5. Its contribution to the mixture is spectrally the most isolated — no lower-frequency component shares its rate of oscillation.
@@ -340,12 +340,13 @@ S4 achieves dramatically lower MSE than S1–S3 across all models and noise leve
 
 ### 8.2 FC vs LSTM: Noise Sensitivity
 
-At **low noise**, LSTM outperforms FC on S2, S3, S4. At **high noise**, FC consistently wins.
+At **low noise with 100 epochs**, FC wins all four signals. At **high noise**, LSTM wins S1 and S3 while FC wins S2 and S4.
 
-This makes intuitive sense:
-- LSTM processes the signal step-by-step, maintaining a hidden state that accumulates context. When the signal is clean, this temporal memory helps capture the underlying frequency.
-- When noise is high (30% amplitude jitter + 17° phase jitter), each time step is corrupted. LSTM's recurrent connections carry that corruption forward through the hidden state, amplifying the effect across the sequence.
-- FC sees the corrupted window all at once and maps it directly to the output in one shot — there is no "error propagation through time" because there is no time dimension in the computation.
+This reveals an interaction between training length and noise level:
+- With 100 epochs, FC has fully converged on the low-noise task. Its flat non-sequential computation means it converges faster and reaches a lower floor when the signal is clean and predictable.
+- LSTM converges more slowly — it needs more epochs to tune its gates — but its temporal memory gives it an edge when noise is high. LSTM's forget gate can learn to suppress noisy time steps rather than letting the error propagate through the entire sequence.
+- At high noise on S1 (1Hz) and S3 (5Hz), the noise corrupts the slow/mid-frequency structure that FC relies on as a fixed pattern. LSTM's cell state retains a longer-horizon estimate that is more robust to per-step corruption.
+- At high noise on S2 (2Hz) and S4 (10Hz), FC still wins — S4 is so distinctly high-frequency that a single flat mapping is sufficient even under noise, and S2 sits in a middle ground where FC's speed advantage outweighs LSTM's memory benefit.
 
 ### 8.3 Why RNN Consistently Underperforms
 
@@ -353,17 +354,17 @@ RNN ranks last in almost every configuration. The cause is the **vanishing gradi
 - During backpropagation through time (BPTT), gradients must travel back through every time step. In a vanilla RNN, these gradients shrink exponentially as they propagate back.
 - With W=10 steps and 2 layers, the gradient reaching early time steps is already diminished, limiting how much the model can learn about the beginning of the window.
 - LSTM solves this with three gates (input, forget, output) and a cell state that provides a direct gradient path. The forget gate can keep relevant information alive without decay.
-- The performance gap (e.g., RNN=0.1534 vs LSTM=0.0924 for S1 low noise) confirms that even at W=10, the gating mechanism provides a measurable advantage.
+- The performance gap (e.g., RNN=0.1548 vs LSTM=0.0554 for S1 low noise) confirms that even at W=10, the gating mechanism provides a measurable advantage.
 
 ### 8.4 Train MSE vs Validation MSE
 
-To check for overfitting, we compare the **mixed-signal training loss** and **mixed-signal validation loss** at the best epoch. The table below uses FC / low noise as a concrete example (S1, best_epoch = 46):
+To check for overfitting, we compare the **mixed-signal training loss** and **mixed-signal validation loss** at the best epoch. The table below uses FC / low noise as a concrete example (S1, best_epoch = 99):
 
 | Metric | Value | Interpretation |
 |--------|-------|---------------|
-| Mixed train loss at epoch 46 | 0.0891 | average MSE over all 4 signals during training |
-| Mixed val loss at epoch 46   | 0.0852 | same, but on held-out 20% data |
-| Per-signal val MSE (S1)      | 0.0782 | S1 specifically, 200 eval windows |
+| Mixed train loss at epoch 99 | 0.0610 | average MSE over all 4 signals during training |
+| Mixed val loss at epoch 99   | 0.0509 | same, but on held-out 20% data |
+| Per-signal val MSE (S1)      | 0.0437 | S1 specifically, 200 eval windows |
 
 Key observations:
 - **Val loss ≤ train loss at best epoch** across all models and signals. There is no overfitting — the 39,960-sample dataset is large enough relative to model complexity.
@@ -372,15 +373,15 @@ Key observations:
 
 ### 8.5 Effect of Noise
 
-Noise roughly **doubles MSE** from low to high for FC and LSTM, but has a more severe effect on RNN:
+Noise roughly **triples MSE** from low to high for FC and LSTM, with RNN also degrading severely:
 
 | Model | S1 low | S1 high | Degradation |
 |-------|--------|---------|-------------|
-| FC    | 0.0782 | 0.2133  | ×2.7 |
-| RNN   | 0.1534 | 0.2921  | ×1.9 |
-| LSTM  | 0.0924 | 0.2221  | ×2.4 |
+| FC    | 0.0437 | 0.1554  | ×3.6 |
+| RNN   | 0.1548 | 0.3023  | ×2.0 |
+| LSTM  | 0.0554 | 0.1435  | ×2.6 |
 
-RNN degrades less in relative terms because it was already performing poorly at low noise — there is less room to fall. LSTM and FC degrade similarly, but LSTM loses its advantage at high noise.
+RNN degrades least in relative terms because it starts from a much higher base — there is less room to fall. FC suffers the largest relative degradation (×3.6) because it benefits so strongly from a clean, predictable low-noise signal. LSTM degrades moderately (×2.6) and actually overtakes FC at high noise on S1, confirming its gating mechanism is more noise-tolerant.
 
 ### 8.6 FFT Spectral Analysis — What the Frequency Domain Reveals
 
@@ -477,7 +478,7 @@ Key findings:
 
 ![S4 reconstruction](outputs/figures/S4_reconstruction.png)
 
-*FC achieves MSE = 0.0099 — near-perfect reconstruction at low noise. LSTM is close behind. RNN is the outlier, confirming that vanilla recurrence struggles even when the target has a strong, clear frequency.*
+*FC achieves MSE = 0.0048 — near-perfect reconstruction at low noise. LSTM is close behind. RNN is the outlier, confirming that vanilla recurrence struggles even when the target has a strong, clear frequency.*
 
 ![S4 loss curves](outputs/figures/S4_loss_curves.png)
 
