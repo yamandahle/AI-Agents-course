@@ -14,6 +14,7 @@ class SignalLSTM(BaseModel):
     """
 
     def __init__(self, window_size: int, hidden_size: int = 128, num_layers: int = 2):
+        """Build LSTM with separate h0/c0 projections from the one-hot signal index."""
         super().__init__()
         self.num_layers = num_layers
         self.h0_proj = nn.Linear(NUM_SIGNALS, hidden_size)
@@ -22,6 +23,7 @@ class SignalLSTM(BaseModel):
         self.fc = nn.Linear(hidden_size, window_size)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """Encode one-hot into h0 and c0, run LSTM, decode last output step."""
         one_hot = x[:, :NUM_SIGNALS]                # (batch, 4)
         window = x[:, NUM_SIGNALS:].unsqueeze(-1)   # (batch, W, 1)
 

@@ -6,6 +6,7 @@ class ResearchVisualizer:
     """Visualizes model performance and signal reconstruction results."""
     
     def __init__(self, output_dir: str = "results"):
+        """Create the output directory and apply the default matplotlib style."""
         self.output_dir = output_dir
         os.makedirs(output_dir, exist_ok=True)
         plt.style.use('seaborn-v0_8-muted')

@@ -80,6 +80,7 @@ def run_experiments(config: dict, fast: bool = False) -> List[ExperimentResult]:
 
 
 def save_results(results: List[ExperimentResult], path: str) -> None:
+    """Serialise a list of ExperimentResult objects to a JSON file at path."""
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w") as f:
         json.dump([asdict(r) for r in results], f, indent=2)
