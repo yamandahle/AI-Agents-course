@@ -43,6 +43,36 @@ class ResearchVisualizer:
         plt.savefig(os.path.join(self.output_dir, f"signal_{title.lower()}.png"))
         plt.close()
 
+    def plot_hidden_states(self, rnn_states: np.ndarray, lstm_cells: np.ndarray):
+        """
+        Visualizes the internal dynamics of RNN vs LSTM.
+        Goal: Show RNN 'flattening' vs LSTM 'information flow'.
+        """
+        plt.figure(figsize=(10, 6))
+        
+        # Calculate mean magnitude across the hidden dimension
+        # Input shapes expected: (seq_len, hidden_dim)
+        rnn_mag = np.mean(np.abs(rnn_states), axis=1)
+        lstm_mag = np.mean(np.abs(lstm_cells), axis=1)
+        
+        t = np.arange(len(rnn_mag))
+        plt.plot(t, rnn_mag, 'r-o', label="RNN Hidden State (h_t) Magnitude")
+        plt.plot(t, lstm_mag, 'b-s', label="LSTM Cell State (c_t) Magnitude")
+        
+        plt.title("Internal State Dynamics: RNN vs. LSTM")
+        plt.xlabel("Time Step (Sequence Index)")
+        plt.ylabel("Mean Absolute Magnitude")
+        plt.legend()
+        plt.grid(True, alpha=0.3)
+        
+        plt.annotate('RNN Flattening (Vanishing Info)', 
+                     xy=(len(t)//2, rnn_mag[len(t)//2]), 
+                     xytext=(len(t)//4, rnn_mag[len(t)//2] - 0.2),
+                     arrowprops=dict(facecolor='black', shrink=0.05))
+        
+        plt.savefig(os.path.join(self.output_dir, "hidden_state_dynamics.png"))
+        plt.close()
+
     def save_final_report(self, metrics: dict):
         """Saves a summary of final KPIs."""
         report_path = os.path.join(self.output_dir, "summary.txt")
