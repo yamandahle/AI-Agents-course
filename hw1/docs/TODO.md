@@ -148,12 +148,15 @@ Status: `[ ]` = pending · `[x]` = done · `[~]` = in progress
 
 ## Quality Gates (all passing)
 
-- [x] `uv run pytest tests/ -v` — **37 tests passing**
+- [x] `uv run pytest tests/ -v` — **55 tests passing**
+- [x] `uv run pytest --cov=src --cov-report=term-missing` — **97% coverage (≥85% required)**
 - [x] `uv run ruff check src/` — **0 errors**
 - [x] `outputs/results/results.json` exists with **24 entries**
 - [x] 13 base PNG figures saved in `outputs/figures/` (17 original minus 4 removed MSE bar charts)
-- [ ] 6 enhancement PNG figures saved in `outputs/figures/` (4 FFT + 1 epochs + 1 heatmap)
+- [x] 6 enhancement PNG figures saved in `outputs/figures/` (4 FFT + 1 epochs + 1 heatmap)
 - [x] No `plt.show()` anywhere in source
 - [x] No hardcoded values in source modules — everything from `config/setup.json`
 - [x] All source modules under 150 lines
 - [x] `.env-example` present
+- [x] `docs/PROMPT_LOG.md` created (Section 8.3 compliance)
+- [x] `config/setup.json` has `"version": "1.00"` (Section 8.1 compliance)
