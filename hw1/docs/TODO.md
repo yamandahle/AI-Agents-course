@@ -85,9 +85,9 @@ Status: `[ ]` = pending · `[x]` = done · `[~]` = in progress
   - [x] `Sx_clean_vs_noisy.png` — clean target vs noisy S5 input
   - [x] `Sx_reconstruction.png` — 3-panel: one subplot per model with predictions
   - [x] `Sx_loss_curves.png` — train + val loss curves (log scale) for all 3 models
-  - [x] `Sx_mse_bar.png` — bar chart of best val MSE per model
+  - [x] ~~`Sx_mse_bar.png`~~ — **removed**, replaced by winner heatmap (E3)
 
-  - [x] All 17 plots saved as PNG via `plt.savefig()` — no `plt.show()` anywhere
+  - [x] All base plots saved as PNG via `plt.savefig()` — no `plt.show()` anywhere
 
 ---
 
@@ -95,7 +95,9 @@ Status: `[ ]` = pending · `[x]` = done · `[~]` = in progress
 
 - [x] `src/sdk/models/` — FC, RNN, LSTM with shared `BaseModel` interface
 - [x] `src/services/` — data generation, training, experiment runner (all business logic)
-- [x] `run_all.py` — single orchestration entry point wrapping all services
+- [x] `run_all.py` — train all models, save to `outputs/models/`, save `results.json`, print tables
+- [x] `run_figures.py` — load saved models + results → generate all 19 figures (no retraining)
+- [x] `run_rnn_epochs.py` — standalone RNN 50 vs 100 epochs experiment
 - [x] `run_test.py` — quick single-signal demo entry point
 
 ---
@@ -118,12 +120,39 @@ Status: `[ ]` = pending · `[x]` = done · `[~]` = in progress
 
 ---
 
+---
+
+## Phase 9 — Enhancement Experiments (Understanding Demonstrations)
+
+### E1 — FFT Spectral Analysis
+- [x] For each signal S1–S4, compute `numpy.fft.rfft` on a representative window for the clean target, noisy S5 input, and each model's prediction
+- [x] Plot magnitude spectrum (frequency axis) with 3 subplots (one per model) on a dark-theme figure
+- [x] Save as `outputs/figures/Sx_fft_comparison.png` for each of the 4 signals
+- [ ] Add FFT section to README analysis explaining what the spectrum reveals about model quality
+
+### E2 — RNN Epochs Experiment (50 vs 100)
+- [x] Create `run_rnn_epochs.py` — standalone script, does NOT re-run full training
+- [x] Load RNN-50, LSTM-50, FC-50 loss histories from `outputs/results/results.json`
+- [x] Train a fresh RNN for 100 epochs only (low noise, W=10)
+- [x] Plot all 4 curves: RNN-50, RNN-100, LSTM-50, FC-50 on one figure
+- [x] Save as `outputs/figures/rnn_epochs_comparison.png`
+- [ ] Add analysis to README: "more epochs helps RNN but it still doesn't match LSTM"
+
+### E3 — Model Winner Heatmap
+- [x] Build 2×4 matrix (noise level × signal), each cell = name of best model + its MSE
+- [x] Colour-code: blue=FC, orange=RNN, magenta=LSTM
+- [x] Save as `outputs/figures/winner_heatmap.png`
+- [ ] Reference heatmap in README summary section
+
+---
+
 ## Quality Gates (all passing)
 
 - [x] `uv run pytest tests/ -v` — **37 tests passing**
 - [x] `uv run ruff check src/` — **0 errors**
 - [x] `outputs/results/results.json` exists with **24 entries**
-- [x] 17 PNG figures saved in `outputs/figures/`
+- [x] 13 base PNG figures saved in `outputs/figures/` (17 original minus 4 removed MSE bar charts)
+- [ ] 6 enhancement PNG figures saved in `outputs/figures/` (4 FFT + 1 epochs + 1 heatmap)
 - [x] No `plt.show()` anywhere in source
 - [x] No hardcoded values in source modules — everything from `config/setup.json`
 - [x] All source modules under 150 lines

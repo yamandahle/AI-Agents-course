@@ -134,6 +134,30 @@ Each run evaluated on all 4 signals → **24 result entries**
 - Per-signal best validation MSE (evaluated on 200 held-out windows)
 - Best epoch (minimum mixed-signal val loss)
 
+### Enhancement Experiments
+
+#### E1 — FFT Spectral Analysis
+For each signal (S1–S4), generate one plot showing the **frequency-domain content** of:
+- The clean target window
+- The noisy S5 input window
+- The prediction from each model (FC, RNN, LSTM)
+
+This proves the model recovers the correct frequency component, not just a smooth approximation.
+Output: `outputs/figures/Sx_fft_comparison.png` (4 plots, one per signal)
+
+#### E2 — RNN Epochs Experiment (50 vs 100)
+Retrain RNN with 100 epochs (FC and LSTM kept at 50 — they are already converged).
+Plot train+val loss curves side-by-side for 50 vs 100 epochs to show:
+- RNN improves but still does not match LSTM
+- FC and LSTM show no meaningful gain past epoch 50
+Output: `outputs/figures/rnn_epochs_comparison.png` (1 plot)
+
+#### E3 — Model Winner Heatmap
+A 2×4 grid heatmap (noise level × signal) where each cell is colour-coded by which model
+achieves the lowest val MSE and annotated with the MSE value.
+Makes model suitability readable at a glance without parsing tables.
+Output: `outputs/figures/winner_heatmap.png` (1 plot)
+
 ---
 
 ## 6. Success Criteria (KPIs)
@@ -143,8 +167,11 @@ Each run evaluated on all 4 signals → **24 result entries**
 |-----------|-------------|
 | All models train | No NaN loss on any signal/noise combo |
 | Results file | `outputs/results/results.json` with 24 entries |
-| Figures | 4 figure types × 4 signals = 16 plots + 1 signals overview = 17 PNGs |
+| Figures | 13 base PNGs + 6 enhancement PNGs = **19 PNGs total** |
 | Loss curves | Per model, showing convergence over 50 epochs |
+| FFT plots | 4 signals × 1 spectral comparison = 4 PNGs |
+| RNN epochs plot | 1 PNG comparing RNN-50 vs RNN-100 vs FC-50 vs LSTM-50 |
+| Winner heatmap | 1 PNG (replaces 4 per-signal MSE bar charts) |
 | Comparison table | Printed to console: signal × noise × model |
 | Test suite | 37 unit tests passing |
 | Linting | 0 Ruff errors |
@@ -180,3 +207,5 @@ S4 (10Hz) is significantly easier because its frequency is most distinguishable 
 - Deployment / serving
 - GPU-specific optimization (code auto-detects CUDA if available)
 - Medium noise level (α=β=0.10) — excluded per experiment design decision
+- Window sizes other than W=10 (fixed per lecture requirement)
+- Additional model architectures beyond FC, RNN, LSTM

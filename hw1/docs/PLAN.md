@@ -42,6 +42,9 @@ hw1/
 │   ├── PLAN.md  ✅  (this file)
 │   └── TODO.md
 │
+├── run_figures.py    ✅         (all 19 figures — loads saved models, no retraining)
+├── run_rnn_epochs.py ✅         (standalone: RNN 50 vs 100 epochs experiment)
+│
 ├── src/
 │   ├── sdk/
 │   │   ├── __init__.py          (exports HW1SDK)
@@ -197,6 +200,28 @@ All saved to `outputs/results/results.json`.
 - Fix `src/services/research_visualizer.py`: reconstruction plots, loss curves
 - Comparison table (45 rows × 3 model columns)
 - All plots saved as PNG via `plt.savefig()` — no `plt.show()`
+
+### Phase 9 — Enhancement Experiments (Understanding Demonstrations)
+
+#### E1 — FFT Spectral Analysis
+- For each signal S1–S4, compute `numpy.fft.rfft` on a representative window for:
+  the clean target, the noisy S5 input, and each model's prediction
+- Plot magnitude spectrum (frequency axis, log scale) on one figure with 3 subplots (one per model)
+- Saved as `outputs/figures/Sx_fft_comparison.png` (4 figures)
+- Code added directly to `run_all.py` (orchestrator, exempt from 150-line limit)
+
+#### E2 — RNN Epochs Experiment
+- After the main 50-epoch training loop, retrain RNN only at 100 epochs (low noise)
+- Plot side-by-side: 50-epoch loss curve vs 100-epoch loss curve for RNN
+- Overlay LSTM 50-epoch curve as reference to show gap
+- Saved as `outputs/figures/rnn_epochs_comparison.png`
+- Demonstrates empirically: RNN improves with more time but never catches LSTM
+
+#### E3 — Model Winner Heatmap
+- Build a 2×4 matrix (rows = noise levels, cols = signals) where each cell = best model name
+- Use `matplotlib` + colour coding: blue=FC, orange=RNN, magenta=LSTM
+- Annotate each cell with the winning MSE value
+- Saved as `outputs/figures/winner_heatmap.png`
 
 ### Phase 7 — SDK + Integration
 - Build `src/sdk/hw1_sdk.py` (wraps all services)
