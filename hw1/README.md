@@ -110,42 +110,22 @@ uv run python -c "import torch, numpy, matplotlib; print('OK')"
 
 ## 3. Quick Start
 
-### For collaborators — run everything in one command
+### Run everything in one command
 
 ```bash
-git pull origin main
-uv sync
 uv run python run_all.py
 ```
 
-Then push the outputs so the team can use them:
-
-```bash
-git add outputs/results/results.json outputs/figures/ outputs/models/
-git commit -m "results: add trained models, figures, and results.json"
-git push origin main
-```
-
-### What `run_all.py` does
-
-This single command:
+This single command runs the full pipeline sequentially:
 1. Trains all 6 model combinations (2 noise levels × 3 architectures), 50 epochs each
-2. Saves each trained model to `outputs/models/` (no need to retrain later)
+2. Saves each trained model to `outputs/models/`
 3. Evaluates per-signal MSE on 200 windows
 4. Saves `outputs/results/results.json` (24 entries)
 5. Prints per-signal MSE tables to the console
 6. Generates all 19 figures in `outputs/figures/`
+7. Runs the RNN 50 vs 100 epochs experiment and saves the comparison plot
 
-Estimated runtime: **~20 minutes** on a modern CPU.
-
-### RNN epochs experiment (separate script)
-
-```bash
-uv run python run_rnn_epochs.py
-```
-
-Loads existing results, trains RNN for 100 epochs, saves comparison plot.
-Estimated runtime: **~10 minutes**. Run independently after `run_all.py` has been executed.
+Estimated runtime: **~30 minutes** on a modern CPU.
 
 ### Regenerate figures only (no retraining)
 
@@ -154,6 +134,7 @@ uv run python run_figures.py
 ```
 
 Loads saved models from `outputs/models/` and regenerates all 19 figures in ~10 seconds.
+Requires `run_all.py` to have been run at least once.
 
 ### Run a Single Signal Test (quick demo)
 

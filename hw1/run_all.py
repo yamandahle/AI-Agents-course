@@ -1,5 +1,5 @@
-"""run_all.py — Train all models, generate all 19 figures, save results.
-Hand to classmate — one command does everything (except RNN epochs experiment).
+"""run_all.py — Full pipeline: train → save → figures → RNN epochs experiment.
+One command does everything sequentially.
   uv run python run_all.py
 """
 import json
@@ -13,6 +13,7 @@ from src.sdk.models.lstm import SignalLSTM
 from src.services.train import train_model
 from src.services.experiment_runner import ExperimentResult, save_results
 from run_figures import main as generate_figures
+from run_rnn_epochs import main as run_rnn_experiment
 
 with open("config/setup.json") as f:
     config = json.load(f)
@@ -86,5 +87,9 @@ print("Generating all figures...")
 print("="*56)
 generate_figures()
 
+print("\n" + "="*56)
+print("Running RNN epochs experiment (50 vs 100)...")
+print("="*56)
+run_rnn_experiment()
+
 print("\nAll done. Outputs saved to outputs/")
-print("(Run 'uv run python run_rnn_epochs.py' separately for the epochs experiment)")
