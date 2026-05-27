@@ -21,7 +21,7 @@ class SignalRNN(BaseModel):
         self.rnn = nn.RNN(1, hidden_size, num_layers, batch_first=True)
         self.fc = nn.Linear(hidden_size, window_size)
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, return_states: bool = False) -> torch.Tensor:
         """Encode one-hot into h0, run RNN over noisy window, decode last hidden state."""
         one_hot = x[:, :NUM_SIGNALS]                # (batch, 4)
         window = x[:, NUM_SIGNALS:].unsqueeze(-1)   # (batch, W, 1)
@@ -29,5 +29,9 @@ class SignalRNN(BaseModel):
         h0 = self.h0_proj(one_hot)                  # (batch, hidden)
         h0 = h0.unsqueeze(0).expand(self.num_layers, -1, -1).contiguous()
 
-        _, hn = self.rnn(window, h0)                # hn: (layers, batch, hidden)
-        return self.fc(hn[-1])                      # (batch, W)
+        out, hn = self.rnn(window, h0)              # out: (batch, W, hidden)
+        preds = self.fc(hn[-1])                     # (batch, W)
+        
+        if return_states:
+            return preds, out
+        return preds

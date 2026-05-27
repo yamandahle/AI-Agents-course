@@ -14,6 +14,9 @@ from src.services.train import train_model
 from src.services.experiment_runner import ExperimentResult, save_results
 from run_figures import main as generate_figures
 from run_rnn_epochs import main as run_rnn_experiment
+from src.services.reconstruction_plotter import ReconstructionPlotter
+from torch.utils.data import DataLoader
+
 
 with open("config/setup.json") as f:
     config = json.load(f)
@@ -91,5 +94,22 @@ print("\n" + "="*56)
 print("Running RNN epochs experiment (50 vs 100)...")
 print("="*56)
 run_rnn_experiment()
+
+# --- Final Reconstruction Gallery ---
+print("\n" + "="*56)
+print("Generating Final Reconstruction Gallery (LSTM)...")
+print("="*56)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# Use the last LSTM model trained (noise=high or low)
+best_model_path = f"{MODELS_DIR}/high_LSTM.pt"
+if os.path.exists(best_model_path):
+    lstm_model = SignalLSTM(W)
+    lstm_model.load(best_model_path)
+    # Use high noise validation set for challenging samples
+    _, val_ds = build_datasets(config, "high", window_size=W)
+    loader = DataLoader(val_ds, batch_size=32, shuffle=False)
+    
+    plotter = ReconstructionPlotter()
+    plotter.visualize_reconstruction_gallery(lstm_model, loader, device)
 
 print("\nAll done. Outputs saved to outputs/")

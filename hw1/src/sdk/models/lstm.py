@@ -22,7 +22,7 @@ class SignalLSTM(BaseModel):
         self.lstm = nn.LSTM(1, hidden_size, num_layers, batch_first=True)
         self.fc = nn.Linear(hidden_size, window_size)
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, return_states: bool = False) -> torch.Tensor:
         """Encode one-hot into h0 and c0, run LSTM, decode last output step."""
         one_hot = x[:, :NUM_SIGNALS]                # (batch, 4)
         window = x[:, NUM_SIGNALS:].unsqueeze(-1)   # (batch, W, 1)
@@ -30,5 +30,9 @@ class SignalLSTM(BaseModel):
         h0 = self.h0_proj(one_hot).unsqueeze(0).expand(self.num_layers, -1, -1).contiguous()
         c0 = self.c0_proj(one_hot).unsqueeze(0).expand(self.num_layers, -1, -1).contiguous()
 
-        out, _ = self.lstm(window, (h0, c0))        # out: (batch, W, hidden)
-        return self.fc(out[:, -1, :])               # (batch, W)
+        out, (hn, cn) = self.lstm(window, (h0, c0)) # out: (batch, W, hidden)
+        preds = self.fc(out[:, -1, :])              # (batch, W)
+        
+        if return_states:
+            return preds, out # 'out' in LSTM contains all hidden states h_t
+        return preds
