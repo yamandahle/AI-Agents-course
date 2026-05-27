@@ -37,7 +37,11 @@ def train_model(model: nn.Module, train_ds: Dataset,
             loss.backward()
             optimizer.step()
             epoch_loss += loss.item() * len(x_batch)
-        train_losses.append(epoch_loss / len(train_ds))
+        avg_train_loss = epoch_loss / len(train_ds)
+        train_losses.append(avg_train_loss)
+
+        if (epoch + 1) % 10 == 0:
+            print(f"        Epoch {epoch+1:03d}/{epochs} - Loss: {avg_train_loss:.6f}")
 
         model.eval()
         val_loss = 0.0
