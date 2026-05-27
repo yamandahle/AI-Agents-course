@@ -1,0 +1,8 @@
+{
+  "logging": {
+    "rotation_strategy": "FIFO",
+    "max_log_files": 20,
+    "max_lines_per_file": 500,
+    "structured_format": "JSONL"
+  }
+}

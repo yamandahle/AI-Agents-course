@@ -1,0 +1,9 @@
+{
+  "debate_rules": {
+    "min_pings_per_side": 10,
+    "allow_ties": false,
+    "communication_format": "JSON",
+    "tone_enforcement": "Politically Correct",
+    "dialogue_routing": "child -> father -> child"
+  }
+}
