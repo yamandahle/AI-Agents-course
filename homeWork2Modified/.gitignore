@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.pyc
+memory/MEMORY.md
+results/results.md
+.venv/
+env/
+venv/
+build/
+dist/
+*.egg-info/
+.coverage
+htmlcov/
+.pytest_cache/
+.ruff_cache/
