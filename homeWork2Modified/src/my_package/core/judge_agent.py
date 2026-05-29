@@ -86,7 +86,13 @@ class JudgeAgent(AgentBase):
         self.scores[agent1_proc.name] = 0
         self.scores[agent2_proc.name] = 0
         self.analytics_flow = []
+        jsonl_path = "results/session.jsonl"
+        os.makedirs(os.path.dirname(jsonl_path), exist_ok=True)
         
+        # Clear previous session file
+        with open(jsonl_path, "w") as f:
+            pass
+
         for r in range(rounds):
             print(f"\n--- Round {r+1}/{rounds} ---")
             
@@ -99,6 +105,10 @@ class JudgeAgent(AgentBase):
             self.use_debate_analyzer(resp1['agent'], resp1['role'], resp1['stance'], resp1['content'], (r*2)+1, topic)
             self.debate_history.append(resp1)
             
+            # Save to jsonl
+            with open(jsonl_path, "a") as f:
+                f.write(json.dumps(resp1) + "\n")
+            
             # Phase 2: Agent 2
             agent2_pipe.send(json.dumps(self.debate_history))
             while not agent2_pipe.poll(timeout=60): time.sleep(0.1)
@@ -107,6 +117,10 @@ class JudgeAgent(AgentBase):
             self.calculate_score(resp2['agent'], resp2['content'])
             self.use_debate_analyzer(resp2['agent'], resp2['role'], resp2['stance'], resp2['content'], (r*2)+2, topic)
             self.debate_history.append(resp2)
+            
+            # Save to jsonl
+            with open(jsonl_path, "a") as f:
+                f.write(json.dumps(resp2) + "\n")
 
         return self.finalize_debate_with_analyzer(topic, agent1_proc.name, agent2_proc.name)
 
@@ -155,6 +169,37 @@ class JudgeAgent(AgentBase):
             "verdict": f"Winner: {winner}",
             "reasoning": reasoning
         }
+
+    def export_session_to_readme(self, topic):
+        """
+        Extracts responses from a JSONL file and writes them to README.md.
+        """
+        jsonl_path = "results/session.jsonl"
+        if not os.path.exists(jsonl_path):
+            print(f"[{self.name}] ERROR: No session file found at {jsonl_path}")
+            return
+
+        print(f"[{self.name}] Extracting session from {jsonl_path} to README.md...")
+        
+        output = []
+        output.append(f"# AI Agent Debate: {topic}\n")
+        output.append("## Full Session Log\n")
+        
+        with open(jsonl_path, "r") as f:
+            for i, line in enumerate(f):
+                msg = json.loads(line)
+                speaker = msg.get("agent", "Unknown")
+                role = msg.get("role", "Unknown")
+                content = msg.get("content", "")
+                
+                output.append(f"### Turn {i+1}: {speaker} ({role})")
+                output.append(f"{content}\n")
+                output.append("---")
+
+        with open("README.md", "w") as f:
+            f.write("\n".join(output))
+        
+        print(f"[{self.name}] README.md updated successfully.")
 
 def create_policy_expert():
     return JudgeAgent(
