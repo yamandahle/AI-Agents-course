@@ -7,16 +7,16 @@ import sys
 FIXED_TOPIC = "Do social media algorithms do more harm to democratic discourse than good?"
 
 def run_system():
+    # Create agents once for session persistence
+    judge = create_policy_expert()
+    ethicist = create_ethics_researcher()
+    entrepreneur = create_tech_entrepreneur()
+
     while True:
         choice = start_menu()
         
         if choice == "1":
             print(f"\nInitializing Debate: {FIXED_TOPIC}\n")
-            
-            # Create agents
-            judge = create_policy_expert()
-            ethicist = create_ethics_researcher()
-            entrepreneur = create_tech_entrepreneur()
             
             # Setup IPC
             parent_conn1, child_conn1 = multiprocessing.Pipe()
@@ -52,6 +52,10 @@ def run_system():
                 p2.join(timeout=5)
                 if p1.is_alive(): p1.terminate()
                 if p2.is_alive(): p2.terminate()
+        
+        elif choice == "2":
+            # Check if a session has been run (via existence of history or file)
+            judge.export_session_to_readme(FIXED_TOPIC)
                 
         elif choice == "3":
             print("Exiting...")
