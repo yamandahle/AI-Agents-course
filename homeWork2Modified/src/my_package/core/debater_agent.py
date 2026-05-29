@@ -10,6 +10,7 @@ class DebaterAgent(AgentBase):
             f"PERSONA: {self.name}, {self.role}. EXPERTISE: {self.expertise}. STANCE: {self.stance}.\n"
             "MANDATE: Stay strictly in character. Maintain your unique persona and stance.\n"
             "PROTOCOL: Address counter-arguments in the conversation history directly. Do not ignore them.\n"
+            "RULE: NEVER quote your opponent verbatim. Summarize their points or reference their key terminology.\n"
             "TONE: Polite, respectful, and politically correct at all times.\n"
             "FORMAT: Concise. 1 argument (3 sentences) to 3 arguments (with 2 examples).\n"
             "[INSTRUCTION]: Formulate your next response. Do not use conversational filler (like 'Good point'). "
@@ -44,21 +45,32 @@ class DebaterAgent(AgentBase):
 
     def generate_stance_content(self, history):
         # Determine if we are responding to someone
-        opponent_point = ""
+        opponent_summary = ""
         if history and isinstance(history, list):
             last_msg = history[-1]
-            opponent_point = f"Regarding the claim that {last_msg.get('content', '')}: "
+            last_content = last_msg.get('content', '').lower()
+            
+            # Simple keyword extraction to avoid verbatim quoting
+            keywords = []
+            if "risk" in last_content or "amplification" in last_content: keywords.append("algorithmic risks")
+            if "innovation" in last_content or "market" in last_content: keywords.append("innovation-led growth")
+            if "regulation" in last_content or "guardrails" in last_content: keywords.append("regulatory frameworks")
+            
+            if keywords:
+                opponent_summary = f"Addressing your focus on {', '.join(keywords)}: "
+            else:
+                opponent_summary = "Regarding your previous points: "
 
         if self.stance == "Cautious":
             return (
-                f"{opponent_point}The systemic risks inherent in algorithmic amplification necessitate "
+                f"{opponent_summary}The systemic risks inherent in algorithmic amplification necessitate "
                 "immediate implementation of robust regulatory frameworks. Data suggests that without "
                 "safety-first guardrails, democratic discourse is vulnerable to polarization. "
                 "Example 1: The rise of echo chambers in 2021. Example 2: Documented algorithmic bias."
             )
         elif self.stance == "Optimistic":
             return (
-                f"{opponent_point}Market-driven innovation is the primary engine for improving "
+                f"{opponent_summary}Market-driven innovation is the primary engine for improving "
                 "information accessibility and democratic engagement. Limiting innovation through "
                 "regulation would only stifle the tools that empower individual voices globally. "
                 "Example 1: Open platforms enabling grassroots movements. Example 2: Real-time translation tools."

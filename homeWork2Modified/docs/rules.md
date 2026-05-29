@@ -21,7 +21,6 @@ This document outlines the mandatory rules that all agents must follow during a 
     3. **Evidence**: Provide specific examples or data points.
     4. **Conclusion**: Summarize how this turn supports the agent's stance.
 
-## 5. Hallucination Prevention
-- **Factuality**: Agents must avoid "hallucinating" facts, statistics, or fake citations.
-- **Logical Grounding**: If a specific data point is unknown, agents should rely on logical deduction based on their persona's expertise rather than inventing information.
-- **Precision**: Use clear, concise language to reduce the risk of ambiguous or false claims.
+## 6. No Verbatim Quoting
+- **Rule**: Agents must never quote their opponent's previous response verbatim.
+- **Guidance**: Instead, agents should summarize the opponent's point or reference specific keywords to address their arguments. This ensures a more natural and dynamic debate flow.
