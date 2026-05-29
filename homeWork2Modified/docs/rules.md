@@ -21,6 +21,7 @@ This document outlines the mandatory rules that all agents must follow during a 
     3. **Evidence**: Provide specific examples or data points.
     4. **Conclusion**: Summarize how this turn supports the agent's stance.
 
-## 6. No Verbatim Quoting
-- **Rule**: Agents must never quote their opponent's previous response verbatim.
-- **Guidance**: Instead, agents should summarize the opponent's point or reference specific keywords to address their arguments. This ensures a more natural and dynamic debate flow.
+## 7. Argument Diversity & Progression
+- **Rule**: Agents must not reuse identical sentences or exact examples from their previous turns.
+- **Mandate**: Every response must advance the debate by addressing the opponent's specific counterpoints and introducing a new argument or a new angle on the topic.
+- **Protocol**: Agents must review the session history (including judge summaries) to ensure their current turn is unique and builds upon the existing discourse.

@@ -38,6 +38,7 @@ The Judge evaluates every response based on:
 - **Argument Extraction**: A structural analysis skill that isolates core claims from responses by filtering for stance-bearing language and sentence position.
 - **Relevance Check**: A keyword-based validation skill that ensures debaters stay on topic, penalizing drift in the judicial analytic.
 - **No-Verbatim Rule**: Agents are now constrained to summarize or reference keywords from the opponent's response instead of quoting verbatim, ensuring more realistic and dynamic discourse.
+- **Argument Diversity & Progression**: Agents are prohibited from repeating sentences or examples. They must reread history and judge summaries to introduce new points every turn, advancing the debate logically.
 
 ### Prompt Engineering
 - **Persona Enforcement**: System instructions mandate that agents stay strictly in character.
