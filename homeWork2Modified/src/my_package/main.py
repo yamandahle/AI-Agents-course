@@ -32,8 +32,8 @@ def run_system():
             try:
                 # Judge orchestrates (runs in main process for UI feedback)
                 verdict = judge.conduct_debate(
-                    p1, parent_conn1, 
-                    p2, parent_conn2, 
+                    p1, p2, 
+                    parent_conn1, parent_conn2, 
                     topic=FIXED_TOPIC
                 )
                 

@@ -30,9 +30,13 @@ The Judge evaluates every response based on:
 - **Quality Keywords**: +2 bonus points for terms like *evidence, research, data, study, however, therefore, because, consider*.
 
 ### Memory & Persistence
-- **`memory/MEMORY.md`**: Stores turn-by-turn summaries to ensure the Judge doesn't lose context during long debates.
-- **`results/results.md`**: Stores final session reports, including Session IDs, scores, and detailed logical explanations for the winner.
-- **Tie-Breaker**: A mechanism that reviews stored summaries to decide a winner if scores are identical after 10 rounds.
+- **`memory/MEMORY.md`**: Stores turn-by-turn summaries and judicial analytics in real-time to ensure the Judge doesn't lose context.
+- **`results/results.md`**: Stores comprehensive session reports, including Session IDs, quantitative scores, and dynamic impact weighing between competing clashes (e.g., Safety vs. Innovation).
+- **Auto-Cleanup**: The session memory is initialized at the start of each debate to ensure fresh context.
+
+### Skills Integration
+- **Argument Extraction**: A structural analysis skill that isolates core claims from responses by filtering for stance-bearing language and sentence position.
+- **Relevance Check**: A keyword-based validation skill that ensures debaters stay on topic, penalizing drift in the judicial analytic.
 
 ### Prompt Engineering
 - **Persona Enforcement**: System instructions mandate that agents stay strictly in character.
@@ -42,7 +46,7 @@ The Judge evaluates every response based on:
 ### UI & Configuration
 - **Terminal Menu**: A simplified keyboard-driven menu (`src/my_package/ui/terminal_menu.py`) for starting the debate.
 - **Fixed Topic**: The debate topic is hardcoded to: *"Do social media algorithms do more harm to democratic discourse than good?"*
-- **Auto-Cleanup**: Temporary memory is automatically wiped after each session report is saved.
+- **UV Support**: Validated `pyproject.toml` and `uv.lock` for modern Python package management.
 
 ## 4. Operational Parameters
 - **Debate Length**: 10 Rounds (20 total responses).
@@ -50,4 +54,4 @@ The Judge evaluates every response based on:
 - **Rule Injection**: Mandatory rule schemas are stored and enforced via `config/setup.json`.
 
 ---
-*Last Updated: Wednesday, May 27, 2026*
+*Last Updated: Friday, May 29, 2026*

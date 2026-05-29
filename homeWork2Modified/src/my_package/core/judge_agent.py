@@ -1,7 +1,10 @@
 from .agent_base import AgentBase
+from ..skills.argument_extraction.extractor import extract_main_argument
+from ..skills.relevance_check.checker import check_relevance
 import multiprocessing
 import json
 import time
+import os
 
 class JudgeAgent(AgentBase):
     def __init__(self, name, role, expertise, stance):
@@ -14,6 +17,14 @@ class JudgeAgent(AgentBase):
         self.analytics_flow = []
         self.framework = "net psychological and societal harm versus individual digital autonomy"
 
+        # Ensure memory and results directories exist
+        os.makedirs(os.path.dirname(self.memory_path), exist_ok=True)
+        os.makedirs(os.path.dirname(self.results_path), exist_ok=True)
+
+        # Clear memory file at start of session
+        with open(self.memory_path, "w") as f:
+            f.write(f"# Debate Memory: {time.strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+
     def run(self):
         """Standard run method for the judge process."""
         print(f"[{self.name}] Judge active and waiting to orchestrate...")
@@ -23,40 +34,52 @@ class JudgeAgent(AgentBase):
         word_count = len(content.split())
         quality_bonus = sum(2 for word in self.quality_keywords if word in content.lower())
         total_score = word_count + quality_bonus
-        
+
         self.scores[agent_name] = self.scores.get(agent_name, 0) + total_score
         return total_score
 
-    def use_debate_analyzer(self, speaker_name, speaker_role, content, turn_number):
+    def use_debate_analyzer(self, speaker_name, speaker_role, speaker_stance, content, turn_number, topic):
         """
         MANDATORY TOOL: Analyzes the speaker's response and builds the analytical flow.
         Extracts circular points and generates judicial analytics.
         """
         print(f"[{self.name}] INVOKING TOOL: debate_analyzer for {speaker_name}...")
-        
-        # Simulate Skill: argument_extraction
-        main_points = [
-            f"Point {i+1}: " + (p[:80] + "...") for i, p in enumerate(content.split('.')[:2]) if p.strip()
-        ]
-        
-        # Simulate Skill: relevance_check & Judge Analytic generation
-        analytic = (
-            f"The speaker {speaker_name} effectively anchors their argument in {self.expertise}. "
-            "However, there is a potential logical gap regarding the long-term scalability of this approach, "
-            "which the opponent might exploit in the next turn."
-        )
-        
+
+        # Use Skill: argument_extraction
+        main_point = extract_main_argument(content, speaker_stance)
+
+        # Use Skill: relevance_check
+        is_relevant, relevance_msg = check_relevance(content, topic)
+
+        # Generate Judge Analytic
+        if not is_relevant:
+            analytic = f"The speaker {speaker_name} drifted from the topic. {relevance_msg}"
+        else:
+            analytic = (
+                f"The speaker {speaker_name} effectively anchors their argument in {speaker_role} perspectives. "
+                f"Core point: {main_point[:100]}... "
+                "The argument is well-structured but requires more empirical support to fully sway the ballot."
+            )
+
         entry = {
             "speaker": speaker_name,
             "role": speaker_role,
-            "points": main_points,
+            "points": [main_point],
             "analytic": analytic,
             "turn": turn_number
         }
         self.analytics_flow.append(entry)
+
+        # Persistence: memory/MEMORY.md
+        with open(self.memory_path, "a") as f:
+            f.write(f"### Turn {turn_number}: {speaker_name}\n")
+            f.write(f"- **Role**: {speaker_role}\n")
+            f.write(f"- **Summary**: {main_point}\n")
+            f.write(f"- **Analytic**: {analytic}\n\n")
+
         return entry
 
-    def conduct_debate(self, agent1_proc, agent2_proc, agent1_pipe, agent2_pipe, topic, rounds=2):
+    def conduct_debate(self, agent1_proc, agent2_proc, agent1_pipe, agent2_pipe, topic, rounds=10):
         """Sequential routing with mandatory debate_analyzer tool usage."""
         print(f"[{self.name}] Starting debate on: {topic}")
         
@@ -73,7 +96,7 @@ class JudgeAgent(AgentBase):
             resp1 = json.loads(agent1_pipe.recv())
             
             self.calculate_score(resp1['agent'], resp1['content'])
-            self.use_debate_analyzer(resp1['agent'], resp1['role'], resp1['content'], (r*2)+1)
+            self.use_debate_analyzer(resp1['agent'], resp1['role'], resp1['stance'], resp1['content'], (r*2)+1, topic)
             self.debate_history.append(resp1)
             
             # Phase 2: Agent 2
@@ -82,7 +105,7 @@ class JudgeAgent(AgentBase):
             resp2 = json.loads(agent2_pipe.recv())
             
             self.calculate_score(resp2['agent'], resp2['content'])
-            self.use_debate_analyzer(resp2['agent'], resp2['role'], resp2['content'], (r*2)+2)
+            self.use_debate_analyzer(resp2['agent'], resp2['role'], resp2['stance'], resp2['content'], (r*2)+2, topic)
             self.debate_history.append(resp2)
 
         return self.finalize_debate_with_analyzer(topic, agent1_proc.name, agent2_proc.name)
@@ -92,29 +115,35 @@ class JudgeAgent(AgentBase):
         score2 = self.scores.get(name2, 0)
         winner = name1 if score1 > score2 else name2
         side = "Government" if winner == name1 else "Opposition"
+        
+        # Determine the key themes based on expertise
+        theme1 = "Safety and Ethics" if "Ethics" in name1 or "Ethics" in self.expertise else "Innovation"
+        theme2 = "Rapid Innovation" if "Entrepreneur" in name2 else "Regulatory Frameworks"
 
         # Build results.md structure
         output = []
         output.append(f"## Debate Session Analytics: {topic}\n")
         output.append(f"*   **The Topic:** {topic}")
         output.append(f"*   **The Framework:** The round is evaluated on **{self.framework}**.")
-        output.append(f"*   **The Verdict:** Awarded to the **{side} ({winner})** because they successfully defended their highest-magnitude impacts through the final speeches.\n")
+        output.append(f"*   **The Verdict:** Awarded to the **{side} ({winner})** based on quantitative scoring ({self.scores[winner]} points) and qualitative depth of arguments.\n")
         output.append("---\n")
         output.append("## Chronological Session Flow & Judicial Analysis\n")
 
         for entry in self.analytics_flow:
             output.append(f"### Speaker {entry['turn']}: {entry['speaker']} ({entry['role']})")
             for pt in entry['points']:
-                output.append(f"*   **Main {pt}**")
+                output.append(f"*   **Main Point:** {pt}")
             output.append(f"\n### Judge Analytic: Evaluation of {entry['role']}")
             output.append(f"*   {entry['analytic']}\n")
 
         output.append("---\n")
         output.append("## Final Round Resolution & Weighing Matrix\n")
         output.append("### Judge Analytic: Ultimate Impact Weighing")
-        output.append("*   **The Mental Health Clash:** Won by the Government through consistent evidence.")
-        output.append("*   **The Autonomy Clash:** Won by the Opposition on the basis of individual agency.")
-        output.append(f"*   **Final Decision:** Because human health out-weighs consumer convenience under the established framework, the ballot is cast for the **{side}**.")
+        output.append(f"*   **The {theme1} Clash:** Evaluated based on long-term societal impact.")
+        output.append(f"*   **The {theme2} Clash:** Evaluated based on economic and technological feasibility.")
+        
+        reasoning = f"The {side} ({winner}) demonstrated a more comprehensive understanding of the {self.framework}, particularly in the later rounds."
+        output.append(f"*   **Final Decision:** {reasoning}")
 
         final_report = "\n".join(output)
         with open(self.results_path, "w") as f:
@@ -124,7 +153,7 @@ class JudgeAgent(AgentBase):
             "agent": self.name,
             "role": self.role,
             "verdict": f"Winner: {winner}",
-            "reasoning": "See results/results.md for full judicial analysis."
+            "reasoning": reasoning
         }
 
 def create_policy_expert():

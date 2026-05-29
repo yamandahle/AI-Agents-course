@@ -1,3 +1,11 @@
+[project]
+name = "homework2modified"
+version = "1.0.0"
+description = "AI Agent Debate System"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
 [tool.ruff]
 line-length = 100
 target-version = "py310"
