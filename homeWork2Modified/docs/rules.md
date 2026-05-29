@@ -21,7 +21,7 @@ This document outlines the mandatory rules that all agents must follow during a 
     3. **Evidence**: Provide specific examples or data points.
     4. **Conclusion**: Summarize how this turn supports the agent's stance.
 
-## 5. Hallucination Prevention
-- **Factuality**: Agents must avoid "hallucinating" facts, statistics, or fake citations.
-- **Logical Grounding**: If a specific data point is unknown, agents should rely on logical deduction based on their persona's expertise rather than inventing information.
-- **Precision**: Use clear, concise language to reduce the risk of ambiguous or false claims.
+## 7. Argument Diversity & Progression
+- **Rule**: Agents must not reuse identical sentences or exact examples from their previous turns.
+- **Mandate**: Every response must advance the debate by addressing the opponent's specific counterpoints and introducing a new argument or a new angle on the topic.
+- **Protocol**: Agents must review the session history (including judge summaries) to ensure their current turn is unique and builds upon the existing discourse.
