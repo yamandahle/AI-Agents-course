@@ -10,13 +10,14 @@ class DebaterAgent(AgentBase):
         system_instructions = (
             f"PERSONA: {self.name}, {self.role}. EXPERTISE: {self.expertise}. STANCE: {self.stance}.\n"
             "MANDATE: Stay strictly in character. Maintain your unique persona and stance.\n"
-            "PROTOCOL: Address counter-arguments in the conversation history directly. Do not ignore them.\n"
-            "RULE 1: NEVER quote your opponent verbatim. Summarize their points or reference their key terminology.\n"
-            "RULE 2: NO REPETITION. Do not reuse sentences or examples from your previous turns.\n"
-            "RULE 3: ADVANCE THE DEBATE. Reread the session history and judge summaries to provide a new argument every turn.\n"
-            "TONE: Polite, respectful, and politically correct at all times.\n"
-            "FORMAT: Concise. 1 argument (3 sentences) to 3 arguments (with 2 examples).\n"
-            "[INSTRUCTION]: Formulate your next response utilizing your associated skill."
+            "REBUTTAL FIRST POLICY: You MUST spend the first 50% of your response directly criticizing the specific point "
+            "made by your opponent in their immediate previous turn. Do not introduce your new point until this is complete.\n"
+            "MEMORY LEDGER: Check the 'ledger' in your input. You are STRICTLY FORBIDDEN from bringing up topics or "
+            "using examples listed in the ledger. You must advance the debate with a new argument or angle.\n"
+            "NO VERBATIM: Summarize the opponent's points or reference their key terminology. Never quote verbatim.\n"
+            "TONE: Polite, respectful, and professional.\n"
+            "FORMAT: Conversational and natural. Avoid rigid prefixes. Ensure your response is substantial.\n"
+            "[INSTRUCTION]: Formulate your response. Include the tag [TOPIC: your_new_topic] at the end of your response."
         )
 
         while True:
@@ -26,84 +27,87 @@ class DebaterAgent(AgentBase):
                     break
                 
                 try:
-                    # Input could be the topic (string) or history (JSON string)
-                    history = json.loads(raw_input) if raw_input.startswith("[") or raw_input.startswith("{") else []
+                    data = json.loads(raw_input)
+                    history = data.get("history", [])
+                    ledger = data.get("ledger", [])
+                    # topic = data.get("topic") # Initial topic if needed
                 except:
                     history = []
+                    ledger = []
 
                 print(f"[{self.name}] Generating response based on stance: {self.stance}...")
                 
                 # Logic to formulate the response
-                content = self.generate_stance_content(history)
+                content = self.generate_stance_content(history, ledger)
                 
+                # Extract the topic tag
+                topic_covered = "General"
+                if "[TOPIC:" in content:
+                    parts = content.split("[TOPIC:")
+                    content = parts[0].strip()
+                    topic_covered = parts[1].split("]")[0].strip()
+
                 response = {
                     "agent": self.name,
                     "role": self.role,
                     "stance": self.stance,
-                    "content": content
+                    "content": content,
+                    "topic_covered": topic_covered
                 }
                 pipe.send(json.dumps(response))
             time.sleep(0.1)
 
-    def generate_stance_content(self, history):
-        # Reread history from Judge Summary if possible
-        memory_content = ""
-        if os.path.exists("memory/MEMORY.md"):
-            with open("memory/MEMORY.md", "r") as f:
-                memory_content = f.read()
-
-        # Determine if we are responding to someone
-        opponent_summary = ""
-        turn_count = 0
-        if history and isinstance(history, list):
-            turn_count = len([msg for msg in history if msg.get('agent') == self.name])
+    def generate_stance_content(self, history, ledger):
+        # Determine turn count
+        turn_count = len([msg for msg in history if msg.get('agent') == self.name])
+        
+        # 1. Rebuttal (50%)
+        rebuttal = ""
+        if history:
             last_msg = history[-1]
-            last_content = last_msg.get('content', '').lower()
-            
-            # Simple keyword extraction to avoid verbatim quoting
-            keywords = []
-            if "risk" in last_content or "amplification" in last_content: keywords.append("algorithmic risks")
-            if "innovation" in last_content or "market" in last_content: keywords.append("innovation-led growth")
-            if "regulation" in last_content or "guardrails" in last_content: keywords.append("regulatory frameworks")
-            
-            if keywords:
-                opponent_summary = f"Addressing your focus on {', '.join(keywords)}: "
-            else:
-                opponent_summary = "Regarding your previous points: "
+            last_content = last_msg.get('content', '')
+            # Simulate rebuttal by referencing their core claim and offering a counter-perspective
+            rebuttal = (
+                f"While you emphasize the importance of {last_msg.get('topic_covered', 'the current discourse')}, "
+                "this perspective fails to account for the systemic externalities that arise when short-term gains "
+                "are prioritized over long-term stability. Your argument assumes a degree of market efficiency "
+                "that simply doesn't exist in the current technological landscape. "
+            )
 
-        # Dynamic arguments and examples to avoid repetition
+        # 2. New Argument (50%) - Check ledger
         cautious_args = [
-            ("The systemic risks inherent in algorithmic amplification necessitate immediate implementation of robust regulatory frameworks.", "The rise of echo chambers in 2021", "Documented algorithmic bias"),
-            ("Data privacy concerns are paramount as predictive models often ingest sensitive user data without explicit informed consent.", "Data harvesting scandals", "Unauthorized profiling"),
-            ("The psychological impact of engagement-optimized feeds contributes significantly to the erosion of mental well-being in youth.", "Increased anxiety rates", "Addictive UI patterns"),
-            ("Algorithmic opacity prevents independent audits, making it impossible to verify if platforms are adhering to safety standards.", "Black-box decision making", "Lack of transparency reports"),
-            ("The concentration of power in a few tech giants undermines the decentralized nature of democratic discourse.", "Market monopolies", "Censorship concerns")
+            ("algorithmic risks", "The systemic risks inherent in algorithmic amplification necessitate immediate implementation of robust regulatory frameworks.", "The rise of echo chambers in 2021", "Documented algorithmic bias"),
+            ("data privacy", "Data privacy concerns are paramount as predictive models often ingest sensitive user data without explicit informed consent.", "Data harvesting scandals", "Unauthorized profiling"),
+            ("mental health", "The psychological impact of engagement-optimized feeds contributes significantly to the erosion of mental well-being in youth.", "Increased anxiety rates", "Addictive UI patterns"),
+            ("algorithmic opacity", "Algorithmic opacity prevents independent audits, making it impossible to verify if platforms are adhering to safety standards.", "Black-box decision making", "Lack of transparency reports"),
+            ("tech monopolies", "The concentration of power in a few tech giants undermines the decentralized nature of democratic discourse.", "Market monopolies", "Censorship concerns")
         ]
 
         optimistic_args = [
-            ("Market-driven innovation is the primary engine for improving information accessibility and democratic engagement.", "Open platforms enabling grassroots movements", "Real-time translation tools"),
-            ("Algorithms can effectively surface high-quality educational content, democratizing access to specialized knowledge.", "AI-driven tutoring", "Personalized learning paths"),
-            ("AI-enhanced moderation tools are essential for scaling safety measures and protecting users from harmful content at speed.", "Automated hate speech detection", "Real-time moderation"),
-            ("The economic benefits of personalized discovery allow small businesses to reach global audiences more efficiently than ever.", "Small business growth", "Targeted entrepreneurship"),
-            ("Digital autonomy is enhanced when users are provided with sophisticated tools to filter and curate their own information environment.", "User-defined filters", "Customizable algorithms")
+            ("innovation engines", "Market-driven innovation is the primary engine for improving information accessibility and democratic engagement.", "Open platforms enabling grassroots movements", "Real-time translation tools"),
+            ("education access", "Algorithms can effectively surface high-quality educational content, democratizing access to specialized knowledge.", "AI-driven tutoring", "Personalized learning paths"),
+            ("moderation tools", "AI-enhanced moderation tools are essential for scaling safety measures and protecting users from harmful content at speed.", "Automated hate speech detection", "Real-time moderation"),
+            ("economic discovery", "The economic benefits of personalized discovery allow small businesses to reach global audiences more efficiently than ever.", "Small business growth", "Targeted entrepreneurship"),
+            ("digital curation", "Digital autonomy is enhanced when users are provided with sophisticated tools to filter and curate their own information environment.", "User-defined filters", "Customizable algorithms")
         ]
 
-        # Select argument based on turn count to ensure variety
-        idx = turn_count % len(cautious_args)
-        
+        available_args = []
         if self.stance == "Cautious":
-            arg, ex1, ex2 = cautious_args[idx]
-            return (
-                f"{opponent_summary}{arg} Data suggests that without safety-first guardrails, democratic discourse is vulnerable. "
-                f"Example 1: {ex1}. Example 2: {ex2}."
-            )
-        elif self.stance == "Optimistic":
-            arg, ex1, ex2 = optimistic_args[idx]
-            return (
-                f"{opponent_summary}{arg} Limiting innovation through regulation would only stifle tools that empower voices globally. "
-                f"Example 1: {ex1}. Example 2: {ex2}."
-            )
-        return "Maintaining a balanced perspective on the issue."
+            available_args = [a for a in cautious_args if a[0] not in ledger]
+        else:
+            available_args = [a for a in optimistic_args if a[0] not in ledger]
+
+        if not available_args:
+            available_args = [cautious_args[0]] if self.stance == "Cautious" else [optimistic_args[0]]
+
+        topic_key, arg, ex1, ex2 = available_args[0]
+        
+        new_point = (
+            f"Moving forward, we must consider that {arg} For instance, {ex1} and {ex2} demonstrate "
+            "why this approach is vital for the future of democratic discourse."
+        )
+
+        return f"{rebuttal}{new_point} [TOPIC: {topic_key}]"
 
 def create_ethics_researcher():
     return DebaterAgent(

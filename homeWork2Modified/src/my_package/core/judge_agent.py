@@ -10,6 +10,7 @@ class JudgeAgent(AgentBase):
     def __init__(self, name, role, expertise, stance):
         super().__init__(name, role, expertise, stance)
         self.debate_history = []
+        self.topic_ledger = [] # Track covered topics
         self.scores = {} # Map agent names to scores
         self.quality_keywords = ['evidence', 'research', 'data', 'study', 'however', 'therefore', 'because', 'consider']
         self.memory_path = "memory/MEMORY.md"
@@ -86,6 +87,7 @@ class JudgeAgent(AgentBase):
         self.scores[agent1_proc.name] = 0
         self.scores[agent2_proc.name] = 0
         self.analytics_flow = []
+        self.topic_ledger = [] # Reset ledger for new session
         jsonl_path = "results/session.jsonl"
         os.makedirs(os.path.dirname(jsonl_path), exist_ok=True)
         
@@ -97,9 +99,18 @@ class JudgeAgent(AgentBase):
             print(f"\n--- Round {r+1}/{rounds} ---")
             
             # Phase 1: Agent 1
-            agent1_pipe.send(topic if r == 0 else json.dumps(self.debate_history))
+            payload1 = {
+                "topic": topic if r == 0 else None,
+                "history": self.debate_history,
+                "ledger": self.topic_ledger
+            }
+            agent1_pipe.send(json.dumps(payload1))
             while not agent1_pipe.poll(timeout=60): time.sleep(0.1)
             resp1 = json.loads(agent1_pipe.recv())
+            
+            # Extract topic from response
+            if "topic_covered" in resp1:
+                self.topic_ledger.append(resp1["topic_covered"])
             
             self.calculate_score(resp1['agent'], resp1['content'])
             self.use_debate_analyzer(resp1['agent'], resp1['role'], resp1['stance'], resp1['content'], (r*2)+1, topic)
@@ -110,9 +121,17 @@ class JudgeAgent(AgentBase):
                 f.write(json.dumps(resp1) + "\n")
             
             # Phase 2: Agent 2
-            agent2_pipe.send(json.dumps(self.debate_history))
+            payload2 = {
+                "history": self.debate_history,
+                "ledger": self.topic_ledger
+            }
+            agent2_pipe.send(json.dumps(payload2))
             while not agent2_pipe.poll(timeout=60): time.sleep(0.1)
             resp2 = json.loads(agent2_pipe.recv())
+            
+            # Extract topic from response
+            if "topic_covered" in resp2:
+                self.topic_ledger.append(resp2["topic_covered"])
             
             self.calculate_score(resp2['agent'], resp2['content'])
             self.use_debate_analyzer(resp2['agent'], resp2['role'], resp2['stance'], resp2['content'], (r*2)+2, topic)
