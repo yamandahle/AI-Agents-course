@@ -21,7 +21,15 @@ This document outlines the mandatory rules that all agents must follow during a 
     3. **Evidence**: Provide specific examples or data points.
     4. **Conclusion**: Summarize how this turn supports the agent's stance.
 
-## 7. Argument Diversity & Progression
-- **Rule**: Agents must not reuse identical sentences or exact examples from their previous turns.
-- **Mandate**: Every response must advance the debate by addressing the opponent's specific counterpoints and introducing a new argument or a new angle on the topic.
-- **Protocol**: Agents must review the session history (including judge summaries) to ensure their current turn is unique and builds upon the existing discourse.
+## 8. Memory Ledger
+- **Hidden State**: A "Memory Ledger" tracks all topics and examples covered in the session.
+- **Rule**: Agents are strictly forbidden from bringing up topics or using examples listed in the ledger.
+- **Goal**: Ensures 100% unique progression and prevents circular reasoning.
+
+## 9. Rebuttal First Policy
+- **Constraint**: The first 50% of every response must be dedicated to a direct critique of the opponent's previous turn.
+- **Sequence**: Rebuttal MUST precede the introduction of any new argument.
+
+## 10. Natural Discourse
+- **Format**: Rigid prefixes (e.g., "Addressing your focus on...") are no longer required.
+- **Style**: Agents are encouraged to use standard conversational transitions while maintaining professional tone and persona fidelity.
