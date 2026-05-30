@@ -41,7 +41,9 @@ The Judge evaluates every response based on:
 - **Argument Diversity & Progression**: Agents are prohibited from repeating sentences or examples.
 - **Memory Ledger**: A hidden system state tracks covered topics (e.g., ["echo chambers", "data privacy"]). Agents are strictly forbidden from reusing these topics or their associated examples.
 - **Rebuttal First Policy**: Enforces that 50% of every agent response must directly criticize the opponent's previous point before introducing new content.
-- **Natural Discourse**: Loosened output templates allow for standard conversational transitions while maintaining professional persona fidelity.
+- **Natural Discourse**: Fluid panel-style debate without clichéd transitions or fixed introductory/closing formulas.
+- **Logic Dismantling**: Mandates direct critique of opponent's specific logic/examples before introducing new content.
+- **Linguistic Variability**: Increased linguistic variety through simulated higher "temperature" settings and randomized sentence structures.
 
 ### Prompt Engineering
 - **Persona Enforcement**: System instructions mandate that agents stay strictly in character.

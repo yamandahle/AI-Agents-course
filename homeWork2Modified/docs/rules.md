@@ -30,6 +30,15 @@ This document outlines the mandatory rules that all agents must follow during a 
 - **Constraint**: The first 50% of every response must be dedicated to a direct critique of the opponent's previous turn.
 - **Sequence**: Rebuttal MUST precede the introduction of any new argument.
 
-## 10. Natural Discourse
-- **Format**: Rigid prefixes (e.g., "Addressing your focus on...") are no longer required.
-- **Style**: Agents are encouraged to use standard conversational transitions while maintaining professional tone and persona fidelity.
+## 11. Fluid Panel Debate
+- **Rule**: Agents must speak in a distinct, unscripted character voice.
+- **Constraint**: NO fixed templates, clichéd transitions (e.g., "While you emphasize..."), or repetitive closing formulas.
+- **Goal**: Mimic the unpredictable flow of a real panel debate.
+
+## 12. Logic Dismantling
+- **Mandate**: Agents must directly address and attempt to dismantle the specific logic or examples brought up by the previous speaker.
+- **Constraint**: Dismantling must occur before any new point is introduced.
+
+## 13. High-Temperature Variability
+- **Hyperparameter**: The simulation uses a higher "temperature" for response generation to ensure linguistic variety.
+- **Constraint**: Sentence structures, openings, and closings must vary significantly across turns.

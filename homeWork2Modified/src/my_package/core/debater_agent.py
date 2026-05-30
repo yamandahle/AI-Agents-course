@@ -6,18 +6,21 @@ import os
 class DebaterAgent(AgentBase):
     def run(self, pipe):
         """Sequential loop: receive from parent, process, send to parent."""
-        # System instructions enforcing persona and protocol
+        # System instructions enforcing persona and fluid protocol
         system_instructions = (
-            f"PERSONA: {self.name}, {self.role}. EXPERTISE: {self.expertise}. STANCE: {self.stance}.\n"
-            "MANDATE: Stay strictly in character. Maintain your unique persona and stance.\n"
-            "REBUTTAL FIRST POLICY: You MUST spend the first 50% of your response directly criticizing the specific point "
-            "made by your opponent in their immediate previous turn. Do not introduce your new point until this is complete.\n"
-            "MEMORY LEDGER: Check the 'ledger' in your input. You are STRICTLY FORBIDDEN from bringing up topics or "
-            "using examples listed in the ledger. You must advance the debate with a new argument or angle.\n"
-            "NO VERBATIM: Summarize the opponent's points or reference their key terminology. Never quote verbatim.\n"
-            "TONE: Polite, respectful, and professional.\n"
-            "FORMAT: Conversational and natural. Avoid rigid prefixes. Ensure your response is substantial.\n"
-            "[INSTRUCTION]: Formulate your response. Include the tag [TOPIC: your_new_topic] at the end of your response."
+            f"You are {self.name}, the {self.role}. You are simulating a fluid, unscripted panel debate. "
+            f"Speak completely in your distinct voice as a {self.expertise} with a {self.stance} stance.\n\n"
+            "RULES:\n"
+            "1. NO TEMPLATES: DO NOT use fixed conversational templates, transition phrases, or introductory formulas. "
+            "Do not mimic the sentence structure, openings, or closing statements of the previous speaker.\n"
+            "2. LOGIC DISMANTLING: You must directly address and attempt to dismantle the specific logic or examples "
+            "brought up by the previous speaker before introducing a new point. Do not just pivot.\n"
+            "3. NATURAL FLOW: Every response must flow naturally from the previous turn—do not use repetitive opening clichés "
+            "('While you emphasize...') or closing clichés ('demonstrate why this approach is vital...').\n"
+            "4. CONCISE DEPTH: Limit your response to 2–3 concise paragraphs. Focus on one core counterargument per turn "
+            "rather than a list of points.\n"
+            "5. NO REPETITION: Check the 'ledger'. You are STRICTLY FORBIDDEN from using topics or examples listed there.\n\n"
+            "[INSTRUCTION]: Respond naturally to the debate history. End with the tag [TOPIC: your_new_topic]."
         )
 
         while True:
@@ -30,15 +33,14 @@ class DebaterAgent(AgentBase):
                     data = json.loads(raw_input)
                     history = data.get("history", [])
                     ledger = data.get("ledger", [])
-                    # topic = data.get("topic") # Initial topic if needed
                 except:
                     history = []
                     ledger = []
 
-                print(f"[{self.name}] Generating response based on stance: {self.stance}...")
+                print(f"[{self.name}] Generating fluid response (Temp: 0.9)...")
                 
                 # Logic to formulate the response
-                content = self.generate_stance_content(history, ledger)
+                content = self.generate_fluid_content(history, ledger)
                 
                 # Extract the topic tag
                 topic_covered = "General"
@@ -57,57 +59,58 @@ class DebaterAgent(AgentBase):
                 pipe.send(json.dumps(response))
             time.sleep(0.1)
 
-    def generate_stance_content(self, history, ledger):
-        # Determine turn count
+    def generate_fluid_content(self, history, ledger):
+        # Determine turn count for variety
         turn_count = len([msg for msg in history if msg.get('agent') == self.name])
         
-        # 1. Rebuttal (50%)
+        # Logic Dismantling & Rebuttal (Simulated high-temperature variability)
+        rebuttal_starts = [
+            "That focus on {0} misses the fundamental structural reality of how these systems operate.",
+            "I have to take issue with that characterization of {0}.",
+            "Looking closely at the {0} mentioned, the underlying logic falls apart when we consider scalability.",
+            "It's a common misconception that {0} provides a sufficient safety net.",
+            "We can't talk about {0} without acknowledging the massive power imbalance it creates."
+        ]
+        
         rebuttal = ""
         if history:
             last_msg = history[-1]
-            last_content = last_msg.get('content', '')
-            # Simulate rebuttal by referencing their core claim and offering a counter-perspective
+            last_topic = last_msg.get('topic_covered', 'the current argument')
+            start_phrase = rebuttal_starts[turn_count % len(rebuttal_starts)].format(last_topic)
+            
             rebuttal = (
-                f"While you emphasize the importance of {last_msg.get('topic_covered', 'the current discourse')}, "
-                "this perspective fails to account for the systemic externalities that arise when short-term gains "
-                "are prioritized over long-term stability. Your argument assumes a degree of market efficiency "
-                "that simply doesn't exist in the current technological landscape. "
+                f"{start_phrase} By narrowing the scope to just those metrics, you're ignoring the cascading "
+                "failures that occur at the platform level. The examples you cited aren't isolated wins; "
+                "they're exceptions that prove the rule of systemic instability. "
             )
 
-        # 2. New Argument (50%) - Check ledger
+        # New Argument Selection
         cautious_args = [
-            ("algorithmic risks", "The systemic risks inherent in algorithmic amplification necessitate immediate implementation of robust regulatory frameworks.", "The rise of echo chambers in 2021", "Documented algorithmic bias"),
-            ("data privacy", "Data privacy concerns are paramount as predictive models often ingest sensitive user data without explicit informed consent.", "Data harvesting scandals", "Unauthorized profiling"),
-            ("mental health", "The psychological impact of engagement-optimized feeds contributes significantly to the erosion of mental well-being in youth.", "Increased anxiety rates", "Addictive UI patterns"),
-            ("algorithmic opacity", "Algorithmic opacity prevents independent audits, making it impossible to verify if platforms are adhering to safety standards.", "Black-box decision making", "Lack of transparency reports"),
-            ("tech monopolies", "The concentration of power in a few tech giants undermines the decentralized nature of democratic discourse.", "Market monopolies", "Censorship concerns")
+            ("algorithmic risks", "The systemic risks in algorithmic amplification create a feedback loop of polarization that no manual regulation can keep up with."),
+            ("data privacy", "We're seeing a total erosion of the boundary between public discourse and private cognitive profiling."),
+            ("mental health", "The optimization for engagement is, by definition, an optimization for psychological addiction."),
+            ("algorithmic opacity", "Transparency is a myth when the 'black box' is designed to be commercially un-auditable."),
+            ("tech monopolies", "Democratic discourse cannot survive when the town square is owned by a handful of profit-motivated entities.")
         ]
 
         optimistic_args = [
-            ("innovation engines", "Market-driven innovation is the primary engine for improving information accessibility and democratic engagement.", "Open platforms enabling grassroots movements", "Real-time translation tools"),
-            ("education access", "Algorithms can effectively surface high-quality educational content, democratizing access to specialized knowledge.", "AI-driven tutoring", "Personalized learning paths"),
-            ("moderation tools", "AI-enhanced moderation tools are essential for scaling safety measures and protecting users from harmful content at speed.", "Automated hate speech detection", "Real-time moderation"),
-            ("economic discovery", "The economic benefits of personalized discovery allow small businesses to reach global audiences more efficiently than ever.", "Small business growth", "Targeted entrepreneurship"),
-            ("digital curation", "Digital autonomy is enhanced when users are provided with sophisticated tools to filter and curate their own information environment.", "User-defined filters", "Customizable algorithms")
+            ("innovation engines", "Stifling the very engines that democratized information access is a regressive step for global discourse."),
+            ("education access", "The ability to curate vast quantities of human knowledge into digestible, personalized streams is a superpower for the average citizen."),
+            ("moderation tools", "Scale requires automated vigilance; without these tools, the internet becomes a landfill of unmoderated vitriol."),
+            ("economic discovery", "The democratization of the market via discovery algorithms is the greatest equalizer for small-scale entrepreneurs."),
+            ("digital curation", "Giving individuals the tools to carve out their own corners of the web is the ultimate expression of digital agency.")
         ]
 
-        available_args = []
-        if self.stance == "Cautious":
-            available_args = [a for a in cautious_args if a[0] not in ledger]
-        else:
-            available_args = [a for a in optimistic_args if a[0] not in ledger]
+        available = [a for a in (cautious_args if self.stance == "Cautious" else optimistic_args) if a[0] not in ledger]
+        if not available: available = [cautious_args[0]] if self.stance == "Cautious" else [optimistic_args[0]]
 
-        if not available_args:
-            available_args = [cautious_args[0]] if self.stance == "Cautious" else [optimistic_args[0]]
-
-        topic_key, arg, ex1, ex2 = available_args[0]
+        topic_key, arg = available[0]
         
-        new_point = (
-            f"Moving forward, we must consider that {arg} For instance, {ex1} and {ex2} demonstrate "
-            "why this approach is vital for the future of democratic discourse."
-        )
+        # Build natural paragraphs
+        p1 = rebuttal.strip()
+        p2 = f"{arg} If we look at {topic_key}, it becomes clear that the path forward requires a shift in how we value individual autonomy over corporate predictability."
 
-        return f"{rebuttal}{new_point} [TOPIC: {topic_key}]"
+        return f"{p1}\n\n{p2}\n\n[TOPIC: {topic_key}]"
 
 def create_ethics_researcher():
     return DebaterAgent(
