@@ -13,12 +13,13 @@ After each agent responds, validate the JSON against this schema:
 - `word_count` — must be ≤ 50
 - `evidence_url` — must be reachable and relevant (verify via web search)
 
-**Rebuttal Check:** Verify the `argument` field directly addresses the opponent's last argument.
-The argument must open with a response to the opponent — not with an independent fact.
+**Rebuttal Check:** Verify the `argument` responds to the opponent's last argument.
+The argument must open by addressing what the opponent said — not with an independent fact.
 Check that `rebuttal_reference` contains the opponent's actual words (not a generic phrase).
-If the agent ignored the opponent and just stated a new fact:
+Check that the tone is conversational — like two people talking, not an academic paper.
+If the agent ignored the opponent, or sounds like a formal report:
 ```json
-{"action": "rebuttal_error", "instruction": "You must respond to what your opponent said. Start your argument by addressing their claim directly, then support with evidence."}
+{"action": "rebuttal_error", "instruction": "Respond to what your opponent actually said. Use plain language — you are talking to a person, not writing a paper. Facts should support your point, not be your point."}
 ```
 The agent must rewrite before the debate continues.
 
