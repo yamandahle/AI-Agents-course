@@ -1,0 +1,25 @@
+# Environment — never commit real keys
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+.venv/
+
+# Testing and coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Logs (generated at runtime)
+logs/
+
+# UV
+uv.lock
