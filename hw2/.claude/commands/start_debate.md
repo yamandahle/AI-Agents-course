@@ -13,10 +13,10 @@ Topic is fixed. No input needed. Run all 5 rounds in one response without stoppi
 tracks context window, enforces timer, routes messages, declares winner.
 
 **PRO** — Argues FOR remote work. Style: confident, data-driven.
-Output: JSON with argument, evidence_url, rebuttal_reference, word_count.
+Output: JSON with argument (≤ 50 words), evidence_url (real verified URL), rebuttal_reference, word_count.
 
 **CON** — Argues AGAINST remote work. Style: skeptical, questioning.
-Output: JSON with argument, evidence_url, rebuttal_reference, word_count.
+Output: JSON with argument (≤ 50 words), evidence_url (real verified URL), rebuttal_reference, word_count.
 
 ---
 
@@ -28,7 +28,8 @@ Output: JSON with argument, evidence_url, rebuttal_reference, word_count.
 [PRO responds — JSON output]
 
 FATHER validates:
-[Validation JSON — check all fields, word count, URL format]
+[Validation JSON — check all fields, word count ≤ 50, search web to verify evidence_url is real]
+[If URL is fabricated → reject, agent must resubmit with verified URL]
 [Agreement scan — show result]
 [Repetition scan — show result]
 [Route JSON — from: pro, to: con]

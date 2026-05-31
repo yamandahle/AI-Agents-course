@@ -10,9 +10,17 @@ After each agent responds, validate the JSON against this schema:
 - `argument` — must exist and not be empty
 - `evidence_url` — must start with "http"
 - `rebuttal_reference` — must exist and not be empty
-- `word_count` — must be ≤ 150
+- `word_count` — must be ≤ 50
+- `evidence_url` — must be reachable and relevant (verify via web search)
 
-If validation fails, output:
+**URL Verification:** After checking the format, search the web for the `evidence_url`.
+If the URL returns a 404, does not exist, or is clearly fabricated:
+```json
+{"action": "url_rejected", "url": "<the bad url>", "instruction": "Resubmit with a real, verified URL from web search."}
+```
+The agent must resubmit before the debate continues.
+
+If any other field fails, output:
 ```json
 {"action": "validation_error", "reason": "<field> is missing or invalid", "instruction": "Resubmit with correct JSON."}
 ```
