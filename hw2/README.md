@@ -1,8 +1,24 @@
 # HW2 — AI Debate System
-**Course:** AI Agents | **Topic:** Remote Work vs Office Work
 
-Three agents debate: PRO (remote work), CON (office work), and FATHER (judge).
-Father routes all messages, detects agreement and repetition, and declares a winner.
+**Course:** AI Agents
+**Student:** Yaman Dahle
+**Topic:** Is remote work better than working from the office?
+
+---
+
+## What This Project Does
+
+This project builds an automated debate between two AI agents, supervised by a third.
+
+- **PRO agent** argues that remote work is better
+- **CON agent** argues that office work is better
+- **Father agent** moderates — routes messages, detects when agents agree or repeat
+  themselves, and at the end declares a winner with a score
+
+The debate runs in 3 stages, each more automated than the last:
+- **Stage 1** — fully manual (you copy-paste between two AI tools)
+- **Stage 2** — semi-automatic (one Claude CLI command runs the full debate)
+- **Stage 3** — fully automated Python code (coming next)
 
 ---
 
@@ -10,92 +26,137 @@ Father routes all messages, detects agreement and repetition, and declares a win
 
 ```
 hw2/
-  .claude/commands/     ← Claude CLI slash commands (Stage 2)
-  stage1/               ← Manual debate prompts and transcript
-  stage2/               ← CLI debate instructions and transcript
-  docs/                 ← PRD, PLAN, TODO, component docs
-  assets/               ← Screenshots from each stage
+  .claude/
+    commands/
+      pro_skill.md        ← defines how PRO agent thinks and argues
+      con_skill.md        ← defines how CON agent thinks and argues
+      father_skill.md     ← defines how Father moderates and scores
+      start_debate.md     ← main command: runs the full 5-round debate
+  stage1/
+    pro_prompt.md         ← prompt pasted into ChatGPT
+    con_prompt.md         ← prompt pasted into Gemini
+    HOW_TO_RUN.md         ← step-by-step manual instructions
+    debate_transcript.md  ← full Stage 1 debate conversation
+    observations.md       ← what we noticed and learned
+  stage2/
+    HOW_TO_RUN.md         ← how to run /start_debate in Claude CLI
+  docs/
+    PRD.md                ← full requirements and acceptance criteria
+    PLAN.md               ← architecture, class diagram, IPC design
+    TODO.md               ← all tasks across all phases
+    PRD_father_agent.md   ← Father agent detailed spec
+    PRD_debate_agents.md  ← PRO and CON agents detailed spec
+    PRD_gatekeeper.md     ← API gatekeeper spec
+    PRD_logger_watchdog.md ← logger and watchdog spec
+  assets/
+    stage1/               ← screenshots from Stage 1
+    stage2/               ← screenshots from Stage 2
 ```
 
 ---
 
-## Stage 1 — Manual Debate (ChatGPT vs Gemini)
+## Stage 1 — Manual Debate
 
-Two separate AI tools were used manually — ChatGPT as PRO, Gemini as CON.
-The human (Father) copy-pasted arguments between them for 5 rounds.
+### What it is
+The simplest version. You open two browser tabs — ChatGPT for PRO, Gemini for CON.
+You paste the debate prompt into each, then manually copy-paste arguments back and forth.
+You act as the Father — you decide who won at the end.
 
-**What we learned:** Both agents drifted toward repeating the same 2-3 points
-by round 3. Neither tried to agree. CON won (8/10 vs 6/10) because it used
-more specific statistics that were harder to dismiss.
+### How to run it
+1. Open `stage1/pro_prompt.md` — paste its contents into a new ChatGPT conversation
+2. Open `stage1/con_prompt.md` — paste its contents into a new Gemini conversation
+3. Follow the steps in `stage1/HOW_TO_RUN.md`
+4. Run 5 rounds, then write your verdict in `stage1/observations.md`
 
-Full transcript: [`stage1/debate_transcript.md`](stage1/debate_transcript.md)
-Observations: [`stage1/observations.md`](stage1/observations.md)
+### What we learned
+Both agents stayed in character and never agreed with each other.
+By round 3, both started repeating the same arguments.
+CON was more persuasive (8/10 vs 6/10) because it used more specific numbers.
+Neither agent provided real URLs — only study names. This was fixed in Stage 2.
+
+Full transcript → [`stage1/debate_transcript.md`](stage1/debate_transcript.md)
 
 ---
 
-## Stage 2 — Claude CLI Command (`/start_debate`)
+## Stage 2 — Claude CLI Command
 
-All three roles (PRO, CON, FATHER) run inside a single Claude CLI session.
-Typing `/start_debate` runs the full 5-round debate automatically.
+### What it is
+All three agents (PRO, CON, Father) run inside a single Claude CLI session.
+You type one command and the full 5-round debate runs automatically.
 
-### How the commands work
+Each agent is defined as a saved Claude CLI command (a `.md` file in `.claude/commands/`).
+When you type `/start_debate`, Claude loads the command and plays all three roles in sequence.
 
-| Command | Role | File |
-|---------|------|------|
-| `/start_debate` | Runs the full debate | `.claude/commands/start_debate.md` |
-| `/pro_skill` | PRO agent behavior | `.claude/commands/pro_skill.md` |
-| `/con_skill` | CON agent behavior | `.claude/commands/con_skill.md` |
-| `/father_skill` | Father moderator rules | `.claude/commands/father_skill.md` |
+### What Father does in every round
+1. Receives the agent's response as structured JSON
+2. Validates the JSON — checks all required fields and word count (max 50 words)
+3. Verifies the `evidence_url` is a real link using web search
+4. Checks the agent actually responded to the opponent — not just stated a new fact
+5. Scans for agreement phrases ("good point", "fair enough", etc.) → intervenes if found
+6. Checks if the agent repeated a previous argument → intervenes if found
+7. Tracks total tokens: `WCn = WCn-1 + tokens(PRO) + tokens(CON)`
+8. Routes to the next agent
 
-### What Father does each round
-1. Validates JSON response (fields, word count ≤ 50)
-2. Verifies `evidence_url` is a real URL via web search
-3. Checks the agent responded to the opponent — not just stated a new fact
-4. Scans for agreement phrases → intervention if found
-5. Checks for repeated arguments → intervention if found
-6. Tracks context window: `WCn = WCn-1 + tokens(PRO) + tokens(CON)`
-7. Routes to the next agent
+> **Note:** Interventions are only counted when Father sends an agent back to rewrite
+> due to agreement or repetition. Validation checks do not count as interventions.
 
-Interventions are counted only for agreement and repetition — not for validation checks.
+### JSON format every agent uses
+```json
+{
+  "round": 1,
+  "sender": "pro",
+  "argument": "Your point is wrong because...",
+  "evidence_url": "https://example.com/real-study",
+  "rebuttal_reference": "exact words from opponent that you are responding to",
+  "word_count": 47
+}
+```
 
-### Prompts Used to Build Stage 2
+### How to run it
+```bash
+# Step 1 — open a terminal and go to the hw2 folder
+cd "C:\Users\ASUS\Desktop\AI-Agents-course\hw2"
 
-**Step 1 — Basic command structure:**
-> Create 4 commands: `pro_skill.md` (argues FOR remote work, confident style, web search,
-> under 150 words, starts with "PRO:"), `con_skill.md` (argues AGAINST, skeptical style,
-> different from PRO), `father_skill.md` (neutral, routes messages, detects agreement and
-> repetition, stops at 5 rounds, declares winner — no tie), `start_debate.md` (runs everything
-> with `=== ROUND N/5 ===` format automatically).
+# Step 2 — open Claude CLI
+claude
 
-**Step 2 — Technical additions:**
-> JSON format for every response (argument, evidence_url, rebuttal_reference, word_count).
-> Context window tracking using `WCn = WCn-1 + PRO + CON`, summarize after round 3.
-> 30-second timer per agent. Father validates JSON before accepting. Agreement and repetition
-> detection from JSON. Final verdict in JSON with scores, reasoning, total interventions,
-> total tokens used.
+# Step 3 — run the debate
+/start_debate
+```
 
-**Step 3 — Quality fixes applied:**
-> - Word limit reduced from 150 → 50 words
-> - Father verifies `evidence_url` is real via web search before accepting
-> - Agents must respond to opponent first — URL is support, not the main point
-> - Conversational tone enforced — two people talking, not academic papers
-> - Intervention counter fixed — only counts agreement and repetition, not validation checks
+The debate runs automatically. After 5 rounds, Father outputs a verdict JSON:
+```json
+{
+  "verdict": {
+    "pro_score": 72,
+    "con_score": 58,
+    "winner": "pro",
+    "reasoning": "PRO consistently responded to CON's claims directly...",
+    "total_interventions": 1,
+    "total_tokens_used": 1840,
+    "rounds_completed": 5
+  }
+}
+```
+A tie (50/50) is forbidden. The minimum split is 60/40.
 
-### Screenshots
-See [`assets/stage2/`](assets/stage2/) for full session screenshots.
+Screenshots → [`assets/stage2/`](assets/stage2/)
 
 ---
 
 ## Stage 3 — Full Python (coming next)
 
-Full automation with OOP classes, Gatekeeper, Watchdog, structured logs, and CLI menu.
+Full automation with Python classes, an API Gatekeeper, Watchdog process monitor,
+structured rotating logs, and a terminal menu. No manual steps required.
 
 ---
 
-## How to Run Stage 2
+## Key Design Decisions
 
-```bash
-cd hw2
-claude
-/start_debate
-```
+| Decision | Reason |
+|----------|--------|
+| All messages go through Father only | Prevents direct agent communication — enforces rules |
+| Agents respond to opponent first | Ensures real debate, not two parallel speeches |
+| URLs verified by Father via web search | Prevents agents from fabricating citations |
+| JSON format for all messages | Structured, easy to validate, saves tokens |
+| Interventions ≠ validation checks | Keeps the intervention count honest and meaningful |
