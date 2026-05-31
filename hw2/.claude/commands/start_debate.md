@@ -28,6 +28,8 @@ Output: JSON with argument (≤ 50 words), evidence_url (real verified URL), reb
 [PRO responds — JSON output]
 
 FATHER validates:
+[Rebuttal check — did this agent directly respond to the opponent's last argument?
+ If argument starts with a fact instead of addressing the opponent → reject, force rewrite]
 [Validation JSON — check all fields, word count ≤ 50, search web to verify evidence_url is real]
 [If URL is fabricated → reject, agent must resubmit with verified URL]
 [Agreement scan — show result]

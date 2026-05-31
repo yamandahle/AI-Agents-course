@@ -13,6 +13,15 @@ After each agent responds, validate the JSON against this schema:
 - `word_count` — must be ≤ 50
 - `evidence_url` — must be reachable and relevant (verify via web search)
 
+**Rebuttal Check:** Verify the `argument` field directly addresses the opponent's last argument.
+The argument must open with a response to the opponent — not with an independent fact.
+Check that `rebuttal_reference` contains the opponent's actual words (not a generic phrase).
+If the agent ignored the opponent and just stated a new fact:
+```json
+{"action": "rebuttal_error", "instruction": "You must respond to what your opponent said. Start your argument by addressing their claim directly, then support with evidence."}
+```
+The agent must rewrite before the debate continues.
+
 **URL Verification:** After checking the format, search the web for the `evidence_url`.
 If the URL returns a 404, does not exist, or is clearly fabricated:
 ```json
