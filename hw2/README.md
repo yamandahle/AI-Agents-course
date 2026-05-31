@@ -1,7 +1,6 @@
 # HW2 — AI Debate System
 
 **Course:** AI Agents
-**Student:** Yaman Dahle
 **Topic:** Is remote work better than working from the office?
 
 ---
@@ -96,9 +95,6 @@ When you type `/start_debate`, Claude loads the command and plays all three role
 6. Checks if the agent repeated a previous argument → intervenes if found
 7. Tracks total tokens: `WCn = WCn-1 + tokens(PRO) + tokens(CON)`
 8. Routes to the next agent
-
-> **Note:** Interventions are only counted when Father sends an agent back to rewrite
-> due to agreement or repetition. Validation checks do not count as interventions.
 
 ### JSON format every agent uses
 ```json
