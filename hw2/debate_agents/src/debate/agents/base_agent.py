@@ -138,6 +138,29 @@ class BaseAgent(abc.ABC):
     # Protected helpers
     # ------------------------------------------------------------------
 
+    def _build_prompt(self, opponent_msg: DebateMessage, evidence: str) -> str:
+        """Compose the full LLM prompt: skill role + opponent argument + evidence + word cap."""
+        return (
+            f"{self.get_skill_prompt()}\n\n"
+            f"OPPONENT'S ARGUMENT (round {opponent_msg.round}):\n{opponent_msg.content}\n\n"
+            f"SUPPORTING EVIDENCE FROM WEB SEARCH:\n{evidence}\n\n"
+            f"Respond in {self._word_limit} words or fewer. "
+            f"Start by directly addressing the opponent's specific claim."
+        )
+
+    def _format_evidence(self, results: list[dict[str, str]]) -> str:
+        """Format Tavily results into a readable evidence block for the prompt."""
+        if not results:
+            return "No search results available."
+        return "\n".join(
+            f"- {r['title']}: {r['snippet']} ({r['url']})" for r in results
+        )
+
+    def _enforce_word_limit(self, text: str) -> str:
+        """Truncate text to at most word_limit words as set in config."""
+        words = text.split()
+        return " ".join(words[: self._word_limit]) if len(words) > self._word_limit else text
+
     def _call_llm(self, prompt: str) -> str:
         """Send prompt through the Gatekeeper with a hard timeout.
 
