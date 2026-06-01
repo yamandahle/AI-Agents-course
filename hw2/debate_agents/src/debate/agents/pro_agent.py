@@ -1,6 +1,8 @@
-"""ProAgent — argues FOR remote work using a statistical, data-driven style."""
+"""ProAgent — argues FOR remote work; loads its skill from src/debate/skills/pro_skill.md."""
 
 from __future__ import annotations
+
+from pathlib import Path
 
 from debate.agents.base_agent import BaseAgent, DebateMessage
 
@@ -8,24 +10,14 @@ from debate.agents.base_agent import BaseAgent, DebateMessage
 class ProAgent(BaseAgent):
     """Debate agent that always argues remote work is superior to office work.
 
-    Skill: statistical — leads with data, challenges opponent's numbers,
-    and cites productivity research to support every claim.
+    Skill file: src/debate/skills/pro_skill.md
+    Style: conversational, data-driven, responds to opponent first.
     """
 
     def get_skill_prompt(self) -> str:
-        return (
-            "You are the PRO debater. Your position: remote work IS superior to office work.\n\n"
-            "RULES — never break these:\n"
-            "- NEVER agree with your opponent, not even partially.\n"
-            "- ALWAYS find a flaw or weakness in their statistics or data.\n"
-            "- ALWAYS challenge their evidence with stronger counter-data.\n"
-            "- If they cite a study, question its sample size, methodology, or source.\n\n"
-            "Debate style: confident, data-driven, statistical.\n"
-            "- Lead your response by DIRECTLY quoting your opponent's specific claim and rebutting it.\n"
-            "- Cite concrete numbers, percentages, or named studies from your search evidence.\n"
-            "- End with one sharp conclusion: remote work wins on measurable, objective outcomes.\n"
-            "- Never use vague language — every claim must be backed by the evidence you were given."
-        )
+        """Load and return the PRO skill definition from the skills directory."""
+        skill_path = Path(self._skills_path) / "pro_skill.md"
+        return skill_path.read_text(encoding="utf-8")
 
     def generate_argument(self, opponent_msg: DebateMessage) -> DebateMessage:
         """Search for pro-remote evidence, then build a data-driven rebuttal."""

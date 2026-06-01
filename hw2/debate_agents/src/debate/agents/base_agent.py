@@ -72,6 +72,7 @@ class BaseAgent(abc.ABC):
         self._model: str = setup["debate"]["model"]
         self._timeout: float = setup["debate"]["timeout_seconds"]
         self._word_limit: int = setup["debate"]["word_limit"]
+        self._skills_path: str = setup["debate"].get("skills_path", "src/debate/skills/")
         self._max_tokens: int = limits["anthropic"]["max_tokens_per_call"]
         self._max_results: int = limits["tavily"]["max_results_per_search"]
 

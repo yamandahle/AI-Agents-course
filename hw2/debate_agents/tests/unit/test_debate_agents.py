@@ -108,7 +108,7 @@ class TestProAgentSkill:
         prompt = pro.get_skill_prompt()
         assert any(
             kw in prompt.lower()
-            for kw in ("challenge", "flaw", "counter", "attack", "rebut")
+            for kw in ("challenge", "flaw", "counter", "attack", "rebut", "doesn't hold", "point doesn't")
         )
 
 
@@ -132,12 +132,15 @@ class TestConAgentSkill:
         assert "never" in prompt.lower() or "do not concede" in prompt.lower()
 
     def test_con_skill_prompt_instructs_find_fallacies(self) -> None:
-        """CON prompt must instruct the agent to expose logical flaws or fallacies."""
+        """CON prompt must instruct the agent to expose logical flaws or question evidence."""
         con, _, _ = _make_con()
         prompt = con.get_skill_prompt()
         assert any(
             kw in prompt.lower()
-            for kw in ("fallac", "weakest", "flaw", "assumption", "logical", "expose")
+            for kw in (
+                "fallac", "weakest", "flaw", "assumption", "logical", "expose",
+                "challenge", "skeptical", "doesn't convince",
+            )
         )
 
 
