@@ -53,14 +53,14 @@ Priority: P0 = blocker  P1 = high  P2 = medium
 
 | # | Task | Status | Priority | Definition of Done |
 |---|------|--------|----------|--------------------|
-| 24 | Initialize UV project, write pyproject.toml | [ ] | P0 | `uv sync` succeeds, ruff config present |
-| 25 | Create .env-example and .gitignore | [ ] | P0 | No secrets in repo; .env-example has placeholders |
-| 26 | Create config/ files (3 JSON files) | [ ] | P0 | All params read from config, zero hardcoded values |
+| 24 | Initialize UV project, write pyproject.toml | [x] | P0 | `uv sync` succeeds, ruff config present |
+| 25 | Create .env-example and .gitignore | [x] | P0 | No secrets in repo; .env-example has placeholders |
+| 26 | Create config/ files (3 JSON files) | [x] | P0 | All params read from config, zero hardcoded values |
 | 27 | Implement ConfigManager | [ ] | P0 | All config reads go through one class |
 | 28 | Write tests for ConfigManager | [ ] | P0 | Happy path + missing key + bad file covered |
 | 29 | Implement DebateMessage dataclass | [ ] | P0 | Schema matches PLAN.md; validates on construction |
-| 30 | Implement ApiGatekeeper | [ ] | P0 | Rate limit, FIFO queue, token log all working |
-| 31 | Write tests for ApiGatekeeper (≥ 85% cov) | [ ] | P0 | Rate limit hit, retry, token log all tested |
+| 30 | Implement ApiGatekeeper | [x] | P0 | Rate limit, FIFO queue, token log all working |
+| 31 | Write tests for ApiGatekeeper (≥ 85% cov) | [x] | P0 | Rate limit hit, retry, token log all tested |
 | 32 | Implement DebateLogger | [ ] | P0 | FIFO rotation, 20 files max, 500 lines per config |
 | 33 | Write tests for DebateLogger | [ ] | P1 | Rotation trigger tested with mock filesystem |
 | 34 | Implement BaseAgent ABC | [ ] | P0 | Abstract methods enforced; shared init works |
