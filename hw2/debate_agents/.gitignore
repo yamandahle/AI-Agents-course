@@ -21,5 +21,4 @@ htmlcov/
 # Logs (generated at runtime)
 logs/
 
-# UV
-uv.lock
+# UV — uv.lock is committed intentionally (reproducible builds)
