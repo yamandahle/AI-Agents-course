@@ -175,6 +175,7 @@ class BaseAgent(abc.ABC):
             model=self._model,
             messages=[{"role": "user", "content": prompt}],
             max_tokens=self._max_tokens,
+            agent=self._role,
         )
         try:
             response = future.result(timeout=self._timeout)

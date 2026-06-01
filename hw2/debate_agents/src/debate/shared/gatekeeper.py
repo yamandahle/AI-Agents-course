@@ -41,7 +41,9 @@ class ApiGatekeeper:
     # Public interface
     # ------------------------------------------------------------------
 
-    def call(self, model: str, messages: list[dict[str, Any]], max_tokens: int) -> Any:
+    def call(
+        self, model: str, messages: list[dict[str, Any]], max_tokens: int, agent: str = "unknown",
+    ) -> Any:
         """Execute one Anthropic API call through the gatekeeper.
 
         Enforces rate limit, retries with backoff, logs tokens + cost,
@@ -49,7 +51,7 @@ class ApiGatekeeper:
         """
         self._enforce_rate_limit()
         response = self._call_with_retry(model=model, messages=messages, max_tokens=max_tokens)
-        self._record_call(model=model, response=response)
+        self._record_call(model=model, response=response, agent=agent)
         return response
 
     def get_cost_table(self) -> list[dict[str, Any]]:
@@ -98,7 +100,7 @@ class ApiGatekeeper:
                     time.sleep(backoff)
         raise last_exc  # type: ignore[misc]
 
-    def _record_call(self, model: str, response: Any) -> None:
+    def _record_call(self, model: str, response: Any, agent: str = "unknown") -> None:
         """Log token counts and cost; raise BudgetExceededError if limit exceeded."""
         input_tokens: int = response.usage.input_tokens
         output_tokens: int = response.usage.output_tokens
@@ -109,6 +111,7 @@ class ApiGatekeeper:
         entry: dict[str, Any] = {
             "timestamp": time.time(),
             "model": model,
+            "agent": agent,
             "input_tokens": input_tokens,
             "output_tokens": output_tokens,
             "cost_usd": cost,
