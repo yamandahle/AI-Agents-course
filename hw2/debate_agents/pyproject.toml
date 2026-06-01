@@ -26,6 +26,7 @@ ignore = ["E501"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["src"]
 addopts = "--cov=src/debate --cov-report=term-missing --cov-fail-under=85"
 
 [tool.coverage.run]
