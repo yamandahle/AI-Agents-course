@@ -8,10 +8,12 @@ services directly.
 from __future__ import annotations
 
 import uuid
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Any
 
 from debate.agents.base_agent import DebateMessage
+from debate.agents.father_scoring import DebateResult
 
 
 class SessionNotFoundError(KeyError):
@@ -28,6 +30,7 @@ class DebateSession:
     config_path: str
     transcript: list[DebateMessage] = field(default_factory=list)
     cost_report: dict[str, Any] = field(default_factory=dict)
+    result: DebateResult | None = None
 
 
 class DebateSDK:
@@ -49,6 +52,27 @@ class DebateSDK:
             config_path=config_path,
         )
         self._sessions[session.session_id] = session
+        return session
+
+    def execute_debate(
+        self,
+        session_id: str,
+        on_event: Callable[..., None] | None = None,
+    ) -> DebateSession:
+        """Run the debate for an existing session via DebateOrchestrator.
+
+        Blocks until the debate completes, then updates the session with results.
+        """
+        from debate.services.debate_orchestrator import DebateOrchestrator
+
+        session = self._get(session_id)
+        orchestrator = DebateOrchestrator(config_dir=session.config_path)
+        result = orchestrator.run(session.topic, on_event=on_event)
+
+        session.status = "completed"
+        session.transcript = list(result.transcript)
+        session.cost_report = {"entries": orchestrator.get_cost_breakdown()}
+        session.result = result
         return session
 
     def get_status(self, session_id: str) -> dict[str, Any]:
@@ -88,6 +112,12 @@ _default = DebateSDK()
 
 def start_debate(topic: str, config_path: str) -> DebateSession:
     return _default.start_debate(topic, config_path)
+
+
+def execute_debate(
+    session_id: str, on_event: Callable[..., None] | None = None
+) -> DebateSession:
+    return _default.execute_debate(session_id, on_event=on_event)
 
 
 def get_status(session_id: str) -> dict[str, Any]:

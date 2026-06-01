@@ -121,8 +121,15 @@ class ApiGatekeeper:
 
         if self._logger is not None:
             self._logger.info(
-                f"gatekeeper | model={model} in={input_tokens} out={output_tokens} "
-                f"cost=${cost:.6f} cumulative=${self._cumulative_cost:.6f}"
+                "gatekeeper",
+                "api_call",
+                {
+                    "model": model,
+                    "input_tokens": input_tokens,
+                    "output_tokens": output_tokens,
+                    "cost_usd": cost,
+                    "cumulative_cost_usd": self._cumulative_cost,
+                },
             )
 
         if self._cumulative_cost > self._daily_budget:
