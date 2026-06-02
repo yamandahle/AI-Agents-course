@@ -61,8 +61,21 @@ Display after each round:
 ```
 [CONTEXT] Round N: +<new_tokens> | Total: <WCn> tokens
 ```
-After Round 3: summarize rounds 1–2 to save tokens.
-Log: `[CONTEXT] Rounds 1-2 summarized. Tokens saved: ~<N>`
+COMPACTION RULE — check after EVERY round without exception:
+If total context tokens exceed 600:
+- Summarize ALL argument history into 3-4 sentences
+- Reset context counter to the size of the summary only
+- Show:
+  ⚙ FATHER: Summarizing history to save tokens...
+  [Context compacted: saved ~<N> tokens]
+- Continue tracking from the new lower baseline
+
+This check happens every single round.
+Not just at round 3.
+Not just once.
+Every round — check the total, compact if above 600.
+The threshold 600 is loaded from config as:
+"context_compaction_threshold": 600
 
 ## Step 7 — Routing (NOT an intervention)
 ```json
