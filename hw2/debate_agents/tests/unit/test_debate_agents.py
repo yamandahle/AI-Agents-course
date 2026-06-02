@@ -330,3 +330,86 @@ class TestNoDirectCommunication:
         con_instance = _make_con()[0]
         with pytest.raises((AttributeError, TypeError)):
             pro.generate_argument(con_instance)  # type: ignore[arg-type]
+
+
+# ---------------------------------------------------------------------------
+# 9. Statistical Reasoning skill integration (ProAgent)
+# ---------------------------------------------------------------------------
+
+class TestProStatisticalReasoning:
+    def test_analyse_statistics_returns_empty_when_no_evidence(self) -> None:
+        """_analyse_statistics must return '' when evidence is empty string."""
+        pro, _, _ = _make_pro()
+        assert pro._analyse_statistics("") == ""
+
+    def test_analyse_statistics_returns_empty_for_no_results_sentinel(self) -> None:
+        """_analyse_statistics must return '' for the 'No search results' sentinel."""
+        pro, _, _ = _make_pro()
+        assert pro._analyse_statistics("No search results available.") == ""
+
+    def test_analyse_statistics_returns_empty_when_skill_file_missing(self, tmp_path: pytest.fixture) -> None:
+        """_analyse_statistics must return '' gracefully when skill file does not exist."""
+        gk = MagicMock()
+        gk.call.return_value = _make_mock_response()
+        cfg = FakeCfg()
+        cfg.setup["debate"]["skills_path"] = str(tmp_path) + "/"
+        # Write only pro_skill.md so Statistical_Reasoning.md is absent
+        (tmp_path / "pro_skill.md").write_text("PRO skill content", encoding="utf-8")
+        pro = ProAgent(role="pro", config_manager=cfg, gatekeeper=gk)
+        assert pro._analyse_statistics("Some evidence here.") == ""
+
+    def test_build_pro_prompt_without_analysis_still_has_opponent_content(self) -> None:
+        """_build_pro_prompt with empty stat_analysis must still include opponent argument."""
+        pro, _, _ = _make_pro()
+        msg = DebateMessage(type="argument", round=2, sender="con", content="Offices beat remote.")
+        prompt = pro._build_pro_prompt(msg, "some evidence", "")
+        assert "Offices beat remote." in prompt
+
+    def test_build_pro_prompt_with_analysis_includes_stat_block(self) -> None:
+        """_build_pro_prompt with stat_analysis must inject the analysis block."""
+        pro, _, _ = _make_pro()
+        msg = DebateMessage(type="argument", round=2, sender="con", content="Offices beat remote.")
+        prompt = pro._build_pro_prompt(msg, "some evidence", "S1: STRONG stat here")
+        assert "STATISTICAL VALIDITY ANALYSIS" in prompt
+        assert "S1: STRONG stat here" in prompt
+
+
+# ---------------------------------------------------------------------------
+# 10. News Argumentation Analysis skill integration (ConAgent)
+# ---------------------------------------------------------------------------
+
+class TestConNewsAnalysis:
+    def test_analyse_evidence_returns_empty_when_no_evidence(self) -> None:
+        """_analyse_evidence must return '' when evidence is empty string."""
+        con, _, _ = _make_con()
+        assert con._analyse_evidence("") == ""
+
+    def test_analyse_evidence_returns_empty_for_no_results_sentinel(self) -> None:
+        """_analyse_evidence must return '' for the 'No search results' sentinel."""
+        con, _, _ = _make_con()
+        assert con._analyse_evidence("No search results available.") == ""
+
+    def test_analyse_evidence_returns_empty_when_skill_file_missing(self, tmp_path: pytest.fixture) -> None:
+        """_analyse_evidence must return '' gracefully when skill file does not exist."""
+        gk = MagicMock()
+        gk.call.return_value = _make_mock_response()
+        cfg = FakeCfg()
+        cfg.setup["debate"]["skills_path"] = str(tmp_path) + "/"
+        (tmp_path / "con_skill.md").write_text("CON skill content", encoding="utf-8")
+        con = ConAgent(role="con", config_manager=cfg, gatekeeper=gk)
+        assert con._analyse_evidence("Some evidence here.") == ""
+
+    def test_build_con_prompt_without_analysis_still_has_opponent_content(self) -> None:
+        """_build_con_prompt with empty analysis must still include opponent argument."""
+        con, _, _ = _make_con()
+        msg = DebateMessage(type="argument", round=2, sender="pro", content="Remote beats offices.")
+        prompt = con._build_con_prompt(msg, "some evidence", "")
+        assert "Remote beats offices." in prompt
+
+    def test_build_con_prompt_with_analysis_includes_claim_block(self) -> None:
+        """_build_con_prompt with analysis must inject the structured claim block."""
+        con, _, _ = _make_con()
+        msg = DebateMessage(type="argument", round=2, sender="pro", content="Remote beats offices.")
+        prompt = con._build_con_prompt(msg, "some evidence", "CLAIM C1: weak premise here")
+        assert "STRUCTURED CLAIM ANALYSIS" in prompt
+        assert "CLAIM C1: weak premise here" in prompt
