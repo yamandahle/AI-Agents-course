@@ -1,86 +1,78 @@
 # AI Agents Course
 
-Student repository for the **AI Agents** course (Dr. Yoram Segal).
+Repository for the **AI Agents** course (Dr. Yoram Segal).
 
-| Assignment | Folder | What it does |
-|------------|--------|----------------|
+| Assignment | Folder | Description |
+|------------|--------|-------------|
 | HW1 | [`hw1/`](hw1/) | Signal separation with FC, RNN, and LSTM |
-| HW2 | [`hw2/`](hw2/) | Multi-agent debate: PRO vs CON, moderated by Father |
+| HW2 | [`hw2/`](hw2/) | Multi-agent debate: PRO, CON, and Father moderator |
 
 ---
 
 ## Table of Contents
 
-1. [Repository overview](#1-repository-overview)
-2. [HW2 — quick start](#2-hw2--quick-start)
-3. [HW2 — evidence and results](#3-hw2--evidence-and-results)
-4. [Documentation](#4-documentation)
+1. [Repository contents](#1-repository-contents)
+2. [HW2 — stages and documentation](#2-hw2--stages-and-documentation)
+3. [HW2 — quick start (Stage 3)](#3-hw2--quick-start-stage-3)
+4. [HW2 — deliverables](#4-hw2--deliverables)
 5. [HW1](#5-hw1)
 
 ---
 
-## 1. Repository overview
+## 1. Repository contents
 
-This repo contains two assignments:
-
-- **HW1** — machine learning on noisy mixed signals (fully documented in [`hw1/README.md`](hw1/README.md)).
-- **HW2** — three-stage debate system on the topic *“Is remote work better than working from the office?”*
-  - **PRO** argues for remote work
-  - **CON** argues for office work
-  - **Father** routes all messages, enforces rules, and declares a winner (no ties)
-
-HW2 is submitted on branch **`yamandahle-hw2`** (see [GitHub](https://github.com/yamandahle/AI-Agents-course)).
+- **HW1** — neural networks for blind source separation on mixed sine signals ([`hw1/README.md`](hw1/README.md)).
+- **HW2** — three-stage implementation of an AI debate on *remote work vs. office work* ([`hw2/README.md`](hw2/README.md)).
 
 ---
 
-## 2. HW2 — quick start
+## 2. HW2 — stages and documentation
 
-The runnable Python app lives in **`hw2/debate_agents/`**.
+HW2 is built in three ordered stages. Goals and file locations are documented in [`hw2/README.md` § Development stages](hw2/README.md#2-development-stages).
+
+| Stage | Goal (summary) | Folder |
+|-------|----------------|--------|
+| 1 | Manual debate; human as Father | [`hw2/stage1/`](hw2/stage1/) |
+| 2 | Semi-automatic debate via Claude CLI | [`hw2/stage2/`](hw2/stage2/), [`hw2/.claude/commands/`](hw2/.claude/commands/) |
+| 3 | Full Python automation, tests, Gatekeeper | [`hw2/debate_agents/`](hw2/debate_agents/) |
+
+---
+
+## 3. HW2 — quick start (Stage 3)
 
 ```powershell
 cd hw2/debate_agents
 uv sync
 copy .env-example .env
-# Edit .env: set ANTHROPIC_API_KEY and TAVILY_API_KEY
+```
+
+Configure API keys in `.env`, then:
+
+```powershell
 uv run python src/main.py
 ```
 
-**Menu:** `1` = run debate · `2` = transcript · `3` = cost report · `4` = logs · `5` = exit
-
-After option **1**, the full run is saved to [`hw2/debate_agents/results/sample_debate.txt`](hw2/debate_agents/results/sample_debate.txt).
-
-Full guide: [`hw2/README.md`](hw2/README.md) · Technical details: [`hw2/debate_agents/README.md`](hw2/debate_agents/README.md)
+Technical details: [`hw2/debate_agents/README.md`](hw2/debate_agents/README.md)
 
 ---
 
-## 3. HW2 — evidence and results
+## 4. HW2 — deliverables
 
-Chat screenshots are **not required** — transcripts and logs are in the repo:
+| Stage | Deliverable | Path |
+|-------|-------------|------|
+| 1 | Debate transcript | [`hw2/stage1/debate_transcript.md`](hw2/stage1/debate_transcript.md) |
+| 1 | Observations | [`hw2/stage1/observations.md`](hw2/stage1/observations.md) |
+| 2 | CLI commands | [`hw2/.claude/commands/`](hw2/.claude/commands/) |
+| 3 | Sample run | [`hw2/debate_agents/results/sample_debate.txt`](hw2/debate_agents/results/sample_debate.txt) |
+| 3 | Test report | [`hw2/debate_agents/results/test_results.txt`](hw2/debate_agents/results/test_results.txt) |
 
-| What | File |
-|------|------|
-| Stage 1 manual debate (ChatGPT + Gemini) | [`hw2/stage1/debate_transcript.md`](hw2/stage1/debate_transcript.md) |
-| Stage 1 lessons learned | [`hw2/stage1/observations.md`](hw2/stage1/observations.md) |
-| Stage 2 Claude CLI prompts | [`hw2/.claude/commands/`](hw2/.claude/commands/) |
-| Stage 3 sample run (transcript + verdict + cost) | [`hw2/debate_agents/results/sample_debate.txt`](hw2/debate_agents/results/sample_debate.txt) |
-| Stage 3 tests (161 passed, ~86% coverage) | [`hw2/debate_agents/results/test_results.txt`](hw2/debate_agents/results/test_results.txt) |
-
----
-
-## 4. Documentation
-
-| Document | Location |
-|----------|----------|
-| HW2 overview (3 stages) | [`hw2/README.md`](hw2/README.md) |
-| Product requirements | [`hw2/docs/PRD.md`](hw2/docs/PRD.md) |
-| Architecture plan | [`hw2/docs/PLAN.md`](hw2/docs/PLAN.md) |
-| Task tracker | [`hw2/docs/TODO.md`](hw2/docs/TODO.md) |
+Planning documents: [`hw2/docs/`](hw2/docs/)
 
 ---
 
 ## 5. HW1
 
-Installation, experiments, figures, and analysis: [`hw1/README.md`](hw1/README.md)
+Installation, experiments, and analysis: [`hw1/README.md`](hw1/README.md)
 
 ---
 
