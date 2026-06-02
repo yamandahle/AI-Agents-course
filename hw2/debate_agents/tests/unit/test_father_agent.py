@@ -235,11 +235,11 @@ class TestNoTieRule:
         result = father.run_debate("topic", MockAgent("pro", _std_responses()), MockAgent("con", _std_responses()))
         assert abs(result.pro_score + result.con_score - 100.0) < 0.01
 
-    def test_minimum_60_40_split(self) -> None:
-        """The winning side must have at least 60 points (minimum 60/40 split enforced)."""
+    def test_minimum_gap_enforced(self) -> None:
+        """Scores must differ by at least 2 points — no ties allowed."""
         father = _make_father(rounds=3)
         result = father.run_debate("topic", MockAgent("pro", _std_responses()), MockAgent("con", _std_responses()))
-        assert max(result.pro_score, result.con_score) >= 60.0
+        assert abs(result.pro_score - result.con_score) >= 2.0
 
 
 # ---------------------------------------------------------------------------

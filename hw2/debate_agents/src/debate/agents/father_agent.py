@@ -59,11 +59,16 @@ class FatherAgent(BaseAgent):
         pro_history: list[DebateMessage] = []
         con_history: list[DebateMessage] = []
         interventions = 0
+        compactions = 0
         context_tokens = 0
         pro_concepts: list[str] = []
         con_concepts: list[str] = []
         pro_contradictions = 0
         con_contradictions = 0
+        pro_urls_seen: set[str] = set()
+        con_urls_seen: set[str] = set()
+        pro_rounds_won = 0
+        con_rounds_won = 0
         current_msg = DebateMessage(type="argument", round=0, sender="con", content=topic)
 
         for rnd in range(1, self._rounds + 1):
@@ -81,6 +86,8 @@ class FatherAgent(BaseAgent):
                 pro_concepts.append(pro_msg.concept)
             if self._detect_contradiction(pro_msg, pro_history):
                 pro_contradictions += 1
+                self._fire(on_event, "father_check", {"agent": "pro", "check": "contradiction", "ok": False})
+            self._coach(pro_msg, "pro", pro_urls_seen, on_event)
             pro_history.append(pro_msg)
             transcript.append(pro_msg)
             self._fire(on_event, "father_route", {"to": "con"})
@@ -97,8 +104,20 @@ class FatherAgent(BaseAgent):
                 con_concepts.append(con_msg.concept)
             if self._detect_contradiction(con_msg, con_history):
                 con_contradictions += 1
+                self._fire(on_event, "father_check", {"agent": "con", "check": "contradiction", "ok": False})
+            self._coach(con_msg, "con", con_urls_seen, on_event)
             con_history.append(con_msg)
             transcript.append(con_msg)
+
+            rnd_winner, rnd_reason = self._score_round(pro_msg, con_msg)
+            if rnd_winner == "pro":
+                pro_rounds_won += 1
+            else:
+                con_rounds_won += 1
+            self._fire(on_event, "round_result", {
+                "round": rnd, "winner": rnd_winner, "reason": rnd_reason,
+                "pro_rounds_won": pro_rounds_won, "con_rounds_won": con_rounds_won,
+            })
 
             round_tokens = round(
                 (pro_msg.word_count + con_msg.word_count) * self._token_multiplier
@@ -109,7 +128,8 @@ class FatherAgent(BaseAgent):
             if self._logger is not None:
                 self._logger.info("father", "context_update", {"round": rnd, "new_tokens": round_tokens, "total": context_tokens})
 
-            if rnd == self._summarize_after:
+            if rnd % self._summarize_after == 0:
+                compactions += 1
                 summary = self._summarize_history(pro_history + con_history)
                 if self._logger is not None:
                     self._logger.info("father", "context_compact", {
@@ -123,6 +143,7 @@ class FatherAgent(BaseAgent):
             pro_history, con_history, transcript, interventions, context_tokens,
             pro_concepts=pro_concepts, con_concepts=con_concepts,
             pro_contradictions=pro_contradictions, con_contradictions=con_contradictions,
+            compactions=compactions,
         )
         self._fire(on_event, "verdict", {"result": result})
         return result
@@ -215,6 +236,7 @@ class FatherAgent(BaseAgent):
         con_concepts: list[str] | None = None,
         pro_contradictions: int = 0,
         con_contradictions: int = 0,
+        compactions: int = 0,
     ) -> DebateResult:
         pro_bd = self._scorer.score_detailed(
             pro_history, self._word_limit,
@@ -230,22 +252,61 @@ class FatherAgent(BaseAgent):
         else:
             pro_pct = round(pro_bd.total / total * 100, 1)
             con_pct = round(100.0 - pro_pct, 1)
-        if abs(pro_pct - con_pct) < 1.0:
+        if abs(pro_pct - con_pct) < 2.0:
             pro_pct = min(100.0, pro_pct + 1.0)
             con_pct = max(0.0, con_pct - 1.0)
         winner = "pro" if pro_pct >= con_pct else "con"
-        if max(pro_pct, con_pct) < 60.0:
-            pro_pct, con_pct = (60.0, 40.0) if winner == "pro" else (40.0, 60.0)
         return DebateResult(
             winner=winner, pro_score=pro_pct, con_score=con_pct,
             total_interventions=interventions, rounds_completed=len(pro_history),
             transcript=transcript, context_tokens=context_tokens,
             pro_breakdown=pro_bd, con_breakdown=con_bd,
+            total_compactions=compactions,
         )
 
     # ------------------------------------------------------------------
     # Helpers
     # ------------------------------------------------------------------
+
+    def _coach(
+        self,
+        msg: DebateMessage,
+        agent_name: str,
+        seen_urls: set[str],
+        on_event: _OnEvent,
+    ) -> None:
+        """Fire coaching events if the argument trips a quality rule."""
+        if msg.word_count < 50:
+            self._fire(on_event, "father_coaching", {
+                "agent": agent_name,
+                "message": "Too short — you left your argument half-finished. Develop it more next round.",
+            })
+        url = msg.evidence_url.strip()
+        if url and url in seen_urls:
+            self._fire(on_event, "father_coaching", {
+                "agent": agent_name,
+                "message": "You reused that source. Find completely fresh evidence next round.",
+            })
+        if url:
+            seen_urls.add(url)
+
+    def _score_round(self, pro_msg: DebateMessage, con_msg: DebateMessage) -> tuple[str, str]:
+        """Determine which agent won this single round based on evidence + depth."""
+        pro_ev = self._scorer._score_evidence([pro_msg])
+        con_ev = self._scorer._score_evidence([con_msg])
+        pro_st = self._scorer._score_strength([pro_msg], self._word_limit)
+        con_st = self._scorer._score_strength([con_msg], self._word_limit)
+        pro_total = pro_ev * 0.6 + pro_st * 0.4
+        con_total = con_ev * 0.6 + con_st * 0.4
+        if pro_total > con_total + 2:
+            return "pro", "stronger evidence and depth"
+        if con_total > pro_total + 2:
+            return "con", "stronger evidence and depth"
+        if pro_msg.word_count > con_msg.word_count:
+            return "pro", "more developed argument"
+        if con_msg.word_count > pro_msg.word_count:
+            return "con", "more developed argument"
+        return "pro", "closely matched — PRO takes the edge"
 
     def _detect_contradiction(
         self, message: DebateMessage, own_history: list[DebateMessage],

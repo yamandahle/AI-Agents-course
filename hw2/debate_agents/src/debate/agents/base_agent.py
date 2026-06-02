@@ -33,7 +33,8 @@ class DebateMessage:
         default_factory=lambda: datetime.now(tz=timezone.utc).isoformat()
     )
     word_count: int = 0
-    concept: str = ""  # new_concept_used label extracted from LLM JSON response
+    concept: str = ""
+    evidence_url: str = ""
 
     def to_json(self) -> str:
         """Serialise to a JSON string suitable for queue transport."""
@@ -49,6 +50,7 @@ class DebateMessage:
             content=data["content"],
             timestamp=data.get("timestamp", datetime.now(tz=timezone.utc).isoformat()),
             word_count=data.get("word_count", 0),
+            evidence_url=data.get("evidence_url", ""),
         )
 
 
@@ -211,6 +213,21 @@ class BaseAgent(abc.ABC):
         except (json.JSONDecodeError, ValueError):
             pass
         return text
+
+    def _extract_url(self, raw: str) -> str:
+        """Extract the evidence_url field from a JSON LLM response."""
+        text = raw.strip()
+        if text.startswith("```"):
+            lines = text.splitlines()
+            text = "\n".join(lines[1:-1] if lines[-1].strip() == "```" else lines[1:]).strip()
+        try:
+            parsed = json.loads(text)
+            if isinstance(parsed, dict):
+                url = str(parsed.get("evidence_url", "")).strip()
+                return url if url.startswith("http") else ""
+        except (json.JSONDecodeError, ValueError):
+            pass
+        return ""
 
     def _call_llm(self, prompt: str) -> str:
         """Send prompt through the Gatekeeper with a hard timeout.

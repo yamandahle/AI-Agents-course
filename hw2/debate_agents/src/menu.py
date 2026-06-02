@@ -23,7 +23,7 @@ _state: dict[str, Any] = {"pro_searches": 0, "con_searches": 0, "round_tokens": 
 
 def show_header() -> None:
     print("\n========================================")
-    print("   AI DEBATE SYSTEM — HW2")
+    print("   AI DEBATE SYSTEM - HW2")
     print(f"   {_TOPIC}")
     print("========================================")
     print("1. Start new debate")
@@ -40,28 +40,38 @@ def _on_event(event: str, data: dict[str, Any]) -> None:
         print(f"\n=== PING {data['round']}/{data['total']} ===")
     elif event == "pro_searching":
         _state["pro_searches"] += 1
-        print("  \U0001f50d PRO searching web for evidence...")
+        print("  [SEARCH] PRO searching web for evidence...")
     elif event == "pro_argument":
         print(_wrap(f"PRO: {data['content']}"))
     elif event == "father_validate":
-        print("  FATHER: validating JSON... ✓")
+        print("  FATHER: validating JSON... OK")
     elif event == "father_check":
-        result_str = "CLEAR" if data["ok"] else "⚠ INTERVENING"
+        result_str = "CLEAR" if data["ok"] else "VIOLATION FOUND"
         print(f"  FATHER: checking {data['check']}... {result_str}")
     elif event == "father_route":
         print(f"  FATHER: routing to {data['to'].upper()}...")
     elif event == "con_searching":
         _state["con_searches"] += 1
-        print("  \U0001f50d CON searching web for evidence...")
+        print("  [SEARCH] CON searching web for evidence...")
     elif event == "con_argument":
         print(_wrap(f"CON: {data['content']}"))
+    elif event == "father_coaching":
+        agent = data["agent"].upper()
+        print(f"  [COACH -> {agent}] {data['message']}")
+    elif event == "round_result":
+        rnd = data["round"]
+        w = data["winner"].upper()
+        reason = data["reason"]
+        pw = data["pro_rounds_won"]
+        cw = data["con_rounds_won"]
+        print(f"  FATHER: Round {rnd} -> {w} ({reason})  |  Score: PRO {pw} - CON {cw}")
     elif event == "intervention":
-        print("  ⚠ FATHER INTERVENES: Stay in your role. You must disagree.")
+        print("  !! FATHER INTERVENES: Stay in your role. You must disagree.")
     elif event == "context_update":
         _state["round_tokens"].append(data["total"])
         print(f"  [Context: ~{data['total']} tokens used]")
     elif event == "context_compact":
-        print("  ⚙ FATHER: Summarizing history to save tokens...")
+        print("  [COMPACT] FATHER: Summarizing history to save tokens...")
         print(f"  [Context compacted: saved ~{data['saved']} tokens]")
         summary = data.get("summary", "")
         if summary and summary != "(summary unavailable)":
@@ -75,10 +85,12 @@ def _print_verdict(result: Any) -> None:
     winner_pct = result.pro_score if result.winner == "pro" else result.con_score
     loser_pct = 100.0 - winner_pct
     searches = _state["pro_searches"] + _state["con_searches"]
-    print(f"WINNER: {result.winner.upper()} — Score: {winner_pct:.0f}% vs {loser_pct:.0f}%")
-    print(f"Total interventions:  {result.total_interventions}")
-    print(f"Total tokens used:    {result.context_tokens}")
-    print(f"Total web searches:   {searches}")
+    compactions = getattr(result, "total_compactions", 0)
+    print(f"WINNER: {result.winner.upper()} - Score: {winner_pct:.0f}% vs {loser_pct:.0f}%")
+    print(f"Role violations fixed: {result.total_interventions}")
+    print(f"History compactions:   {compactions}")
+    print(f"Total tokens used:     {result.context_tokens}")
+    print(f"Total web searches:    {searches}")
 
     pb, cb = result.pro_breakdown, result.con_breakdown
     if pb and cb:
@@ -90,7 +102,7 @@ def _print_verdict(result: Any) -> None:
         print(f"{'Evidence quality':<26} {pb.evidence:>{col}.1f} {cb.evidence:>{col}.1f}")
         print(f"{'Persuasiveness':<26} {pb.persuasion:>{col}.1f} {cb.persuasion:>{col}.1f}")
         print(f"{'New concepts  (+2 each)':<26} {pb.concept_bonus:>{col}.1f} {cb.concept_bonus:>{col}.1f}")
-        print(f"{'Contradictions (−2 each)':<26} {-pb.contradiction_penalty:>{col}.1f} {-cb.contradiction_penalty:>{col}.1f}")
+        print(f"{'Contradictions (-2 each)':<26} {-pb.contradiction_penalty:>{col}.1f} {-cb.contradiction_penalty:>{col}.1f}")
         print("-" * (26 + col * 2 + 2))
         print(f"{'Raw score':<26} {pb.total:>{col}.1f} {cb.total:>{col}.1f}")
         print(f"{'Unique concepts introduced':<26} {pb.concepts_introduced:>{col}} {cb.concepts_introduced:>{col}}")

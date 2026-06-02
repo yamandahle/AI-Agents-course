@@ -40,6 +40,7 @@ class DebateResult:
     context_tokens: int = 0
     pro_breakdown: ScoreBreakdown | None = None
     con_breakdown: ScoreBreakdown | None = None
+    total_compactions: int = 0
 
 
 class ArgumentScorer:

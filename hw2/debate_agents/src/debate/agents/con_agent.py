@@ -29,7 +29,9 @@ class ConAgent(BaseAgent):
         prompt = self._build_prompt(opponent_msg, evidence)
         raw = self._call_llm(prompt)
         concept = self._extract_concept(raw)
+        url = self._extract_url(raw)
         text = self._enforce_word_limit(self._extract_argument(raw))
         msg = self.send_message(text, ping_num=opponent_msg.round + 1)
         msg.concept = concept
+        msg.evidence_url = url
         return msg
