@@ -400,16 +400,39 @@ class TestConNewsAnalysis:
         assert con._analyse_evidence("Some evidence here.") == ""
 
     def test_build_con_prompt_without_analysis_still_has_opponent_content(self) -> None:
-        """_build_con_prompt with empty analysis must still include opponent argument."""
+        """_build_con_prompt with empty analyses must still include opponent argument."""
         con, _, _ = _make_con()
         msg = DebateMessage(type="argument", round=2, sender="pro", content="Remote beats offices.")
-        prompt = con._build_con_prompt(msg, "some evidence", "")
+        prompt = con._build_con_prompt(msg, "some evidence", "", "")
         assert "Remote beats offices." in prompt
 
     def test_build_con_prompt_with_analysis_includes_claim_block(self) -> None:
-        """_build_con_prompt with analysis must inject the structured claim block."""
+        """_build_con_prompt with evidence analysis must inject the structured claim block."""
         con, _, _ = _make_con()
         msg = DebateMessage(type="argument", round=2, sender="pro", content="Remote beats offices.")
-        prompt = con._build_con_prompt(msg, "some evidence", "CLAIM C1: weak premise here")
-        assert "STRUCTURED CLAIM ANALYSIS" in prompt
+        prompt = con._build_con_prompt(msg, "some evidence", "CLAIM C1: weak premise here", "")
+        assert "EVIDENCE CLAIM ANALYSIS" in prompt
         assert "CLAIM C1: weak premise here" in prompt
+
+    def test_build_con_prompt_with_fallacy_includes_fallacy_block(self) -> None:
+        """_build_con_prompt with fallacy analysis must inject the reasoning error block."""
+        con, _, _ = _make_con()
+        msg = DebateMessage(type="argument", round=2, sender="pro", content="Remote beats offices.")
+        prompt = con._build_con_prompt(msg, "some evidence", "", "FALLACY: hasty generalisation found")
+        assert "OPPONENT REASONING ANALYSIS" in prompt
+        assert "hasty generalisation found" in prompt
+
+    def test_detect_fallacies_returns_empty_when_skill_missing(self, tmp_path: pytest.fixture) -> None:
+        """_detect_fallacies must return '' gracefully when skill file does not exist."""
+        gk = MagicMock()
+        gk.call.return_value = _make_mock_response()
+        cfg = FakeCfg()
+        cfg.setup["debate"]["skills_path"] = str(tmp_path) + "/"
+        (tmp_path / "con_skill.md").write_text("CON skill content", encoding="utf-8")
+        con = ConAgent(role="con", config_manager=cfg, gatekeeper=gk)
+        assert con._detect_fallacies("Some argument here.") == ""
+
+    def test_detect_fallacies_returns_empty_for_empty_argument(self) -> None:
+        """_detect_fallacies must return '' when opponent argument is empty."""
+        con, _, _ = _make_con()
+        assert con._detect_fallacies("") == ""

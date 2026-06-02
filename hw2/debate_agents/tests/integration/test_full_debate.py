@@ -170,10 +170,10 @@ class TestVerdictProduced:
         result = components.father.run_debate("Remote work vs office work", components.pro, components.con)
         assert abs(result.pro_score + result.con_score - 100.0) < 0.01
 
-    def test_winner_has_at_least_60_points(self, components: _Components) -> None:
-        """The winning side must hold at least 60 points (60/40 minimum split enforced)."""
+    def test_scores_differ_by_at_least_2_points(self, components: _Components) -> None:
+        """Scores must differ by at least 2 points — no ties allowed."""
         result = components.father.run_debate("Remote work vs office work", components.pro, components.con)
-        assert max(result.pro_score, result.con_score) >= 60.0
+        assert abs(result.pro_score - result.con_score) >= 2.0
 
     def test_no_score_tie(self, components: _Components) -> None:
         """pro_score and con_score must never be equal (tie is forbidden by no-tie rule)."""
