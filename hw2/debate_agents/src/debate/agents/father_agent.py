@@ -91,11 +91,14 @@ class FatherAgent(BaseAgent):
 
             if self._logger is not None:
                 self._logger.info("father", "context_update", {"round": rnd, "new_tokens": round_tokens, "total": context_tokens})
-                if rnd == self._summarize_after:
-                    self._logger.info("father", "context_compact", {"rounds_summarized": f"1-{rnd - 1}", "tokens_saved": context_tokens // 2})
 
             if rnd == self._summarize_after:
-                self._fire(on_event, "context_compact", {"saved": context_tokens // 2})
+                summary = self._summarize_history(pro_history + con_history)
+                if self._logger is not None:
+                    self._logger.info("father", "context_compact", {
+                        "rounds_summarized": f"1-{rnd}", "tokens_saved": context_tokens // 2, "summary": summary,
+                    })
+                self._fire(on_event, "context_compact", {"saved": context_tokens // 2, "summary": summary})
 
             current_msg = con_msg
 
@@ -155,9 +158,21 @@ class FatherAgent(BaseAgent):
         return msg, 0
 
     def _intervene(self, agent: Any, reason: str, opponent_msg: DebateMessage) -> DebateMessage:
+        if reason == "agreement":
+            instruction = (
+                "INTERVENTION: You agreed with your opponent — that is forbidden. "
+                "Rewrite. Attack their claim directly. Introduce a brand-new concept "
+                "you have not used in any previous round."
+            )
+        else:
+            instruction = (
+                "INTERVENTION: You repeated a concept already argued. "
+                "Pick a completely different angle you have NOT raised before. "
+                "Also rebut your opponent's last specific claim in one sentence."
+            )
         notice = DebateMessage(
             type="intervention", round=opponent_msg.round, sender="father",
-            content=f"INTERVENTION ({reason}): Rewrite with a stronger, distinct argument.",
+            content=instruction,
         )
         agent.receive_message(notice)
         if self._logger is not None:
@@ -199,6 +214,22 @@ class FatherAgent(BaseAgent):
     # ------------------------------------------------------------------
     # Helpers
     # ------------------------------------------------------------------
+
+    def _summarize_history(self, history: list[DebateMessage]) -> str:
+        """Call LLM with the summarize skill to compact the debate transcript."""
+        skill_path = Path(self._skills_path) / "summarize_skill.md"
+        try:
+            skill = skill_path.read_text(encoding="utf-8")
+        except OSError:
+            return "(summary unavailable)"
+        transcript_text = "\n".join(
+            f"Round {m.round} [{m.sender.upper()}]: {m.content}" for m in history
+        )
+        prompt = f"{skill}\n\nDEBATE HISTORY TO SUMMARIZE:\n{transcript_text}"
+        try:
+            return self._call_llm(prompt)
+        except Exception:  # noqa: BLE001
+            return "(summary unavailable)"
 
     def _fire(self, on_event: _OnEvent, event: str, data: dict[str, Any]) -> None:
         if on_event is not None:

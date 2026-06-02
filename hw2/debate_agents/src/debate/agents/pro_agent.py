@@ -20,10 +20,13 @@ class ProAgent(BaseAgent):
         return skill_path.read_text(encoding="utf-8")
 
     def generate_argument(self, opponent_msg: DebateMessage) -> DebateMessage:
-        """Search for pro-remote evidence, then build a data-driven rebuttal."""
-        query = f"remote work productivity benefits statistics evidence {opponent_msg.content[:80]}"
-        results = self.search_web(query)
-        evidence = self._format_evidence(results)
-        prompt = self._build_prompt(opponent_msg, evidence)
-        text = self._enforce_word_limit(self._call_llm(prompt))
+        """Build opening statement on round 0, then data-driven rebuttals for all later rounds."""
+        if opponent_msg.round == 0:
+            prompt = self._build_opening_prompt(opponent_msg.content)
+        else:
+            query = f"remote work productivity benefits statistics evidence {opponent_msg.content[:80]}"
+            results = self.search_web(query)
+            evidence = self._format_evidence(results)
+            prompt = self._build_prompt(opponent_msg, evidence)
+        text = self._enforce_word_limit(self._extract_argument(self._call_llm(prompt)))
         return self.send_message(text, ping_num=opponent_msg.round + 1)

@@ -14,6 +14,7 @@ from concurrent.futures import ThreadPoolExecutor
 from concurrent.futures import TimeoutError as FutureTimeoutError
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 # ---------------------------------------------------------------------------
@@ -139,6 +140,19 @@ class BaseAgent(abc.ABC):
     # Protected helpers
     # ------------------------------------------------------------------
 
+    def _build_opening_prompt(self, topic: str) -> str:
+        """Build the round-1 opening prompt using open_skill.md + agent role."""
+        try:
+            opening_skill = (Path(self._skills_path) / "open_skill.md").read_text(encoding="utf-8")
+        except OSError:
+            opening_skill = ""
+        return (
+            f"YOUR DEBATE ROLE AND POSITION:\n{self.get_skill_prompt()}\n\n"
+            f"{opening_skill}\n\n"
+            f"DEBATE TOPIC: {topic}\n\n"
+            f"Deliver your opening statement. Maximum {self._word_limit} words."
+        )
+
     def _build_prompt(self, opponent_msg: DebateMessage, evidence: str) -> str:
         """Compose the full LLM prompt: skill role + opponent argument + evidence + word cap."""
         return (
@@ -161,6 +175,27 @@ class BaseAgent(abc.ABC):
         """Truncate text to at most word_limit words as set in config."""
         words = text.split()
         return " ".join(words[: self._word_limit]) if len(words) > self._word_limit else text
+
+    def _extract_argument(self, raw: str) -> str:
+        """Extract plain argument text from a raw LLM response.
+
+        Handles three formats the LLM may return:
+        1. JSON object with an "argument" key → returns that value
+        2. Markdown-fenced block (```...```) → strips fences, then tries JSON again
+        3. Plain text → returns as-is
+        """
+        text = raw.strip()
+        # Strip markdown code fences if present
+        if text.startswith("```"):
+            lines = text.splitlines()
+            text = "\n".join(lines[1:-1] if lines[-1].strip() == "```" else lines[1:]).strip()
+        try:
+            parsed = json.loads(text)
+            if isinstance(parsed, dict) and "argument" in parsed:
+                return str(parsed["argument"])
+        except (json.JSONDecodeError, ValueError):
+            pass
+        return text
 
     def _call_llm(self, prompt: str) -> str:
         """Send prompt through the Gatekeeper with a hard timeout.

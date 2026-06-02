@@ -75,6 +75,8 @@ Score each agent 0–25 per category:
 - Evidence quality and relevance
 - Direct response to opponent
 - Persuasion and conversational effectiveness
+- add a bonus points if the topic that added by the agent does not exist anywhere else 
+
 
 ```json
 {

@@ -27,5 +27,5 @@ class ConAgent(BaseAgent):
         results = self.search_web(query)
         evidence = self._format_evidence(results)
         prompt = self._build_prompt(opponent_msg, evidence)
-        text = self._enforce_word_limit(self._call_llm(prompt))
+        text = self._enforce_word_limit(self._extract_argument(self._call_llm(prompt)))
         return self.send_message(text, ping_num=opponent_msg.round + 1)

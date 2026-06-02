@@ -3,12 +3,19 @@
 from __future__ import annotations
 
 import json
+import textwrap
 from pathlib import Path
 from typing import Any
 
 from debate.sdk.runner import DebateRunner
 
 _TOPIC = "Is remote work better than working from the office?"
+_WIDTH = 80  # wrap width for argument text
+
+
+def _wrap(text: str, indent: str = "  ") -> str:
+    """Wrap text to terminal width with a consistent left indent."""
+    return textwrap.fill(text, width=_WIDTH, initial_indent=indent, subsequent_indent=indent)
 _CONFIG_DIR = "config"
 _runner = DebateRunner(config_dir=_CONFIG_DIR)
 _state: dict[str, Any] = {"pro_searches": 0, "con_searches": 0, "round_tokens": []}
@@ -17,7 +24,7 @@ _state: dict[str, Any] = {"pro_searches": 0, "con_searches": 0, "round_tokens": 
 def show_header() -> None:
     print("\n========================================")
     print("   AI DEBATE SYSTEM — HW2")
-    print("   Remote Work vs Office Work")
+    print(f"   {_TOPIC}")
     print("========================================")
     print("1. Start new debate")
     print("2. View last debate transcript")
@@ -35,7 +42,7 @@ def _on_event(event: str, data: dict[str, Any]) -> None:
         _state["pro_searches"] += 1
         print("  \U0001f50d PRO searching web for evidence...")
     elif event == "pro_argument":
-        print(f"  PRO: {data['content'][:110]}...")
+        print(_wrap(f"PRO: {data['content']}"))
     elif event == "father_validate":
         print("  FATHER: validating JSON... ✓")
     elif event == "father_check":
@@ -47,7 +54,7 @@ def _on_event(event: str, data: dict[str, Any]) -> None:
         _state["con_searches"] += 1
         print("  \U0001f50d CON searching web for evidence...")
     elif event == "con_argument":
-        print(f"  CON: {data['content'][:110]}...")
+        print(_wrap(f"CON: {data['content']}"))
     elif event == "intervention":
         print("  ⚠ FATHER INTERVENES: Stay in your role. You must disagree.")
     elif event == "context_update":
@@ -56,6 +63,9 @@ def _on_event(event: str, data: dict[str, Any]) -> None:
     elif event == "context_compact":
         print("  ⚙ FATHER: Summarizing history to save tokens...")
         print(f"  [Context compacted: saved ~{data['saved']} tokens]")
+        summary = data.get("summary", "")
+        if summary and summary != "(summary unavailable)":
+            print(_wrap(f"SUMMARY: {summary}"))
     elif event == "verdict":
         _print_verdict(data["result"])
 
@@ -75,7 +85,7 @@ def _print_verdict(result: Any) -> None:
 def handle_start_debate() -> None:
     setup = json.loads(Path(f"{_CONFIG_DIR}/setup.json").read_text(encoding="utf-8"))
     skills = setup["debate"].get("skills_path", "src/debate/skills/")
-    print("\nStarting debate... Topic: Remote Work vs Office")
+    print(f"\nStarting debate... Topic: {_TOPIC}")
     print(f"PRO agent loading skill:    {skills}pro_skill.md")
     print(f"CON agent loading skill:    {skills}con_skill.md")
     print(f"FATHER loading skill:       {skills}father_skill.md")
@@ -93,7 +103,7 @@ def handle_view_transcript() -> None:
     print(f"\n--- TRANSCRIPT ({result.rounds_completed} rounds) ---")
     for msg in result.transcript:
         print(f"\n[Round {msg.round}] {msg.sender.upper()}:")
-        print(f"  {msg.content[:250]}")
+        print(_wrap(msg.content))
     _print_verdict(result)
 
 
