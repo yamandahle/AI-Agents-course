@@ -33,6 +33,7 @@ class DebateMessage:
         default_factory=lambda: datetime.now(tz=timezone.utc).isoformat()
     )
     word_count: int = 0
+    concept: str = ""  # new_concept_used label extracted from LLM JSON response
 
     def to_json(self) -> str:
         """Serialise to a JSON string suitable for queue transport."""
@@ -175,6 +176,20 @@ class BaseAgent(abc.ABC):
         """Truncate text to at most word_limit words as set in config."""
         words = text.split()
         return " ".join(words[: self._word_limit]) if len(words) > self._word_limit else text
+
+    def _extract_concept(self, raw: str) -> str:
+        """Extract the new_concept_used label from a JSON LLM response."""
+        text = raw.strip()
+        if text.startswith("```"):
+            lines = text.splitlines()
+            text = "\n".join(lines[1:-1] if lines[-1].strip() == "```" else lines[1:]).strip()
+        try:
+            parsed = json.loads(text)
+            if isinstance(parsed, dict):
+                return str(parsed.get("new_concept_used", "")).strip().lower()
+        except (json.JSONDecodeError, ValueError):
+            pass
+        return ""
 
     def _extract_argument(self, raw: str) -> str:
         """Extract plain argument text from a raw LLM response.

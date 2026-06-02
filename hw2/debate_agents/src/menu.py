@@ -79,6 +79,22 @@ def _print_verdict(result: Any) -> None:
     print(f"Total interventions:  {result.total_interventions}")
     print(f"Total tokens used:    {result.context_tokens}")
     print(f"Total web searches:   {searches}")
+
+    pb, cb = result.pro_breakdown, result.con_breakdown
+    if pb and cb:
+        print("\n--- HOW THE FATHER DECIDED ---")
+        col = 16
+        print(f"{'Category':<26} {'PRO':>{col}} {'CON':>{col}}")
+        print("-" * (26 + col * 2 + 2))
+        print(f"{'Argument strength':<26} {pb.strength:>{col}.1f} {cb.strength:>{col}.1f}")
+        print(f"{'Evidence quality':<26} {pb.evidence:>{col}.1f} {cb.evidence:>{col}.1f}")
+        print(f"{'Persuasiveness':<26} {pb.persuasion:>{col}.1f} {cb.persuasion:>{col}.1f}")
+        print(f"{'New concepts  (+2 each)':<26} {pb.concept_bonus:>{col}.1f} {cb.concept_bonus:>{col}.1f}")
+        print(f"{'Contradictions (−2 each)':<26} {-pb.contradiction_penalty:>{col}.1f} {-cb.contradiction_penalty:>{col}.1f}")
+        print("-" * (26 + col * 2 + 2))
+        print(f"{'Raw score':<26} {pb.total:>{col}.1f} {cb.total:>{col}.1f}")
+        print(f"{'Unique concepts introduced':<26} {pb.concepts_introduced:>{col}} {cb.concepts_introduced:>{col}}")
+        print(f"{'Self-contradictions found':<26} {pb.contradictions_found:>{col}} {cb.contradictions_found:>{col}}")
     print("==============================")
 
 

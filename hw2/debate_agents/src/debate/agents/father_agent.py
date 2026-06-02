@@ -27,6 +27,11 @@ _STOPWORDS: frozenset[str] = frozenset(
 
 _OnEvent = Callable[..., None] | None
 
+_NEGATION_WORDS: tuple[str, ...] = (
+    " not ", " never ", "doesn't", "isn't", "aren't", "won't", "can't",
+    "no longer", "actually no", "that's wrong", "that is wrong",
+)
+
 
 class FatherAgent(BaseAgent):
     """Debate moderator: routes turns, enforces rules, tracks context, produces verdict."""
@@ -55,6 +60,10 @@ class FatherAgent(BaseAgent):
         con_history: list[DebateMessage] = []
         interventions = 0
         context_tokens = 0
+        pro_concepts: list[str] = []
+        con_concepts: list[str] = []
+        pro_contradictions = 0
+        con_contradictions = 0
         current_msg = DebateMessage(type="argument", round=0, sender="con", content=topic)
 
         for rnd in range(1, self._rounds + 1):
@@ -68,6 +77,10 @@ class FatherAgent(BaseAgent):
                 pro_msg, pro_agent, "pro", current_msg, pro_history, on_event,
             )
             interventions += n
+            if pro_msg.concept and pro_msg.concept not in pro_concepts:
+                pro_concepts.append(pro_msg.concept)
+            if self._detect_contradiction(pro_msg, pro_history):
+                pro_contradictions += 1
             pro_history.append(pro_msg)
             transcript.append(pro_msg)
             self._fire(on_event, "father_route", {"to": "con"})
@@ -80,6 +93,10 @@ class FatherAgent(BaseAgent):
                 con_msg, con_agent, "con", pro_msg, con_history, on_event,
             )
             interventions += n
+            if con_msg.concept and con_msg.concept not in con_concepts:
+                con_concepts.append(con_msg.concept)
+            if self._detect_contradiction(con_msg, con_history):
+                con_contradictions += 1
             con_history.append(con_msg)
             transcript.append(con_msg)
 
@@ -102,7 +119,11 @@ class FatherAgent(BaseAgent):
 
             current_msg = con_msg
 
-        result = self._produce_verdict(pro_history, con_history, transcript, interventions, context_tokens)
+        result = self._produce_verdict(
+            pro_history, con_history, transcript, interventions, context_tokens,
+            pro_concepts=pro_concepts, con_concepts=con_concepts,
+            pro_contradictions=pro_contradictions, con_contradictions=con_contradictions,
+        )
         self._fire(on_event, "verdict", {"result": result})
         return result
 
@@ -190,14 +211,24 @@ class FatherAgent(BaseAgent):
         transcript: list[DebateMessage],
         interventions: int,
         context_tokens: int,
+        pro_concepts: list[str] | None = None,
+        con_concepts: list[str] | None = None,
+        pro_contradictions: int = 0,
+        con_contradictions: int = 0,
     ) -> DebateResult:
-        pro_raw = self._scorer.score(pro_history, self._word_limit)
-        con_raw = self._scorer.score(con_history, self._word_limit)
-        total = pro_raw + con_raw
+        pro_bd = self._scorer.score_detailed(
+            pro_history, self._word_limit,
+            len(pro_concepts or []), pro_contradictions,
+        )
+        con_bd = self._scorer.score_detailed(
+            con_history, self._word_limit,
+            len(con_concepts or []), con_contradictions,
+        )
+        total = pro_bd.total + con_bd.total
         if total == 0:
             pro_pct, con_pct = 60.0, 40.0
         else:
-            pro_pct = round(pro_raw / total * 100, 1)
+            pro_pct = round(pro_bd.total / total * 100, 1)
             con_pct = round(100.0 - pro_pct, 1)
         if abs(pro_pct - con_pct) < 1.0:
             pro_pct = min(100.0, pro_pct + 1.0)
@@ -209,11 +240,28 @@ class FatherAgent(BaseAgent):
             winner=winner, pro_score=pro_pct, con_score=con_pct,
             total_interventions=interventions, rounds_completed=len(pro_history),
             transcript=transcript, context_tokens=context_tokens,
+            pro_breakdown=pro_bd, con_breakdown=con_bd,
         )
 
     # ------------------------------------------------------------------
     # Helpers
     # ------------------------------------------------------------------
+
+    def _detect_contradiction(
+        self, message: DebateMessage, own_history: list[DebateMessage],
+    ) -> bool:
+        """Return True if message negates a concept the same agent previously argued."""
+        content_lower = " " + message.content.lower() + " "
+        own_concepts = [m.concept.lower() for m in own_history if m.concept]
+        if not own_concepts:
+            return False
+        for concept in own_concepts:
+            if concept and concept in content_lower:
+                pos = content_lower.find(concept)
+                window = content_lower[max(0, pos - 40) : pos + len(concept) + 40]
+                if any(neg in window for neg in _NEGATION_WORDS):
+                    return True
+        return False
 
     def _summarize_history(self, history: list[DebateMessage]) -> str:
         """Call LLM with the summarize skill to compact the debate transcript."""
