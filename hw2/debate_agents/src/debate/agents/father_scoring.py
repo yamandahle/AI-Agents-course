@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from debate.agents.base_agent import DebateMessage
+    from debate.agents.models import DebateMessage
 
 _EVIDENCE_MARKERS: tuple[str, ...] = (
     "%", "study", "research", "http", "data", "found", "showed", "according", "survey",

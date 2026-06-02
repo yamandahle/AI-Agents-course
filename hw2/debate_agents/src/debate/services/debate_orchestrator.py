@@ -74,7 +74,6 @@ def _debate_worker(  # pragma: no cover
 # Orchestrator — lives in the main process
 # ---------------------------------------------------------------------------
 
-
 class DebateOrchestrator:  # pragma: no cover
     """Coordinates the debate: spawns subprocess, wires IPC queues, monitors with Watchdog."""
 
