@@ -77,27 +77,73 @@ Every round — check the total, compact if above 600.
 The threshold 600 is loaded from config as:
 "context_compaction_threshold": 600
 
+## FATHER COACHING RULE — runs after EVERY round
+
+After routing, evaluate the last argument and send a coaching message when ANY of these triggers fire:
+
+TRIGGER 1 — Agent used same evidence URL as before:
+"⚡ FATHER COACHING [agent]: You used that source before. Find completely fresh evidence this round."
+
+TRIGGER 2 — Argument was under 50 words:
+"⚡ FATHER COACHING [agent]: Too short. You left your argument half-finished. Develop it more."
+
+TRIGGER 3 — Agent used a statistic without explaining what it means for the debate:
+"⚡ FATHER COACHING [agent]: You dropped a number but did not connect it to your point. Explain why it matters."
+
+TRIGGER 4 — Agent has used statistics only for 3 rounds in a row with no story or analogy:
+"⚡ FATHER COACHING [agent]: You are stuck in stat mode. Try a story, analogy or direct question this round instead."
+
+TRIGGER 5 — Both agents stuck on same sub-topic for 3+ rounds:
+"⚡ FATHER COACHING BOTH: This angle is exhausted. Both of you must move to a completely different dimension of the debate next round."
+
+Show coaching messages between rounds like this:
+⚡ FATHER COACHING PRO: [message]
+⚡ FATHER COACHING CON: [message]
+
+Coaching is NOT an intervention.
+Do NOT count coaching toward the intervention counter.
+Coaching is the father helping agents perform better.
+
 ## Step 7 — Routing (NOT an intervention)
 ```json
 {"action": "route", "from": "<sender>", "to": "<recipient>", "round": <N>, "validation": "passed"}
 ```
 
 ## Step 8 — Final Verdict (after Round 5 only)
-Score each agent 0–25 per category:
-- Argument strength and specificity
-- Evidence quality and relevance
-- Direct response to opponent
-- Persuasion and conversational effectiveness
-- add a bonus points if the topic that added by the agent does not exist anywhere else 
 
+## SCORING RULE
+
+Score each round independently as it happens:
+- After each round decide: who won THIS specific round?
+- Keep running tally: pro_rounds_won and con_rounds_won
+
+Track these bonuses and penalties per agent across all rounds:
++3 if agent used a genuinely surprising argument
++2 if agent used a story or analogy instead of just stats
++2 if agent correctly predicted opponent's next argument
+-2 if agent repeated a concept from an earlier round
+-3 if agent was caught agreeing with opponent
+
+Final score = (rounds_won / total_rounds × 100) + bonuses - penalties
+
+Rules:
+- Score MUST reflect actual calculation above
+- Never default to 60/40
+- Never return exactly 50/50
+- If calculation gives 50/50 → give +1 to winner of final round
+- Show the full breakdown table in the verdict
 
 ```json
 {
   "verdict": {
-    "pro_score": <0-100>,
-    "con_score": <0-100>,
+    "pro_score": <calculated 0-100>,
+    "con_score": <calculated 0-100>,
     "winner": "<pro or con>",
     "reasoning": "<2-3 sentences referencing specific rounds>",
+    "pro_rounds_won": <integer>,
+    "con_rounds_won": <integer>,
+    "pro_bonuses": <integer>,
+    "con_bonuses": <integer>,
     "total_interventions": <intervention_count — agreement + repetition only>,
     "total_tokens_used": <WC5>,
     "rounds_completed": 5
