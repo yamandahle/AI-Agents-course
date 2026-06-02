@@ -8,6 +8,7 @@ from menu_handlers import (
     _TOPIC,
     make_runner,
     print_verdict,
+    truncate_display,
     wrap,
 )
 from menu_handlers import (
@@ -42,39 +43,45 @@ def show_header() -> None:
 
 def _on_event(event: str, data: dict[str, Any]) -> None:
     if event == "round_start":
-        print(f"\n=== PING {data['round']}/{data['total']} ===")
+        print(f"\n{'=' * 40}")
+        print(f"  ROUND {data['round']} of {data['total']}")
+        print(f"{'=' * 40}")
     elif event == "pro_searching":
         _state["pro_searches"] += 1
-        print("  [SEARCH] PRO searching web for evidence...")
+        print("  [PRO] Searching web for evidence...")
     elif event == "pro_argument":
         print(wrap(f"PRO: {data['content']}"))
-    elif event == "father_validate":
-        print("  FATHER: validating JSON... OK")
-    elif event == "father_check":
-        print(f"  FATHER: checking {data['check']}... {'CLEAR' if data['ok'] else 'VIOLATION FOUND'}")
+    elif event == "father_check" and not data.get("ok"):
+        print(f"  [FATHER] Rule check failed: {data['check']}")
     elif event == "father_route":
-        print(f"  FATHER: routing to {data['to'].upper()}...")
+        print(f"  [FATHER] Turn -> {data['to'].upper()}")
     elif event == "con_searching":
         _state["con_searches"] += 1
-        print("  [SEARCH] CON searching web for evidence...")
+        print("  [CON] Searching web for evidence...")
     elif event == "con_argument":
         print(wrap(f"CON: {data['content']}"))
     elif event == "father_coaching":
         print(f"  [COACH -> {data['agent'].upper()}] {data['message']}")
     elif event == "round_result":
         pw, cw = data["pro_rounds_won"], data["con_rounds_won"]
-        print(f"  FATHER: Round {data['round']} -> {data['winner'].upper()} ({data['reason']})  |  Score: PRO {pw} - CON {cw}")
+        print(
+            f"  [ROUND {data['round']}] Winner: {data['winner'].upper()} "
+            f"({data['reason']})  |  Running tally PRO {pw} - CON {cw}"
+        )
+        print(f"  {'-' * 38}")
     elif event == "intervention":
-        print("  !! FATHER INTERVENES: Stay in your role. You must disagree.")
+        print("  !! [FATHER] Intervention: stay in role — do not agree.")
     elif event == "context_update":
         _state["round_tokens"].append(data["total"])
-        print(f"  [Context: ~{data['total']} tokens used]")
+        print(f"  [Context] ~{data['total']} tokens in history")
     elif event == "context_compact":
-        print("  [COMPACT] FATHER: Summarizing history to save tokens...")
-        print(f"  [Context compacted: saved ~{data['saved']} tokens]")
+        saved = data.get("saved", 0)
+        print(f"  [FATHER] History compacted (~{saved} tokens saved).")
         summary = data.get("summary", "")
         if summary and summary != "(summary unavailable)":
-            print(wrap(f"SUMMARY: {summary}"))
+            short = truncate_display(summary)
+            print(wrap(f"Summary (short): {short}"))
+            print("  (Full summary is in logs/ — menu option 4)")
     elif event == "verdict":
         searches = _state["pro_searches"] + _state["con_searches"]
         print(f"Total web searches:    {searches}")

@@ -1,205 +1,180 @@
-# Debate Agents — HW2: AI Multi-Agent System
+# Debate Agents — Stage 3 (Python)
 
-A three-agent debate system where **PRO** and **CON** agents argue "Is remote work better than office work?" while a neutral **FATHER** agent moderates, detects violations, and produces a scored verdict.
+**Assignment:** HW2 — AI Agents  
+**Topic:** Is remote work better than working from the office?
+
+This folder contains **Stage 3** of the project: a fully automated three-agent debate system (PRO, CON, Father).
+
+**Stage goals and Stages 1–2:** see [`../README.md`](../README.md#2-development-stages).
 
 ---
 
-## System Architecture
+## Table of Contents
+
+1. [Purpose](#1-purpose)
+2. [Architecture](#2-architecture)
+3. [Installation](#3-installation)
+4. [Running the application](#4-running-the-application)
+5. [Configuration](#5-configuration)
+6. [Testing and quality](#6-testing-and-quality)
+7. [Cost analysis](#7-cost-analysis)
+8. [Project layout](#8-project-layout)
+9. [Results](#9-results)
+10. [Related documentation](#10-related-documentation)
+
+---
+
+## 1. Purpose
+
+| Component | Responsibility |
+|-----------|----------------|
+| **ProAgent** | Argues that remote work is superior; uses statistical reasoning and web search |
+| **ConAgent** | Argues that office work is superior; uses evidence analysis and fallacy detection |
+| **FatherAgent** | Routes turns, checks agreement/repetition/contradiction, scores rounds, declares winner |
+| **ApiGatekeeper** | All Anthropic API calls; rate limits, retries, per-call cost logging |
+| **DebateSDK** | Public entry point for starting and executing debates |
+| **DebateOrchestrator** | Runs debate in a subprocess with Watchdog and event streaming |
+
+---
+
+## 2. Architecture
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                   FatherAgent                        │
-│  • Routes turns (PRO → CON → PRO → ...)             │
-│  • Detects: agreement, repetition, contradiction     │
-│  • Scores each round (ArgumentScorer)               │
-│  • LLM self-evaluation (5 structured questions)     │
-│  • Produces final verdict — no 50/50 ties allowed   │
-└────────────┬──────────────────────┬─────────────────┘
-             │                      │
-    ┌────────▼────────┐    ┌────────▼────────┐
-    │    ProAgent     │    │    ConAgent     │
-    │  Argues FOR     │    │  Argues AGAINST │
-    │  remote work    │    │  remote work    │
-    │                 │    │                 │
-    │ Skills:         │    │ Skills:         │
-    │ • Statistical   │    │ • News Analysis │
-    │   Reasoning     │    │ • Logical       │
-    │ • Web Search    │    │   Fallacy Det.  │
-    │   (Tavily)      │    │ • Web Search    │
-    └─────────────────┘    └─────────────────┘
-             │                      │
-             └──────────┬───────────┘
-                        │
-              ┌─────────▼─────────┐
-              │   ApiGatekeeper   │
-              │ Rate limiting     │
-              │ Retry + backoff   │
-              │ Budget tracking   │
-              │ Cost reporting    │
-              └─────────┬─────────┘
-                        │
-              ┌─────────▼─────────┐
-              │   DebateLogger    │
-              │ JSON log files    │
-              │ Auto-rotation     │
-              └───────────────────┘
+Terminal menu (main.py)
+        │
+        ▼
+   DebateSDK (sdk.py)
+        │
+        ▼
+ DebateOrchestrator  ──►  Watchdog + multiprocessing
+        │
+        ▼
+ FatherAgent ──► ProAgent / ConAgent
+        │
+        ▼
+ ApiGatekeeper ──► Anthropic API
+ DebateLogger  ──► JSON log files (rotating)
 ```
 
----
-
-## Scoring System
-
-The Father uses a **two-stage scoring formula** to prevent 50/50 ties:
-
-| Component | Weight | Method |
-|-----------|--------|--------|
-| Round tally | 60% | `50 + (pro_wins - con_wins) / total_rounds × 30` |
-| LLM evaluation | 40% | 5 questions (novelty, evidence, rebuttal, logic, persuasion) scored 0–10 |
-
-A minimum gap of **2 points** is enforced. If scores are equal, the side that won more rounds gets the tie-break. Scores always sum to 100.
+**Scoring:** 60% round wins + 40% LLM evaluation (five criteria). Minimum score gap: 2 points. Total always sums to 100.
 
 ---
 
-## Agent Skills
-
-| Agent | Specialist Skills |
-|-------|------------------|
-| PRO | Statistical Reasoning — validates data quality and highlights strong stats |
-| CON | News Argumentation Analysis — dissects evidence claims; Logical Fallacy Detection — exposes reasoning errors |
-| FATHER | 5-question LLM self-evaluation for final verdict |
-
----
-
-## Project Structure
-
-```
-debate_agents/
-├── src/
-│   ├── main.py                          # Entry point
-│   ├── menu.py                          # Interactive menu
-│   ├── menu_handlers.py                 # Menu action handlers
-│   └── debate/
-│       ├── agents/
-│       │   ├── base_agent.py            # Abstract base + DebateMessage
-│       │   ├── agent_mixin.py           # Shared LLM/evidence helpers
-│       │   ├── models.py                # DebateMessage dataclass
-│       │   ├── pro_agent.py             # PRO debater
-│       │   ├── con_agent.py             # CON debater
-│       │   ├── father_agent.py          # Moderator + orchestrator
-│       │   ├── father_checks.py         # Agreement/repetition detection
-│       │   ├── father_routing.py        # Routing + intervention mixin
-│       │   ├── father_scoring.py        # ArgumentScorer + DebateResult
-│       │   └── father_verdict.py        # Scoring formula + LLM evaluation
-│       ├── shared/
-│       │   ├── gatekeeper.py            # Rate limiting + cost tracking
-│       │   ├── logger.py                # JSON rotating logger
-│       │   ├── watchdog.py              # Process monitor
-│       │   └── config.py               # Config loader
-│       └── skills/
-│           ├── pro_skill.md             # PRO persona + debate rules
-│           ├── con_skill.md             # CON persona + debate rules
-│           ├── father_skill.md          # Father evaluation protocol
-│           ├── Statistical_Reasoning.md
-│           ├── News_Argumentation_Analysis.md
-│           └── Logical_Fallacy_Detection.md
-├── tests/
-│   ├── unit/                            # 140+ unit tests
-│   └── integration/                     # Full pipeline tests
-├── config/
-│   ├── setup.json                       # Debate config (rounds, model, etc.)
-│   ├── rate_limits.json                 # API rate + budget limits
-│   └── logging_config.json             # Log rotation settings
-├── results/                             # Sample outputs (see below)
-└── logs/                                # Auto-generated debate logs
-```
-
----
-
-## Setup
+## 3. Installation
 
 **Requirements:** Python 3.11+, [uv](https://docs.astral.sh/uv/)
 
-```bash
-# 1. Install dependencies
+```powershell
 uv sync
-
-# 2. Create your .env file
-cp .env.example .env
-# Edit .env and add your real API keys:
-#   ANTHROPIC_API_KEY=sk-ant-...
-#   TAVILY_API_KEY=tvly-...
-
-# 3. Run the debate
-uv run python src/main.py
+copy .env-example .env
 ```
+
+Environment variables (see `.env-example`):
+
+| Variable | Purpose |
+|----------|---------|
+| `ANTHROPIC_API_KEY` | LLM API |
+| `TAVILY_API_KEY` | Web search for citations |
+
+The file `.env` is listed in `.gitignore` and must not be committed.
 
 ---
 
-## Running Tests
+## 4. Running the application
 
-```bash
-# Run all tests with coverage report
+```powershell
+uv run python src/main.py
+```
+
+| Option | Description |
+|--------|-------------|
+| 1 | Execute full debate (default: 10 rounds); writes `results/sample_debate.txt` |
+| 2 | Show transcript and verdict from last run |
+| 3 | Show Gatekeeper cost table |
+| 4 | Show last 20 structured log entries |
+| 5 | Exit |
+
+---
+
+## 5. Configuration
+
+Parameters are loaded from `config/` (no hardcoded values in application code).
+
+**`config/setup.json`**
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `debate.rounds` | 10 | Number of debate rounds |
+| `debate.word_limit` | 150 | Maximum words per argument |
+| `debate.model` | claude-haiku-4-5 | Anthropic model id |
+
+**`config/rate_limits.json`** — requests per minute, daily budget, model pricing.
+
+**`config/logging_config.json`** — log directory, max files, max lines per file.
+
+---
+
+## 6. Testing and quality
+
+```powershell
+uv run ruff check .
 uv run pytest tests/
-
-# Run only unit tests
-uv run pytest tests/unit/ -q
-
-# Run only integration tests
-uv run pytest tests/integration/ -q
 ```
 
-Expected output: **161 tests passed, 86% coverage** (minimum required: 85%).
+| Metric | Value |
+|--------|-------|
+| Tests | 161 passed |
+| Coverage | ~86% (minimum required: 85%) |
+| Report | [`results/test_results.txt`](results/test_results.txt) |
 
 ---
 
-## Running the Debate
+## 7. Cost analysis
 
-Launch the interactive menu:
+Measured from one complete 10-round run (`logs/debate_20260602_180328_337838_0001.log`):
 
-```bash
-uv run python src/main.py
+| Model | API calls | Input tokens | Output tokens | Total (USD) |
+|-------|-----------|--------------|---------------|-------------|
+| claude-haiku-4-5 | 53 | ~118,500 | ~33,800 | 0.254 |
+
+Pricing is defined in `config/rate_limits.json`. The Gatekeeper enforces rate limits and a daily budget cap (`daily_budget_usd`).
+
+---
+
+## 8. Project layout
+
+```
+debate_agents/
+  src/           Application code (agents, SDK, menu)
+  tests/         Unit and integration tests
+  config/        setup.json, rate_limits.json, logging_config.json
+  docs/          PRD, PLAN, TODO (copy; see also ../docs/)
+  results/       sample_debate.txt, test_results.txt
+  logs/          Runtime logs (git-ignored)
 ```
 
-Menu options:
-1. **Start Debate** — runs all 10 rounds and prints the verdict
-2. **View Transcript** — shows the last debate's full argument log
-3. **Cost Report** — shows API token usage and USD cost per call
-4. **View Logs** — shows the last 20 log entries
-5. **Exit**
+---
+
+## 9. Results
+
+| File | Contents |
+|------|----------|
+| [`results/sample_debate.txt`](results/sample_debate.txt) | Full transcript, final verdict, cost summary |
+| [`results/test_results.txt`](results/test_results.txt) | Pytest output and coverage |
 
 ---
 
-## Configuration
+## 10. Related documentation
 
-Edit `config/setup.json` to change debate parameters:
-
-```json
-{
-  "debate": {
-    "rounds": 10,
-    "word_limit": 150,
-    "model": "claude-haiku-4-5",
-    "timeout_seconds": 30
-  }
-}
-```
-
-Edit `config/rate_limits.json` to adjust API budget and rate limits.
+| Document | Path |
+|----------|------|
+| HW2 overview and all stages | [`../README.md`](../README.md) |
+| Product requirements | [`../docs/PRD.md`](../docs/PRD.md) |
+| Architecture plan | [`../docs/PLAN.md`](../docs/PLAN.md) |
+| Task tracker | [`docs/TODO.md`](docs/TODO.md) |
 
 ---
 
-## Key Design Decisions
+## License
 
-- **No direct agent communication** — agents only exchange `DebateMessage` objects through the Father; they never hold references to each other.
-- **All API calls through Gatekeeper** — no agent touches the Anthropic client directly; rate limiting, retries, and budget enforcement are centralized.
-- **No 50/50 ties** — the scoring formula uses round tally as primary signal and LLM evaluation as secondary; a minimum 2-point gap is always enforced.
-- **All config from files** — zero hardcoded values in code; everything lives in `config/`.
-- **No API keys in code** — loaded exclusively from `.env` via `python-dotenv`.
-
----
-
-## Results
-
-See the `results/` folder for:
-- `sample_debate.txt` — full output from a real 10-round debate
-- `test_results.txt` — pytest coverage report
+Course assignment — academic use.

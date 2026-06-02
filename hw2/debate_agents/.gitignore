@@ -1,5 +1,8 @@
 # Environment — never commit real keys
 .env
+*.key
+*.pem
+credentials.json
 
 # Python
 __pycache__/

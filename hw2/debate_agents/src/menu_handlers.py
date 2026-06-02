@@ -2,24 +2,105 @@
 
 from __future__ import annotations
 
-import json
+import io
 import textwrap
+from contextlib import redirect_stdout
 from pathlib import Path
 from typing import Any
 
 from debate.sdk.runner import DebateRunner
+from debate.shared.config import ConfigManager
 
 _WIDTH = 80
 _CONFIG_DIR = "config"
 _TOPIC = "Is remote work better than working from the office?"
+_SUMMARY_DISPLAY_MAX = 400
+_LOG_DATA_MAX = 72
 
 
 def wrap(text: str, indent: str = "  ") -> str:
     return textwrap.fill(text, width=_WIDTH, initial_indent=indent, subsequent_indent=indent)
 
 
+def truncate_display(text: str, max_chars: int = _SUMMARY_DISPLAY_MAX) -> str:
+    """Shorten long text for terminal / screenshots (full text stays in logs)."""
+    cleaned = text.strip()
+    if len(cleaned) <= max_chars:
+        return cleaned
+    cut = cleaned[: max_chars - 3].rsplit(" ", 1)[0]
+    return f"{cut}..."
+
+
+def format_log_data(data: object) -> str:
+    """Compact one-line summary for log viewer (avoid huge dict dumps)."""
+    if not isinstance(data, dict):
+        return str(data)[:_LOG_DATA_MAX]
+    parts: list[str] = []
+    for key, value in data.items():
+        if key == "summary" and isinstance(value, str):
+            value = truncate_display(value, 60)
+        text = f"{key}={value}"
+        if len(text) > 36:
+            text = f"{key}=..."
+        parts.append(text)
+    line = " ".join(parts)
+    return line if len(line) <= _LOG_DATA_MAX else line[: _LOG_DATA_MAX - 3] + "..."
+
+
 def make_runner() -> DebateRunner:
     return DebateRunner(config_dir=_CONFIG_DIR)
+
+
+def export_debate_to_file(
+    result: Any,
+    cost_entries: list[dict[str, Any]],
+    path: str = "results/sample_debate.txt",
+) -> Path:
+    """Write transcript + verdict + cost summary for README / GitHub."""
+    lines: list[str] = [
+        "AI DEBATE SYSTEM — Saved run output",
+        f"Topic: {_TOPIC}",
+        f"Rounds completed: {result.rounds_completed}",
+        "",
+        "=" * 60,
+        "DEBATE TRANSCRIPT",
+        "=" * 60,
+    ]
+    debate_round = 0
+    for msg in result.transcript:
+        if msg.sender == "pro":
+            debate_round += 1
+            lines.extend(["", f"--- ROUND {debate_round} of {result.rounds_completed} ---", ""])
+        lines.append(wrap(f"{msg.sender.upper()}: {msg.content}"))
+        lines.append(f"  ({msg.word_count} words)")
+
+    lines.extend(["", "=" * 60, "FINAL VERDICT", "=" * 60])
+    buf = io.StringIO()
+    with redirect_stdout(buf):
+        print_verdict(result)
+    lines.extend(buf.getvalue().splitlines())
+
+    if cost_entries:
+        total_in = sum(e["input_tokens"] for e in cost_entries)
+        total_out = sum(e["output_tokens"] for e in cost_entries)
+        total_cost = sum(e["cost_usd"] for e in cost_entries)
+        lines.extend(
+            [
+                "",
+                "=" * 60,
+                "COST SUMMARY (Gatekeeper)",
+                "=" * 60,
+                f"API calls:     {len(cost_entries)}",
+                f"Input tokens:  {total_in}",
+                f"Output tokens: {total_out}",
+                f"Total cost:    ${total_cost:.4f}",
+            ]
+        )
+
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return out
 
 
 def print_verdict(result: Any) -> None:
@@ -51,16 +132,21 @@ def print_verdict(result: Any) -> None:
 
 
 def handle_start_debate(runner: DebateRunner, state: dict[str, Any], on_event: Any) -> None:
-    setup = json.loads(Path(f"{_CONFIG_DIR}/setup.json").read_text(encoding="utf-8"))
+    setup = ConfigManager(_CONFIG_DIR).setup
     skills = setup["debate"].get("skills_path", "src/debate/skills/")
-    print(f"\nStarting debate... Topic: {_TOPIC}")
-    print(f"PRO agent loading skill:    {skills}pro_skill.md")
-    print(f"CON agent loading skill:    {skills}con_skill.md")
-    print(f"FATHER loading skill:       {skills}father_skill.md")
+    rounds = setup["debate"].get("rounds", 10)
+    print(f"\nStarting debate ({rounds} rounds)...")
+    print(f"Topic: {_TOPIC}")
+    print(f"Skills: {skills}pro_skill.md, con_skill.md, father_skill.md")
+    print("Live output below — scroll for verdict, or use menu 2–4 after.\n")
     state["pro_searches"] = 0
     state["con_searches"] = 0
     state["round_tokens"] = []
     runner.run(_TOPIC, on_event=on_event)
+    result = runner.get_last_result()
+    if result is not None:
+        out = export_debate_to_file(result, runner.get_cost_breakdown())
+        print(f"\n[SAVED] Full transcript + verdict -> {out}")
 
 
 def handle_view_transcript(runner: DebateRunner) -> None:
@@ -101,9 +187,12 @@ def handle_view_logs(runner: DebateRunner) -> None:
     if not entries:
         print("\nNo log entries yet. Run a debate first (option 1).")
         return
-    print("\n--- LAST 20 LOG ENTRIES ---")
-    print(f"{'Timestamp':<20} {'Agent':>8} {'Event':<22} Data")
-    print("-" * 75)
+    print("\n--- LAST 20 LOG ENTRIES (most recent session) ---")
+    print(f"{'Timestamp':<20} {'Agent':>8} {'Event':<18} Details")
+    print("-" * 80)
     for e in entries:
         ts = e.get("timestamp", "")[:19].replace("T", " ")
-        print(f"{ts:<20} {e.get('agent', '?'):>8} {e.get('event', '?'):<22} {e.get('data', {})}")
+        print(
+            f"{ts:<20} {e.get('agent', '?'):>8} {e.get('event', '?'):<18} "
+            f"{format_log_data(e.get('data', {}))}"
+        )

@@ -34,6 +34,7 @@ source = ["src/debate"]
 omit = ["tests/*", "src/main.py"]
 
 [tool.coverage.report]
+fail_under = 85
 exclude_lines = [
     "pragma: no cover",
     "if __name__ == .__main__.:",

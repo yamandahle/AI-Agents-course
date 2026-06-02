@@ -1,0 +1,7 @@
+# Local helper scripts (not for submission)
+helper/
+
+# Local git command logs
+PUSH_LOG.txt
+git_out.txt
+FULL_GIT_WORKFLOW_OUTPUT.txt
