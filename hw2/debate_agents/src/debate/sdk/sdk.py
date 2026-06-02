@@ -10,6 +10,7 @@ from __future__ import annotations
 import uuid
 from collections.abc import Callable
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any
 
 from debate.agents.base_agent import DebateMessage
@@ -31,6 +32,14 @@ class DebateSession:
     transcript: list[DebateMessage] = field(default_factory=list)
     cost_report: dict[str, Any] = field(default_factory=dict)
     result: DebateResult | None = None
+
+
+def _config_dir_from_path(config_path: str) -> str:
+    """Accept either a config directory or a path to a JSON file inside it."""
+    path = Path(config_path)
+    if path.suffix.lower() == ".json":
+        return str(path.parent)
+    return config_path
 
 
 class DebateSDK:
@@ -66,7 +75,8 @@ class DebateSDK:
         from debate.services.debate_orchestrator import DebateOrchestrator
 
         session = self._get(session_id)
-        orchestrator = DebateOrchestrator(config_dir=session.config_path)
+        config_dir = _config_dir_from_path(session.config_path)
+        orchestrator = DebateOrchestrator(config_dir=config_dir)
         result = orchestrator.run(session.topic, on_event=on_event)
 
         session.status = "completed"

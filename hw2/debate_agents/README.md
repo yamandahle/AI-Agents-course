@@ -109,8 +109,11 @@ debate_agents/
 │   ├── setup.json                       # Debate config (rounds, model, etc.)
 │   ├── rate_limits.json                 # API rate + budget limits
 │   └── logging_config.json             # Log rotation settings
+├── docs/                                # PRD.md, PLAN.md, TODO.md
+├── data/                                # Optional runtime data
+├── assets/                              # Screenshots for README (see assets/README.md)
 ├── results/                             # Sample outputs (see below)
-└── logs/                                # Auto-generated debate logs
+└── logs/                                # Auto-generated debate logs (git-ignored)
 ```
 
 ---
@@ -123,8 +126,9 @@ debate_agents/
 # 1. Install dependencies
 uv sync
 
-# 2. Create your .env file
-cp .env.example .env
+# 2. Create your .env file (Windows)
+copy .env-example .env
+# Linux/macOS: cp .env-example .env
 # Edit .env and add your real API keys:
 #   ANTHROPIC_API_KEY=sk-ant-...
 #   TAVILY_API_KEY=tvly-...
@@ -132,6 +136,10 @@ cp .env.example .env
 # 3. Run the debate
 uv run python src/main.py
 ```
+
+**Typical workflow:** menu option **1** runs a full 10-round debate → **2** shows transcript → **3** shows per-call token costs → **4** shows JSON logs.
+
+All debate logic runs through **`debate.sdk.DebateSDK`**; the CLI only displays events.
 
 ---
 
@@ -186,6 +194,56 @@ Edit `config/setup.json` to change debate parameters:
 
 Edit `config/rate_limits.json` to adjust API budget and rate limits.
 
+| Parameter | File | Purpose |
+|-----------|------|---------|
+| `debate.rounds` | `setup.json` | Number of PRO/CON exchanges (default 10) |
+| `debate.word_limit` | `setup.json` | Max words per argument (150) |
+| `debate.model` | `setup.json` | Anthropic model id |
+| `anthropic.requests_per_minute` | `rate_limits.json` | Gatekeeper rate limit |
+| `anthropic.daily_budget_usd` | `rate_limits.json` | Hard stop for spend |
+| `max_files` / `max_lines_per_file` | `logging_config.json` | Log rotation |
+
+---
+
+## Cost Analysis (actual run data)
+
+Measured from a full **10-round** debate (`logs/debate_20260602_180328_337838_0001.log`):
+
+| Model | API calls | Input tokens | Output tokens | Total cost (USD) |
+|-------|-----------|--------------|---------------|------------------|
+| claude-haiku-4-5 | 53 | ~118,500 | ~33,800 | **$0.254** |
+
+Pricing from `config/rate_limits.json`: Haiku $0.80 / $4.00 per million input/output tokens.
+
+**Optimization strategies (Gatekeeper):**
+- Rate limit (10 req/min) prevents burst spend and API throttling.
+- Daily budget cap (`daily_budget_usd: 2.00`) stops runaway cost.
+- Context compaction every 3 rounds reduces prompt size on long debates.
+- Haiku model chosen for debate turns; Father verdict uses same model via gatekeeper.
+
+**Scaling note:** ~$0.025 per round at current settings; 100 debates/day would hit the $2 budget cap — increase `daily_budget_usd` only when needed.
+
+---
+
+## Screenshots
+
+Add PNG screenshots to `assets/` (see `assets/README.md`). Suggested captures:
+1. Main menu  
+2. Debate in progress  
+3. Final verdict  
+4. Cost report (menu option 3)
+
+---
+
+## Quality tooling
+
+```bash
+uv run ruff check .
+uv run pytest tests/
+```
+
+Expected: **zero** ruff errors; **≥ 85%** coverage (see `results/test_results.txt`).
+
 ---
 
 ## Key Design Decisions
@@ -201,5 +259,37 @@ Edit `config/rate_limits.json` to adjust API budget and rate limits.
 ## Results
 
 See the `results/` folder for:
-- `sample_debate.txt` — full output from a real 10-round debate
-- `test_results.txt` — pytest coverage report
+- `sample_debate.txt` — transcript excerpt + verdict + cost (updated automatically after each live debate via menu option 1)
+- `test_results.txt` — pytest coverage report (161 passed, ~86%)
+
+Regenerate without API calls (mocked debate):
+
+```bash
+uv run python scripts/generate_sample_debate.py
+```
+
+---
+
+## Documentation
+
+| Document | Location |
+|----------|----------|
+| PRD | `docs/PRD.md` |
+| Plan | `docs/PLAN.md` + `../../docs/PLAN.md` |
+| TODO | `docs/TODO.md` |
+| Component PRDs | `../../docs/PRD_*.md` |
+
+---
+
+## Contributing
+
+1. Create a feature branch from `yamandahle-hw2`.
+2. Run `uv run ruff check .` and `uv run pytest tests/` before committing.
+3. Never commit `.env` or API keys.
+4. Update `docs/TODO.md` when completing tasks.
+
+---
+
+## License
+
+Course assignment for AI Agents — academic use. Code and prompts © student submission 2026.
