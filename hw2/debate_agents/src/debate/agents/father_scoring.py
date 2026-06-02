@@ -41,6 +41,7 @@ class DebateResult:
     pro_breakdown: ScoreBreakdown | None = None
     con_breakdown: ScoreBreakdown | None = None
     total_compactions: int = 0
+    verdict_reasoning: str = ""
 
 
 class ArgumentScorer:

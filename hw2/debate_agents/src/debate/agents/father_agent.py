@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
@@ -144,6 +145,8 @@ class FatherAgent(BaseAgent):
             pro_concepts=pro_concepts, con_concepts=con_concepts,
             pro_contradictions=pro_contradictions, con_contradictions=con_contradictions,
             compactions=compactions,
+            pro_rounds_won=pro_rounds_won,
+            con_rounds_won=con_rounds_won,
         )
         self._fire(on_event, "verdict", {"result": result})
         return result
@@ -237,7 +240,10 @@ class FatherAgent(BaseAgent):
         pro_contradictions: int = 0,
         con_contradictions: int = 0,
         compactions: int = 0,
+        pro_rounds_won: int = 0,
+        con_rounds_won: int = 0,
     ) -> DebateResult:
+        # Breakdown kept for display transparency
         pro_bd = self._scorer.score_detailed(
             pro_history, self._word_limit,
             len(pro_concepts or []), pro_contradictions,
@@ -246,15 +252,34 @@ class FatherAgent(BaseAgent):
             con_history, self._word_limit,
             len(con_concepts or []), con_contradictions,
         )
-        total = pro_bd.total + con_bd.total
-        if total == 0:
-            pro_pct, con_pct = 60.0, 40.0
+
+        # Primary score: round tally (60% weight)
+        total_rounds = pro_rounds_won + con_rounds_won
+        round_pro_pct = (
+            50.0 + (pro_rounds_won - con_rounds_won) / total_rounds * 30.0
+            if total_rounds > 0 else 50.0
+        )
+
+        # Secondary score: LLM self-evaluation (40% weight)
+        llm_pro_pct, verdict_reasoning = self._llm_evaluate(
+            pro_history, con_history, pro_rounds_won, con_rounds_won,
+        )
+
+        if llm_pro_pct is not None:
+            pro_pct = round(0.6 * round_pro_pct + 0.4 * llm_pro_pct, 1)
         else:
-            pro_pct = round(pro_bd.total / total * 100, 1)
-            con_pct = round(100.0 - pro_pct, 1)
+            pro_pct = round(round_pro_pct, 1)
+        con_pct = round(100.0 - pro_pct, 1)
+
+        # Enforce 2-point minimum gap — break in favour of round-tally leader
         if abs(pro_pct - con_pct) < 2.0:
-            pro_pct = min(100.0, pro_pct + 1.0)
-            con_pct = max(0.0, con_pct - 1.0)
+            if pro_rounds_won >= con_rounds_won:
+                pro_pct = min(100.0, pro_pct + 1.0)
+                con_pct = max(0.0, con_pct - 1.0)
+            else:
+                con_pct = min(100.0, con_pct + 1.0)
+                pro_pct = max(0.0, pro_pct - 1.0)
+
         winner = "pro" if pro_pct >= con_pct else "con"
         return DebateResult(
             winner=winner, pro_score=pro_pct, con_score=con_pct,
@@ -262,6 +287,7 @@ class FatherAgent(BaseAgent):
             transcript=transcript, context_tokens=context_tokens,
             pro_breakdown=pro_bd, con_breakdown=con_bd,
             total_compactions=compactions,
+            verdict_reasoning=verdict_reasoning,
         )
 
     # ------------------------------------------------------------------
@@ -307,6 +333,55 @@ class FatherAgent(BaseAgent):
         if con_msg.word_count > pro_msg.word_count:
             return "con", "more developed argument"
         return "pro", "closely matched — PRO takes the edge"
+
+    def _llm_evaluate(
+        self,
+        pro_history: list[DebateMessage],
+        con_history: list[DebateMessage],
+        pro_rounds_won: int,
+        con_rounds_won: int,
+    ) -> tuple[float | None, str]:
+        """Ask the LLM 5 structured questions about the debate. Returns (pro_pct or None, reasoning)."""
+        lines = []
+        for p, c in zip(pro_history, con_history, strict=False):
+            lines.append(f"Round {p.round} PRO: {p.content}")
+            lines.append(f"Round {c.round} CON: {c.content}")
+        transcript_text = "\n".join(lines)
+        prompt = (
+            f"{self.get_skill_prompt()}\n\n"
+            f"=== FINAL DEBATE EVALUATION ===\n"
+            f"Round tally: PRO won {pro_rounds_won}, CON won {con_rounds_won}.\n\n"
+            f"FULL TRANSCRIPT:\n{transcript_text}\n\n"
+            f"As the neutral judge, score the OVERALL debate on each dimension.\n"
+            f"Use 0-10 (0 = CON clearly better, 5 = exactly equal, 10 = PRO clearly better).\n\n"
+            f"Q1 Novelty: Which side introduced more original, diverse concepts across all rounds?\n"
+            f"Q2 Evidence: Whose evidence was more specific, credible, and hard to dismiss?\n"
+            f"Q3 Rebuttal: Who more directly and effectively dismantled the opponent's specific claims?\n"
+            f"Q4 Logic: Whose reasoning chain was clearer and harder to attack?\n"
+            f"Q5 Persuasion: Who would convince a neutral, informed observer?\n\n"
+            f"Respond ONLY with this JSON — no text before or after:\n"
+            f'{{"q1_novelty":<0-10>,"q2_evidence":<0-10>,"q3_rebuttal":<0-10>,'
+            f'"q4_logic":<0-10>,"q5_persuasion":<0-10>,'
+            f'"reasoning":"<2 sentences on who won overall and the single most decisive reason>"}}'
+        )
+        try:
+            raw = self._call_llm(prompt)
+            text = str(raw).strip()
+            if text.startswith("```"):
+                inner = text.splitlines()
+                text = "\n".join(inner[1:-1] if inner[-1].strip() == "```" else inner[1:]).strip()
+            parsed = json.loads(text)
+            scores = [
+                float(parsed["q1_novelty"]),
+                float(parsed["q2_evidence"]),
+                float(parsed["q3_rebuttal"]),
+                float(parsed["q4_logic"]),
+                float(parsed["q5_persuasion"]),
+            ]
+            avg = sum(scores) / len(scores)   # 0-10 scale for PRO
+            return avg / 10.0 * 100.0, str(parsed.get("reasoning", ""))
+        except Exception:  # noqa: BLE001
+            return None, ""
 
     def _detect_contradiction(
         self, message: DebateMessage, own_history: list[DebateMessage],

@@ -109,45 +109,50 @@ Coaching is the father helping agents perform better.
 {"action": "route", "from": "<sender>", "to": "<recipient>", "round": <N>, "validation": "passed"}
 ```
 
-## Step 8 — Final Verdict (after Round 5 only)
+## Step 8 — Final Debate Evaluation
 
-## SCORING RULE
+When asked to evaluate the full debate, you receive the complete transcript and
+the round-by-round tally. Your job is to answer 5 structured questions honestly.
 
-Score each round independently as it happens:
-- After each round decide: who won THIS specific round?
-- Keep running tally: pro_rounds_won and con_rounds_won
+### The 5 Evaluation Questions
 
-Track these bonuses and penalties per agent across all rounds:
-+3 if agent used a genuinely surprising argument
-+2 if agent used a story or analogy instead of just stats
-+2 if agent correctly predicted opponent's next argument
--2 if agent repeated a concept from an earlier round
--3 if agent was caught agreeing with opponent
+Score each question 0-10:
+- **0** = CON clearly dominated on this dimension
+- **5** = both sides were exactly equal
+- **10** = PRO clearly dominated on this dimension
 
-Final score = (rounds_won / total_rounds × 100) + bonuses - penalties
+**Q1 — Novelty**: Which side introduced more original, diverse concepts across all rounds?
+Do not reward recycling the same angle. Credit genuinely new dimensions of the debate.
 
-Rules:
-- Score MUST reflect actual calculation above
-- Never default to 60/40
-- Never return exactly 50/50
-- If calculation gives 50/50 → give +1 to winner of final round
-- Show the full breakdown table in the verdict
+**Q2 — Evidence quality**: Whose evidence was more specific, credible, and hard to dismiss?
+Prefer named studies, concrete numbers, and verifiable sources over vague claims.
 
+**Q3 — Rebuttal effectiveness**: Who more directly and effectively dismantled the opponent's
+specific claims? Reward direct engagement. Penalise ignoring what the opponent said.
+
+**Q4 — Logical coherence**: Whose reasoning chain was clearer and harder to attack?
+Look for well-structured argument → evidence → conclusion flow. Penalise fallacies.
+
+**Q5 — Overall persuasion**: Who would be more convincing to a neutral, informed observer
+with no prior position on the topic?
+
+### Output Format — JSON only
+
+Respond ONLY with this JSON — no text before or after:
 ```json
 {
-  "verdict": {
-    "pro_score": <calculated 0-100>,
-    "con_score": <calculated 0-100>,
-    "winner": "<pro or con>",
-    "reasoning": "<2-3 sentences referencing specific rounds>",
-    "pro_rounds_won": <integer>,
-    "con_rounds_won": <integer>,
-    "pro_bonuses": <integer>,
-    "con_bonuses": <integer>,
-    "total_interventions": <intervention_count — agreement + repetition only>,
-    "total_tokens_used": <WC5>,
-    "rounds_completed": 5
-  }
+  "q1_novelty": <0-10>,
+  "q2_evidence": <0-10>,
+  "q3_rebuttal": <0-10>,
+  "q4_logic": <0-10>,
+  "q5_persuasion": <0-10>,
+  "reasoning": "<2 sentences: who won overall and the single most decisive reason>"
 }
 ```
-Tie (50/50) is **absolutely forbidden**. Minimum split: 60/40.
+
+### Hard Rules for the Verdict
+
+- Score MUST reflect your honest assessment of the transcript — not the round tally alone.
+- Never return exactly 5 on all five questions simultaneously (that produces a 50/50 tie).
+- The reasoning must name a specific argument or round that tipped the balance.
+- 50/50 tie is **absolutely forbidden**.

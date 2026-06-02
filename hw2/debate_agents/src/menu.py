@@ -104,9 +104,13 @@ def _print_verdict(result: Any) -> None:
         print(f"{'New concepts  (+2 each)':<26} {pb.concept_bonus:>{col}.1f} {cb.concept_bonus:>{col}.1f}")
         print(f"{'Contradictions (-2 each)':<26} {-pb.contradiction_penalty:>{col}.1f} {-cb.contradiction_penalty:>{col}.1f}")
         print("-" * (26 + col * 2 + 2))
-        print(f"{'Raw score':<26} {pb.total:>{col}.1f} {cb.total:>{col}.1f}")
+        print(f"{'Raw score (display only)':<26} {pb.total:>{col}.1f} {cb.total:>{col}.1f}")
         print(f"{'Unique concepts introduced':<26} {pb.concepts_introduced:>{col}} {cb.concepts_introduced:>{col}}")
         print(f"{'Self-contradictions found':<26} {pb.contradictions_found:>{col}} {cb.contradictions_found:>{col}}")
+
+    reasoning = getattr(result, "verdict_reasoning", "")
+    if reasoning:
+        print(f"\nFATHER'S REASONING:\n{_wrap(reasoning)}")
     print("==============================")
 
 

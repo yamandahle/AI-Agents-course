@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock
 
+import pytest
+
 from debate.agents.base_agent import DebateMessage
 from debate.agents.father_agent import FatherAgent
 from debate.agents.father_scoring import ArgumentScorer, DebateResult
@@ -359,3 +361,64 @@ class TestCompaction:
         father.run_debate("topic", MockAgent("pro", _std_responses()), MockAgent("con", _std_responses()))
         calls = [str(c) for c in logger.info.call_args_list]
         assert any("compact" in c for c in calls)
+
+
+# ---------------------------------------------------------------------------
+# 12. LLM self-evaluation
+# ---------------------------------------------------------------------------
+
+
+class TestLlmEvaluate:
+    _VALID_JSON = (
+        '{"q1_novelty":8,"q2_evidence":7,"q3_rebuttal":6,"q4_logic":7,"q5_persuasion":7,'
+        '"reasoning":"PRO introduced stronger evidence in every round."}'
+    )
+    _FENCED_JSON = (
+        '```json\n{"q1_novelty":5,"q2_evidence":6,"q3_rebuttal":5,"q4_logic":5,"q5_persuasion":5,'
+        '"reasoning":"Closely matched debate overall."}\n```'
+    )
+
+    def test_llm_evaluate_returns_pro_pct_from_valid_json(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """_llm_evaluate must parse valid JSON and return (float, str)."""
+        father = _make_father()
+        monkeypatch.setattr(father, "_call_llm", lambda _: self._VALID_JSON)
+        pro = [DebateMessage(type="argument", round=1, sender="pro", content="remote")]
+        con = [DebateMessage(type="argument", round=1, sender="con", content="office")]
+        pct, reasoning = father._llm_evaluate(pro, con, 2, 1)  # noqa: SLF001
+        expected = (8 + 7 + 6 + 7 + 7) / 5 / 10 * 100
+        assert pct is not None
+        assert abs(pct - expected) < 0.1
+        assert "PRO" in reasoning
+
+    def test_llm_evaluate_handles_fenced_json(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """_llm_evaluate must strip markdown code fences before parsing."""
+        father = _make_father()
+        monkeypatch.setattr(father, "_call_llm", lambda _: self._FENCED_JSON)
+        pro = [DebateMessage(type="argument", round=1, sender="pro", content="remote")]
+        con = [DebateMessage(type="argument", round=1, sender="con", content="office")]
+        pct, _ = father._llm_evaluate(pro, con, 1, 1)  # noqa: SLF001
+        expected = (5 + 6 + 5 + 5 + 5) / 5 / 10 * 100
+        assert pct is not None
+        assert abs(pct - expected) < 0.1
+
+    def test_llm_evaluate_returns_none_on_invalid_json(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """_llm_evaluate must return (None, '') gracefully when LLM returns non-JSON."""
+        father = _make_father()
+        monkeypatch.setattr(father, "_call_llm", lambda _: "not valid json at all")
+        pro = [DebateMessage(type="argument", round=1, sender="pro", content="remote")]
+        con = [DebateMessage(type="argument", round=1, sender="con", content="office")]
+        pct, reasoning = father._llm_evaluate(pro, con, 1, 1)  # noqa: SLF001
+        assert pct is None
+        assert reasoning == ""
+
+    def test_verdict_reasoning_propagated_to_result(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """verdict_reasoning from _llm_evaluate must appear in the final DebateResult."""
+        father = _make_father(rounds=3)
+        monkeypatch.setattr(
+            father, "_llm_evaluate",
+            lambda *_: (70.0, "PRO dominated every round with superior evidence."),
+        )
+        result = father.run_debate(
+            "topic", MockAgent("pro", _std_responses()), MockAgent("con", _std_responses()),
+        )
+        assert result.verdict_reasoning == "PRO dominated every round with superior evidence."
