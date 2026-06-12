@@ -59,8 +59,12 @@ def main() -> int:
             )
             print(f"Review loop complete: {final_draft}")
 
-            pdf_path = sdk.compile_to_pdf(str(final_draft))
-            print(f"PDF compiled: {pdf_path}")
+            try:
+                pdf_path = sdk.compile_to_pdf(str(final_draft))
+                print(f"PDF compiled: {pdf_path}")
+            except FileNotFoundError as exc:
+                print(f"Warning: LaTeX compiler not found — skipping PDF step ({exc})")
+                print(f"To compile: lualatex {final_draft}")
 
         summary = metrics.summary()
         if summary["steps"] > 0:

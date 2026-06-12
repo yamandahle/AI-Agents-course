@@ -74,6 +74,7 @@ class Reviewer:
             user=user_msg,
             step=f"review:{Path(draft_path).stem}",
             temperature=0.1,
+            max_tokens=16384,
         )
         return self._parse(resp.text)
 
@@ -84,13 +85,37 @@ class Reviewer:
         return "\n\n".join(parts)
 
     def _parse(self, raw: str) -> ArticleReview:
+        import re as _re
         raw = raw.strip()
+        # Strip markdown code fences
+        m = _re.search(r"```(?:json)?\s*([\s\S]+?)\s*```", raw)
+        if m:
+            raw = m.group(1).strip()
         start = raw.find("{")
         end = raw.rfind("}") + 1
         try:
             data = json.loads(raw[start:end])
             return ArticleReview.model_validate(data)
         except Exception:
+            # Truncated JSON — try to extract partial comments
+            try:
+                comments_match = _re.search(r'"comments"\s*:\s*(\[[\s\S]*?\})\s*[,\]]', raw)
+                score_match = _re.search(r'"overall_score"\s*:\s*([\d.]+)', raw)
+                pass_match = _re.search(r'"pass_fail"\s*:\s*"(\w+)"', raw)
+                if score_match:
+                    score = float(score_match.group(1))
+                    pf = pass_match.group(1) if pass_match else "FAIL"
+                    return ArticleReview(
+                        comments=[ReviewComment(
+                            profile="Parse",
+                            location="whole article",
+                            comment="Review partially parsed (truncated output).",
+                        )],
+                        overall_score=score,
+                        pass_fail=pf,
+                    )
+            except Exception:
+                pass
             return ArticleReview(
                 comments=[ReviewComment(
                     profile="Parse",
