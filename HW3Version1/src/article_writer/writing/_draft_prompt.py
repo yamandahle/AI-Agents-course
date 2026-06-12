@@ -34,6 +34,7 @@ Use \\documentclass[12pt,a4paper]{article} with these packages and font setup:
 \\usepackage{float}
 \\usepackage{amsmath}
 \\usepackage{array}
+\\usepackage{tabularx}
 \\usepackage{caption}
 \\usepackage{tikz}
 \\usetikzlibrary{shapes,arrows.meta,positioning}
@@ -72,19 +73,48 @@ DOCUMENT SKELETON — follow exactly
 
 \\begin{document}
 
-% 1. Custom title page — NO \\maketitle
+% 1. Academic cover page — NO \\maketitle
 \\begin{titlepage}
-  \\centering
-  \\vspace*{2cm}
-  {\\hebrewfont\\Huge\\bfseries <Hebrew title in Hebrew script>\\par}
-  \\vspace{0.5cm}
-  {\\large \\begin{hebrew}<subtitle in Hebrew>\\end{hebrew}\\par}
-  \\vspace{1.5cm}
-  {\\large מאת: Nagham Mansour\\par}
-  {\\large קורס: AI Agents --- Advanced Topics\\par}
-  {\\large מרצה: Dr. Yoram Segal\\par}
-  {\\large June 2026\\par}
   \\thispagestyle{empty}
+  \\centering
+
+  % University logo (PNG, path relative to results/ compilation directory)
+  \\includegraphics[width=5cm]{../assets/images/uniHaifasymbol.png}\\par
+  \\vspace{0.4cm}
+
+  % Institution
+  {\\large\\bfseries University of Haifa\\par}
+  {\\normalsize Department of Information Systems\\par}
+
+  \\vspace{1.2cm}\\hrule\\vspace{1.2cm}
+
+  % English title — primary, prominent
+  {\\Huge\\bfseries <English title of the article>\\par}
+  \\vspace{0.3cm}
+  {\\Large\\bfseries <English subtitle>\\par}
+
+  % Hebrew subtitle — MUST be wrapped in \\begin{hebrew}...\\end{hebrew}
+  % NEVER mix Hebrew words with Latin text in the same unguarded paragraph
+  \\vspace{0.5cm}
+  {\\hebrewfont\\large
+    \\begin{hebrew}
+      <Hebrew title translation in Hebrew script only>
+    \\end{hebrew}\\par}
+
+  \\vfill
+
+  % Metadata block — ALL LINES IN PURE ENGLISH, no Hebrew label words
+  % Mixing Hebrew labels (מאת, קורס) with Latin text causes BiDi mirroring
+  \\begin{tabular}{rl}
+    \\textbf{Authors:}    & Nagham Manasra \\& Yaman Dahle \\\\[4pt]
+    \\textbf{Course:}     & 203.3763 --- Orchestration of AI Agents \\\\[4pt]
+    \\textbf{Instructor:} & Dr. Yoram Segal \\\\
+  \\end{tabular}
+
+  \\vspace{1.2cm}\\hrule\\vspace{0.6cm}
+
+  % Date
+  {\\large June 2026\\par}
 \\end{titlepage}
 
 % 2. Table of contents
@@ -134,9 +164,26 @@ CONTENT REQUIREMENTS
           \\label{fig:accuracy}
         \\end{figure}
       NEVER use \\includegraphics — there are no image files. ALWAYS use pgfplots or tikzpicture.
-   c. Exactly one \\begin{table}[H] with REAL data. Use p{width} columns (NEVER llll which overflows).
-      Example column spec: {>{\\raggedright\\arraybackslash}p{2.8cm} >{\\raggedright\\arraybackslash}p{2.5cm}
-                             >{\\raggedright\\arraybackslash}p{3.8cm} >{\\raggedright\\arraybackslash}p{3.5cm}}
+   c. Exactly one \\begin{table}[H] with REAL data. Use tabularx with \\textwidth so columns
+      automatically fill the exact page width with zero overflow. Example:
+        \\begin{table}[H]
+          \\centering
+          \\caption{Table title \\cite{key}.}
+          \\label{tab:example}
+          \\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}p{3cm}
+                                        >{\\raggedright\\arraybackslash}X
+                                        >{\\raggedright\\arraybackslash}X
+                                        >{\\raggedright\\arraybackslash}X}
+            \\toprule
+            \\textbf{Type} & \\textbf{Applications} & \\textbf{Advantages} & \\textbf{Limitations} \\\\
+            \\midrule
+            Row 1 data & data & data & data \\\\
+            \\addlinespace
+            Row 2 data & data & data & data \\\\
+            \\bottomrule
+          \\end{tabularx}
+        \\end{table}
+      RULES: ALWAYS use tabularx{\\textwidth}. NEVER use {llll} or p{fraction\\textwidth}.
       Add \\addlinespace between rows. Put citations in \\caption{}, NEVER use \\caption*{}.
 
 3. BiDi SECTION: One full section demonstrating Hebrew-English switching.
@@ -158,7 +205,8 @@ CONTENT REQUIREMENTS
    - Each subsection in the BiDi chapter must have BOTH a hebrewblock and an englishblock
    - The BiDi section must have at least 3 subsections
    - Section headings in Hebrew MUST use: \\section{\\texthebrew{כותרת בעברית}}
-   - Titlepage Hebrew title MUST use: {\\hebrewfont\\Huge\\bfseries כותרת...\\par}
+   - Titlepage Hebrew subtitle MUST be inside: {\\hebrewfont\\large\\begin{hebrew}...\\end{hebrew}\\par}
+   - Titlepage metadata lines MUST be pure English (see cover page template above)
 
 4. CITATIONS: You MUST only use citation keys that are explicitly listed below.
    Do NOT invent new keys. Do NOT use academic paper keys (author+year format).
@@ -187,9 +235,12 @@ CONTENT REQUIREMENTS
 HARD RULES
 ════════════════════════════════════════
 - NO \\maketitle anywhere — the titlepage block replaces it
-- NO \\includegraphics at all — use pgfplots ybar charts or tikzpicture diagrams instead
+- NO \\includegraphics for charts/diagrams — use pgfplots or tikzpicture instead
+  (\\includegraphics IS allowed for the university logo PNG: ../assets/images/uniHaifasymbol.png)
 - NO \\caption*{} — put citations directly inside \\caption{} or omit the note
-- NO llll table columns — use p{width} column specs to prevent text overflow
+- NO {llll} or p{fraction\\textwidth} table columns — use tabularx{\\textwidth} with X columns
+- NO Hebrew words mixed with Latin text in metadata lines — all metadata in pure English
+  (mixing causes BiDi mirroring; Hebrew goes ONLY inside \\begin{hebrew}...\\end{hebrew} blocks)
 - NO David Libre, DejaVu Serif, Times New Roman, or Arial fonts — use David CLM for Hebrew
 - Output starts with \\documentclass — no text before it
 - Output ends with \\end{document} — no text after it
