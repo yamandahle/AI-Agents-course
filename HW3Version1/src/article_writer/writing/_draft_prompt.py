@@ -33,6 +33,24 @@ Use \\documentclass[12pt,a4paper]{article} with these packages and font setup:
 \\usepackage{booktabs}
 \\usepackage{float}
 \\usepackage{amsmath}
+\\usepackage{tcolorbox}
+\\tcbuselibrary{skins,breakable}
+% Bilingual block containers for the BiDi section
+\\newenvironment{hebrewblock}{%
+  \\begin{tcolorbox}[enhanced,breakable,title={\\hebrewfont עברית},
+    colback=blue!3!white,colframe=blue!35!white,fonttitle=\\bfseries,
+    attach boxed title to top right={yshift=-2.5mm,xshift=-4mm},
+    boxed title style={colback=blue!35!white,sharp corners}]
+  \\begin{hebrew}
+}{%
+  \\end{hebrew}\\end{tcolorbox}\\medskip
+}
+\\newenvironment{englishblock}{%
+  \\begin{tcolorbox}[enhanced,breakable,title={English Translation},
+    colback=gray!4!white,colframe=gray!40!white,fonttitle=\\bfseries]
+}{%
+  \\end{tcolorbox}\\medskip
+}
 \\usepackage{graphicx}
 \\usepackage{fancyhdr}
 \\pagestyle{fancy}
@@ -102,27 +120,43 @@ CONTENT REQUIREMENTS
         \\end{figure}
    c. Exactly one \\begin{table}[H] with real data using \\toprule/\\midrule/\\bottomrule
 
-3. BiDi SECTION: One full section demonstrating Hebrew-English switching. Follow this exact pattern
-   for EVERY subsection in that section — Hebrew paragraph first, then its English equivalent:
+3. BiDi SECTION: One full section demonstrating Hebrew-English switching.
+   Use the custom tcolorbox environments defined in the preamble.
+   Follow this exact pattern for EVERY subsection in that section:
 
-     \\subsection{<English heading>}
-     \\begin{hebrew}
+     \\subsection{\\texthebrew{כותרת בעברית}}
+     \\begin{hebrewblock}
      פסקה עברית עם 4–7 משפטים. כל משפט עד 25 מילים. הטקסט זורם מימין לשמאל.
-     \\end{hebrew}
-     \\begin{english}
+     \\end{hebrewblock}
+     \\begin{englishblock}
      English paragraph with the same content (4–7 sentences, max 25 words each).
-     \\end{english}
+     \\end{englishblock}
 
    CRITICAL RULES for BiDi:
-   - NEVER put English text inside \\begin{hebrew}...\\end{hebrew}
-   - NEVER put Hebrew text inside \\begin{english}...\\end{english}
-   - Each subsection in the BiDi chapter must have BOTH a Hebrew block and an English block
+   - Use \\begin{hebrewblock}...\\end{hebrewblock} for Hebrew paragraphs (NOT bare \\begin{hebrew})
+   - Use \\begin{englishblock}...\\end{englishblock} for the English translation
+   - NEVER put English text inside hebrewblock; NEVER put Hebrew inside englishblock
+   - Each subsection in the BiDi chapter must have BOTH a hebrewblock and an englishblock
    - The BiDi section must have at least 3 subsections
    - Section headings in Hebrew MUST use: \\section{\\texthebrew{כותרת בעברית}}
    - Titlepage Hebrew title MUST use: {\\hebrewfont\\Huge\\bfseries כותרת...\\par}
 
-4. CITATIONS: Cite at least 6 different \\cite{key} entries from references.bib.
-   If a cited key is not in the .bib, add a \\bibitem or \\DeclareNameFormat entry.
+4. CITATIONS: You MUST only use citation keys that are explicitly listed below.
+   Do NOT invent new keys. Do NOT use academic paper keys (author+year format).
+   Allowed keys (these are all defined in references.bib):
+     who2021ai, topol2019highperformance, esteva2017dermatologist, nih, ieee,
+     frontiersin, mdpi, oracle, ajmc, televox, deepscribe, fda, regdesk, gov.uk,
+     ey, duanemorris, reedsmith, zynxhealth, relias, saisystems, jll, alation,
+     practolytics, pew, russell2010artificial, topol2019deep, shah2019artificial,
+     lecun2015deep, davenport2019ai, rajpurkar2017chexnet, mckinney2020international,
+     campanella2019deep, saito2015precision, fleming2018artificial, wang2019deep,
+     oracle_cloud, nih_ethical_implications, nih_patient_outcomes, nih_patient_satisfaction,
+     televox_patient_engagement, deepscribe_ai_medical_scribe, jll_commercial_real_estate,
+     dataart_digital_transformation, practolytics_medical_billing, alation_data_catalog,
+     ey_global_regulatory, fda_ai_ml_samd, gov_uk_mhra_roadmap, regdesk_eu_ai_act,
+     relias_healthcare_lms, zynxhealth_clinical_decision_support, google_health,
+     ibm_watson_health, infermedica_platform, microsoft_azure_ai, pathai, tempus
+   Use at least 8 different keys spread across the article.
 
 5. ABSTRACT: Write a 150–200 word abstract in English before the first section.
 
