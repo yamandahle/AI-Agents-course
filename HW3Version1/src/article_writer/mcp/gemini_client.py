@@ -14,8 +14,8 @@ from article_writer.shared.logger import get_logger
 load_dotenv()
 logger = get_logger(__name__)
 
-_DEEP_MODEL = "gemini-1.5-pro"
-_FLASH_MODEL = "gemini-1.5-flash"
+_DEEP_MODEL = "gemini-2.0-flash"
+_FLASH_MODEL = "gemini-2.0-flash"
 
 
 class GeminiClient:

@@ -24,7 +24,7 @@ _COST_PER_1K = {
     "gemini-2.5-pro": {"input": 0.00125, "output": 0.01},
 }
 
-_GOOGLE_DEFAULT_MODEL = "gemini-2.5-flash-lite"
+_GOOGLE_DEFAULT_MODEL = "gemini-2.0-flash"
 
 
 @dataclass

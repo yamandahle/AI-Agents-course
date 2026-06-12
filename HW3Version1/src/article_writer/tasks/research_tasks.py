@@ -21,7 +21,7 @@ def make_research_batch_task(researcher: Agent, topic: str) -> Task:
             "Each fact tagged with confidence: HIGH or MEDIUM. LOW items excluded."
         ),
         agent=researcher,
-        human_input=True,
+        human_input=False,
     )
 
 

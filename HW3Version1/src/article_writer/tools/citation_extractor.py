@@ -5,16 +5,17 @@ import json
 import os
 from typing import ClassVar
 
-import anthropic
 from dotenv import load_dotenv
 
 from article_writer.shared.gatekeeper import ApiGatekeeper
+from article_writer.shared.llm_client import LLMClient, LLMResponse
 from article_writer.shared.logger import get_logger
 from article_writer.tools.base_tool import ArticleBaseTool
 
 load_dotenv()
 logger = get_logger(__name__)
 
+_SYSTEM = "You are a citation formatter. Return only valid JSON."
 _URL_PROMPT = (
     "Extract citation metadata from this URL: {prompt}\n"
     'Return JSON only: {{"title": "...", "author": "...", "date": "YYYY-MM-DD", "url": "{prompt}"}}\n'
@@ -25,6 +26,8 @@ _TEXT_PROMPT = (
     'Return JSON only: {{"title": "...", "author": "...", "date": "YYYY-MM-DD", "publication": "..."}}\n'
     'Use "Unknown" for any missing field.'
 )
+
+_PROVIDER_TO_SERVICE = {"anthropic": "anthropic", "google": "gemini"}
 
 
 class CitationExtractorTool(ArticleBaseTool):
@@ -43,18 +46,19 @@ class CitationExtractorTool(ArticleBaseTool):
         clean = self._sanitize_input(prompt)
         self._log_call(clean)
         is_url = clean.startswith("http://") or clean.startswith("https://")
-        llm_prompt = (_URL_PROMPT if is_url else _TEXT_PROMPT).format(prompt=clean)
+        user = (_URL_PROMPT if is_url else _TEXT_PROMPT).format(prompt=clean)
         try:
+            provider = os.getenv("LLM_PROVIDER", "anthropic").lower()
+            service = _PROVIDER_TO_SERVICE.get(provider, provider)
             gate = ApiGatekeeper()
-            client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
-            def _call() -> anthropic.types.Message:
-                return client.messages.create(
-                    model="claude-haiku-4-5-20251001",
-                    max_tokens=256,
-                    messages=[{"role": "user", "content": llm_prompt}],
-                )
-            response = gate.execute("anthropic", _call)
-            data = json.loads(response.content[0].text)
+            llm = LLMClient()
+
+            def _call() -> LLMResponse:
+                return llm.complete(system=_SYSTEM, user=user,
+                                    step="citation_extractor", max_tokens=256)
+
+            resp = gate.execute(service, _call)
+            data = json.loads(resp.text)
             title = data.get("title", "Unknown Source")
             url = data.get("url", clean if is_url else "")
             author = data.get("author", "Unknown")
