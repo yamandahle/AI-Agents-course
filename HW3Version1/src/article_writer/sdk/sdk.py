@@ -111,8 +111,13 @@ class ArticleWriterSDK:
     def compile_to_pdf(self, tex_path: str) -> Path:
         """Compile LaTeX to PDF via lualatex. Returns path to article_final.pdf."""
         from article_writer.latex.latex_compiler import LaTeXCompiler
+        tex = Path(tex_path)
+        bib = tex.parent / "references.bib"
+        if not bib.exists():
+            bib.write_text("% auto-generated stub\n", encoding="utf-8")
+            logger.warning("Created empty references.bib stub at %s", bib)
         compiler = LaTeXCompiler()
-        pdf = compiler.compile(Path(tex_path))
+        pdf = compiler.compile(tex)
         final = Path("results/article_final.pdf")
         if pdf != final:
             final.parent.mkdir(parents=True, exist_ok=True)

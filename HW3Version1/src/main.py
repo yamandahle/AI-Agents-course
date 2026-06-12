@@ -65,6 +65,8 @@ def main() -> int:
             except FileNotFoundError as exc:
                 print(f"Warning: LaTeX compiler not found — skipping PDF step ({exc})")
                 print(f"To compile: lualatex {final_draft}")
+            except Exception as exc:
+                print(f"Warning: PDF compilation issue — {exc}")
 
         summary = metrics.summary()
         if summary["steps"] > 0:
