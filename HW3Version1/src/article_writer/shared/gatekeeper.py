@@ -4,7 +4,8 @@ from __future__ import annotations
 import time
 from collections import deque
 from dataclasses import dataclass, field
-from typing import Any, Callable
+from typing import Any
+from collections.abc import Callable
 
 from article_writer.shared.config import load_rate_limits
 from article_writer.shared.logger import get_logger

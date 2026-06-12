@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import asyncio
-import json
 from typing import Any
 
 import mcp.server.stdio
@@ -23,7 +22,7 @@ _TOOLS = [
     ),
     types.Tool(
         name="researcher_handler",
-        description="Manage research session state. Tracks visited URLs and suggests new queries. Input: current research intent.",
+        description="Manage research session state. Tracks visited URLs and suggests new queries.",
         inputSchema={"type": "object", "properties": {"prompt": {"type": "string"}}, "required": ["prompt"]},
     ),
     types.Tool(

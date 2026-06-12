@@ -9,7 +9,7 @@ from typing import ClassVar
 import anthropic
 from dotenv import load_dotenv
 
-from article_writer.shared.constants import CONFIDENCE_HIGH, CONFIDENCE_LOW, CONFIDENCE_MEDIUM
+from article_writer.shared.constants import CONFIDENCE_LOW
 from article_writer.shared.gatekeeper import ApiGatekeeper
 from article_writer.shared.logger import get_logger
 from article_writer.tools.base_tool import ArticleBaseTool
@@ -72,4 +72,4 @@ class ContentFilterTool(ArticleBaseTool):
             return ContentFilterResult(keep=keep, confidence=confidence, reason=data.get("reason", ""))
         except (json.JSONDecodeError, Exception) as exc:
             logger.warning("content_filter JSON parse error: %s — defaulting to DISCARD", exc)
-            return ContentFilterResult(keep=False, confidence=CONFIDENCE_LOW, reason="Parse error — discarded for safety")
+            return ContentFilterResult(keep=False, confidence=CONFIDENCE_LOW, reason="Parse error")

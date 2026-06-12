@@ -77,7 +77,11 @@ class ResearcherHandlerTool(ArticleBaseTool):
         except (json.JSONDecodeError, Exception) as exc:
             logger.warning("researcher_handler fallback triggered: %s", exc)
             fallback = [f"{clean} (angle {i})" for i in range(1, 4)]
-            return json.dumps({"batch": self._session.batch_count, "new_queries": fallback, "summary_so_far": "Unavailable"})
+            return json.dumps({
+                "batch": self._session.batch_count,
+                "new_queries": fallback,
+                "summary_so_far": "Unavailable",
+            })
 
     def reset_session(self) -> None:
         self._session = _ResearchSession()

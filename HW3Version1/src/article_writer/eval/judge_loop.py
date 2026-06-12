@@ -1,12 +1,11 @@
 """Iterative judge improvement loop: run on dev → compute F1 → refine → repeat."""
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass
 from pathlib import Path
 
 from article_writer.shared.llm_client import LLMClient
-from article_writer.eval.judge import ArticleJudge, JudgeResult, _DEFAULT_PROMPT as _JUDGE_DEFAULT_PROMPT
+from article_writer.eval.judge import ArticleJudge, _DEFAULT_PROMPT as _JUDGE_DEFAULT_PROMPT
 from article_writer.eval.f1_metrics import compute_f1, format_report, F1Result
 
 _PROMPT_REFINER_SYSTEM = """\

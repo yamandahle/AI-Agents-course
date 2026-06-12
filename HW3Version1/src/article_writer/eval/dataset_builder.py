@@ -130,9 +130,12 @@ class DatasetBuilder:
         test = samples[:n_test]
         dev = samples[n_test:n_test + n_dev]
         train = samples[n_test + n_dev:]
-        for s in train: s.split = "train"
-        for s in dev: s.split = "dev"
-        for s in test: s.split = "test"
+        for s in train:
+            s.split = "train"
+        for s in dev:
+            s.split = "dev"
+        for s in test:
+            s.split = "test"
         return {"train": train, "dev": dev, "test": test}
 
     def _save_splits(self, splits: dict[str, list[LabelledSample]], out_dir: Path) -> None:

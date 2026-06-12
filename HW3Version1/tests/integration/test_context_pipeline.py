@@ -38,16 +38,28 @@ def test_context_loader_builds_non_empty_context(tmp_path: Path) -> None:
 
 
 def test_draft_generator_saves_file(tmp_path: Path, monkeypatch) -> None:
-    monkeypatch.chdir(tmp_path)
+    from article_writer.shared.config import AppConfig, LLMConfig, ResearchConfig, WritingConfig, LaTeXConfig
     from article_writer.writing.draft_generator import DraftGenerator
+
     fake_tex = r"\documentclass{article}\begin{document}\maketitle\tableofcontents\end{document}"
-    mock_msg = MagicMock()
-    mock_msg.content = [MagicMock(text=fake_tex)]
-    mock_msg.usage.input_tokens = 100
-    mock_msg.usage.output_tokens = 200
-    with patch("article_writer.writing.draft_generator.ApiGatekeeper") as MockGate:
-        MockGate.return_value.execute.return_value = mock_msg
-        gen = DraftGenerator("test context")
+    fake_config = AppConfig(
+        version="1.0",
+        llm=LLMConfig(provider="anthropic", model="claude-sonnet-4-6", temperature=0.3),
+        research=ResearchConfig(search_backend="gemini", fallback_backend="perplexity",
+                                batch_size=5, max_batches=3, min_confidence="MEDIUM"),
+        writing=WritingConfig(max_evaluator_iterations=3, score_threshold=8.0, target_pages=15),
+        latex=LaTeXConfig(compiler="lualatex", compile_passes=4),
+    )
+    mock_resp = MagicMock()
+    mock_resp.content = [MagicMock(text=fake_tex)]
+    mock_resp.usage.input_tokens = 10
+    mock_resp.usage.output_tokens = 20
+
+    monkeypatch.chdir(tmp_path)
+    with patch("article_writer.writing.draft_generator.load_config", return_value=fake_config), \
+         patch("article_writer.writing.draft_generator.ApiGatekeeper") as MockGate:
+        MockGate.return_value.execute.return_value = mock_resp
+        gen = DraftGenerator("test context", config=fake_config)
         result = gen.generate()
     assert result.exists()
     assert result.name == "draft_v1.tex"

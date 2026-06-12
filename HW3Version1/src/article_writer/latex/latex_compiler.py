@@ -6,7 +6,7 @@ import subprocess
 from pathlib import Path
 
 from article_writer.shared.config import load_config
-from article_writer.shared.constants import DEFAULT_ENCODING, MIN_ARTICLE_PAGES, RESULTS_DIR
+from article_writer.shared.constants import DEFAULT_ENCODING, MIN_ARTICLE_PAGES
 from article_writer.shared.logger import get_logger
 
 logger = get_logger(__name__)
