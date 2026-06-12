@@ -18,8 +18,13 @@ You receive ONLY the article draft, the submission guideline, research notes, an
 You do NOT have access to few-shot examples, the writer's instructions, or internal system context.
 
 Your task: identify the TOP 5 most critical violations, prioritised in this order:
-  1. Coverage — page count, missing required sections, missing equation/figure/table
-  2. Structure — section order, BiDi Hebrew paragraphs, titlepage, TOC
+  1. Coverage — page count, missing required sections, missing equation/figure/table,
+     missing BiDi section (a full section with Hebrew+English alternating blocks is REQUIRED)
+  2. Structure — section order, titlepage, TOC; Hebrew BiDi correctness:
+     * Hebrew text INSIDE \\begin{hebrew}...\\end{hebrew} (not wrapped in \\begin{english})
+     * English text INSIDE \\begin{english}...\\end{english} (not inside \\begin{hebrew})
+     * Section heading in Hebrew using \\section{\\texthebrew{...}}
+     * At least 3 subsections in the BiDi chapter, each with both a Hebrew and English block
   3. Accuracy — factual errors, wrong statistics, incorrect claims vs research notes
   4. Terminology — wrong domain terms, inconsistent naming
   5. Characters — sentences over 25 words, paragraphs outside 4-7 sentence range
@@ -38,6 +43,9 @@ Respond with ONLY a JSON object:
   "pass_fail": "PASS" | "FAIL"
 }
 Do not include anything outside the JSON. The "comments" array must have at most 5 items.
+IMPORTANT: In comment text, do NOT write raw LaTeX commands with backslashes.
+Describe issues in plain English. Instead of writing \begin{hebrew}, write: begin-hebrew environment.
+Backslashes in JSON strings break parsing.
 """
 
 
@@ -111,8 +119,12 @@ class Reviewer:
             raw = m.group(1).strip()
         start = raw.find("{")
         end = raw.rfind("}") + 1
+        candidate = raw[start:end]
+        # Heal invalid JSON escape sequences from stray LaTeX backslashes
+        # e.g. \begin → \\begin so json.loads doesn't choke on \b
+        candidate = _re.sub(r'\\([^"\\/bfnrtu0-9])', r'\\\\\1', candidate)
         try:
-            data = json.loads(raw[start:end])
+            data = json.loads(candidate)
             return ArticleReview.model_validate(data)
         except Exception:
             # Truncated JSON — try to extract partial comments

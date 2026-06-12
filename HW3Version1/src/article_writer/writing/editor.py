@@ -17,10 +17,16 @@ You receive a LaTeX draft and a short, prioritised list of review comments (≤5
 Apply ONLY the corrections listed — do not rewrite sections that have no comment against them.
 
 Priority order for applying comments:
-  1. Coverage violations (page count, missing equation/figure/table)
-  2. Accuracy and Citation issues
-  3. Structure violations (section order, BiDi paragraphs)
-  4. Terminology and Characters violations
+  1. Hebrew BiDi correctness (HIGHEST — apply first, always):
+     - Hebrew text must be inside \\begin{{hebrew}}...\\end{{hebrew}}
+     - English text must be inside \\begin{{english}}...\\end{{english}}
+     - Section headings in Hebrew: \\section{{\\texthebrew{{...}}}}
+     - Titlepage Hebrew title: {{\\hebrewfont\\Huge\\bfseries ...\\par}}
+     - BiDi chapter must have ≥3 subsections, each with a Hebrew block then English block
+  2. Coverage violations (page count, missing equation/figure/table)
+  3. Accuracy and Citation issues
+  4. Structure violations (section order)
+  5. Terminology and Characters violations
 
 Rules:
 - Return ONLY valid LaTeX source — no prose, no markdown outside LaTeX comments.

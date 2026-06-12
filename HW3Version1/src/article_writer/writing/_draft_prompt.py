@@ -13,8 +13,15 @@ Use \\documentclass[12pt,a4paper]{article} with these packages and font setup:
 \\setmainlanguage{english}
 \\setotherlanguage{hebrew}
 \\usepackage{fontspec}
-\\setmainfont{Latin Modern Roman}
-\\newfontfamily\\hebrewfont[Script=Hebrew]{DejaVu Serif}
+% Register Hebrew fallback BEFORE setmainfont so it applies everywhere (headings, titles, etc.)
+\\directlua{
+  luaotfload.add_fallback("hebrewfallback", {
+    "David CLM:mode=harf;script=hebr;"
+  })
+}
+\\setmainfont{Latin Modern Roman}[RawFeature={fallback=hebrewfallback}]
+\\newfontfamily\\hebrewfont[Script=Hebrew]{David CLM}
+\\usepackage{luabidi}
 \\usepackage{geometry}
 \\geometry{margin=2.5cm}
 \\usepackage{setspace}
@@ -46,7 +53,7 @@ DOCUMENT SKELETON — follow exactly
 \\begin{titlepage}
   \\centering
   \\vspace*{2cm}
-  {\\Huge\\bfseries <Hebrew title in Hebrew script>\\par}
+  {\\hebrewfont\\Huge\\bfseries <Hebrew title in Hebrew script>\\par}
   \\vspace{0.5cm}
   {\\large \\begin{hebrew}<subtitle in Hebrew>\\end{hebrew}\\par}
   \\vspace{1.5cm}
@@ -95,8 +102,24 @@ CONTENT REQUIREMENTS
         \\end{figure}
    c. Exactly one \\begin{table}[H] with real data using \\toprule/\\midrule/\\bottomrule
 
-3. BiDi SECTION: One full section written primarily in Hebrew. Use \\begin{hebrew}...\\end{hebrew}
-   for at least 2 complete paragraphs (4–7 sentences each) in that section.
+3. BiDi SECTION: One full section demonstrating Hebrew-English switching. Follow this exact pattern
+   for EVERY subsection in that section — Hebrew paragraph first, then its English equivalent:
+
+     \\subsection{<English heading>}
+     \\begin{hebrew}
+     פסקה עברית עם 4–7 משפטים. כל משפט עד 25 מילים. הטקסט זורם מימין לשמאל.
+     \\end{hebrew}
+     \\begin{english}
+     English paragraph with the same content (4–7 sentences, max 25 words each).
+     \\end{english}
+
+   CRITICAL RULES for BiDi:
+   - NEVER put English text inside \\begin{hebrew}...\\end{hebrew}
+   - NEVER put Hebrew text inside \\begin{english}...\\end{english}
+   - Each subsection in the BiDi chapter must have BOTH a Hebrew block and an English block
+   - The BiDi section must have at least 3 subsections
+   - Section headings in Hebrew MUST use: \\section{\\texthebrew{כותרת בעברית}}
+   - Titlepage Hebrew title MUST use: {\\hebrewfont\\Huge\\bfseries כותרת...\\par}
 
 4. CITATIONS: Cite at least 6 different \\cite{key} entries from references.bib.
    If a cited key is not in the .bib, add a \\bibitem or \\DeclareNameFormat entry.
@@ -112,7 +135,7 @@ HARD RULES
 ════════════════════════════════════════
 - NO \\maketitle anywhere — the titlepage block replaces it
 - NO example-image-a or any \\includegraphics that references a non-existent file
-- NO David Libre, David, Times New Roman, or Arial fonts
+- NO David Libre, DejaVu Serif, Times New Roman, or Arial fonts — use David CLM for Hebrew
 - Output starts with \\documentclass — no text before it
 - Output ends with \\end{document} — no text after it
 """
