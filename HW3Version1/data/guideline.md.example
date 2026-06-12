@@ -1,0 +1,51 @@
+# Article Guideline — Template
+
+Copy this file to `data/guideline.md` and fill in the details before running the pipeline.
+
+---
+
+## Topic
+[Describe the specific topic of the article in 1–3 sentences. Be precise.]
+
+Example: The impact of large language model agents on software engineering productivity, with a focus on code generation, automated testing, and developer workflow integration.
+
+## Angle
+[What is the specific perspective or argument this article takes on the topic?]
+
+Example: A critical examination of both the productivity gains and the quality risks introduced by AI code generation tools in professional software development contexts.
+
+## Key Points
+[List 5–8 specific points the article must cover. Each point should map to at least one section.]
+
+- Key Point 1: Definition and taxonomy of AI code generation tools
+- Key Point 2: Empirical evidence of productivity improvements (metrics, studies)
+- Key Point 3: Code quality concerns — security vulnerabilities, technical debt
+- Key Point 4: Developer adoption patterns and workflow integration challenges
+- Key Point 5: Case studies from industry deployments
+- Key Point 6: Ethical and legal considerations (copyright, attribution)
+- Key Point 7: Future directions and research gaps
+
+## Narrative Arc
+[Describe the logical flow of the article — how it builds from introduction to conclusion.]
+
+Example: The article begins by contextualizing AI in software development, reviews the state of the evidence, presents a critical analysis of benefits and risks, and concludes with a balanced recommendation framework for organizations considering adoption.
+
+## Target Length
+~15 pages (minimum)
+
+## Language Requirements
+- Primary language: Hebrew (RTL)
+- At least one chapter demonstrating Hebrew-English BiDi switching
+- Technical terms remain in English throughout
+
+## Required Visual Elements
+- Graph: Performance comparison chart (Python matplotlib → PDF)
+- Table: Summary of key studies or tool comparison
+- Formula: At least one mathematical formula relevant to the topic
+- Image: Architecture diagram or relevant figure
+
+## Cover Page Information
+- Author: Nagham Mansour
+- Course: AI Agents — Advanced Topics
+- Lecturer: Dr. Yoram Segal
+- Date: [fill in submission date]
