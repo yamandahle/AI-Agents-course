@@ -12,6 +12,7 @@ logger = get_logger(__name__)
 
 _HTML_TAG_RE = re.compile(r"<[^>]+>")
 _SCRIPT_RE = re.compile(r"<script[^>]*>.*?</script>", re.IGNORECASE | re.DOTALL)
+_CODE_FENCE_RE = re.compile(r"```(?:json)?\s*([\s\S]+?)\s*```")
 
 
 class ArticleBaseTool(BaseTool):
@@ -29,3 +30,9 @@ class ArticleBaseTool(BaseTool):
     def _format_markdown_output(self, header: str, body: str) -> str:
         """Ensure output starts with a markdown ## header."""
         return f"## {header}\n\n{body}"
+
+    @staticmethod
+    def strip_json_fence(text: str) -> str:
+        """Strip markdown code fences from LLM JSON responses."""
+        m = _CODE_FENCE_RE.search(text.strip())
+        return m.group(1) if m else text.strip()

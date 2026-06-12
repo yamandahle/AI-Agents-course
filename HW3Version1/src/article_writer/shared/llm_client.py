@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import os
 import time
-import warnings
 from dataclasses import dataclass
 from typing import Any
 
@@ -24,7 +23,7 @@ _COST_PER_1K = {
     "gemini-2.5-pro": {"input": 0.00125, "output": 0.01},
 }
 
-_GOOGLE_DEFAULT_MODEL = "gemini-2.0-flash"
+_GOOGLE_DEFAULT_MODEL = "gemini-2.5-flash"
 
 
 @dataclass
@@ -56,16 +55,10 @@ class LLMClient:
             self.model = model or "claude-sonnet-4-6"
         elif self.provider == "google":
             self.model = model or os.getenv("GEMINI_MODEL", _GOOGLE_DEFAULT_MODEL)
-            self._client = self._init_google()
+            from google import genai as _genai
+            self._google_client = _genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
         else:
             raise ValueError(f"Unknown LLM provider: {self.provider!r}")
-
-    def _init_google(self) -> Any:
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")
-            import google.generativeai as genai
-        genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-        return genai.GenerativeModel(self.model)
 
     def complete(
         self,
@@ -125,15 +118,21 @@ class LLMClient:
 
     def _call_google(self, system: str, user: str,
                      temperature: float, max_tokens: int) -> _InternalResult:
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")
-            import google.generativeai as genai
-        cfg = genai.GenerationConfig(temperature=temperature, max_output_tokens=max_tokens)
-        combined = f"{system}\n\n{user}"
-        resp = self._client.generate_content(combined, generation_config=cfg)
+        from google.genai import types as _gtypes
+        resp = self._google_client.models.generate_content(
+            model=self.model,
+            contents=user,
+            config=_gtypes.GenerateContentConfig(
+                system_instruction=system,
+                temperature=temperature,
+                max_output_tokens=max_tokens,
+                # Disable internal thinking so token budget goes to visible output
+                thinking_config=_gtypes.ThinkingConfig(thinking_budget=0),
+            ),
+        )
         meta = resp.usage_metadata
         return _InternalResult(
-            text=resp.text,
+            text=resp.text or "",
             input_tokens=getattr(meta, "prompt_token_count", 0),
             output_tokens=getattr(meta, "candidates_token_count", 0),
         )

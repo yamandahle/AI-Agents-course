@@ -74,7 +74,7 @@ class ResearcherHandlerTool(ArticleBaseTool):
                                     step="researcher_handler", max_tokens=512)
 
             resp = gate.execute(service, _call)
-            parsed = json.loads(resp.text)
+            parsed = json.loads(self.strip_json_fence(resp.text))
             parsed["batch"] = self._session.batch_count
             return json.dumps(parsed)
         except (json.JSONDecodeError, Exception) as exc:

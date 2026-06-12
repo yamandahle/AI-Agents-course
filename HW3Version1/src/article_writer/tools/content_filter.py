@@ -6,16 +6,18 @@ import os
 from dataclasses import dataclass
 from typing import ClassVar
 
-import anthropic
 from dotenv import load_dotenv
 
 from article_writer.shared.constants import CONFIDENCE_LOW
 from article_writer.shared.gatekeeper import ApiGatekeeper
+from article_writer.shared.llm_client import LLMClient
 from article_writer.shared.logger import get_logger
 from article_writer.tools.base_tool import ArticleBaseTool
 
 load_dotenv()
 logger = get_logger(__name__)
+
+_PROVIDER_TO_SERVICE = {"anthropic": "anthropic", "google": "gemini"}
 
 _FILTER_PROMPT = (
     "You are a fact-checker. Rate the content below for relevance to '{topic}' "
@@ -57,19 +59,26 @@ class ContentFilterTool(ArticleBaseTool):
     def _score(self, content: str, topic: str) -> ContentFilterResult:
         llm_prompt = _FILTER_PROMPT.format(topic=topic, content=content[:2000])
         try:
+            provider = os.getenv("LLM_PROVIDER", "anthropic").lower()
+            service = _PROVIDER_TO_SERVICE.get(provider, provider)
             gate = ApiGatekeeper()
-            client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
-            def _call() -> anthropic.types.Message:
-                return client.messages.create(
-                    model="claude-haiku-4-5-20251001",
+            llm = LLMClient()
+
+            def _call():
+                return llm.complete(
+                    system="You are a fact-checker that returns only JSON.",
+                    user=llm_prompt,
+                    step="content_filter",
                     max_tokens=200,
-                    messages=[{"role": "user", "content": llm_prompt}],
                 )
-            response = gate.execute("anthropic", _call)
-            data = json.loads(response.content[0].text)
+
+            resp = gate.execute(service, _call)
+            data = json.loads(self.strip_json_fence(resp.text))
             confidence = data.get("confidence", CONFIDENCE_LOW)
             keep = data.get("keep", False) and confidence != CONFIDENCE_LOW
-            return ContentFilterResult(keep=keep, confidence=confidence, reason=data.get("reason", ""))
+            return ContentFilterResult(
+                keep=keep, confidence=confidence, reason=data.get("reason", "")
+            )
         except (json.JSONDecodeError, Exception) as exc:
             logger.warning("content_filter JSON parse error: %s — defaulting to DISCARD", exc)
             return ContentFilterResult(keep=False, confidence=CONFIDENCE_LOW, reason="Parse error")

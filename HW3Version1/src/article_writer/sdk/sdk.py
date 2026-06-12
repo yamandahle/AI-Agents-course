@@ -52,7 +52,14 @@ class ArticleWriterSDK:
         filter_t = make_research_filter_task(researcher, batch)
         artifact = make_research_artifact_task(researcher, filter_t)
         crew = ArticleResearchCrew(researcher, [batch, filter_t, artifact])
-        crew.kickoff({"topic": topic})
+        result = crew.kickoff({"topic": topic})
+        # The artifact task produces the research.md content as its final answer
+        output_text = str(result).strip() if result else ""
+        if output_text:
+            out_path = Path("data/research.md")
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(output_text, encoding="utf-8")
+            logger.info("research.md written: %d chars", len(output_text))
         return Path("data/research.md")
 
     def start_writing_session(

@@ -58,7 +58,7 @@ class CitationExtractorTool(ArticleBaseTool):
                                     step="citation_extractor", max_tokens=256)
 
             resp = gate.execute(service, _call)
-            data = json.loads(resp.text)
+            data = json.loads(self.strip_json_fence(resp.text))
             title = data.get("title", "Unknown Source")
             url = data.get("url", clean if is_url else "")
             author = data.get("author", "Unknown")
