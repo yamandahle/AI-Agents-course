@@ -28,10 +28,10 @@ class LaTeXCompiler:
         """Compile tex_path to PDF. Returns path to resulting .pdf."""
         cwd = output_dir or tex_path.parent
         stem = tex_path.stem
-        self._run_pass([self._compiler, "-interaction=nonstopmode", str(tex_path)], cwd)
+        self._run_pass([self._compiler, "-interaction=nonstopmode", tex_path.name], cwd)
         self._run_pass(["biber", stem], cwd)
         for _ in range(self._passes - 1):
-            self._run_pass([self._compiler, "-interaction=nonstopmode", str(tex_path)], cwd)
+            self._run_pass([self._compiler, "-interaction=nonstopmode", tex_path.name], cwd)
         pdf_path = cwd / f"{stem}.pdf"
         if not pdf_path.exists():
             raise CompilationError(f"PDF not produced at {pdf_path}")

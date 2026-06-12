@@ -2,18 +2,29 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 from pydantic import BaseModel
 
+from article_writer.shared.gatekeeper import ApiGatekeeper
 from article_writer.shared.llm_client import LLMClient
+
+_PROVIDER_TO_SERVICE = {"anthropic": "anthropic", "google": "gemini"}
 
 _REVIEWER_SYSTEM = """\
 You are an expert academic article reviewer for MDPI journals.
 You receive ONLY the article draft, the submission guideline, research notes, and writing profiles.
 You do NOT have access to few-shot examples, the writer's instructions, or internal system context.
 
-Your task: identify every violation of the guideline, research accuracy, or writing profiles.
+Your task: identify the TOP 5 most critical violations, prioritised in this order:
+  1. Coverage — page count, missing required sections, missing equation/figure/table
+  2. Structure — section order, BiDi Hebrew paragraphs, titlepage, TOC
+  3. Accuracy — factual errors, wrong statistics, incorrect claims vs research notes
+  4. Terminology — wrong domain terms, inconsistent naming
+  5. Characters — sentences over 25 words, paragraphs outside 4-7 sentence range
+
+Select at most 5 comments total. Choose the highest-severity issues first.
 For each issue output a JSON object with these exact keys:
   - "profile": which profile or constraint is violated
       (one of: "Structure", "Terminology", "Characters", "Coverage", "Accuracy", "Citation")
@@ -26,7 +37,7 @@ Respond with ONLY a JSON object:
   "overall_score": <float 0-10>,
   "pass_fail": "PASS" | "FAIL"
 }
-Do not include anything outside the JSON.
+Do not include anything outside the JSON. The "comments" array must have at most 5 items.
 """
 
 
@@ -51,6 +62,7 @@ class Reviewer:
 
     def __init__(self, llm: LLMClient | None = None) -> None:
         self._llm = llm or LLMClient()
+        self._gate = ApiGatekeeper()
 
     def review(
         self,
@@ -69,13 +81,19 @@ class Reviewer:
             f"## WRITING PROFILES\n{profiles}\n\n"
             f"## ARTICLE DRAFT TO REVIEW\n{draft}"
         )
-        resp = self._llm.complete(
-            system=_REVIEWER_SYSTEM,
-            user=user_msg,
-            step=f"review:{Path(draft_path).stem}",
-            temperature=0.1,
-            max_tokens=16384,
-        )
+        provider = os.getenv("LLM_PROVIDER", "anthropic").lower()
+        service = _PROVIDER_TO_SERVICE.get(provider, provider)
+
+        def _call():
+            return self._llm.complete(
+                system=_REVIEWER_SYSTEM,
+                user=user_msg,
+                step=f"review:{Path(draft_path).stem}",
+                temperature=0.1,
+                max_tokens=16384,
+            )
+
+        resp = self._gate.execute(service, _call)
         return self._parse(resp.text)
 
     def _load_profiles(self, profiles_dir: Path) -> str:

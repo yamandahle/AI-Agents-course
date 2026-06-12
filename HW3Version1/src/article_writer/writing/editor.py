@@ -1,25 +1,36 @@
 """Editor — applies structured ReviewComment list to a draft with guideline-first priority."""
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
+from article_writer.shared.gatekeeper import ApiGatekeeper
 from article_writer.shared.llm_client import LLMClient
 from article_writer.writing.reviewer import ArticleReview
 from article_writer.writing.few_shot_loader import FewShotLoader
 
+_PROVIDER_TO_SERVICE = {"anthropic": "anthropic", "google": "gemini"}
+
 _EDITOR_SYSTEM = """\
 You are an expert academic article editor for MDPI journals.
-You receive a LaTeX draft and a structured list of review comments.
-Apply ALL corrections prioritised in this order:
-  1. Guideline violations (Coverage, Accuracy, Citation)
-  2. Research accuracy issues
-  3. Writing profile violations (Structure, Terminology, Characters)
+You receive a LaTeX draft and a short, prioritised list of review comments (≤5 items).
+Apply ONLY the corrections listed — do not rewrite sections that have no comment against them.
+
+Priority order for applying comments:
+  1. Coverage violations (page count, missing equation/figure/table)
+  2. Accuracy and Citation issues
+  3. Structure violations (section order, BiDi paragraphs)
+  4. Terminology and Characters violations
 
 Rules:
 - Return ONLY valid LaTeX source — no prose, no markdown outside LaTeX comments.
-- Preserve all LaTeX preamble, \\begin{{document}}, \\maketitle, \\tableofcontents, \\end{{document}}.
-- Each correction must be minimal — do not rewrite unrelated sections.
+- Preserve all LaTeX preamble, \\begin{{document}}, \\tableofcontents, \\end{{document}}.
+- If the draft uses \\begin{{titlepage}}, keep it intact — do NOT add \\maketitle.
+- Each correction must be surgical — change only the sentences/paragraphs the comment targets.
+- Do NOT restructure or rewrite sections that are not mentioned in any comment.
 - If a comment says a citation is missing, add \\cite{{key}} inline; add the bib entry to the bibliography section.
+- The few-shot examples show MDPI academic writing tone and style — use them for vocabulary
+  and hedging language only; do not copy their LaTeX structure or preamble.
 """
 
 
@@ -40,6 +51,7 @@ class Editor:
     def __init__(self, llm: LLMClient | None = None,
                  few_shot_dir: str | Path = "few_shot_examples") -> None:
         self._llm = llm or LLMClient()
+        self._gate = ApiGatekeeper()
         self._few_shot_dir = Path(few_shot_dir)
 
     def apply(
@@ -66,13 +78,19 @@ class Editor:
             f"## CURRENT DRAFT\n{draft}\n\n"
             "Now output the corrected full LaTeX draft:"
         )
-        resp = self._llm.complete(
-            system=_EDITOR_SYSTEM,
-            user=user_msg,
-            step=f"edit:draft_v{version}",
-            temperature=0.2,
-            max_tokens=32768,
-        )
+        provider = os.getenv("LLM_PROVIDER", "anthropic").lower()
+        service = _PROVIDER_TO_SERVICE.get(provider, provider)
+
+        def _call():
+            return self._llm.complete(
+                system=_EDITOR_SYSTEM,
+                user=user_msg,
+                step=f"edit:draft_v{version}",
+                temperature=0.2,
+                max_tokens=32768,
+            )
+
+        resp = self._gate.execute(service, _call)
         out_path = Path("results") / f"draft_v{version}.tex"
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(_strip_code_fence(resp.text), encoding="utf-8")
