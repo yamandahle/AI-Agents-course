@@ -65,7 +65,7 @@ def make_optimization_task(writer: Agent, eval_task: Task) -> Task:
             "Apply ALL critique points from the critique file to the current draft.\n"
             "- Do not remove sections that were not critiqued.\n"
             "- Do not shrink below 15 pages.\n"
-            "- Save revised draft to results/draft_v{N+1}.tex."
+            "- Save revised draft to results/draft_v<N+1>.tex."
         ),
         expected_output="Revised LaTeX draft saved with incremented version number.",
         agent=writer,

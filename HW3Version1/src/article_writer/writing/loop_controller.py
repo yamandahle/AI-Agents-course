@@ -40,7 +40,7 @@ class EvalOptimizerLoop:
 
             critique_path = Path(RESULTS_DIR) / f"critique_v{iteration}.md"
             if iteration >= _MIN_ITERATIONS and last_score >= self._threshold:
-                logger.info("Score %.2f >= threshold %.1f after min iterations — stopping loop.", last_score, self._threshold)
+                logger.info("Score %.2f >= threshold %.1f — stopping loop.", last_score, self._threshold)
                 break
 
             if iteration < self._max_iterations:

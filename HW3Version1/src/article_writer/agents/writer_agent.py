@@ -4,6 +4,7 @@ from __future__ import annotations
 from crewai import Agent
 
 from article_writer.agents.base_agent import BaseAgentMixin
+from article_writer.shared.crewai_llm import get_crewai_llm
 
 _WRITER_BACKSTORY = (
     "You are a Senior Technical Article Writer. You transform research material "
@@ -31,6 +32,7 @@ def build_writer_agent() -> Agent:
             "Follow all writing profiles. Compile cleanly with lualatex."
         ),
         backstory=backstory,
+        llm=get_crewai_llm(),
         tools=[],
         allow_delegation=True,
         verbose=True,
@@ -46,6 +48,7 @@ def build_evaluator_agent() -> Agent:
             "critique in structured JSON format. Minimum 2 iterations required."
         ),
         backstory=_EVALUATOR_BACKSTORY,
+        llm=get_crewai_llm(),
         tools=[],
         allow_delegation=False,
         verbose=True,

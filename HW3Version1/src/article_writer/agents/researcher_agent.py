@@ -5,6 +5,7 @@ from crewai import Agent
 
 from article_writer.agents.base_agent import BaseAgentMixin
 from article_writer.shared.config import load_config
+from article_writer.shared.crewai_llm import get_crewai_llm
 from article_writer.tools.citation_extractor import CitationExtractorTool
 from article_writer.tools.content_filter import ContentFilterTool
 from article_writer.tools.deep_research_tool import DeepResearchTool
@@ -34,6 +35,7 @@ def build_researcher_agent() -> Agent:
         role=_ROLE,
         goal=_GOAL,
         backstory=backstory,
+        llm=get_crewai_llm(),
         tools=[
             DeepResearchTool(),
             ResearcherHandlerTool(),

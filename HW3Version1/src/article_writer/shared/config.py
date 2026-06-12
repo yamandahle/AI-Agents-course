@@ -10,8 +10,10 @@ from pathlib import Path
 @dataclass(frozen=True)
 class LLMConfig:
     provider: str
-    model: str
     temperature: float
+    model: str = "claude-sonnet-4-6"
+    anthropic_model: str = "claude-sonnet-4-6"
+    gemini_model: str = "gemini-2.5-flash"
 
 
 @dataclass(frozen=True)
@@ -28,6 +30,7 @@ class WritingConfig:
     max_evaluator_iterations: int
     score_threshold: float
     target_pages: int
+    review_iterations: int = 3
 
 
 @dataclass(frozen=True)

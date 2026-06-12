@@ -23,6 +23,13 @@ Rules:
 """
 
 
+def _strip_code_fence(text: str) -> str:
+    import re
+    text = text.strip()
+    m = re.search(r"```(?:latex|tex)?\s*([\s\S]+?)\s*```\s*$", text)
+    return m.group(1).strip() if m else text
+
+
 def _load(path: Path) -> str:
     return path.read_text(encoding="utf-8") if path.exists() else ""
 
@@ -64,11 +71,11 @@ class Editor:
             user=user_msg,
             step=f"edit:draft_v{version}",
             temperature=0.2,
-            max_tokens=12000,
+            max_tokens=32768,
         )
         out_path = Path("results") / f"draft_v{version}.tex"
         out_path.parent.mkdir(parents=True, exist_ok=True)
-        out_path.write_text(resp.text, encoding="utf-8")
+        out_path.write_text(_strip_code_fence(resp.text), encoding="utf-8")
         return out_path
 
     def _format_comments(self, review: ArticleReview) -> str:

@@ -27,14 +27,14 @@ You are a meticulous research analyst. Your job is to gather comprehensive, veri
 
 ### Output Format for research.md
 ```markdown
-# Research: {Topic}
-Generated: {date}
+# Research: <Topic>
+Generated: <date>
 
-## {Dimension 1}
-- **Fact**: {statement} — **Confidence**: HIGH — **Source**: [Title](url)
-- **Fact**: {statement} — **Confidence**: MEDIUM — **Source**: [Title](url)
+## <Dimension 1>
+- **Fact**: <statement> — **Confidence**: HIGH — **Source**: [Title](url)
+- **Fact**: <statement> — **Confidence**: MEDIUM — **Source**: [Title](url)
 
-## {Dimension 2}
+## <Dimension 2>
 ...
 
 ## Raw Sources

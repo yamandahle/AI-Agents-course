@@ -19,6 +19,24 @@ class ArticleWriterSDK:
         self._gate = ApiGatekeeper()
         self._metrics = MetricsTracker()
 
+    def _extract_topic(self, guideline_path: str) -> str:
+        """Pull the topic string from the guideline header or first paragraph."""
+        text = Path(guideline_path).read_text(encoding="utf-8")
+        for line in text.splitlines():
+            line = line.strip()
+            # Generated guideline header: "# Article Guideline — <topic>"
+            if line.startswith("# Article Guideline"):
+                parts = line.split("—", 1)
+                if len(parts) == 2:
+                    return parts[1].strip()
+            # Fall back: first non-empty, non-heading line after "## Topic"
+        return text[:120].replace("\n", " ").strip()
+
+    def generate_guideline(self, topic: str, output_path: str = "data/guideline.md") -> Path:
+        """Expand a raw topic string into a full guideline.md using an LLM."""
+        from article_writer.writing.guideline_generator import GuidelineGenerator
+        return GuidelineGenerator().generate(topic, output_path)
+
     def start_research_session(self, guideline_path: str) -> Path:
         """Run the researcher agent pipeline. Returns path to data/research.md."""
         from article_writer.agents.researcher_agent import build_researcher_agent
@@ -28,14 +46,20 @@ class ArticleWriterSDK:
             make_research_batch_task,
             make_research_filter_task,
         )
-        from article_writer.writing.context_loader import ContextLoader
-        topic = ContextLoader(guideline_path=guideline_path).load_guideline()[:200]
+        topic = self._extract_topic(guideline_path)
         researcher = build_researcher_agent()
         batch = make_research_batch_task(researcher, topic)
         filter_t = make_research_filter_task(researcher, batch)
         artifact = make_research_artifact_task(researcher, filter_t)
         crew = ArticleResearchCrew(researcher, [batch, filter_t, artifact])
-        crew.kickoff({"topic": topic})
+        result = crew.kickoff({"topic": topic})
+        # The artifact task produces the research.md content as its final answer
+        output_text = str(result).strip() if result else ""
+        if output_text:
+            out_path = Path("data/research.md")
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(output_text, encoding="utf-8")
+            logger.info("research.md written: %d chars", len(output_text))
         return Path("data/research.md")
 
     def start_writing_session(
@@ -87,8 +111,13 @@ class ArticleWriterSDK:
     def compile_to_pdf(self, tex_path: str) -> Path:
         """Compile LaTeX to PDF via lualatex. Returns path to article_final.pdf."""
         from article_writer.latex.latex_compiler import LaTeXCompiler
+        tex = Path(tex_path)
+        bib = tex.parent / "references.bib"
+        if not bib.exists():
+            bib.write_text("% auto-generated stub\n", encoding="utf-8")
+            logger.warning("Created empty references.bib stub at %s", bib)
         compiler = LaTeXCompiler()
-        pdf = compiler.compile(Path(tex_path))
+        pdf = compiler.compile(tex)
         final = Path("results/article_final.pdf")
         if pdf != final:
             final.parent.mkdir(parents=True, exist_ok=True)

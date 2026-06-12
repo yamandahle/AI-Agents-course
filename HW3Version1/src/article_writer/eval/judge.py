@@ -8,6 +8,20 @@ from pydantic import BaseModel
 
 from article_writer.shared.llm_client import LLMClient
 
+_TRAINED_RESULTS_PATH = Path("eval_dataset/judge_results.json")
+
+
+def load_trained_prompt(results_path: str | Path = _TRAINED_RESULTS_PATH) -> str | None:
+    """Return the final refined prompt from a completed judge loop run, or None."""
+    p = Path(results_path)
+    if not p.exists():
+        return None
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+        return data.get("final_prompt") or None
+    except Exception:
+        return None
+
 _DEFAULT_PROMPT = """\
 You are a strict academic journal editor for MDPI journals evaluating a submitted article.
 
@@ -63,7 +77,7 @@ class ArticleJudge:
 
     def __init__(self, llm: LLMClient | None = None, prompt: str | None = None) -> None:
         self._llm = llm or LLMClient()
-        self.prompt = prompt or _DEFAULT_PROMPT
+        self.prompt = prompt or load_trained_prompt() or _DEFAULT_PROMPT
 
     def judge(
         self,

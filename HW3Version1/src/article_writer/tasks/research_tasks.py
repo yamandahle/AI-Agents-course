@@ -21,7 +21,7 @@ def make_research_batch_task(researcher: Agent, topic: str) -> Task:
             "Each fact tagged with confidence: HIGH or MEDIUM. LOW items excluded."
         ),
         agent=researcher,
-        human_input=True,
+        human_input=False,
     )
 
 
@@ -50,7 +50,7 @@ def make_research_artifact_task(researcher: Agent, filter_task: Task) -> Task:
             "Write all curated facts to data/research.md.\n"
             "Format:\n"
             "  # Research: {topic}\n"
-            "  ## {Dimension}\n"
+            "  ## <DimensionName>\n"
             "  - **Fact**: ... — **Confidence**: HIGH — **Source**: [title](url)\n"
             "Include a ## Raw Sources section at the end listing all cited URLs."
         ),
