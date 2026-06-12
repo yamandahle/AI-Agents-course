@@ -1,0 +1,31 @@
+{
+  "version": "1.00",
+  "llm": {
+    "provider": "anthropic",
+    "anthropic_model": "claude-sonnet-4-6",
+    "gemini_model": "gemini-2.5-flash",
+    "temperature": 0.3
+  },
+  "research": {
+    "search_backend": "gemini",
+    "fallback_backend": "perplexity",
+    "batch_size": 5,
+    "max_batches": 10,
+    "min_confidence": "MEDIUM"
+  },
+  "writing": {
+    "max_evaluator_iterations": 3,
+    "score_threshold": 8.0,
+    "target_pages": 15,
+    "review_iterations": 3
+  },
+  "latex": {
+    "compiler": "lualatex",
+    "compile_passes": 4
+  },
+  "tracing": {
+    "enabled": true,
+    "traces_file": "results/traces.jsonl",
+    "metrics_file": "results/metrics.jsonl"
+  }
+}

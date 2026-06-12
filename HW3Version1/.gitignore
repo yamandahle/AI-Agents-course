@@ -1,0 +1,61 @@
+# Secrets
+.env
+
+# Windows Zone.Identifier metadata files (WSL artifact)
+*:Zone.Identifier
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# uv
+.uv/
+
+# Ruff
+.ruff_cache/
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Generated artifacts — not committed
+data/research.md
+results/*.tex
+results/*.json
+results/*.jsonl
+results/*.pdf
+!results/.gitkeep
+
+# Keep data/guideline.md tracked (it's hand-authored)
+# data/guideline.md is intentionally NOT gitignored
+
+# Eval dataset splits (generated, not tracked)
+eval_dataset/splits/*.jsonl
+!eval_dataset/splits/.gitkeep
+!eval_dataset/raw/.gitkeep
+*.aux
+*.log
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*.synctex.gz
+*.toc
+*.out
+*.fls
+*.fdb_latexmk
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+*.swp
