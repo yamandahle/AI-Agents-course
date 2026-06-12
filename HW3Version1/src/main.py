@@ -10,8 +10,10 @@ from article_writer.shared.metrics_tracker import MetricsTracker
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="AI Article Writer — multi-agent pipeline")
+    parser.add_argument("--topic",
+                        help="Article topic (auto-generates guideline.md from this)")
     parser.add_argument("--guideline", default="data/guideline.md",
-                        help="Path to article guideline")
+                        help="Path to article guideline (used when --topic is not given)")
     parser.add_argument("--research", default="data/research.md",
                         help="Path to research artifact")
     parser.add_argument("--few-shots", default="few_shot_examples",
@@ -31,14 +33,21 @@ def main() -> int:
     args = _parse_args()
     sdk = ArticleWriterSDK()
     metrics = MetricsTracker()
+    guideline_path = args.guideline
+
     try:
+        if args.topic:
+            print(f"Generating guideline for topic: {args.topic!r}")
+            guideline_path = str(sdk.generate_guideline(args.topic))
+            print(f"Guideline written: {guideline_path}")
+
         if args.mode in ("research", "full"):
-            research_path = sdk.start_research_session(args.guideline)
+            research_path = sdk.start_research_session(guideline_path)
             print(f"Research complete: {research_path}")
 
         if args.mode in ("write", "full"):
             draft_path = sdk.start_writing_session(
-                guideline_path=args.guideline,
+                guideline_path=guideline_path,
                 research_path=args.research,
                 few_shot_dir=args.few_shots,
             )
@@ -59,7 +68,7 @@ def main() -> int:
                   f"${summary['total_cost_usd']:.4f} cost | "
                   f"{summary['total_tokens']} tokens | "
                   f"{summary['total_latency_ms']}ms total")
-            print(f"Traces: results/traces.jsonl | Metrics: results/metrics.jsonl")
+            print("Traces: results/traces.jsonl | Metrics: results/metrics.jsonl")
 
     except FileNotFoundError as exc:
         print(f"Error: required file not found — {exc}", file=sys.stderr)

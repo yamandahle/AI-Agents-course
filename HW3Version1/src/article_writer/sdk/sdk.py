@@ -19,6 +19,24 @@ class ArticleWriterSDK:
         self._gate = ApiGatekeeper()
         self._metrics = MetricsTracker()
 
+    def _extract_topic(self, guideline_path: str) -> str:
+        """Pull the topic string from the guideline header or first paragraph."""
+        text = Path(guideline_path).read_text(encoding="utf-8")
+        for line in text.splitlines():
+            line = line.strip()
+            # Generated guideline header: "# Article Guideline — <topic>"
+            if line.startswith("# Article Guideline"):
+                parts = line.split("—", 1)
+                if len(parts) == 2:
+                    return parts[1].strip()
+            # Fall back: first non-empty, non-heading line after "## Topic"
+        return text[:120].replace("\n", " ").strip()
+
+    def generate_guideline(self, topic: str, output_path: str = "data/guideline.md") -> Path:
+        """Expand a raw topic string into a full guideline.md using an LLM."""
+        from article_writer.writing.guideline_generator import GuidelineGenerator
+        return GuidelineGenerator().generate(topic, output_path)
+
     def start_research_session(self, guideline_path: str) -> Path:
         """Run the researcher agent pipeline. Returns path to data/research.md."""
         from article_writer.agents.researcher_agent import build_researcher_agent
@@ -28,8 +46,7 @@ class ArticleWriterSDK:
             make_research_batch_task,
             make_research_filter_task,
         )
-        from article_writer.writing.context_loader import ContextLoader
-        topic = ContextLoader(guideline_path=guideline_path).load_guideline()[:200]
+        topic = self._extract_topic(guideline_path)
         researcher = build_researcher_agent()
         batch = make_research_batch_task(researcher, topic)
         filter_t = make_research_filter_task(researcher, batch)

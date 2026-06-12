@@ -50,7 +50,7 @@ def make_research_artifact_task(researcher: Agent, filter_task: Task) -> Task:
             "Write all curated facts to data/research.md.\n"
             "Format:\n"
             "  # Research: {topic}\n"
-            "  ## {Dimension}\n"
+            "  ## <DimensionName>\n"
             "  - **Fact**: ... — **Confidence**: HIGH — **Source**: [title](url)\n"
             "Include a ## Raw Sources section at the end listing all cited URLs."
         ),
