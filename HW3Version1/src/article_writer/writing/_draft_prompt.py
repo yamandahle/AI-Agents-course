@@ -33,6 +33,12 @@ Use \\documentclass[12pt,a4paper]{article} with these packages and font setup:
 \\usepackage{booktabs}
 \\usepackage{float}
 \\usepackage{amsmath}
+\\usepackage{array}
+\\usepackage{caption}
+\\usepackage{tikz}
+\\usetikzlibrary{shapes,arrows.meta,positioning}
+\\usepackage{pgfplots}
+\\pgfplotsset{compat=1.18}
 \\usepackage{tcolorbox}
 \\tcbuselibrary{skins,breakable}
 % Bilingual block containers for the BiDi section
@@ -57,9 +63,8 @@ Use \\documentclass[12pt,a4paper]{article} with these packages and font setup:
 \\usepackage{todonotes}
 
 Do NOT use David Libre, David, or any font not in this list.
-Do NOT use \\includegraphics with example-image-a or any external file.
-For any figure that needs an image, use:
-  \\fbox{\\parbox{10cm}{Placeholder: <description of chart/diagram>}}
+Do NOT use \\includegraphics at all — it requires external files that do not exist.
+For charts, use pgfplots. For flow diagrams, use tikzpicture with the positioning library.
 
 ════════════════════════════════════════
 DOCUMENT SKELETON — follow exactly
@@ -111,14 +116,28 @@ CONTENT REQUIREMENTS
 2. MANDATORY ELEMENTS (all three must appear in the body):
    a. Exactly one \\begin{equation} ... \\end{equation} block with a real formula
       (e.g., diagnostic accuracy, F1-score, or Bayesian formula relevant to content)
-   b. Exactly one \\begin{figure}[H] block. Use a fbox placeholder instead of \\includegraphics:
+   b. Exactly one \\begin{figure}[H] block with a REAL pgfplots ybar chart. Example:
         \\begin{figure}[H]
           \\centering
-          \\fbox{\\parbox{10cm}{Placeholder: diagnostic accuracy bar chart}}
-          \\caption{...}
+          \\begin{tikzpicture}
+            \\begin{axis}[ybar,bar width=0.4cm,width=0.85\\textwidth,height=7cm,
+              ylabel={Accuracy (\\%)},xlabel={Task},ymin=75,ymax=100,
+              xtick=data,symbolic x coords={Task A,Task B,Task C},
+              xticklabel style={rotate=20,anchor=north east,font=\\small},
+              nodes near coords,legend style={at={(0.5,1.05)},anchor=south,legend columns=-1}]
+              \\addplot+[fill=blue!60] coordinates {(Task A,94)(Task B,90)(Task C,91)};
+              \\addplot+[fill=orange!60] coordinates {(Task A,85)(Task B,87)(Task C,86)};
+              \\legend{AI Agent,Human Expert}
+            \\end{axis}
+          \\end{tikzpicture}
+          \\caption{...\\cite{key1}}
           \\label{fig:accuracy}
         \\end{figure}
-   c. Exactly one \\begin{table}[H] with real data using \\toprule/\\midrule/\\bottomrule
+      NEVER use \\includegraphics — there are no image files. ALWAYS use pgfplots or tikzpicture.
+   c. Exactly one \\begin{table}[H] with REAL data. Use p{width} columns (NEVER llll which overflows).
+      Example column spec: {>{\\raggedright\\arraybackslash}p{2.8cm} >{\\raggedright\\arraybackslash}p{2.5cm}
+                             >{\\raggedright\\arraybackslash}p{3.8cm} >{\\raggedright\\arraybackslash}p{3.5cm}}
+      Add \\addlinespace between rows. Put citations in \\caption{}, NEVER use \\caption*{}.
 
 3. BiDi SECTION: One full section demonstrating Hebrew-English switching.
    Use the custom tcolorbox environments defined in the preamble.
@@ -168,7 +187,9 @@ CONTENT REQUIREMENTS
 HARD RULES
 ════════════════════════════════════════
 - NO \\maketitle anywhere — the titlepage block replaces it
-- NO example-image-a or any \\includegraphics that references a non-existent file
+- NO \\includegraphics at all — use pgfplots ybar charts or tikzpicture diagrams instead
+- NO \\caption*{} — put citations directly inside \\caption{} or omit the note
+- NO llll table columns — use p{width} column specs to prevent text overflow
 - NO David Libre, DejaVu Serif, Times New Roman, or Arial fonts — use David CLM for Hebrew
 - Output starts with \\documentclass — no text before it
 - Output ends with \\end{document} — no text after it
