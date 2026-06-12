@@ -222,7 +222,12 @@ CONTENT REQUIREMENTS
      dataart_digital_transformation, practolytics_medical_billing, alation_data_catalog,
      ey_global_regulatory, fda_ai_ml_samd, gov_uk_mhra_roadmap, regdesk_eu_ai_act,
      relias_healthcare_lms, zynxhealth_clinical_decision_support, google_health,
-     ibm_watson_health, infermedica_platform, microsoft_azure_ai, pathai, tempus
+     ibm_watson_health, infermedica_platform, microsoft_azure_ai, pathai, tempus,
+     aidoc.com, alation.com, aslm.org, bcg.com, compunnel.com, coursera.org,
+     deepscribe.ai, emerline.com, heidihealth.com, hitrustalliance.net, ibm.com,
+     intellias.com, medicalfuturist.com, medium.com, omnicuris.com,
+     rapidinnovation.io, retellai.com, salesforce.com, sgu.edu, sully.ai,
+     theintellify.com, tonic.ai, weforum.org
    Use at least 8 different keys spread across the article.
 
 5. ABSTRACT: Write a 150–200 word abstract in English before the first section.
