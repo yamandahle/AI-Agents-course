@@ -149,3 +149,74 @@ Final result: 24-page PDF (lualatex, 0 errors, 0 `[?]` artifacts).
 uv run python src/article_writer/tools/chart_checker.py
 # Output: results/chart_check/chart_check.pdf
 ```
+
+---
+
+## Prompt 8 — Grade Fixes: Tests, Coverage, Jupyter Notebook, Python Graph
+
+> (Session continuation) Fix 13 failing tests. Boost coverage from 24.49% to ≥85%. Run the Python graph and wire into draft. Create Jupyter notebook for results analysis. Commit and push.
+
+### What was built
+- **Test fixes** — all mock helpers updated to return `LLMResponse(text, input_tokens, output_tokens, model, cost_usd)` instead of Anthropic-style `MagicMock`; spurious `anthropic.Anthropic` patches removed; Google SDK mock updated from `google.generativeai` (old) to `google.genai` (new)
+- **New test files** — `test_latex_sanitizer.py`, `test_latex_sanitizer_fixes.py`, `test_latex_sanitizer_validate.py`, `test_latex_sanitizer_extra.py`, `test_sdk.py`, `test_chart_checker.py`, `test_guideline_generator.py`
+- **Coverage** — 24.49% → 86.48% (303 tests passing)
+- **`notebooks/results_analysis.ipynb`** — 10-cell notebook: latency boxplot by category, token usage, cumulative cost, cost pie, model comparison, top-10 expensive steps, latency histogram
+- **`assets/graphs/accuracy_curve.pdf`** — matplotlib graph generated and inserted into `results/draft_final.tex` via `\includegraphics`
+
+| Decision | Detail |
+|---|---|
+| Mock return type | `LLMResponse` dataclass (not `MagicMock` with `.content[0].text`) |
+| SDK test patching | Lazy local imports in SDK methods → patches target original module paths |
+| Coverage tool | `pytest-cov` with `--cov-fail-under=85` in `pyproject.toml` |
+
+---
+
+## Prompt 9 — Python-First Chart Generation Pipeline
+
+> is it now in the pipeline instead of generating the graphs and the charts using python code and then taking the images as the output of this code and inserted in the latex draft as image? … make a prd file for this addition then a plan then a todo list and execute it fully
+
+### What was built
+- **`src/article_writer/tools/chart_generator.py`** — generates 3 publication-quality matplotlib PDFs before LLM runs:
+  - `accuracy_curve.pdf` — training vs validation accuracy over 30 epochs
+  - `diagnostic_comparison.pdf` — AI vs human expert on 5 medical imaging tasks
+  - `cost_reduction.pdf` — operational cost reduction across hospital departments
+  - `generate_all()` is idempotent (skips existing unless `regenerate=True`)
+- **Sanitizer Fix n3 updated** — `_fix_includegraphics` now accepts `tex_dir: Path | None`; skips replacement when the referenced PDF exists on disk
+- **Draft prompt updated** — removed "NEVER use `\includegraphics`" rule; added PRE-GENERATED CHARTS block listing all 3 PDF paths with descriptions
+- **SDK wired** — `start_writing_session()` calls `generate_all(Path(charts_dir))` before `DraftGenerator` runs
+- **`pyproject.toml`** — added `matplotlib>=3.8.0` and `numpy>=1.26.0`
+- **Tests** — `test_chart_generator.py` (8 tests), sanitizer T1/T2 in `test_latex_sanitizer_extra.py`
+
+| Decision | Detail |
+|---|---|
+| Why pre-generate | Matplotlib produces clean, anti-aliased PDFs; pgfplots is error-prone and hard for LLMs |
+| Idempotency | `generate_all()` checks `path.exists()` before calling each generator — safe to call on every run |
+| Sanitizer bypass | File-existence check before replacement so pre-generated charts are never converted to pgfplots |
+| LLM instruction | Prompt tells LLM the exact paths; LLM uses `\includegraphics[width=0.88\textwidth]{../assets/graphs/<file>.pdf}` |
+
+---
+
+## Prompt 10 — TikZ Spatial Collision Prevention
+
+> modify the writer agent to "When generating TikZ code for flowcharts or system architectures, you must ensure that lines never cross through text labels or box borders…" and for the reviewer "Analyze the layout architecture of the generated TikZ code and check for spatial collisions…" make a prd file and a plan and todo list and execute it to solve the figure bug
+
+### What was built
+- **Writer prompt §3 TIKZ FLOWCHART RULES** — new block in CONTENT REQUIREMENTS with:
+  - Label clearance: every `node[midway]` must carry `fill=white, inner sep=2pt`
+  - Three safe feedback-loop routing methods with copy-paste examples (`|-`, `to[out,in]`, named waypoint coordinate)
+  - `xshift ≥ 1.5cm` beyond rightmost box edge for return paths
+  - Complete clean flowchart example with orthogonal feedback loop
+- **HARD RULES strengthened** — three numbered constraints replacing the single arrow-label line
+- **Reviewer `TikzLayout` check** (priority 3) — rejects figures where:
+  - Connection label node lacks `fill=white` or `fill=pagecolor`
+  - `\draw` path uses bare `--` for multi-hop route crossing a box
+- **Editor priority updated** — TikZ fixes now ranked 2nd (after BiDi, before Coverage); `_format_comments` priority_order includes `"TikzLayout"`
+- **Sanitizer Fix 12 `_fix_diagonal_paths`** — converts `-- ++(x,y)` diagonal segments to `-- ++(x,0) -- ++(0,y)` (horizontal-first orthogonal routing)
+- **Tests** — `tests/unit/test_latex/test_tikz_collision.py` (11 tests)
+- **Verified in pipeline run** — generated flowchart uses `(feedback.east) -- ++(2.5cm,0) |- (integration.east)` with `fill=white` on all labels
+
+| Decision | Detail |
+|---|---|
+| Three-layer defence | Prompt (prevent) → reviewer (detect) → sanitizer (fix) — collision never reaches PDF |
+| Diagonal detection | Regex `-- \+\+\(x,y\)` where both x and y non-zero; split to `-- ++(x,0) -- ++(0,y)` |
+| Orthogonal routing | `|-` operator routes horizontal then vertical; `xshift` keeps the line clear of box borders |
