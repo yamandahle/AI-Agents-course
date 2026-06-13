@@ -9,6 +9,9 @@ from pydantic import BaseModel
 
 from article_writer.shared.gatekeeper import ApiGatekeeper
 from article_writer.shared.llm_client import LLMClient
+from article_writer.shared.logger import get_logger
+
+logger = get_logger(__name__)
 
 _PROVIDER_TO_SERVICE = {"anthropic": "anthropic", "google": "gemini"}
 
@@ -129,7 +132,6 @@ class Reviewer:
         except Exception:
             # Truncated JSON — try to extract partial comments
             try:
-                comments_match = _re.search(r'"comments"\s*:\s*(\[[\s\S]*?\})\s*[,\]]', raw)
                 score_match = _re.search(r'"overall_score"\s*:\s*([\d.]+)', raw)
                 pass_match = _re.search(r'"pass_fail"\s*:\s*"(\w+)"', raw)
                 if score_match:
@@ -145,7 +147,7 @@ class Reviewer:
                         pass_fail=pf,
                     )
             except Exception:
-                pass
+                logger.debug("Partial review parse also failed", exc_info=True)
             return ArticleReview(
                 comments=[ReviewComment(
                     profile="Parse",

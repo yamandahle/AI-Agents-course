@@ -50,10 +50,8 @@ def test_draft_generator_saves_file(tmp_path: Path, monkeypatch) -> None:
         writing=WritingConfig(max_evaluator_iterations=3, score_threshold=8.0, target_pages=15),
         latex=LaTeXConfig(compiler="lualatex", compile_passes=4),
     )
-    mock_resp = MagicMock()
-    mock_resp.content = [MagicMock(text=fake_tex)]
-    mock_resp.usage.input_tokens = 10
-    mock_resp.usage.output_tokens = 20
+    from article_writer.shared.llm_client import LLMResponse
+    mock_resp = LLMResponse(text=fake_tex, input_tokens=10, output_tokens=20, model="mock", cost_usd=0.0)
 
     monkeypatch.chdir(tmp_path)
     with patch("article_writer.writing.draft_generator.load_config", return_value=fake_config), \

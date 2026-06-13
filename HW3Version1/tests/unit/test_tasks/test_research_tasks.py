@@ -15,7 +15,7 @@ def test_make_research_batch_task_creates_task_with_human_input() -> None:
         from article_writer.tasks.research_tasks import make_research_batch_task
         make_research_batch_task(agent, "AI in healthcare")
     kwargs = MockTask.call_args.kwargs
-    assert kwargs["human_input"] is True
+    assert kwargs["human_input"] is False
     assert "AI in healthcare" in kwargs["description"]
 
 

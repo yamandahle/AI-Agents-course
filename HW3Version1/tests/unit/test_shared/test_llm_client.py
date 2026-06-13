@@ -81,16 +81,19 @@ def test_estimate_cost_unknown_model_uses_fallback(monkeypatch: pytest.MonkeyPat
 
 def test_google_provider_complete(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("GEMINI_API_KEY", "test-key")
-    mock_model = _mock_google_model()
-    mock_genai = MagicMock()
-    mock_genai.GenerativeModel.return_value = mock_model
-    mock_genai.GenerationConfig.return_value = MagicMock()
-    with patch.dict("sys.modules", {"google.generativeai": mock_genai}):
-        from importlib import reload
-        import article_writer.shared.llm_client as llm_module
-        reload(llm_module)
-        client = llm_module.LLMClient(provider="google", model="gemini-2.0-flash")
-        resp = client.complete(system="be helpful", user="hello")
-    assert resp.text == "google response"
-    assert resp.input_tokens == 80
-    assert resp.output_tokens == 40
+    # Build a mock google.genai.Client whose .models.generate_content() returns our resp
+    resp = MagicMock()
+    resp.text = "google response"
+    resp.usage_metadata.prompt_token_count = 80
+    resp.usage_metadata.candidates_token_count = 40
+    mock_client_instance = MagicMock()
+    mock_client_instance.models.generate_content.return_value = resp
+    with patch("google.genai.Client", return_value=mock_client_instance), \
+         patch("google.genai.types.GenerateContentConfig"), \
+         patch("google.genai.types.ThinkingConfig"):
+        from article_writer.shared.llm_client import LLMClient
+        client = LLMClient(provider="google", model="gemini-2.0-flash")
+        result = client.complete(system="be helpful", user="hello")
+    assert result.text == "google response"
+    assert result.input_tokens == 80
+    assert result.output_tokens == 40

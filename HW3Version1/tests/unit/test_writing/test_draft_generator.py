@@ -23,12 +23,9 @@ def _fake_config() -> AppConfig:
 _VALID_TEX = r"\documentclass{article}\begin{document}\maketitle\tableofcontents Hello\end{document}"
 
 
-def _mock_response(tex: str = _VALID_TEX) -> MagicMock:
-    resp = MagicMock()
-    resp.content = [MagicMock(text=tex)]
-    resp.usage.input_tokens = 100
-    resp.usage.output_tokens = 200
-    return resp
+def _mock_response(tex: str = _VALID_TEX):
+    from article_writer.shared.llm_client import LLMResponse
+    return LLMResponse(text=tex, input_tokens=100, output_tokens=200, model="mock", cost_usd=0.0)
 
 
 def test_generate_saves_draft_v1(tmp_path: Path, monkeypatch) -> None:

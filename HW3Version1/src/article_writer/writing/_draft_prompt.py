@@ -187,7 +187,7 @@ CONTENT REQUIREMENTS
             \\bottomrule
           \\end{tabularx}
         \\end{table}
-      RULES: ALWAYS use tabularx{\\textwidth} with >{\RaggedRight\\arraybackslash}X columns.
+      RULES: ALWAYS use tabularx{\\textwidth} with >{\\RaggedRight\\arraybackslash}X columns.
       NEVER use {llll}, {lcr}, or p{fraction\\textwidth} — use X columns only (ragged2e is loaded).
       Add \\addlinespace between rows. Put citations in \\caption{}, NEVER use \\caption*{}.
 
@@ -244,7 +244,7 @@ CONTENT REQUIREMENTS
 6. LaTeX LAYOUT CONSTRAINT:
    Never use hardcoded column sizes or single-line alignments (like |l|c|r|) for tables
    containing descriptive prose. You must use the tabularx environment with left-aligned,
-   auto-wrapping X column containers (>{\RaggedRight\arraybackslash}X) to keep text bounded
+   auto-wrapping X column containers (>{\\RaggedRight\\arraybackslash}X) to keep text bounded
    perfectly within the \\textwidth container shape. \\usepackage{ragged2e} is already in the
    preamble; use \\RaggedRight (capital R) not \\raggedright in column specs.
 
@@ -279,7 +279,8 @@ HARD RULES
 - NO \\includegraphics for charts/diagrams — use pgfplots or tikzpicture instead
   (\\includegraphics IS allowed for the university logo PNG: ../assets/images/uniHaifasymbol.png)
 - NO \\caption*{} — put citations directly inside \\caption{} or omit the note
-- NO {llll}, {lcr|}, or p{fraction\\textwidth} table columns — use tabularx{\\textwidth} with >{\RaggedRight\\arraybackslash}X columns
+- NO {llll}, {lcr|}, or p{fraction\\textwidth} table columns — use tabularx{\\textwidth}
+  with >{\\RaggedRight\\arraybackslash}X columns
 - NO root-domain citations (https://aha.org) — every \\cite{} key must be from the allowed list above
 - NO invented citation keys — only keys explicitly listed in CITATIONS above are valid
 - NO Hebrew words mixed with Latin text in metadata lines — all metadata in pure English

@@ -2,15 +2,14 @@
 from __future__ import annotations
 
 import json
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 from article_writer.tools.researcher_handler import ResearcherHandlerTool
 
 
-def _make_mock_response(text: str) -> MagicMock:
-    resp = MagicMock()
-    resp.content = [MagicMock(text=text)]
-    return resp
+def _make_mock_response(text: str):
+    from article_writer.shared.llm_client import LLMResponse
+    return LLMResponse(text=text, input_tokens=10, output_tokens=20, model="mock", cost_usd=0.0)
 
 
 def test_run_increments_batch_count() -> None:
@@ -18,9 +17,8 @@ def test_run_increments_batch_count() -> None:
     llm_json = json.dumps({"new_queries": ["q1", "q2", "q3"], "summary_so_far": "done"})
     with patch("article_writer.tools.researcher_handler.ApiGatekeeper") as MockGate:
         MockGate.return_value.execute.return_value = _make_mock_response(llm_json)
-        with patch("article_writer.tools.researcher_handler.anthropic.Anthropic"):
-            tool._run("AI research")
-            tool._run("ML research")
+        tool._run("AI research")
+        tool._run("ML research")
     assert tool._session.batch_count == 2
 
 
@@ -38,8 +36,7 @@ def test_run_output_is_valid_json() -> None:
     llm_json = json.dumps({"new_queries": ["a", "b", "c"], "summary_so_far": "ok"})
     with patch("article_writer.tools.researcher_handler.ApiGatekeeper") as MockGate:
         MockGate.return_value.execute.return_value = _make_mock_response(llm_json)
-        with patch("article_writer.tools.researcher_handler.anthropic.Anthropic"):
-            result = tool._run("topic")
+        result = tool._run("topic")
     parsed = json.loads(result)
     assert "new_queries" in parsed
     assert "batch" in parsed

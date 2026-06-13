@@ -18,36 +18,146 @@ class CompilationError(Exception):
 
 # Known domain → (org_name, article_title, url_path) for quality stub generation
 _KNOWN_DOMAIN_META: dict[str, tuple[str, str, str]] = {
-    "bcg.com":              ("Boston Consulting Group", "AI in Healthcare: Strategy and Impact", "/industries/health-care/ai-healthcare"),
-    "weforum.org":          ("World Economic Forum", "Harnessing Artificial Intelligence for Health", "/reports/harnessing-artificial-intelligence-for-health"),
-    "aha.org":              ("American Hospital Association", "AI Use Cases in Health Care", "/guidesreports/2023-artificial-intelligence-use-cases-health-care"),
-    "ama-assn.org":         ("American Medical Association", "Augmented Intelligence in Medicine Policy", "/delivering-care/ama-ed-center/augmented-intelligence"),
-    "mckinsey.com":         ("McKinsey & Company", "AI in Healthcare: The Future of Patient Care", "/industries/healthcare-systems-and-services/our-insights/ai-in-healthcare"),
-    "deloitte.com":         ("Deloitte Insights", "AI Adoption in Healthcare Organizations", "/us/en/insights/industry/health-care/artificial-intelligence-in-health-care"),
-    "pwc.com":              ("PwC", "AI in Health: Strengthening the Healthcare System", "/gx/en/industries/healthcare/publications/ai-robotics-new-health.html"),
-    "weforum.org":          ("World Economic Forum", "Harnessing AI for Health", "/reports/harnessing-artificial-intelligence-for-health"),
-    "salesforce.com":       ("Salesforce", "AI for Healthcare: Clinical and Operational Intelligence", "/solutions/industries/healthcare/ai-in-healthcare/"),
-    "flatiron.com":         ("Flatiron Health", "Real-World Evidence and AI in Oncology Research", "/evidence/real-world-evidence/"),
-    "fiercehealthcare.com": ("Fierce Healthcare", "AI and Machine Learning Transforming Healthcare", "/ai-and-machine-learning/"),
-    "royalsocietypublishing.org": ("The Royal Society", "Machine Intelligence in Healthcare", "/doi/10.1098/rsta.2020.0203"),
-    "thehastingscenter.org": ("The Hastings Center", "Ethics of Artificial Intelligence in Healthcare", "/publications/ethics-artificial-intelligence/"),
-    "sermo.com":            ("Sermo", "Physician Perspectives on AI Diagnostic Tools", "/reports/physician-ai-adoption-report/"),
-    "kellton.com":          ("Kellton Tech", "Digital Transformation in Healthcare with AI", "/industries/healthcare/ai-healthcare-solutions/"),
-    "snowflake.com":        ("Snowflake", "Data Cloud for Healthcare AI and Analytics", "/solutions/industries/healthcare-life-sciences/"),
-    "elucidata.io":         ("Elucidata", "AI-Driven Drug Discovery and Data Platforms", "/solutions/healthcare-ai/"),
-    "sam-solutions.com":    ("SAM Solutions", "Healthcare Software Development with AI Integration", "/industries/healthcare/"),
-    "knack.com":            ("Knack", "No-Code AI Workflow Automation for Healthcare", "/solutions/healthcare/"),
-    "azaleahealth.com":     ("Azalea Health", "Electronic Health Records with Integrated AI", "/solutions/ehr-ai/"),
-    "keragon.com":          ("Keragon", "Healthcare API Integration and AI Workflow Automation", "/solutions/healthcare-integration/"),
-    "alation.com":          ("Alation", "Healthcare Data Catalog and AI Governance", "/solutions/healthcare/"),
-    "thinkers360.com":      ("Thinkers360", "AI in Healthcare: Thought Leadership Analysis", "/blog/ai-healthcare-innovation/"),
-    "healthtechmagazine.net": ("HealthTech Magazine", "AI and Machine Learning in Clinical Settings", "/topic/artificial-intelligence/"),
-    "johnsnowlabs.com":     ("John Snow Labs", "Clinical NLP and Healthcare AI Pipelines", "/solutions/healthcare/"),
-    "emerline.com":         ("Emerline", "Custom Healthcare Software with AI Capabilities", "/industries/healthcare/"),
-    "hitrustalliance.net":  ("HITRUST Alliance", "AI Security and Compliance in Healthcare", "/hitrust-framework/ai-security/"),
-    "harvard.edu":          ("Harvard Medical School", "AI and Machine Learning in Medical Education", "/hms/research/ai-medicine/"),
-    "digiqt.com":           ("DigiQT", "Healthcare Digital Transformation with AI Agents", "/industries/healthcare/"),
-    "weforum.org":          ("World Economic Forum", "AI Health Report", "/reports/harnessing-artificial-intelligence-for-health"),
+    "bcg.com": (
+        "Boston Consulting Group",
+        "AI in Healthcare: Strategy and Impact",
+        "/industries/health-care/ai-healthcare",
+    ),
+    "weforum.org": (
+        "World Economic Forum",
+        "Harnessing Artificial Intelligence for Health",
+        "/reports/harnessing-artificial-intelligence-for-health",
+    ),
+    "aha.org": (
+        "American Hospital Association",
+        "AI Use Cases in Health Care",
+        "/guidesreports/2023-artificial-intelligence-use-cases-health-care",
+    ),
+    "ama-assn.org": (
+        "American Medical Association",
+        "Augmented Intelligence in Medicine Policy",
+        "/delivering-care/ama-ed-center/augmented-intelligence",
+    ),
+    "mckinsey.com": (
+        "McKinsey & Company",
+        "AI in Healthcare: The Future of Patient Care",
+        "/industries/healthcare-systems-and-services/our-insights/ai-in-healthcare",
+    ),
+    "deloitte.com": (
+        "Deloitte Insights",
+        "AI Adoption in Healthcare Organizations",
+        "/us/en/insights/industry/health-care/artificial-intelligence-in-health-care",
+    ),
+    "pwc.com": (
+        "PwC",
+        "AI in Health: Strengthening the Healthcare System",
+        "/gx/en/industries/healthcare/publications/ai-robotics-new-health.html",
+    ),
+    "salesforce.com": (
+        "Salesforce",
+        "AI for Healthcare: Clinical and Operational Intelligence",
+        "/solutions/industries/healthcare/ai-in-healthcare/",
+    ),
+    "flatiron.com": (
+        "Flatiron Health",
+        "Real-World Evidence and AI in Oncology Research",
+        "/evidence/real-world-evidence/",
+    ),
+    "fiercehealthcare.com": (
+        "Fierce Healthcare",
+        "AI and Machine Learning Transforming Healthcare",
+        "/ai-and-machine-learning/",
+    ),
+    "royalsocietypublishing.org": (
+        "The Royal Society",
+        "Machine Intelligence in Healthcare",
+        "/doi/10.1098/rsta.2020.0203",
+    ),
+    "thehastingscenter.org": (
+        "The Hastings Center",
+        "Ethics of Artificial Intelligence in Healthcare",
+        "/publications/ethics-artificial-intelligence/",
+    ),
+    "sermo.com": (
+        "Sermo",
+        "Physician Perspectives on AI Diagnostic Tools",
+        "/reports/physician-ai-adoption-report/",
+    ),
+    "kellton.com": (
+        "Kellton Tech",
+        "Digital Transformation in Healthcare with AI",
+        "/industries/healthcare/ai-healthcare-solutions/",
+    ),
+    "snowflake.com": (
+        "Snowflake",
+        "Data Cloud for Healthcare AI and Analytics",
+        "/solutions/industries/healthcare-life-sciences/",
+    ),
+    "elucidata.io": (
+        "Elucidata",
+        "AI-Driven Drug Discovery and Data Platforms",
+        "/solutions/healthcare-ai/",
+    ),
+    "sam-solutions.com": (
+        "SAM Solutions",
+        "Healthcare Software Development with AI Integration",
+        "/industries/healthcare/",
+    ),
+    "knack.com": (
+        "Knack",
+        "No-Code AI Workflow Automation for Healthcare",
+        "/solutions/healthcare/",
+    ),
+    "azaleahealth.com": (
+        "Azalea Health",
+        "Electronic Health Records with Integrated AI",
+        "/solutions/ehr-ai/",
+    ),
+    "keragon.com": (
+        "Keragon",
+        "Healthcare API Integration and AI Workflow Automation",
+        "/solutions/healthcare-integration/",
+    ),
+    "alation.com": (
+        "Alation",
+        "Healthcare Data Catalog and AI Governance",
+        "/solutions/healthcare/",
+    ),
+    "thinkers360.com": (
+        "Thinkers360",
+        "AI in Healthcare: Thought Leadership Analysis",
+        "/blog/ai-healthcare-innovation/",
+    ),
+    "healthtechmagazine.net": (
+        "HealthTech Magazine",
+        "AI and Machine Learning in Clinical Settings",
+        "/topic/artificial-intelligence/",
+    ),
+    "johnsnowlabs.com": (
+        "John Snow Labs",
+        "Clinical NLP and Healthcare AI Pipelines",
+        "/solutions/healthcare/",
+    ),
+    "emerline.com": (
+        "Emerline",
+        "Custom Healthcare Software with AI Capabilities",
+        "/industries/healthcare/",
+    ),
+    "hitrustalliance.net": (
+        "HITRUST Alliance",
+        "AI Security and Compliance in Healthcare",
+        "/hitrust-framework/ai-security/",
+    ),
+    "harvard.edu": (
+        "Harvard Medical School",
+        "AI and Machine Learning in Medical Education",
+        "/hms/research/ai-medicine/",
+    ),
+    "digiqt.com": (
+        "DigiQT",
+        "Healthcare Digital Transformation with AI Agents",
+        "/industries/healthcare/",
+    ),
 }
 
 
@@ -106,7 +216,7 @@ class LaTeXCompiler:
             domain_key = key if "." in key else None
             if domain_key and domain_key in _KNOWN_DOMAIN_META:
                 org, title, url_path = _KNOWN_DOMAIN_META[domain_key]
-                base = "https://www." + domain_key.lstrip("www.")
+                base = "https://www." + domain_key.removeprefix("www.")
                 url = base + url_path
                 note = "UNVERIFIED — metadata derived from known domain registry"
             else:
