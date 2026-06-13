@@ -73,10 +73,13 @@ class ArticleWriterSDK:
         guideline_path: str = "data/guideline.md",
         research_path: str = "data/research.md",
         few_shot_dir: str = "few_shot_examples",
+        charts_dir: str = "assets/graphs",
     ) -> Path:
         """Load context + generate initial draft. Returns results/draft_v1.tex."""
+        from article_writer.tools.chart_generator import generate_all
         from article_writer.writing.context_loader import ContextLoader
         from article_writer.writing.draft_generator import DraftGenerator
+        generate_all(Path(charts_dir))
         loader = ContextLoader(
             guideline_path=guideline_path,
             research_path=research_path,

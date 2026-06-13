@@ -66,10 +66,26 @@ Use \\documentclass[12pt,a4paper]{article} with these packages and font setup:
 \\usepackage{todonotes}
 
 Do NOT use David Libre, David, or any font not in this list.
-Do NOT use \\includegraphics at all — it requires external files that do not exist.
-For charts, use pgfplots. For flow diagrams, use tikzpicture with the positioning library.
 NEVER change \\setmainlanguage — it is always {english}. Changing it to {hebrew} mirrors the entire article.
 NEVER remove the hebrewblock/englishblock \\newenvironment definitions from the preamble.
+
+PRE-GENERATED CHARTS — use \\includegraphics for these three charts (PDF files exist on disk):
+  1. ../assets/graphs/accuracy_curve.pdf
+       AI diagnostic model training vs validation accuracy over 30 epochs.
+  2. ../assets/graphs/diagnostic_comparison.pdf
+       AI agent vs human expert accuracy (%) on 5 medical imaging tasks (bar chart).
+  3. ../assets/graphs/cost_reduction.pdf
+       Operational cost reduction (%) with AI agents across hospital departments (bar chart).
+
+Each chart MUST appear exactly once in the article body inside a figure environment:
+  \\begin{figure}[H]
+    \\centering
+    \\includegraphics[width=0.88\\textwidth]{../assets/graphs/<filename>.pdf}
+    \\caption{Descriptive caption explaining what the chart shows.\\cite{key}}
+    \\label{fig:<label>}
+  \\end{figure}
+For flow diagrams (architecture, pipelines) use tikzpicture as before.
+Do NOT write pgfplots code for data charts — use the pre-generated PDFs above.
 
 ════════════════════════════════════════
 DOCUMENT SKELETON — follow exactly
@@ -276,8 +292,8 @@ HARD RULES
   ✗ INVALID: \\cite{aha.org}     \\cite{weforum.org}   \\cite{keragon_ai}
 
 - NO \\maketitle anywhere — the titlepage block replaces it
-- NO \\includegraphics for charts/diagrams — use pgfplots or tikzpicture instead
-  (\\includegraphics IS allowed for the university logo PNG: ../assets/images/uniHaifasymbol.png)
+- NO pgfplots/\\addplot for data charts — use the 3 pre-generated \\includegraphics PDFs
+  (\\includegraphics IS allowed for: the logo PNG and the 3 chart PDFs listed above)
 - NO \\caption*{} — put citations directly inside \\caption{} or omit the note
 - NO {llll}, {lcr|}, or p{fraction\\textwidth} table columns — use tabularx{\\textwidth}
   with >{\\RaggedRight\\arraybackslash}X columns

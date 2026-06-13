@@ -57,6 +57,33 @@ def test_fix_includegraphics_no_figure_no_change() -> None:
     assert n == 0
 
 
+def test_fix_includegraphics_skips_when_pdf_exists(tmp_path: Path) -> None:
+    """When the referenced PDF exists on disk, the \\includegraphics block is kept as-is."""
+    (tmp_path / "accuracy_curve.pdf").write_bytes(b"%PDF-1.4 stub")
+    src = (
+        r"\begin{figure}[H]" + "\n"
+        r"\includegraphics[width=0.88\textwidth]{accuracy_curve.pdf}" + "\n"
+        r"\caption{Accuracy curve.\cite{lecun2015deep}}" + "\n"
+        r"\end{figure}"
+    )
+    result, n = _s()._fix_includegraphics(src, tex_dir=tmp_path)
+    assert r"\includegraphics" in result
+    assert n == 0
+
+
+def test_fix_includegraphics_replaces_when_pdf_missing(tmp_path: Path) -> None:
+    """When the referenced PDF is absent from disk, the block is replaced."""
+    src = (
+        r"\begin{figure}[H]" + "\n"
+        r"\includegraphics{missing_chart.pdf}" + "\n"
+        r"\caption{Missing chart.}" + "\n"
+        r"\end{figure}"
+    )
+    result, n = _s()._fix_includegraphics(src, tex_dir=tmp_path)
+    assert r"\includegraphics" not in result
+    assert n > 0
+
+
 # ── _fix_cover_hebrew ─────────────────────────────────────────────────────────
 
 def test_fix_cover_hebrew_single_line_hebrewfont() -> None:

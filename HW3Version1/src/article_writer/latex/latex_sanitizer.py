@@ -296,7 +296,7 @@ class LatexSanitizer:
         s, n0  = self._fix_wrong_main_language(source)   # MUST run first
         s, n1  = self._fix_malformed_envs(s)
         s, n2  = self._fix_missing_bidi_envs(s)
-        s, n3  = self._fix_includegraphics(s)
+        s, n3  = self._fix_includegraphics(s, tex_dir=tex_path.parent)
         s, n4  = self._fix_undefined_tikz_styles(s)
         s, n5  = self._fix_cover_hebrew(s)
         s, n6  = self._fix_bidi_body_sections(s)
@@ -359,7 +359,7 @@ class LatexSanitizer:
 
     # ── Fix 2: \includegraphics → pgfplots / tikz ────────────────────────────
 
-    def _fix_includegraphics(self, source: str) -> tuple[str, int]:
+    def _fix_includegraphics(self, source: str, tex_dir: Path | None = None) -> tuple[str, int]:
         fixes = 0
 
         def _replace(m: re.Match) -> str:
@@ -368,6 +368,11 @@ class LatexSanitizer:
             ig = _INCLUDE_RE.search(block)
             if not ig or _LOGO_TOKEN in ig.group(1):
                 return block
+            # Keep \includegraphics when the referenced PDF exists on disk
+            if tex_dir is not None:
+                candidate = (tex_dir / ig.group(1)).resolve()
+                if candidate.exists():
+                    return block
             cap_m = _CAPTION_RE.search(block)
             words = set(re.findall(r"[a-z]+", (cap_m.group(1) if cap_m else "").lower()))
             body = _PGFPLOTS if words & _CHART_KW else _TIKZFLOW
