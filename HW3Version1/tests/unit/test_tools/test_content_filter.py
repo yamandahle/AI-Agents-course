@@ -7,10 +7,9 @@ from unittest.mock import MagicMock, patch
 from article_writer.tools.content_filter import ContentFilterTool
 
 
-def _mock_anthropic_response(text: str) -> MagicMock:
-    msg = MagicMock()
-    msg.content = [MagicMock(text=text)]
-    return msg
+def _mock_anthropic_response(text: str):
+    from article_writer.shared.llm_client import LLMResponse
+    return LLMResponse(text=text, input_tokens=10, output_tokens=20, model="mock", cost_usd=0.0)
 
 
 def test_run_returns_keep_for_high_confidence() -> None:

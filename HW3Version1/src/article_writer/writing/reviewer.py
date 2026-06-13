@@ -2,21 +2,48 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 from pydantic import BaseModel
 
+from article_writer.shared.gatekeeper import ApiGatekeeper
 from article_writer.shared.llm_client import LLMClient
+from article_writer.shared.logger import get_logger
+
+logger = get_logger(__name__)
+
+_PROVIDER_TO_SERVICE = {"anthropic": "anthropic", "google": "gemini"}
 
 _REVIEWER_SYSTEM = """\
 You are an expert academic article reviewer for MDPI journals.
 You receive ONLY the article draft, the submission guideline, research notes, and writing profiles.
 You do NOT have access to few-shot examples, the writer's instructions, or internal system context.
 
-Your task: identify every violation of the guideline, research accuracy, or writing profiles.
+Your task: identify the TOP 5 most critical violations, prioritised in this order:
+  1. Coverage — page count, missing required sections, missing equation/figure/table,
+     missing BiDi section (a full section with Hebrew+English alternating blocks is REQUIRED)
+  2. Structure — section order, titlepage, TOC; Hebrew BiDi correctness:
+     * Hebrew text INSIDE \\begin{hebrew}...\\end{hebrew} (not wrapped in \\begin{english})
+     * English text INSIDE \\begin{english}...\\end{english} (not inside \\begin{hebrew})
+     * Section heading in Hebrew using \\section{\\texthebrew{...}}
+     * At least 3 subsections in the BiDi chapter, each with both a Hebrew and English block
+  3. TikzLayout — spatial collisions in TikZ flowcharts and architecture diagrams.
+     REJECT the figure if ANY of these are true:
+     * A connection label node on an arrow path does NOT have fill=white or fill=pagecolor
+       as an explicit attribute (e.g. node[midway] without fill=white is a violation).
+     * A draw path uses bare -- to connect two non-adjacent nodes creating a diagonal line
+       that could cross an intermediate box or another arrow path. Feedback and return paths
+       MUST use orthogonal routing (|- or -| operators) or curved arcs (to[out,in]).
+     When flagging, cite the specific draw command and the missing attribute.
+  4. Accuracy — factual errors, wrong statistics, incorrect claims vs research notes
+  5. Terminology — wrong domain terms, inconsistent naming
+  6. Characters — sentences over 25 words, paragraphs outside 4-7 sentence range
+
+Select at most 5 comments total. Choose the highest-severity issues first.
 For each issue output a JSON object with these exact keys:
   - "profile": which profile or constraint is violated
-      (one of: "Structure", "Terminology", "Characters", "Coverage", "Accuracy", "Citation")
+      (one of: "Structure", "Terminology", "Characters", "Coverage", "Accuracy", "Citation", "TikzLayout")
   - "location": where in the article (e.g. "Abstract, sentence 2", "Section 2.3, para 1")
   - "comment": what is wrong — keep it to 1-2 lines
 
@@ -26,7 +53,10 @@ Respond with ONLY a JSON object:
   "overall_score": <float 0-10>,
   "pass_fail": "PASS" | "FAIL"
 }
-Do not include anything outside the JSON.
+Do not include anything outside the JSON. The "comments" array must have at most 5 items.
+IMPORTANT: In comment text, do NOT write raw LaTeX commands with backslashes.
+Describe issues in plain English. Instead of writing \begin{hebrew}, write: begin-hebrew environment.
+Backslashes in JSON strings break parsing.
 """
 
 
@@ -51,6 +81,7 @@ class Reviewer:
 
     def __init__(self, llm: LLMClient | None = None) -> None:
         self._llm = llm or LLMClient()
+        self._gate = ApiGatekeeper()
 
     def review(
         self,
@@ -69,13 +100,19 @@ class Reviewer:
             f"## WRITING PROFILES\n{profiles}\n\n"
             f"## ARTICLE DRAFT TO REVIEW\n{draft}"
         )
-        resp = self._llm.complete(
-            system=_REVIEWER_SYSTEM,
-            user=user_msg,
-            step=f"review:{Path(draft_path).stem}",
-            temperature=0.1,
-            max_tokens=16384,
-        )
+        provider = os.getenv("LLM_PROVIDER", "anthropic").lower()
+        service = _PROVIDER_TO_SERVICE.get(provider, provider)
+
+        def _call():
+            return self._llm.complete(
+                system=_REVIEWER_SYSTEM,
+                user=user_msg,
+                step=f"review:{Path(draft_path).stem}",
+                temperature=0.1,
+                max_tokens=16384,
+            )
+
+        resp = self._gate.execute(service, _call)
         return self._parse(resp.text)
 
     def _load_profiles(self, profiles_dir: Path) -> str:
@@ -93,13 +130,16 @@ class Reviewer:
             raw = m.group(1).strip()
         start = raw.find("{")
         end = raw.rfind("}") + 1
+        candidate = raw[start:end]
+        # Heal invalid JSON escape sequences from stray LaTeX backslashes
+        # e.g. \begin → \\begin so json.loads doesn't choke on \b
+        candidate = _re.sub(r'\\([^"\\/bfnrtu0-9])', r'\\\\\1', candidate)
         try:
-            data = json.loads(raw[start:end])
+            data = json.loads(candidate)
             return ArticleReview.model_validate(data)
         except Exception:
             # Truncated JSON — try to extract partial comments
             try:
-                comments_match = _re.search(r'"comments"\s*:\s*(\[[\s\S]*?\})\s*[,\]]', raw)
                 score_match = _re.search(r'"overall_score"\s*:\s*([\d.]+)', raw)
                 pass_match = _re.search(r'"pass_fail"\s*:\s*"(\w+)"', raw)
                 if score_match:
@@ -115,7 +155,7 @@ class Reviewer:
                         pass_fail=pf,
                     )
             except Exception:
-                pass
+                logger.debug("Partial review parse also failed", exc_info=True)
             return ArticleReview(
                 comments=[ReviewComment(
                     profile="Parse",

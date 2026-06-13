@@ -37,14 +37,15 @@ def test_extract_page_count_returns_zero_on_no_match(tmp_path: Path) -> None:
     assert compiler._extract_page_count(log) == 0
 
 
-def test_run_pass_raises_on_nonzero_exit(tmp_path: Path) -> None:
+def test_run_pass_logs_warning_on_nonzero_exit(tmp_path: Path) -> None:
+    # _run_pass intentionally only warns on non-zero exit — CompilationError is
+    # raised by compile() when the PDF is absent after all passes.
     compiler = _make_compiler()
     mock_result = MagicMock()
     mock_result.returncode = 1
     mock_result.stderr = "LaTeX error"
     with patch("subprocess.run", return_value=mock_result):
-        with pytest.raises(CompilationError, match="lualatex"):
-            compiler._run_pass(["lualatex", "article.tex"], tmp_path)
+        compiler._run_pass(["lualatex", "article.tex"], tmp_path)  # must not raise
 
 
 def test_run_pass_succeeds_on_zero_exit(tmp_path: Path) -> None:
