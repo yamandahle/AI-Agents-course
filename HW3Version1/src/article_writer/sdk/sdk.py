@@ -115,15 +115,24 @@ class ArticleWriterSDK:
         return self.run_review_loop(draft_path, max_iter)
 
     def compile_to_pdf(self, tex_path: str) -> Path:
-        """Compile LaTeX to PDF via lualatex. Returns path to article_final.pdf."""
+        """Sanitize + compile LaTeX to PDF via lualatex. Returns article_final.pdf."""
         from article_writer.latex.latex_compiler import LaTeXCompiler
+        from article_writer.latex.latex_sanitizer import LatexSanitizer
         tex = Path(tex_path)
+        sanitizer = LatexSanitizer()
+        sanitizer.sanitize(tex)
         bib = tex.parent / "references.bib"
         if not bib.exists():
             bib.write_text("% auto-generated stub\n", encoding="utf-8")
             logger.warning("Created empty references.bib stub at %s", bib)
         compiler = LaTeXCompiler()
         pdf = compiler.compile(tex)
+        # Final validation — reports any remaining BiDi/bibliography issues
+        log_path = tex.parent / f"{tex.stem}.log"
+        blg_path = tex.parent / f"{tex.stem}.blg"
+        issues = sanitizer.validate(tex, log_path, blg_path)
+        if issues:
+            logger.warning("Post-compile validation: %d issue(s) found", len(issues))
         final = Path("results/article_final.pdf")
         if pdf != final:
             final.parent.mkdir(parents=True, exist_ok=True)

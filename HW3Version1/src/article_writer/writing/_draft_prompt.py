@@ -10,8 +10,8 @@ PREAMBLE REQUIREMENTS
 Use \\documentclass[12pt,a4paper]{article} with these packages and font setup:
 
 \\usepackage{polyglossia}
-\\setmainlanguage{english}
-\\setotherlanguage{hebrew}
+\\setmainlanguage{english}   % NEVER change — changing to hebrew mirrors the ENTIRE document
+\\setotherlanguage{hebrew}   % Hebrew is secondary; always wrap Hebrew text in hebrewblock
 \\usepackage{fontspec}
 % Register Hebrew fallback BEFORE setmainfont so it applies everywhere (headings, titles, etc.)
 \\directlua{
@@ -34,6 +34,7 @@ Use \\documentclass[12pt,a4paper]{article} with these packages and font setup:
 \\usepackage{float}
 \\usepackage{amsmath}
 \\usepackage{array}
+\\usepackage{ragged2e}
 \\usepackage{tabularx}
 \\usepackage{caption}
 \\usepackage{tikz}
@@ -44,19 +45,20 @@ Use \\documentclass[12pt,a4paper]{article} with these packages and font setup:
 \\tcbuselibrary{skins,breakable}
 % Bilingual block containers for the BiDi section
 \\newenvironment{hebrewblock}{%
-  \\begin{tcolorbox}[enhanced,breakable,title={\\hebrewfont עברית},
-    colback=blue!3!white,colframe=blue!35!white,fonttitle=\\bfseries,
-    attach boxed title to top right={yshift=-2.5mm,xshift=-4mm},
-    boxed title style={colback=blue!35!white,sharp corners}]
-  \\begin{hebrew}
+  \\begin{tcolorbox}[enhanced,breakable,parbox=false,
+    colback=blue!4!white,colframe=blue!28!white,
+    left=8pt,right=8pt,top=6pt,bottom=6pt,arc=2pt,boxrule=0.5pt]%
+  \\hebrewfont\\begin{hebrew}%
 }{%
-  \\end{hebrew}\\end{tcolorbox}\\medskip
+  \\end{hebrew}\\end{tcolorbox}\\vspace{3pt}%
 }
 \\newenvironment{englishblock}{%
-  \\begin{tcolorbox}[enhanced,breakable,title={English Translation},
-    colback=gray!4!white,colframe=gray!40!white,fonttitle=\\bfseries]
+  \\begin{tcolorbox}[enhanced,breakable,parbox=false,
+    colback=gray!5!white,colframe=gray!28!white,
+    left=8pt,right=8pt,top=6pt,bottom=6pt,arc=2pt,boxrule=0.5pt]%
+  \\normalfont\\setLR%   % force LTR direction inside the box
 }{%
-  \\end{tcolorbox}\\medskip
+  \\end{tcolorbox}\\vspace{3pt}%
 }
 \\usepackage{graphicx}
 \\usepackage{fancyhdr}
@@ -66,6 +68,8 @@ Use \\documentclass[12pt,a4paper]{article} with these packages and font setup:
 Do NOT use David Libre, David, or any font not in this list.
 Do NOT use \\includegraphics at all — it requires external files that do not exist.
 For charts, use pgfplots. For flow diagrams, use tikzpicture with the positioning library.
+NEVER change \\setmainlanguage — it is always {english}. Changing it to {hebrew} mirrors the entire article.
+NEVER remove the hebrewblock/englishblock \\newenvironment definitions from the preamble.
 
 ════════════════════════════════════════
 DOCUMENT SKELETON — follow exactly
@@ -170,10 +174,10 @@ CONTENT REQUIREMENTS
           \\centering
           \\caption{Table title \\cite{key}.}
           \\label{tab:example}
-          \\begin{tabularx}{\\textwidth}{>{\\raggedright\\arraybackslash}p{3cm}
-                                        >{\\raggedright\\arraybackslash}X
-                                        >{\\raggedright\\arraybackslash}X
-                                        >{\\raggedright\\arraybackslash}X}
+          \\begin{tabularx}{\\textwidth}{>{\\RaggedRight\\arraybackslash}X
+                                        >{\\RaggedRight\\arraybackslash}X
+                                        >{\\RaggedRight\\arraybackslash}X
+                                        >{\\RaggedRight\\arraybackslash}X}
             \\toprule
             \\textbf{Type} & \\textbf{Applications} & \\textbf{Advantages} & \\textbf{Limitations} \\\\
             \\midrule
@@ -183,7 +187,8 @@ CONTENT REQUIREMENTS
             \\bottomrule
           \\end{tabularx}
         \\end{table}
-      RULES: ALWAYS use tabularx{\\textwidth}. NEVER use {llll} or p{fraction\\textwidth}.
+      RULES: ALWAYS use tabularx{\\textwidth} with >{\RaggedRight\\arraybackslash}X columns.
+      NEVER use {llll}, {lcr}, or p{fraction\\textwidth} — use X columns only (ragged2e is loaded).
       Add \\addlinespace between rows. Put citations in \\caption{}, NEVER use \\caption*{}.
 
 3. BiDi SECTION: One full section demonstrating Hebrew-English switching.
@@ -208,45 +213,82 @@ CONTENT REQUIREMENTS
    - Titlepage Hebrew subtitle MUST be inside: {\\hebrewfont\\large\\begin{hebrew}...\\end{hebrew}\\par}
    - Titlepage metadata lines MUST be pure English (see cover page template above)
 
-4. CITATIONS: You MUST only use citation keys that are explicitly listed below.
-   Do NOT invent new keys. Do NOT use academic paper keys (author+year format).
-   Allowed keys (these are all defined in references.bib):
-     who2021ai, topol2019highperformance, esteva2017dermatologist, nih, ieee,
-     frontiersin, mdpi, oracle, ajmc, televox, deepscribe, fda, regdesk, gov.uk,
-     ey, duanemorris, reedsmith, zynxhealth, relias, saisystems, jll, alation,
-     practolytics, pew, russell2010artificial, topol2019deep, shah2019artificial,
-     lecun2015deep, davenport2019ai, rajpurkar2017chexnet, mckinney2020international,
-     campanella2019deep, saito2015precision, fleming2018artificial, wang2019deep,
-     oracle_cloud, nih_ethical_implications, nih_patient_outcomes, nih_patient_satisfaction,
-     televox_patient_engagement, deepscribe_ai_medical_scribe, jll_commercial_real_estate,
-     dataart_digital_transformation, practolytics_medical_billing, alation_data_catalog,
-     ey_global_regulatory, fda_ai_ml_samd, gov_uk_mhra_roadmap, regdesk_eu_ai_act,
-     relias_healthcare_lms, zynxhealth_clinical_decision_support, google_health,
-     ibm_watson_health, infermedica_platform, microsoft_azure_ai, pathai, tempus,
-     aidoc.com, alation.com, aslm.org, bcg.com, compunnel.com, coursera.org,
-     deepscribe.ai, emerline.com, heidihealth.com, hitrustalliance.net, ibm.com,
-     intellias.com, medicalfuturist.com, medium.com, omnicuris.com,
-     rapidinnovation.io, retellai.com, salesforce.com, sgu.edu, sully.ai,
-     theintellify.com, tonic.ai, weforum.org
+4. CITATIONS — VERIFICATION CONSTRAINT:
+   Every entry in the References list must contain a complete academic metadata footprint:
+   Author name, Article Title, Journal or Institutional Publisher, Year, and a specific,
+   verified deep-link URL. Do NOT generate placeholder domains or root-level marketing links.
+
+   You MUST only use citation keys from the list below — these are the ONLY keys defined
+   in references.bib. Do NOT invent new keys. Do NOT use domain-name keys (aha.org, etc.).
+   Allowed keys:
+     % Peer-reviewed articles:
+     topol2019highperformance, esteva2017dermatologist, lecun2015deep, davenport2019ai,
+     rajpurkar2017chexnet, mckinney2020international, campanella2019deep, shah2019artificial,
+     saito2015precision, fleming2018artificial, wang2019deep,
+     % Books:
+     russell2010artificial, topol2019deep, goodfellow2016deep,
+     % Institutional/industry (all have specific deep-link URLs):
+     who2021ai, fda_ai_ml_samd, gov_uk_mhra_roadmap, nih_ethical_implications,
+     regdesk_eu_ai_act, zynxhealth_clinical_decision_support, relias_healthcare_lms,
+     alation_data_catalog, ey_global_regulatory, jll_commercial_real_estate,
+     dataart_digital_transformation, televox_patient_engagement, oracle_cloud,
+     deepscribe_ai_medical_scribe, ibm_watson_health, microsoft_azure_ai
    Use at least 8 different keys spread across the article.
 
-5. ABSTRACT: Write a 150–200 word abstract in English before the first section.
+5. STRUCTURAL CODE ALIGNMENT CONSTRAINT:
+   When rendering structural code for figures or tables, you must explicitly match the text
+   strings used in the horizontal/vertical axes with the text strings used in the accompanying
+   prose summary. If the prose says "mammography screening", the axis label must say exactly
+   "Mammography Screening" — not "A", "B", "Task 1", or any placeholder.
 
-6. FEW-SHOT STYLE GUIDANCE: The few-shot examples in the context show MDPI academic articles.
+6. LaTeX LAYOUT CONSTRAINT:
+   Never use hardcoded column sizes or single-line alignments (like |l|c|r|) for tables
+   containing descriptive prose. You must use the tabularx environment with left-aligned,
+   auto-wrapping X column containers (>{\RaggedRight\arraybackslash}X) to keep text bounded
+   perfectly within the \\textwidth container shape. \\usepackage{ragged2e} is already in the
+   preamble; use \\RaggedRight (capital R) not \\raggedright in column specs.
+
+7. ABSTRACT: Write a 150–200 word abstract in English before the first section.
+
+8. FEW-SHOT STYLE GUIDANCE: The few-shot examples in the context show MDPI academic articles.
    Use them for TONE and ACADEMIC WRITING STYLE only (vocabulary, hedging, citation practice).
    Do NOT copy their LaTeX structure, packages, or commands — use the preamble above instead.
 
 ════════════════════════════════════════
 HARD RULES
 ════════════════════════════════════════
+⚠ CITATION KEYS — HARD STOP:
+  Only these exact keys exist in references.bib:
+    topol2019highperformance  esteva2017dermatologist  lecun2015deep
+    davenport2019ai  rajpurkar2017chexnet  mckinney2020international
+    campanella2019deep  shah2019artificial  saito2015precision
+    fleming2018artificial  wang2019deep  russell2010artificial
+    topol2019deep  goodfellow2016deep  who2021ai  fda_ai_ml_samd
+    gov_uk_mhra_roadmap  nih_ethical_implications  regdesk_eu_ai_act
+    zynxhealth_clinical_decision_support  relias_healthcare_lms
+    alation_data_catalog  ey_global_regulatory  jll_commercial_real_estate
+    dataart_digital_transformation  televox_patient_engagement  oracle_cloud
+    deepscribe_ai_medical_scribe  ibm_watson_health  microsoft_azure_ai
+  ANY other key (aha.org, bcg.com, weforum.org, keragon_ai, etc.) will cause
+  a broken reference [?] in the compiled PDF. Your output is INVALID if it
+  contains a \\cite{} with a key not in the list above.
+  ✓ VALID:   \\cite{who2021ai}   \\cite{shah2019artificial, fda_ai_ml_samd}
+  ✗ INVALID: \\cite{aha.org}     \\cite{weforum.org}   \\cite{keragon_ai}
+
 - NO \\maketitle anywhere — the titlepage block replaces it
 - NO \\includegraphics for charts/diagrams — use pgfplots or tikzpicture instead
   (\\includegraphics IS allowed for the university logo PNG: ../assets/images/uniHaifasymbol.png)
 - NO \\caption*{} — put citations directly inside \\caption{} or omit the note
-- NO {llll} or p{fraction\\textwidth} table columns — use tabularx{\\textwidth} with X columns
+- NO {llll}, {lcr|}, or p{fraction\\textwidth} table columns — use tabularx{\\textwidth} with >{\RaggedRight\\arraybackslash}X columns
+- NO root-domain citations (https://aha.org) — every \\cite{} key must be from the allowed list above
+- NO invented citation keys — only keys explicitly listed in CITATIONS above are valid
 - NO Hebrew words mixed with Latin text in metadata lines — all metadata in pure English
   (mixing causes BiDi mirroring; Hebrew goes ONLY inside \\begin{hebrew}...\\end{hebrew} blocks)
 - NO David Libre, DejaVu Serif, Times New Roman, or Arial fonts — use David CLM for Hebrew
 - Output starts with \\documentclass — no text before it
 - Output ends with \\end{document} — no text after it
+- ARROW LABELS: Every \\draw[->] edge label node MUST include fill=white and inner sep=2pt so
+  the text clears the arrow line and adjacent boxes. Required format:
+    \\draw[->] (A) -- (B) node[midway, above, fill=white, inner sep=2pt, font=\\footnotesize] {Label};
+  Do NOT write node[midway] without fill=white — the label will bleed over adjacent content.
 """
