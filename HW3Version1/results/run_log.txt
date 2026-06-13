@@ -4786,3 +4786,403 @@ Transcript written on draft_final.log.
 2026-06-13 20:12:29,901 INFO article_writer.writing.optimizer — Optimizer iteration 1: diff +3 lines
 2026-06-13 20:12:29,911 INFO article_writer.writing.optimizer — Optimized draft saved: /tmp/pytest-of-nagham1023/pytest-25/test_optimize_version_incremen0/draft_v4.tex
 2026-06-13 20:12:29,911 INFO article_writer.writing.optimizer — Optimizer iteration 3: diff +3 lines
+2026-06-13 20:29:00,651 INFO article_writer.writing.context_loader — Loaded profile 'Structure.md' (21 chars)
+2026-06-13 20:29:00,652 INFO article_writer.writing.context_loader — Loaded profile 'Terminology.md' (23 chars)
+2026-06-13 20:29:00,652 INFO article_writer.writing.context_loader — Loaded profile 'Characters.md' (22 chars)
+2026-06-13 20:29:00,652 INFO article_writer.writing.context_loader — Loaded 0 few-shot examples from /tmp/pytest-of-nagham1023/pytest-26/test_context_loader_builds_non0/few_shot_examples
+2026-06-13 20:29:00,652 INFO article_writer.writing.context_loader — Loaded guideline 'guideline.md' (26 chars)
+2026-06-13 20:29:00,652 INFO article_writer.writing.context_loader — Loaded research artifact 'research.md' (45 chars)
+2026-06-13 20:29:02,006 INFO article_writer.writing.draft_generator — [TOKENS] service=gemini in=10 out=20 cost=$0.0000
+2026-06-13 20:29:02,006 INFO article_writer.writing.draft_generator — Draft saved: results/draft_v1.tex (79 chars)
+2026-06-13 20:29:02,011 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=32 ts=2026-06-13T17:29:02.011124+00:00
+2026-06-13 20:29:02,012 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=32 ts=2026-06-13T17:29:02.012459+00:00
+2026-06-13 20:29:02,013 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=32 ts=2026-06-13T17:29:02.013329+00:00
+2026-06-13 20:29:02,017 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=32 ts=2026-06-13T17:29:02.017082+00:00
+2026-06-13 20:29:02,018 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=32 ts=2026-06-13T17:29:02.017999+00:00
+2026-06-13 20:29:02,018 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=32 ts=2026-06-13T17:29:02.018859+00:00
+2026-06-13 20:29:02,019 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=32 ts=2026-06-13T17:29:02.019738+00:00
+2026-06-13 20:29:02,025 WARNING article_writer.agents.base_agent — Skill file not found: skills/nonexistent-skill/SKILL.md — continuing without it
+2026-06-13 20:29:02,028 INFO article_writer.agents.base_agent — Loaded skill 'test-skill' (26 chars)
+2026-06-13 20:29:02,030 INFO article_writer.agents.base_agent — Loaded skill 'my-skill' (19 chars)
+2026-06-13 20:29:02,031 WARNING article_writer.agents.base_agent — Skill file not found: skills/no-such-skill/SKILL.md — continuing without it
+2026-06-13 20:29:02,031 INFO article_writer.agents.base_agent — [TASK START] test-task
+2026-06-13 20:29:02,033 INFO article_writer.agents.base_agent — [TASK END] test-task — result_preview='preview'
+2026-06-13 20:29:02,085 INFO article_writer.crew — ArticleResearchCrew kickoff — inputs: ['topic']
+2026-06-13 20:29:02,086 INFO article_writer.crew — ArticleResearchCrew complete
+2026-06-13 20:29:02,088 INFO article_writer.crew — ArticleWritingCrew kickoff — inputs: ['topic']
+2026-06-13 20:29:02,088 INFO article_writer.crew — ArticleWritingCrew complete
+2026-06-13 20:29:02,090 INFO article_writer.crew — ArticleWritingCrew kickoff — inputs: []
+2026-06-13 20:29:02,091 INFO article_writer.crew — ArticleWritingCrew complete
+2026-06-13 20:29:02,816 WARNING article_writer.latex.latex_compiler — lualatex exited 1 — LaTeX error
+2026-06-13 20:29:02,818 INFO article_writer.latex.latex_compiler — Pass completed: lualatex article.tex
+2026-06-13 20:29:02,821 INFO article_writer.latex.latex_compiler — Pass completed: lualatex -interaction=nonstopmode
+2026-06-13 20:29:02,821 INFO article_writer.latex.latex_compiler — Pass completed: biber article
+2026-06-13 20:29:02,821 INFO article_writer.latex.latex_compiler — Pass completed: lualatex -interaction=nonstopmode
+2026-06-13 20:29:02,821 INFO article_writer.latex.latex_compiler — Pass completed: lualatex -interaction=nonstopmode
+2026-06-13 20:29:02,928 INFO article_writer.mcp.gemini_client — [TOKENS] service=gemini in=50 out=30 cost=$0.0000
+2026-06-13 20:29:02,945 INFO article_writer.mcp.gemini_client — [TOKENS] service=gemini in=50 out=30 cost=$0.0000
+2026-06-13 20:29:02,988 INFO article_writer.mcp.perplexity_client — [TOKENS] service=perplexity in=40 out=20 cost=$0.0000
+2026-06-13 20:29:02,992 INFO article_writer.mcp.perplexity_client — [TOKENS] service=perplexity in=40 out=20 cost=$0.0000
+2026-06-13 20:29:02,995 INFO article_writer.mcp.perplexity_client — [TOKENS] service=perplexity in=40 out=20 cost=$0.0000
+2026-06-13 20:29:03,013 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=55 ts=2026-06-13T17:29:03.013142+00:00
+2026-06-13 20:29:03,035 INFO article_writer.sdk.sdk — Review loop complete. Cost so far: $0.7646 | tokens: 3709866
+2026-06-13 20:29:03,041 INFO article_writer.sdk.sdk — Final PDF: results/article_final.pdf
+2026-06-13 20:29:03,046 INFO article_writer.sdk.sdk — Total pipeline cost: $0.7646 | 3709866 tokens | 5420600ms
+2026-06-13 20:29:03,058 INFO article_writer.shared.gatekeeper — [API] service=test_svc query_len=2 response_len=6 ts=2026-06-13T17:29:03.058764+00:00
+2026-06-13 20:29:03,060 WARNING article_writer.shared.gatekeeper — Attempt 1/2 failed for test_svc: transient
+2026-06-13 20:29:03,060 INFO article_writer.shared.gatekeeper — [API] service=test_svc query_len=2 response_len=2 ts=2026-06-13T17:29:03.060653+00:00
+2026-06-13 20:29:03,062 WARNING article_writer.shared.gatekeeper — Attempt 1/2 failed for test_svc: always fails
+2026-06-13 20:29:03,063 WARNING article_writer.shared.gatekeeper — Attempt 2/2 failed for test_svc: always fails
+2026-06-13 20:29:03,124 INFO article_writer.tools.base_tool — [TOOL] test_tool called — input_len=10
+2026-06-13 20:29:06,608 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=25
+2026-06-13 20:29:06,626 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=29
+2026-06-13 20:29:06,644 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=17
+2026-06-13 20:29:06,656 WARNING article_writer.tools.citation_extractor — citation_extractor fallback for 'some text passage': API down
+2026-06-13 20:29:06,660 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=13
+2026-06-13 20:29:06,676 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=52
+2026-06-13 20:29:06,696 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=24
+2026-06-13 20:29:06,717 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=24
+2026-06-13 20:29:06,730 WARNING article_writer.tools.content_filter — content_filter JSON parse error: Expecting value: line 1 column 1 (char 0) — defaulting to DISCARD
+2026-06-13 20:29:06,735 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=43
+2026-06-13 20:29:06,749 INFO article_writer.tools.base_tool — [TOOL] deep_research called — input_len=16
+2026-06-13 20:29:06,753 INFO article_writer.tools.base_tool — [TOOL] deep_research called — input_len=10
+2026-06-13 20:29:06,755 INFO article_writer.tools.base_tool — [TOOL] deep_research called — input_len=9
+2026-06-13 20:29:06,756 WARNING article_writer.tools.deep_research_tool — deep_research: no usable result for query 'bad query'
+2026-06-13 20:29:06,758 INFO article_writer.tools.base_tool — [TOOL] deep_research called — input_len=17
+2026-06-13 20:29:06,758 WARNING article_writer.tools.deep_research_tool — deep_research: no usable result for query 'unreachable query'
+2026-06-13 20:29:06,762 INFO article_writer.tools.base_tool — [TOOL] researcher_handler called — input_len=11
+2026-06-13 20:29:06,775 INFO article_writer.tools.base_tool — [TOOL] researcher_handler called — input_len=11
+2026-06-13 20:29:06,796 INFO article_writer.tools.base_tool — [TOOL] researcher_handler called — input_len=5
+2026-06-13 20:29:06,820 INFO article_writer.tools.base_tool — [TOOL] researcher_handler called — input_len=5
+2026-06-13 20:29:06,831 WARNING article_writer.tools.researcher_handler — researcher_handler fallback triggered: API down
+2026-06-13 20:29:06,848 INFO article_writer.writing.context_loader — Loaded profile 'Structure.md' (22 chars)
+2026-06-13 20:29:06,848 INFO article_writer.writing.context_loader — Loaded profile 'Terminology.md' (24 chars)
+2026-06-13 20:29:06,849 INFO article_writer.writing.context_loader — Loaded profile 'Characters.md' (23 chars)
+2026-06-13 20:29:06,849 INFO article_writer.writing.context_loader — Loaded 0 few-shot examples from /tmp/pytest-of-nagham1023/pytest-26/test_build_writer_context_cont0/few_shot_examples
+2026-06-13 20:29:06,849 INFO article_writer.writing.context_loader — Loaded guideline 'guideline.md' (13 chars)
+2026-06-13 20:29:06,849 INFO article_writer.writing.context_loader — Loaded research artifact 'research.md' (17 chars)
+2026-06-13 20:29:06,852 INFO article_writer.writing.context_loader — Loaded profile 'Structure.md' (15 chars)
+2026-06-13 20:29:06,853 INFO article_writer.writing.context_loader — Loaded profile 'Terminology.md' (15 chars)
+2026-06-13 20:29:06,853 INFO article_writer.writing.context_loader — Loaded profile 'Characters.md' (15 chars)
+2026-06-13 20:29:06,853 INFO article_writer.writing.context_loader — Loaded 0 few-shot examples from /tmp/pytest-of-nagham1023/pytest-26/test_profiles_appear_before_gu0/few_shot_examples
+2026-06-13 20:29:06,853 INFO article_writer.writing.context_loader — Loaded guideline 'guideline.md' (5 chars)
+2026-06-13 20:29:06,853 INFO article_writer.writing.context_loader — Loaded research artifact 'research.md' (8 chars)
+2026-06-13 20:29:06,868 INFO article_writer.writing.draft_generator — [TOKENS] service=gemini in=100 out=200 cost=$0.0000
+2026-06-13 20:29:06,869 INFO article_writer.writing.draft_generator — Draft saved: results/draft_v1.tex (85 chars)
+2026-06-13 20:29:06,885 INFO article_writer.writing.draft_generator — [TOKENS] service=gemini in=100 out=200 cost=$0.0000
+2026-06-13 20:29:06,900 INFO article_writer.writing.draft_generator — [TOKENS] service=gemini in=100 out=200 cost=$0.0000
+2026-06-13 20:29:06,900 INFO article_writer.writing.draft_generator — Draft saved: results/draft_v1.tex (85 chars)
+2026-06-13 20:29:06,906 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=55 ts=2026-06-13T17:29:06.906292+00:00
+2026-06-13 20:29:06,909 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=55 ts=2026-06-13T17:29:06.909281+00:00
+2026-06-13 20:29:06,912 INFO article_writer.writing.evaluator — [EVAL] iter=1 scores={'coverage': 8.0, 'accuracy': 7.0, 'style': 9.0, 'structure': 8.0, 'citation_quality': 7.0, 'weighted': 7.8500000000000005}
+2026-06-13 20:29:06,919 INFO article_writer.writing.evaluator — [EVAL] iter=2 scores={'coverage': 8.0, 'accuracy': 7.0, 'style': 9.0, 'structure': 8.0, 'citation_quality': 7.0, 'weighted': 7.8500000000000005}
+2026-06-13 20:29:06,924 INFO article_writer.writing.evaluator — [EVAL] iter=1 scores={'coverage': 10.0, 'accuracy': 1.0, 'style': 5.0, 'structure': 1.0, 'citation_quality': 10.0, 'weighted': 4.95}
+2026-06-13 20:29:06,930 INFO article_writer.writing.evaluator — [EVAL] iter=1 scores={'coverage': 5.0, 'accuracy': 5.0, 'style': 5.0, 'structure': 5.0, 'citation_quality': 5.0, 'weighted': 5.0}
+2026-06-13 20:29:06,934 INFO article_writer.writing.guideline_generator — Generating guideline for topic: AI in Healthcare
+2026-06-13 20:29:06,934 INFO article_writer.writing.guideline_generator — Guideline written to /tmp/pytest-of-nagham1023/pytest-26/test_generate_writes_file0/guideline.md (46 chars)
+2026-06-13 20:29:06,937 INFO article_writer.writing.guideline_generator — Generating guideline for topic: Robotics
+2026-06-13 20:29:06,937 INFO article_writer.writing.guideline_generator — Guideline written to /tmp/pytest-of-nagham1023/pytest-26/test_generate_returns_path0/guideline.md (46 chars)
+2026-06-13 20:29:06,939 INFO article_writer.writing.guideline_generator — Generating guideline for topic: topic
+2026-06-13 20:29:06,939 INFO article_writer.writing.guideline_generator — Guideline written to /tmp/pytest-of-nagham1023/pytest-26/test_generate_strips_whitespac0/guideline.md (26 chars)
+2026-06-13 20:29:06,941 INFO article_writer.writing.guideline_generator — Generating guideline for topic: AI topic
+2026-06-13 20:29:06,942 INFO article_writer.writing.guideline_generator — Guideline written to /tmp/pytest-of-nagham1023/pytest-26/test_generate_calls_llm_comple0/guideline.md (46 chars)
+2026-06-13 20:29:06,944 INFO article_writer.writing.guideline_generator — Generating guideline for topic: topic
+2026-06-13 20:29:06,944 INFO article_writer.writing.guideline_generator — Guideline written to /tmp/pytest-of-nagham1023/pytest-26/test_generate_creates_parent_d0/subdir/guideline.md (46 chars)
+2026-06-13 20:29:06,953 INFO article_writer.writing.loop_controller — === Eval-Optimizer loop iteration 1/3 ===
+2026-06-13 20:29:06,953 INFO article_writer.writing.loop_controller — Iteration 1 score: 10.00 / 10 (threshold 8.0)
+2026-06-13 20:29:06,954 INFO article_writer.writing.loop_controller — === Eval-Optimizer loop iteration 2/3 ===
+2026-06-13 20:29:06,954 INFO article_writer.writing.loop_controller — Iteration 2 score: 10.00 / 10 (threshold 8.0)
+2026-06-13 20:29:06,954 INFO article_writer.writing.loop_controller — Score 10.00 >= threshold 8.0 — stopping loop.
+2026-06-13 20:29:06,954 INFO article_writer.writing.loop_controller — Loop complete. Final score: 10.00. Draft: /tmp/pytest-of-nagham1023/pytest-26/test_loop_runs_minimum_2_itera0/results/draft_v1.tex
+2026-06-13 20:29:06,957 INFO article_writer.writing.loop_controller — === Eval-Optimizer loop iteration 1/2 ===
+2026-06-13 20:29:06,957 INFO article_writer.writing.loop_controller — Iteration 1 score: 1.00 / 10 (threshold 10.0)
+2026-06-13 20:29:06,957 INFO article_writer.writing.loop_controller — === Eval-Optimizer loop iteration 2/2 ===
+2026-06-13 20:29:06,957 INFO article_writer.writing.loop_controller — Iteration 2 score: 1.00 / 10 (threshold 10.0)
+2026-06-13 20:29:06,957 INFO article_writer.writing.loop_controller — Loop complete. Final score: 1.00. Draft: /tmp/pytest-of-nagham1023/pytest-26/test_loop_stops_at_max_iterati0/results/draft_v1.tex
+2026-06-13 20:29:06,960 INFO article_writer.writing.loop_controller — === Eval-Optimizer loop iteration 1/2 ===
+2026-06-13 20:29:06,960 INFO article_writer.writing.loop_controller — Iteration 1 score: 9.00 / 10 (threshold 0.0)
+2026-06-13 20:29:06,960 INFO article_writer.writing.loop_controller — === Eval-Optimizer loop iteration 2/2 ===
+2026-06-13 20:29:06,961 INFO article_writer.writing.loop_controller — Iteration 2 score: 9.00 / 10 (threshold 0.0)
+2026-06-13 20:29:06,961 INFO article_writer.writing.loop_controller — Score 9.00 >= threshold 0.0 — stopping loop.
+2026-06-13 20:29:06,961 INFO article_writer.writing.loop_controller — Loop complete. Final score: 9.00. Draft: /tmp/pytest-of-nagham1023/pytest-26/test_loop_returns_path0/results/draft_v1.tex
+2026-06-13 20:29:06,965 INFO article_writer.writing.optimizer — Optimized draft saved: /tmp/pytest-of-nagham1023/pytest-26/test_optimize_saves_next_versi0/draft_v2.tex
+2026-06-13 20:29:06,965 INFO article_writer.writing.optimizer — Optimizer iteration 1: diff +3 lines
+2026-06-13 20:29:06,976 INFO article_writer.writing.optimizer — Optimized draft saved: /tmp/pytest-of-nagham1023/pytest-26/test_optimize_version_incremen0/draft_v4.tex
+2026-06-13 20:29:06,976 INFO article_writer.writing.optimizer — Optimizer iteration 3: diff +3 lines
+2026-06-13 20:30:29,259 INFO article_writer.agents.base_agent — Loaded skill 'research' (3779 chars)
+2026-06-13 20:30:29,918 INFO article_writer.crew — ArticleResearchCrew kickoff — inputs: ['topic']
+2026-06-13 20:30:33,292 INFO article_writer.tools.base_tool — [TOOL] researcher_handler called — input_len=61
+2026-06-13 20:30:34,345 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:30:34.345963+00:00
+2026-06-13 20:30:37,698 INFO article_writer.tools.base_tool — [TOOL] deep_research called — input_len=56
+2026-06-13 20:30:47,407 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:30:47.407054+00:00
+2026-06-13 20:30:47,407 INFO article_writer.mcp.gemini_client — [TOKENS] service=gemini in=21 out=706 cost=$0.0000
+2026-06-13 20:31:09,054 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=215
+2026-06-13 20:31:09,054 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=235
+2026-06-13 20:31:09,057 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=215
+2026-06-13 20:31:09,136 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=215
+2026-06-13 20:31:09,139 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=295
+2026-06-13 20:31:09,142 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=215
+2026-06-13 20:31:09,142 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=235
+2026-06-13 20:31:09,149 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=227
+2026-06-13 20:31:10,398 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:10.398356+00:00
+2026-06-13 20:31:10,399 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=215
+2026-06-13 20:31:10,537 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:10.537613+00:00
+2026-06-13 20:31:10,539 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=321
+2026-06-13 20:31:10,541 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:10.541795+00:00
+2026-06-13 20:31:10,543 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=231
+2026-06-13 20:31:10,702 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:10.702931+00:00
+2026-06-13 20:31:10,705 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=335
+2026-06-13 20:31:10,763 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:10.763541+00:00
+2026-06-13 20:31:10,765 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=215
+2026-06-13 20:31:10,769 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:10.769715+00:00
+2026-06-13 20:31:10,771 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=243
+2026-06-13 20:31:10,822 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:10.822605+00:00
+2026-06-13 20:31:10,825 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=211
+2026-06-13 20:31:10,950 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:10.950766+00:00
+2026-06-13 20:31:10,953 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=174
+2026-06-13 20:31:11,521 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:11.521567+00:00
+2026-06-13 20:31:11,523 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=239
+2026-06-13 20:31:11,683 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:11.683796+00:00
+2026-06-13 20:31:11,686 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=332
+2026-06-13 20:31:11,852 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:11.852818+00:00
+2026-06-13 20:31:11,857 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=215
+2026-06-13 20:31:11,905 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:11.905227+00:00
+2026-06-13 20:31:11,906 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=271
+2026-06-13 20:31:12,077 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:12.077501+00:00
+2026-06-13 20:31:12,082 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=236
+2026-06-13 20:31:12,302 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:12.302917+00:00
+2026-06-13 20:31:12,309 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=216
+2026-06-13 20:31:12,753 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:12.753906+00:00
+2026-06-13 20:31:12,756 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=291
+2026-06-13 20:31:12,979 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:12.979944+00:00
+2026-06-13 20:31:12,986 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=234
+2026-06-13 20:31:12,990 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:12.990685+00:00
+2026-06-13 20:31:13,224 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:13.224678+00:00
+2026-06-13 20:31:13,234 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:13.234436+00:00
+2026-06-13 20:31:13,235 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:13.235465+00:00
+2026-06-13 20:31:13,240 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:13.240030+00:00
+2026-06-13 20:31:13,407 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:13.407546+00:00
+2026-06-13 20:31:14,157 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:14.157660+00:00
+2026-06-13 20:31:14,161 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:14.161081+00:00
+2026-06-13 20:31:23,341 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=628
+2026-06-13 20:31:23,341 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=583
+2026-06-13 20:31:23,341 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=596
+2026-06-13 20:31:23,344 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=514
+2026-06-13 20:31:23,345 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=617
+2026-06-13 20:31:23,346 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=376
+2026-06-13 20:31:24,345 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:24.345396+00:00
+2026-06-13 20:31:24,345 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:24.345795+00:00
+2026-06-13 20:31:24,624 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:24.624877+00:00
+2026-06-13 20:31:24,746 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:24.746138+00:00
+2026-06-13 20:31:24,876 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:24.876954+00:00
+2026-06-13 20:31:25,951 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:25.951733+00:00
+2026-06-13 20:31:29,097 INFO article_writer.tools.base_tool — [TOOL] deep_research called — input_len=64
+2026-06-13 20:31:42,602 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:31:42.602146+00:00
+2026-06-13 20:31:42,602 INFO article_writer.mcp.gemini_client — [TOKENS] service=gemini in=22 out=953 cost=$0.0000
+2026-06-13 20:32:02,596 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=203
+2026-06-13 20:32:02,598 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=247
+2026-06-13 20:32:02,600 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=251
+2026-06-13 20:32:02,601 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=243
+2026-06-13 20:32:02,601 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=243
+2026-06-13 20:32:02,603 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=299
+2026-06-13 20:32:02,603 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=235
+2026-06-13 20:32:02,604 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=235
+2026-06-13 20:32:03,719 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:03.719049+00:00
+2026-06-13 20:32:03,724 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:03.724420+00:00
+2026-06-13 20:32:03,726 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=235
+2026-06-13 20:32:03,727 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=327
+2026-06-13 20:32:03,891 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:03.891339+00:00
+2026-06-13 20:32:03,896 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=271
+2026-06-13 20:32:03,999 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:03.999740+00:00
+2026-06-13 20:32:04,001 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=215
+2026-06-13 20:32:04,006 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:04.006048+00:00
+2026-06-13 20:32:04,008 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=295
+2026-06-13 20:32:04,058 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:04.058957+00:00
+2026-06-13 20:32:04,060 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=288
+2026-06-13 20:32:04,118 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:04.118098+00:00
+2026-06-13 20:32:04,119 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=276
+2026-06-13 20:32:04,854 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:04.854945+00:00
+2026-06-13 20:32:04,857 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=300
+2026-06-13 20:32:05,131 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:05.131356+00:00
+2026-06-13 20:32:05,133 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=223
+2026-06-13 20:32:05,308 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:05.308366+00:00
+2026-06-13 20:32:05,310 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=215
+2026-06-13 20:32:05,313 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:05.313555+00:00
+2026-06-13 20:32:05,315 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=295
+2026-06-13 20:32:05,426 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:05.426706+00:00
+2026-06-13 20:32:05,430 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=282
+2026-06-13 20:32:05,529 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:05.529469+00:00
+2026-06-13 20:32:05,532 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=215
+2026-06-13 20:32:05,535 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:05.535915+00:00
+2026-06-13 20:32:05,537 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=315
+2026-06-13 20:32:05,637 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:05.637947+00:00
+2026-06-13 20:32:05,644 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=311
+2026-06-13 20:32:06,248 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:06.248515+00:00
+2026-06-13 20:32:06,254 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=295
+2026-06-13 20:32:06,553 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:06.553482+00:00
+2026-06-13 20:32:06,555 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=247
+2026-06-13 20:32:06,595 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:06.595218+00:00
+2026-06-13 20:32:06,597 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=251
+2026-06-13 20:32:06,650 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:06.650647+00:00
+2026-06-13 20:32:06,893 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:06.893354+00:00
+2026-06-13 20:32:06,956 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:06.956412+00:00
+2026-06-13 20:32:07,584 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:07.584717+00:00
+2026-06-13 20:32:07,656 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:07.656352+00:00
+2026-06-13 20:32:07,712 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:07.712941+00:00
+2026-06-13 20:32:09,114 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:09.114106+00:00
+2026-06-13 20:32:10,055 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:10.055133+00:00
+2026-06-13 20:32:20,540 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=783
+2026-06-13 20:32:20,541 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=609
+2026-06-13 20:32:20,543 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=543
+2026-06-13 20:32:20,545 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=692
+2026-06-13 20:32:20,545 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=461
+2026-06-13 20:32:20,547 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=673
+2026-06-13 20:32:20,548 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=410
+2026-06-13 20:32:21,547 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:21.547089+00:00
+2026-06-13 20:32:21,656 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:21.656598+00:00
+2026-06-13 20:32:21,663 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:21.663055+00:00
+2026-06-13 20:32:21,717 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:21.717553+00:00
+2026-06-13 20:32:21,723 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:21.723471+00:00
+2026-06-13 20:32:21,987 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:21.986989+00:00
+2026-06-13 20:32:23,400 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:23.400046+00:00
+2026-06-13 20:32:25,886 INFO article_writer.tools.base_tool — [TOOL] deep_research called — input_len=56
+2026-06-13 20:32:39,643 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:32:39.643049+00:00
+2026-06-13 20:32:39,643 INFO article_writer.mcp.gemini_client — [TOKENS] service=gemini in=20 out=1689 cost=$0.0000
+2026-06-13 20:33:02,400 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=319
+2026-06-13 20:33:02,402 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=299
+2026-06-13 20:33:02,402 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=215
+2026-06-13 20:33:02,403 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=271
+2026-06-13 20:33:02,404 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=300
+2026-06-13 20:33:02,406 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=215
+2026-06-13 20:33:02,406 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=280
+2026-06-13 20:33:02,408 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=283
+2026-06-13 20:33:03,596 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:03.596561+00:00
+2026-06-13 20:33:03,600 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:03.600499+00:00
+2026-06-13 20:33:03,603 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=251
+2026-06-13 20:33:03,603 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=279
+2026-06-13 20:33:03,705 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:03.705085+00:00
+2026-06-13 20:33:03,707 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=276
+2026-06-13 20:33:03,757 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:03.757011+00:00
+2026-06-13 20:33:03,758 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=304
+2026-06-13 20:33:03,810 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:03.810596+00:00
+2026-06-13 20:33:03,812 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=216
+2026-06-13 20:33:04,095 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:04.095479+00:00
+2026-06-13 20:33:04,097 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:04.097754+00:00
+2026-06-13 20:33:04,098 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=216
+2026-06-13 20:33:04,103 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=256
+2026-06-13 20:33:04,142 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:04.142272+00:00
+2026-06-13 20:33:04,144 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=361
+2026-06-13 20:33:04,723 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:04.723468+00:00
+2026-06-13 20:33:04,726 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=253
+2026-06-13 20:33:04,826 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:04.826641+00:00
+2026-06-13 20:33:04,830 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=297
+2026-06-13 20:33:04,939 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:04.939395+00:00
+2026-06-13 20:33:04,942 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=255
+2026-06-13 20:33:05,050 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:05.050270+00:00
+2026-06-13 20:33:05,054 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=274
+2026-06-13 20:33:05,116 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:05.116693+00:00
+2026-06-13 20:33:05,119 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=275
+2026-06-13 20:33:05,163 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:05.163872+00:00
+2026-06-13 20:33:05,166 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=208
+2026-06-13 20:33:05,558 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:05.558143+00:00
+2026-06-13 20:33:05,561 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=216
+2026-06-13 20:33:05,628 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:05.628963+00:00
+2026-06-13 20:33:05,632 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=236
+2026-06-13 20:33:05,859 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:05.859199+00:00
+2026-06-13 20:33:05,861 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=304
+2026-06-13 20:33:06,158 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:06.158552+00:00
+2026-06-13 20:33:06,160 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=187
+2026-06-13 20:33:06,163 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:06.163580+00:00
+2026-06-13 20:33:06,165 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=317
+2026-06-13 20:33:06,206 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:06.206879+00:00
+2026-06-13 20:33:06,208 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=243
+2026-06-13 20:33:06,324 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:06.324563+00:00
+2026-06-13 20:33:06,327 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=227
+2026-06-13 20:33:06,331 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:06.331375+00:00
+2026-06-13 20:33:06,333 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=284
+2026-06-13 20:33:06,826 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:06.826312+00:00
+2026-06-13 20:33:06,828 INFO article_writer.tools.base_tool — [TOOL] citation_extractor called — input_len=224
+2026-06-13 20:33:06,959 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:06.959918+00:00
+2026-06-13 20:33:07,279 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:07.279029+00:00
+2026-06-13 20:33:07,336 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:07.336805+00:00
+2026-06-13 20:33:07,600 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:07.600307+00:00
+2026-06-13 20:33:07,602 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:07.602680+00:00
+2026-06-13 20:33:07,779 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:07.779463+00:00
+2026-06-13 20:33:08,103 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:08.103393+00:00
+2026-06-13 20:33:08,200 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:08.200700+00:00
+2026-06-13 20:33:21,824 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=487
+2026-06-13 20:33:21,825 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=264
+2026-06-13 20:33:21,826 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=366
+2026-06-13 20:33:21,827 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=276
+2026-06-13 20:33:21,829 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=264
+2026-06-13 20:33:21,831 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=368
+2026-06-13 20:33:21,832 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=231
+2026-06-13 20:33:21,832 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=183
+2026-06-13 20:33:22,708 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:22.708912+00:00
+2026-06-13 20:33:22,710 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=271
+2026-06-13 20:33:22,877 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:22.877042+00:00
+2026-06-13 20:33:22,880 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=384
+2026-06-13 20:33:22,933 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:22.933781+00:00
+2026-06-13 20:33:22,935 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=317
+2026-06-13 20:33:22,985 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:22.985358+00:00
+2026-06-13 20:33:22,987 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=434
+2026-06-13 20:33:23,042 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:23.042095+00:00
+2026-06-13 20:33:23,043 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=187
+2026-06-13 20:33:23,098 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:23.098358+00:00
+2026-06-13 20:33:23,099 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=180
+2026-06-13 20:33:23,158 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:23.158118+00:00
+2026-06-13 20:33:23,160 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=259
+2026-06-13 20:33:23,210 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:23.210601+00:00
+2026-06-13 20:33:23,212 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=218
+2026-06-13 20:33:23,600 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:23.600109+00:00
+2026-06-13 20:33:23,603 INFO article_writer.tools.base_tool — [TOOL] content_filter called — input_len=232
+2026-06-13 20:33:23,963 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:23.963216+00:00
+2026-06-13 20:33:23,966 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:23.966021+00:00
+2026-06-13 20:33:24,052 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:24.052784+00:00
+2026-06-13 20:33:24,062 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:24.062912+00:00
+2026-06-13 20:33:24,064 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:24.064644+00:00
+2026-06-13 20:33:24,456 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:24.456032+00:00
+2026-06-13 20:33:24,459 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:24.459346+00:00
+2026-06-13 20:33:24,460 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:33:24.460811+00:00
+2026-06-13 20:42:49,767 INFO article_writer.crew — ArticleResearchCrew complete
+2026-06-13 20:42:49,776 INFO article_writer.sdk.sdk — research.md written: 103019 chars
+2026-06-13 20:42:50,114 INFO article_writer.writing.context_loader — Loaded profile 'Structure.md' (1809 chars)
+2026-06-13 20:42:50,114 INFO article_writer.writing.context_loader — Loaded profile 'Terminology.md' (1761 chars)
+2026-06-13 20:42:50,114 INFO article_writer.writing.context_loader — Loaded profile 'Characters.md' (2025 chars)
+2026-06-13 20:42:50,456 INFO article_writer.writing.context_loader — Loaded 3 few-shot examples from few_shot_examples
+2026-06-13 20:42:50,456 INFO article_writer.writing.context_loader — Loaded guideline 'guideline.md' (4176 chars)
+2026-06-13 20:42:50,456 INFO article_writer.writing.context_loader — Loaded research artifact 'research.md' (103019 chars)
+2026-06-13 20:43:44,313 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:43:44.313872+00:00
+2026-06-13 20:43:44,314 INFO article_writer.writing.draft_generator — [TOKENS] service=gemini in=78016 out=10433 cost=$0.0000
+2026-06-13 20:43:44,316 WARNING article_writer.writing.draft_generator — Draft contains 5 invalid cite key(s) — running correction pass: jhu.edu, medrxiv.org, mindinventory.com, nih.gov, researchgate.net
+2026-06-13 20:44:23,631 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:44:23.631409+00:00
+2026-06-13 20:44:23,631 INFO article_writer.writing.draft_generator — [TOKENS] service=gemini in=14964 out=10447 cost=$0.0000
+2026-06-13 20:44:23,632 INFO article_writer.writing.draft_generator — Cite-key repair: 5 → 0 invalid key(s) remaining
+2026-06-13 20:44:23,633 INFO article_writer.writing.draft_generator — Draft saved: results/draft_v1.tex (49864 chars)
+2026-06-13 20:44:27,464 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:44:27.464486+00:00
+2026-06-13 20:45:17,845 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:45:17.845357+00:00
+2026-06-13 20:45:21,978 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:45:21.978285+00:00
+2026-06-13 20:46:11,456 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:46:11.456539+00:00
+2026-06-13 20:46:15,002 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:46:15.002031+00:00
+2026-06-13 20:47:04,066 INFO article_writer.shared.gatekeeper — [API] service=gemini query_len=2 response_len=120 ts=2026-06-13T17:47:04.066703+00:00
+2026-06-13 20:47:04,072 INFO article_writer.sdk.sdk — Review loop complete. Cost so far: $0.8592 | tokens: 4414236
+2026-06-13 20:47:08,370 WARNING article_writer.latex.latex_compiler — lualatex exited 1 — blic/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb>
+Output written on draft_final.pdf (26 pages, 241302 bytes).
+Transcript written on draft_final.log.
+2026-06-13 20:47:09,131 INFO article_writer.latex.latex_compiler — Pass completed: biber draft_final
+2026-06-13 20:47:13,801 WARNING article_writer.latex.latex_compiler — lualatex exited 1 — blic/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb>
+Output written on draft_final.pdf (26 pages, 240854 bytes).
+Transcript written on draft_final.log.
+2026-06-13 20:47:18,495 WARNING article_writer.latex.latex_compiler — lualatex exited 1 — blic/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb>
+Output written on draft_final.pdf (26 pages, 240854 bytes).
+Transcript written on draft_final.log.
+2026-06-13 20:47:23,258 WARNING article_writer.latex.latex_compiler — lualatex exited 1 — blic/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb>
+Output written on draft_final.pdf (26 pages, 240854 bytes).
+Transcript written on draft_final.log.
+2026-06-13 20:47:23,259 INFO article_writer.latex.latex_compiler — Compilation complete: 26 pages — results/draft_final.pdf
+2026-06-13 20:47:23,260 INFO article_writer.sdk.sdk — Final PDF: results/article_final.pdf
+2026-06-13 20:47:23,263 INFO article_writer.sdk.sdk — Total pipeline cost: $0.8592 | 4414236 tokens | 5827610ms

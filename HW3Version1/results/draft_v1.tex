@@ -1,16 +1,16 @@
 \documentclass[12pt,a4paper]{article}
 
 \usepackage{polyglossia}
-\setmainlanguage{english}   % sanitizer: english must be main language % Changed to Hebrew as primary language
-\setotherlanguage{hebrew} % English as other language
+\setmainlanguage{english}
+\setotherlanguage{hebrew}
 \usepackage{fontspec}
 \directlua{
   luaotfload.add_fallback("hebrewfallback", {
     "David CLM:mode=harf;script=hebr;"
   })
 }
-\setmainfont{David CLM}[Script=Hebrew] % Set David CLM as main font for Hebrew
-\newfontfamily\englishfont[Script=Latin]{Latin Modern Roman} % Define English font
+\setmainfont{Latin Modern Roman}[RawFeature={fallback=hebrewfallback}]
+\newfontfamily\hebrewfont[Script=Hebrew]{David CLM}
 \usepackage{luabidi}
 \usepackage{geometry}
 \geometry{margin=2.5cm}
@@ -45,20 +45,19 @@
   \begin{tcolorbox}[enhanced,breakable,parbox=false,
     colback=gray!5!white,colframe=gray!28!white,
     left=8pt,right=8pt,top=6pt,bottom=6pt,arc=2pt,boxrule=0.5pt]%
-  \englishfont\begin{english}% % Use englishfont for englishblock
+  \normalfont\setLR%
 }{%
-  \end{english}\end{tcolorbox}\vspace{3pt}%
+  \end{tcolorbox}\vspace{3pt}%
 }
 \usepackage{graphicx}
 \usepackage{fancyhdr}
-\setlength{\headheight}{14pt}
 \pagestyle{fancy}
 \usepackage{todonotes}
 
 \fancyhf{}
 \fancyhead[L]{\leftmark}
 \fancyhead[R]{\thepage}
-\fancyfoot[C]{AI Agents --- Advanced Topics, June 2026}
+\fancyfoot[C]{AI Agents --- Orchestration of AI Agents, June 2026}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 
@@ -71,17 +70,17 @@
   \includegraphics[width=5cm]{../assets/images/uniHaifasymbol.png}\par
   \vspace{0.4cm}
 
-  {\englishfont\large\bfseries University of Haifa\par} % Use englishfont for English text
-  {\englishfont\normalsize Department of Information Systems\par} % Use englishfont for English text
+  {\large\bfseries University of Haifa\par}
+  {\normalsize Department of Information Systems\par}
 
   \vspace{1.2cm}\hrule\vspace{1.2cm}
 
-  {\englishfont\Huge\bfseries The Transformative Potential of AI Agents in Healthcare\par} % Use englishfont for English text
+  {\Huge\bfseries The Transformative Potential of AI Agents in Healthcare\par}
   \vspace{0.3cm}
-  {\englishfont\Large\bfseries Navigating Ethical, Regulatory, and Implementation Challenges\par} % Use englishfont for English text
+  {\Large\bfseries Navigating Ethical, Regulatory, and Implementation Challenges\par}
 
   \vspace{0.5cm}
-  {\hebrewfont\large\bfseries
+  {\hebrewfont\large
     \begin{hebrew}
       הפוטנציאל הטרנספורמטיבי של סוכני בינה מלאכותית בשירותי הבריאות: ניווט באתגרים אתיים, רגולטוריים ויישומיים
     \end{hebrew}\par}
@@ -89,101 +88,79 @@
   \vfill
 
   \begin{tabular}{rl}
-    \textbf{Author:}    & Nagham Manasra \& Yaman Dahle \\[4pt] % Corrected author name
-    \textbf{Course:}     & 203.3763 --- Orchestration of AI Agents \\[4pt] % Corrected course name
-    \textbf{Lecturer:} & Dr. Yoram Segal \\ % Corrected instructor label
+    \textbf{Authors:}    & Nagham Manasra \& Yaman Dahle \\[4pt]
+    \textbf{Course:}     & 203.3763 --- Orchestration of AI Agents \\[4pt]
+    \textbf{Instructor:} & Dr. Yoram Segal \\
   \end{tabular}
 
   \vspace{1.2cm}\hrule\vspace{0.6cm}
 
-  {\englishfont\large June 2026\par} % Use englishfont for English text
+  {\large June 2026\par}
 \end{titlepage}
 
 \newpage
 \tableofcontents
 \newpage
 
-\begin{englishblock} % Wrap abstract in english environment
 \begin{abstract}
 Artificial Intelligence (AI) agents are rapidly emerging as pivotal tools in modern healthcare, promising to revolutionize diagnostics, personalized treatment, and administrative efficiencies. This article explores the multifaceted landscape of AI agents in healthcare, categorizing them by their autonomy and functionality, and detailing the core technologies that underpin their operation. It highlights their significant impact on diagnostic accuracy, particularly in medical imaging, and their role in advancing personalized medicine through data-driven insights. The discussion also critically examines the complex ethical considerations, including data privacy, algorithmic bias, and accountability for errors, which are paramount for responsible deployment. Furthermore, the article addresses the evolving regulatory frameworks globally, emphasizing the need for robust oversight and transparent design. Finally, it considers the practical challenges of integrating AI agents into existing healthcare systems, such as infrastructure investment and workforce retraining, concluding with a forward-looking perspective on human-AI collaboration for optimized patient outcomes.
 \end{abstract}
-\end{englishblock}
 
-\section{\texthebrew{מבוא לסוכני בינה מלאכותית בשירותי הבריאות}}
+\section{Introduction to AI Agents in Healthcare}
 \label{sec:introduction}
-\begin{englishblock} % Wrap English text in englishblock
 The healthcare sector is undergoing a profound transformation driven by advancements in Artificial Intelligence (AI). AI agents, defined as autonomous or semi-autonomous systems capable of perceiving their environment and taking actions to achieve specific goals, are at the forefront of this revolution. These agents are designed to augment human capabilities, streamline complex processes, and ultimately enhance patient care outcomes \cite{topol2019highperformance}. Their integration into clinical practice marks a significant shift from traditional healthcare paradigms.
 
 The scope of AI agents in healthcare is broad, encompassing applications from diagnostic support to personalized treatment planning and administrative optimization. This article aims to provide a comprehensive overview of this burgeoning field. It will systematically explore the diverse applications, the underlying technological foundations, and the critical ethical and regulatory challenges that must be addressed for successful implementation. The central argument posits that while AI agents offer unprecedented opportunities, their ethical and effective integration requires robust regulatory frameworks, transparent algorithmic design, and a proactive approach to mitigating biases and fostering patient trust.
-\end{englishblock}
 
-\subsection{\texthebrew{הגדרת סוכני בינה מלאכותית ותפקידם}}
+\subsection{Defining AI Agents and Their Role}
 \label{subsec:defining_ai_agents}
-\begin{englishblock} % Wrap English text in englishblock
 AI agents are computational entities that operate with varying degrees of autonomy to perform tasks typically requiring human intelligence. In healthcare, these agents can range from simple rule-based systems to complex deep learning models that adapt and learn over time \cite{russell2010artificial}. Their primary role is to assist healthcare professionals, optimize operational workflows, and empower patients with better information and personalized care. This augmentation of human effort is key to addressing the growing demands on healthcare systems.
 
 The distinction between AI tools and AI agents often lies in their level of autonomy and decision-making capabilities. While a tool might provide data analysis, an agent can interpret that analysis and recommend an action. This capability allows AI agents to take on more complex tasks, such as predicting disease progression or optimizing resource allocation within a hospital \cite{davenport2019ai}. Understanding these distinctions is crucial for evaluating their impact and potential risks.
-\end{englishblock}
 
-\subsection{\texthebrew{הקשר היסטורי והתפתחות הבינה המלאכותית ברפואה}}
+\subsection{Historical Context and Evolution of AI in Medicine}
 \label{subsec:historical_context}
-\begin{englishblock} % Wrap English text in englishblock
 The concept of applying AI to medicine dates back to the 1960s, with early expert systems like MYCIN designed to diagnose infectious diseases. These early systems relied on rule-based logic and extensive knowledge bases curated by human experts. While groundbreaking, they faced limitations in scalability and adaptability to new information \cite{russell2010artificial}. The computational power and data availability of the era also constrained their practical utility.
 
 The advent of machine learning and deep learning in the 21st century marked a significant turning point. Modern AI agents leverage vast datasets and sophisticated algorithms to identify patterns and make predictions with unprecedented accuracy \cite{lecun2015deep}. This evolution has enabled the development of agents that can process complex medical images, analyze genomic data, and even engage in natural language interactions with patients. The rapid progress continues to redefine the boundaries of what AI can achieve in healthcare.
-\end{englishblock}
 
-\subsection{\texthebrew{היקף ומבנה המאמר}}
+\subsection{Scope and Structure of the Article}
 \label{subsec:scope_structure}
-\begin{englishblock} % Wrap English text in englishblock
 This article is structured to provide a comprehensive understanding of AI agents in healthcare. It begins by categorizing AI agents and detailing their underlying technologies. Subsequent sections delve into their specific applications in diagnostic enhancement and personalized medicine. The discussion then shifts to the critical ethical and regulatory challenges that accompany their deployment.
 
 The article also addresses the practical aspects of integrating these technologies into existing healthcare infrastructures. It concludes by offering insights into future developments and the overarching narrative of responsible AI adoption. This structured approach ensures a thorough examination of both the opportunities and the complexities presented by AI agents in transforming healthcare.
-\end{englishblock}
 
-\section{\texthebrew{קטגוריזציה וטכנולוגיות ליבה של סוכני בינה מלאכותית}}
+\section{Categorization and Core Technologies of AI Agents}
 \label{sec:categorization_technologies}
-\begin{englishblock} % Wrap English text in englishblock
 AI agents in healthcare are diverse, varying in their autonomy, functionality, and the underlying technologies they employ. Understanding these classifications and technical foundations is essential for appreciating their capabilities and limitations. This section provides a framework for categorizing AI agents and explores the core AI technologies that power them.
-\end{englishblock}
 
-\subsection{\texthebrew{סוגי סוכני בינה מלאכותית לפי אוטונומיה ופונקציונליות}}
+\subsection{Types of AI Agents by Autonomy and Functionality}
 \label{subsec:types_of_ai_agents}
-\begin{englishblock} % Wrap English text in englishblock
 AI agents can be broadly categorized based on their level of autonomy and their specific functions within healthcare. Diagnostic support agents, for instance, assist clinicians in interpreting medical images or patient symptoms, offering recommendations without making final decisions \cite{esteva2017dermatologist}. These agents typically operate with a high degree of human oversight. Therapeutic agents, on the other hand, might suggest treatment plans or adjust drug dosages based on real-time patient data, often requiring careful validation by medical professionals.
 
 Administrative agents automate routine tasks such as scheduling appointments, managing patient records, or processing insurance claims. These agents often exhibit higher levels of autonomy in their specific domains, significantly reducing administrative burdens \cite{dataart_digital_transformation}. Robotic surgical assistants represent a different class, providing precision and stability during complex procedures, but always under direct human control. The spectrum of autonomy ranges from decision support to semi-autonomous operation, with full autonomy remaining a distant goal in critical clinical contexts.
-\end{englishblock}
 
-\subsection{\texthebrew{יסודות למידת מכונה ולמידה עמוקה}}
+\subsection{Machine Learning and Deep Learning Foundations}
 \label{subsec:ml_dl_foundations}
-\begin{englishblock} % Wrap English text in englishblock
 The backbone of most modern AI agents in healthcare is machine learning (ML), particularly deep learning. Deep learning models, such as convolutional neural networks (CNNs), excel at processing complex data like medical images (X-rays, MRIs, CT scans) and identifying subtle patterns indicative of disease \cite{lecun2015deep}. These models learn directly from raw data, often outperforming traditional image analysis methods. The ability to learn intricate features from large datasets is crucial for diagnostic accuracy.
 
 Reinforcement learning (RL) is another emerging ML paradigm used in AI agents. RL agents learn optimal strategies by interacting with an environment and receiving feedback, making them suitable for tasks like personalized treatment planning or drug discovery \cite{saito2015precision}. For example, an RL agent could learn to adjust chemotherapy dosages based on patient response, aiming to maximize efficacy while minimizing side effects. These advanced ML techniques enable AI agents to handle the complexity and variability inherent in medical data.
-\end{englishblock}
 
-\subsection{\texthebrew{עיבוד שפה טבעית ואיחוי חיישנים}}
+\subsection{Natural Language Processing and Sensor Fusion}
 \label{subsec:nlp_sensor_fusion}
-\begin{englishblock} % Wrap English text in englishblock
 Natural Language Processing (NLP) is critical for AI agents that interact with human language, whether through electronic health records (EHRs), clinical notes, or patient conversations. NLP allows agents to extract meaningful information from unstructured text, summarize patient histories, and even generate clinical documentation \cite{shah2019artificial}. This capability significantly enhances efficiency and reduces the manual burden on healthcare providers. Large Language Models (LLMs) are particularly impactful in this area, offering advanced text generation and comprehension.
 
 Sensor fusion integrates data from multiple sources, such as wearable devices, medical sensors, and imaging modalities, to create a more comprehensive picture of a patient's health. AI agents utilize sensor fusion to monitor vital signs, track activity levels, and detect anomalies that might indicate a deteriorating condition \cite{fleming2018artificial}. This holistic data integration enables more accurate diagnostics and proactive interventions, supporting remote patient monitoring and preventative care strategies.
-\end{englishblock}
 
-\section{\texthebrew{שיפור אבחון ורפואה מותאמת אישית}}
+\section{Enhancing Diagnostics and Personalized Medicine}
 \label{sec:diagnostics_personalized_medicine}
-\begin{englishblock} % Wrap English text in englishblock
 AI agents are profoundly impacting diagnostic processes and the delivery of personalized medicine. Their ability to analyze vast datasets, identify subtle patterns, and learn from outcomes leads to improvements in accuracy, speed, and treatment efficacy. This section explores these transformative applications in detail.
-\end{englishblock}
 
-\subsection{\texthebrew{דיוק ומהירות אבחון משופרים}}
+\subsection{Improved Diagnostic Accuracy and Speed}
 \label{subsec:diagnostic_accuracy}
-\begin{englishblock} % Wrap English text in englishblock
 AI agents significantly enhance diagnostic accuracy, particularly in fields heavily reliant on image analysis. Radiology and pathology are prime examples where deep learning models can detect anomalies that might be missed by the human eye \cite{rajpurkar2017chexnet}. For instance, AI algorithms can identify early signs of cancer in mammograms or detect diabetic retinopathy in retinal scans with high precision. This capability leads to earlier diagnoses and improved patient prognoses.
 
 The speed at which AI agents can process and analyze medical data is another critical advantage. Radiologists can review hundreds of images in minutes, flagging suspicious areas for human review, thereby reducing workload and turnaround times \cite{mckinney2020international}. This efficiency is vital in emergency settings or for large-scale screening programs. The combination of accuracy and speed makes AI agents invaluable tools in modern diagnostic workflows.
-\end{englishblock}
 
 \begin{figure}[H]
   \centering
@@ -192,111 +169,83 @@ The speed at which AI agents can process and analyze medical data is another cri
   \label{fig:diagnostic_comparison}
 \end{figure}
 
-\subsection{\texthebrew{בינה מלאכותית בדימות רפואי ופתולוגיה}}
+\subsection{AI in Medical Imaging and Pathology}
 \label{subsec:ai_imaging_pathology}
-\begin{englishblock} % Wrap English text in englishblock
 In medical imaging, AI agents are trained on massive datasets of annotated images to recognize patterns associated with various diseases. For example, CheXNet, a deep learning algorithm, can detect pneumonia from chest X-rays at a level comparable to expert radiologists \cite{rajpurkar2017chexnet}. Similar advancements are seen in MRI analysis for brain tumors and CT scans for lung nodules. These systems provide quantitative assessments and highlight areas of concern, aiding clinicians in their interpretations.
 
 Pathology also benefits immensely from AI agents. Digital pathology involves scanning tissue slides at high resolution, generating enormous datasets. AI algorithms can analyze these digital slides to detect cancerous cells, grade tumors, and predict patient outcomes more consistently than manual review \cite{campanella2019deep}. This automation reduces inter-observer variability and frees pathologists to focus on complex cases, enhancing the overall quality and efficiency of diagnosis.
-\end{englishblock}
 
-\subsection{\texthebrew{תכנון טיפול מותאם אישית וגילוי תרופות}}
+\subsection{Personalized Treatment Planning and Drug Discovery}
 \label{subsec:personalized_treatment}
-\begin{englishblock} % Wrap English text in englishblock
 AI agents are transforming personalized medicine by analyzing individual patient data, including genomics, proteomics, EHRs, and lifestyle factors. This comprehensive analysis allows agents to recommend tailored treatment plans, predict drug responses, and identify optimal dosages for each patient \cite{topol2019deep}. For example, AI can suggest specific chemotherapy regimens based on a patient's genetic profile, maximizing efficacy and minimizing adverse effects.
 
 In drug discovery, AI agents accelerate the identification of potential drug candidates and predict their efficacy and toxicity. They can analyze vast chemical libraries, simulate molecular interactions, and optimize drug design, significantly reducing the time and cost associated with traditional drug development \cite{wang2019deep}. This capability promises to bring new, more effective therapies to patients faster, addressing unmet medical needs.
-\end{englishblock}
 
-\section{\texthebrew{שיקולים אתיים בבינה מלאכותית בשירותי הבריאות}}
+\section{Ethical Considerations in AI Healthcare}
 \label{sec:ethical_considerations}
-\begin{englishblock} % Wrap English text in englishblock
 The integration of AI agents into healthcare, while promising, introduces a complex array of ethical considerations. These challenges must be proactively addressed to ensure patient safety, maintain trust, and uphold the fundamental principles of medical ethics. This section delves into key ethical concerns.
-\end{englishblock}
 
-\subsection{\texthebrew{פרטיות ואבטחת נתונים}}
+\subsection{Data Privacy and Security}
 \label{subsec:data_privacy}
-\begin{englishblock} % Wrap English text in englishblock
 AI systems in healthcare process highly sensitive patient data, including medical histories, genetic information, and personal identifiers. This raises significant concerns regarding data privacy and security \cite{nih_ethical_implications}. The potential for data breaches, unauthorized access, or misuse of confidential information is a major ethical challenge. Robust data handling protocols, stringent security measures, and strict compliance with regulations such as HIPAA and GDPR are imperative.
 
 Ensuring informed patient consent for data collection and use is also critical. Patients must understand how their data will be utilized by AI agents, who will have access to it, and for what purposes. Transparency in data governance frameworks is essential to build and maintain patient trust in AI-driven healthcare solutions. Without clear guidelines, the ethical implications of data handling could undermine the benefits of AI.
-\end{englishblock}
 
-\subsection{\texthebrew{הטיה אלגוריתמית ושוויון בבריאות}}
+\subsection{Algorithmic Bias and Health Equity}
 \label{subsec:algorithmic_bias}
-\begin{englishblock} % Wrap English text in englishblock
 AI algorithms are trained on historical data, which can inadvertently contain biases reflecting existing health disparities or societal inequalities. If training data are unrepresentative of diverse patient populations, AI agents may perpetuate or even worsen these biases, leading to misdiagnoses or unequal treatment for marginalized groups \cite{nih_ethical_implications}. For example, an AI diagnostic tool trained predominantly on data from one demographic might perform poorly on others.
 
 Mitigating algorithmic bias requires continuous monitoring, rigorous bias audits, and the use of diverse and representative datasets during model development. Developers and healthcare providers must actively work to identify and correct biases to ensure equitable access to high-quality care for all patients. Addressing these biases is not merely a technical challenge but a fundamental ethical imperative to promote health equity.
-\end{englishblock}
 
-\subsection{\texthebrew{אחריות ושקיפות}}
+\subsection{Accountability and Transparency}
 \label{subsec:accountability_transparency}
-\begin{englishblock} % Wrap English text in englishblock
 Determining accountability for errors or harm caused by AI systems in healthcare is a complex ethical issue. The "black box" nature of some advanced AI models, where their decision-making processes are opaque, further complicates this challenge \cite{nih_ethical_implications}. When an AI agent makes a diagnostic error or recommends an ineffective treatment, it is often unclear whether the responsibility lies with the developer, the deploying institution, or the supervising clinician.
 
 Establishing clear responsibility chains, implementing ethical review boards, and promoting transparency in AI design are crucial. Healthcare professionals must understand how AI-generated recommendations are derived to exercise appropriate clinical judgment. Explainable AI (XAI) techniques are being developed to make AI decisions more interpretable, fostering greater trust and enabling better oversight. This transparency is vital for both legal and ethical accountability.
-\end{englishblock}
 
-\section{\texthebrew{מסגרות רגולטוריות וממשל}}
+\section{Regulatory Frameworks and Governance}
 \label{sec:regulatory_frameworks}
-\begin{englishblock} % Wrap English text in englishblock
 The rapid advancement of AI agents in healthcare necessitates robust regulatory frameworks to ensure their safety, efficacy, and ethical deployment. Governments and international bodies are actively developing guidelines to address the unique challenges posed by AI-driven medical devices and software. This section outlines the evolving regulatory landscape.
-\end{englishblock}
 
-\subsection{\texthebrew{ה-FDA ונוף הרגולציה בארה"ב}}
+\subsection{FDA and US Regulatory Landscape}
 \label{subsec:fda_us_regulation}
-\begin{englishblock} % Wrap English text in englishblock
 In the United States, the Food and Drug Administration (FDA) regulates AI-enabled healthcare products as medical devices, specifically Software as a Medical Device (SaMD) \cite{fda_ai_ml_samd}. The FDA's regulatory approach is based on the intended use of the AI product and the potential risk it poses to patients. Most AI-enabled medical devices currently fall under Class II (moderate risk), requiring premarket review through established pathways.
 
 The FDA's 2021 "AI/ML SaMD Action Plan" introduced a Total Product Lifecycle (TPLC) approach for adaptive AI algorithms. This framework mandates continuous oversight from the initial design phase through post-market monitoring, acknowledging that AI models can evolve over time \cite{fda_ai_ml_samd}. Draft guidance from January 2025 further emphasizes transparency, bias mitigation, and clear, user-friendly labeling for AI-enabled medical devices, aiming to ensure both safety and user comprehension.
-\end{englishblock}
 
-\subsection{\texthebrew{חוק הבינה המלאכותית של האיחוד האירופי וגישות גלובליות}}
+\subsection{EU AI Act and Global Approaches}
 \label{subsec:eu_ai_act}
-\begin{englishblock} % Wrap English text in englishblock
 The European Union's AI Act, expected to be fully applicable by 2027, classifies AI systems in clinical settings as "high-risk" \cite{regdesk_eu_ai_act}. This designation imposes stringent requirements, including robust risk-mitigation systems, high-quality data governance, clear information provision to users, human oversight, and mandatory conformity assessments. AI-enabled medical devices in the EU are subject to dual regulation under both the AI Act and existing Medical Device Regulation (MDR) and In Vitro Diagnostic Medical Device Regulation (IVDR), ensuring comprehensive safety and ethical standards.
 
 Globally, other regulatory bodies are also developing their frameworks. The UK's MHRA, for example, launched a "Software and AI as a Medical Device Change Programme" in 2021. This initiative focuses on risk-proportionate regulation and aims to reclassify low-risk AI products for greater scrutiny, ensuring that regulatory oversight matches the potential impact of AI on patient care \cite{gov_uk_mhra_roadmap}. These global efforts reflect a shared commitment to responsible AI innovation in healthcare.
-\end{englishblock}
 
-\subsection{\texthebrew{אתגרים בהתאמה רגולטורית}}
+\subsection{Challenges in Regulatory Adaptation}
 \label{subsec:regulatory_challenges}
-\begin{englishblock} % Wrap English text in englishblock
 Adapting existing regulatory frameworks to the unique characteristics of AI agents presents several challenges. Traditional medical device regulations often assume static products, whereas many AI models are designed to be adaptive and continuously learn from new data. This dynamic nature requires new approaches to validation and post-market surveillance. Ensuring that AI models remain safe and effective as they evolve is a significant hurdle.
 
 Another challenge lies in harmonizing regulations across different jurisdictions. The global nature of AI development and deployment necessitates international collaboration to avoid fragmentation and facilitate innovation while maintaining high safety standards. Furthermore, the rapid pace of technological advancement often outstrips the speed of legislative processes, creating a constant need for regulatory updates and agile policy-making.
-\end{englishblock}
 
-\section{\texthebrew{אינטגרציה והשפעה תפעולית}}
+\section{Integration and Operational Impact}
 \label{sec:integration_operational_impact}
-\begin{englishblock} % Wrap English text in englishblock
 Integrating AI agents into existing healthcare workflows is a complex undertaking that extends beyond technological implementation. It involves significant infrastructure investment, workforce retraining, and careful change management to realize the full potential of these systems. This section examines the practical aspects and operational impacts of AI adoption.
-\end{englishblock}
 
-\subsection{\texthebrew{דרישות תשתית ואינטגרציית נתונים}}
+\subsection{Infrastructure and Data Integration Requirements}
 \label{subsec:infrastructure_data}
-\begin{englishblock} % Wrap English text in englishblock
 Successful integration of AI agents requires substantial investment in robust digital infrastructure. This includes high-performance computing resources, secure cloud platforms, and advanced data storage solutions \cite{oracle_cloud}. Healthcare organizations must ensure their IT systems can handle the massive volumes of data generated and processed by AI models. Interoperability between different systems, such as Electronic Health Records (EHRs), imaging archives, and laboratory information systems, is paramount.
 
 Data integration is a critical prerequisite for AI agent functionality. Healthcare data often reside in disparate, siloed systems and come in various formats, making it challenging to create unified, high-quality datasets for AI training and deployment \cite{alation_data_catalog}. Standardizing data formats, implementing robust data governance strategies, and utilizing data integration platforms are essential steps. Without seamless data flow, AI agents cannot operate effectively or provide comprehensive insights.
-\end{englishblock}
 
-\subsection{\texthebrew{הכשרת כוח אדם וניהול שינויים}}
+\subsection{Workforce Retraining and Change Management}
 \label{subsec:workforce_retraining}
-\begin{englishblock} % Wrap English text in englishblock
 The introduction of AI agents will inevitably transform healthcare roles and responsibilities. While AI is not expected to replace human professionals entirely, it will augment their capabilities and automate many routine tasks \cite{who2021ai}. This shift necessitates significant workforce retraining to equip clinicians and administrative staff with the skills needed to collaborate effectively with AI. Training programs should focus on digital literacy, data interpretation, and critical evaluation of AI-generated recommendations.
 
 Effective change management strategies are crucial to overcome resistance to new technologies and ensure smooth adoption. Healthcare leaders must communicate the benefits of AI, address concerns about job displacement, and involve staff in the implementation process \cite{who2021ai}. Fostering a culture of continuous learning and adaptation is vital for successful AI integration. This proactive approach helps to ensure that AI agents are perceived as valuable collaborators rather than threats.
-\end{englishblock}
 
-\subsection{\texthebrew{השפעה כלכלית והפחתת עלויות}}
+\subsection{Economic Impact and Cost Reduction}
 \label{subsec:economic_impact}
-\begin{englishblock} % Wrap English text in englishblock
 AI agents have the potential to generate significant economic benefits in healthcare by reducing operational costs and improving efficiency. Automation of administrative tasks, such as medical billing, coding, and scheduling, can yield substantial savings \cite{dataart_digital_transformation}. For example, AI can reduce administrative workloads by up to 40\% in claims processing, leading to hundreds of billions in annual savings. This allows human staff to focus on more complex, patient-facing activities.
 
 Beyond administrative savings, AI agents improve patient outcomes through enhanced diagnostic accuracy and personalized treatment, which can reduce hospital readmissions and avoid expensive long-term care \cite{nih_ethical_implications}. Predictive analytics can identify high-risk patients, enabling proactive interventions that prevent costly complications. While initial investments in AI infrastructure can be substantial, the long-term returns on investment through improved efficiency and better patient care are considerable.
-\end{englishblock}
 
 \begin{figure}[H]
   \centering
@@ -305,53 +254,40 @@ Beyond administrative savings, AI agents improve patient outcomes through enhanc
   \label{fig:cost_reduction}
 \end{figure}
 
-\section{\texthebrew{תחזית עתידית ושיתוף פעולה בין אדם לבינה מלאכותית}}
+\section{Future Outlook and Human-AI Collaboration}
 \label{sec:future_outlook}
-\begin{englishblock} % Wrap English text in englishblock
 The future of AI agents in healthcare is characterized by continued innovation, with a strong emphasis on enhancing human-AI collaboration and developing more sophisticated, ethical systems. This section explores anticipated developments and the evolving paradigm of human-AI synergy.
-\end{englishblock}
 
-\subsection{\texthebrew{התקדמות במערכות מרובות סוכנים}}
+\subsection{Advancements in Multi-Agent Systems}
 \label{subsec:multi_agent_systems}
-\begin{englishblock} % Wrap English text in englishblock
 Future developments in AI agents will likely focus on multi-agent systems, where multiple AI agents collaborate to achieve complex healthcare goals. For example, one agent might specialize in diagnostic image analysis, another in genomic data interpretation, and a third in personalized treatment recommendations. These agents would interact and share insights, providing a more comprehensive and integrated approach to patient care \cite{russell2010artificial}. This collaborative model mirrors human multidisciplinary teams.
 
 Such systems could also extend to coordinating care across different healthcare settings, from hospitals to home care. A multi-agent system could manage patient transitions, ensure continuity of care, and optimize resource allocation in real-time. The synergy between specialized AI agents promises to unlock new levels of efficiency and effectiveness in healthcare delivery, addressing systemic challenges through distributed intelligence.
-\end{englishblock}
 
-\subsection{\texthebrew{בינה מלאכותית ניתנת להסבר (XAI) ואמון}}
+\subsection{Explainable AI (XAI) and Trust}
 \label{subsec:explainable_ai}
-\begin{englishblock} % Wrap English text in englishblock
 The "black box" nature of many deep learning models remains a barrier to widespread adoption in critical healthcare applications. Future advancements will prioritize Explainable AI (XAI), which aims to make AI decisions more transparent and understandable to human users \cite{goodfellow2016deep}. XAI techniques will allow clinicians to comprehend the reasoning behind an AI agent's recommendations, fostering greater trust and enabling more informed clinical judgment.
 
 Increased transparency is crucial for ethical considerations, regulatory compliance, and building confidence among healthcare professionals and patients. When an AI agent can explain its diagnostic rationale or treatment suggestion, it empowers clinicians to validate the advice and integrate it more effectively into their practice. This shift from opaque predictions to interpretable insights is fundamental for the responsible deployment of AI in healthcare.
-\end{englishblock}
 
-\subsection{\texthebrew{שיתוף פעולה חלק בין אדם לבינה מלאכותית}}
+\subsection{Seamless Human-AI Collaboration}
 \label{subsec:human_ai_collaboration}
-\begin{englishblock} % Wrap English text in englishblock
 The ultimate goal for AI agents in healthcare is to achieve seamless human-AI collaboration, where AI augments human capabilities rather than replacing them. This involves designing interfaces and workflows that facilitate intuitive interaction between clinicians and AI systems. AI agents will act as intelligent assistants, providing timely information, automating routine tasks, and offering expert insights to support human decision-making \cite{topol2019highperformance}. This partnership aims to leverage the strengths of both humans and AI.
 
 For example, an AI agent might pre-analyze medical images, highlighting suspicious areas for a radiologist to review, thereby improving efficiency and reducing diagnostic errors. In surgical settings, robotic assistants can provide precision and stability, while human surgeons maintain overall control and strategic decision-making. This collaborative paradigm ensures that human empathy, critical thinking, and ethical judgment remain central to patient care, enhanced by AI's analytical power.
-\end{englishblock}
 
-\section{\texthebrew{הערכת ביצועי סוכני בינה מלאכותית}}
+\section{Evaluating AI Agent Performance}
 \label{sec:evaluating_performance}
-\begin{englishblock} % Wrap English text in englishblock
 The effectiveness of AI agents in healthcare must be rigorously evaluated to ensure their reliability and clinical utility. This involves using appropriate metrics that capture various aspects of performance, particularly in diagnostic applications. This section discusses key evaluation metrics and their importance.
-\end{englishblock}
 
-\subsection{\texthebrew{מדדים לביצועי אבחון}}
+\subsection{Metrics for Diagnostic Performance}
 \label{subsec:diagnostic_metrics}
-\begin{englishblock} % Wrap English text in englishblock
 Evaluating the diagnostic performance of AI agents typically involves metrics such as accuracy, precision, recall, and F1-score. Accuracy measures the proportion of correct predictions (both true positives and true negatives) out of all predictions. However, accuracy alone can be misleading in cases of imbalanced datasets, where one class is much more prevalent than another. For instance, if a disease is rare, an AI could achieve high accuracy by simply predicting "no disease" for most cases.
 
 Precision, also known as positive predictive value, measures the proportion of true positive predictions among all positive predictions made by the AI. Recall, or sensitivity, measures the proportion of true positive predictions among all actual positive cases. Both precision and recall are crucial for understanding an AI's ability to correctly identify disease while minimizing false positives and false negatives. A high recall is often prioritized in screening for serious conditions to avoid missing cases.
-\end{englishblock}
 
-\subsection{\texthebrew{נוסחת ציון F1}}
+\subsection{The F1-Score Formula}
 \label{subsec:f1_score_formula}
-\begin{englishblock} % Wrap English text in englishblock
 The F1-score is a harmonic mean of precision and recall, providing a single metric that balances both. It is particularly useful when there is an uneven class distribution, as it penalizes models that perform poorly on either precision or recall. A high F1-score indicates that the AI agent has both low false positives and low false negatives, making it a robust indicator of diagnostic performance.
 
 The formula for the F1-score is defined as:
@@ -360,75 +296,56 @@ F1 = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \t
 \label{eq:f1_score}
 \end{equation}
 Here, Precision is $\frac{\text{True Positives}}{\text{True Positives} + \text{False Positives}}$ and Recall is $\frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}}$. This formula ensures that a model must achieve a good balance between correctly identifying positive cases and avoiding incorrect positive identifications. The F1-score is widely used in medical AI research to provide a comprehensive assessment of model effectiveness.
-\end{englishblock}
 
-\subsection{\texthebrew{אימות וניטור מתמשך}}
+\subsection{Validation and Continuous Monitoring}
 \label{subsec:validation_monitoring}
-\begin{englishblock} % Wrap English text in englishblock
 Beyond initial evaluation, continuous validation and monitoring are essential for AI agents deployed in clinical settings. AI models can drift over time due to changes in patient populations, medical practices, or data input characteristics. Regular re-evaluation against new, independent datasets is necessary to ensure sustained performance \cite{fda_ai_ml_samd}. This ongoing process helps to detect any degradation in accuracy or emergence of new biases.
 
 Post-market surveillance involves tracking the real-world performance of AI agents and collecting feedback from clinicians. This feedback loop is vital for identifying unforeseen issues, refining algorithms, and ensuring that the AI remains clinically relevant and safe. The Total Product Lifecycle approach advocated by regulatory bodies underscores the importance of this continuous monitoring for adaptive AI systems.
-\end{englishblock}
 
-\section{\texthebrew{אתגרים ומגבלות של סוכני בינה מלאכותית}}
+\section{Challenges and Limitations of AI Agents}
 \label{sec:challenges_limitations}
-\begin{englishblock} % Wrap English text in englishblock
 Despite their transformative potential, AI agents in healthcare face significant challenges and limitations that must be acknowledged and addressed. These range from technical hurdles to broader societal and practical constraints.
-\end{englishblock}
 
-\subsection{\texthebrew{איכות וזמינות נתונים}}
+\subsection{Data Quality and Availability}
 \label{subsec:data_quality}
-\begin{englishblock} % Wrap English text in englishblock
 The performance of AI agents is heavily dependent on the quality, quantity, and representativeness of the data used for training. Healthcare data are often fragmented, incomplete, and inconsistent, making it difficult to build robust AI models \cite{davenport2019ai}. Issues such as missing values, incorrect entries, and varied data formats can introduce noise and bias into the training process. Poor data quality directly translates to unreliable AI predictions.
 
 Furthermore, access to large, diverse, and ethically sourced medical datasets is a persistent challenge. Data sharing is often restricted by privacy regulations and proprietary concerns, limiting the scope and generalizability of AI models. Overcoming these data-related limitations requires significant investment in data standardization, curation, and secure sharing platforms.
-\end{englishblock}
 
-\subsection{\texthebrew{מורכבות אינטגרציה ויכולת פעולה הדדית}}
+\subsection{Integration Complexity and Interoperability}
 \label{subsec:integration_complexity}
-\begin{englishblock} % Wrap English text in englishblock
 Integrating AI agents into existing, often legacy, healthcare IT systems is a complex endeavor. Healthcare environments are characterized by a patchwork of different software systems, electronic health records (EHRs), and medical devices that often lack seamless interoperability \cite{dataart_digital_transformation}. This fragmentation makes it difficult for AI agents to access and synthesize information from all relevant sources, hindering their ability to provide comprehensive insights.
 
 Achieving true interoperability requires standardized APIs, common data models, and robust integration platforms. The technical and organizational challenges associated with this integration can be substantial, requiring significant resources and strategic planning. Without effective integration, AI agents may operate in silos, limiting their impact and creating additional workflow complexities for clinicians.
-\end{englishblock}
 
-\subsection{\texthebrew{קבלה אתית וחברתית}}
+\subsection{Ethical and Societal Acceptance}
 \label{subsec:ethical_societal_acceptance}
-\begin{englishblock} % Wrap English text in englishblock
 Beyond technical and regulatory hurdles, the ethical and societal acceptance of AI agents in healthcare remains a critical limitation. Concerns about data privacy, algorithmic bias, and accountability for errors can erode public trust \cite{nih_ethical_implications}. Patients and clinicians may be hesitant to adopt AI solutions if they do not understand how these systems work or if they perceive a lack of human oversight.
 
 The potential for dehumanization of care, where technology might diminish the empathetic human connection between patients and providers, is another significant concern \cite{who2021ai}. Addressing these ethical and societal anxieties requires transparent communication, public education, and the active involvement of diverse stakeholders in the development and deployment of AI. Building trust is paramount for the widespread and beneficial adoption of AI in healthcare.
-\end{englishblock}
 
-\section{\texthebrew{ארכיטקטורת מערכת סוכני בינה מלאכותית לתכנון טיפול מותאם אישית}}
+\section{AI Agent System Architecture for Personalized Treatment}
 \label{sec:ai_architecture}
-\begin{englishblock} % Wrap English text in englishblock
 The design of AI agent systems for personalized treatment planning involves a sophisticated architecture that integrates various data sources and AI modules. This architecture ensures comprehensive analysis and tailored recommendations.
-\end{englishblock}
 
-\subsection{\texthebrew{הכנסת נתונים ועיבוד מקדים}}
+\subsection{Data Ingestion and Preprocessing}
 \label{subsec:data_ingestion}
-\begin{englishblock} % Wrap English text in englishblock
 The initial stage of an AI agent system for personalized treatment involves ingesting diverse patient data. This includes Electronic Health Records (EHRs), which contain medical history, diagnoses, medications, and lab results \cite{zynxhealth_clinical_decision_support}. Genomic data, providing insights into an individual's genetic predispositions and drug metabolism, are also crucial inputs. Additionally, lifestyle data from wearable devices or patient-reported outcomes can offer valuable context.
 
 Once ingested, the raw data undergo extensive preprocessing. This involves cleaning, normalization, and feature extraction to transform heterogeneous data into a standardized format suitable for AI model input. Data quality checks are performed to identify and handle missing values or inconsistencies. This meticulous preprocessing step is vital for ensuring the accuracy and reliability of subsequent AI analyses.
-\end{englishblock}
 
-\subsection{\texthebrew{מודולי עיבוד בינה מלאכותית}}
+\subsection{AI Processing Modules}
 \label{subsec:ai_processing}
-\begin{englishblock} % Wrap English text in englishblock
 The core of the system consists of multiple AI processing modules, each specialized for different analytical tasks. Machine learning models, particularly deep learning networks, are used for pattern recognition in complex data. For instance, a module might analyze genomic sequences to identify disease markers or predict drug efficacy based on genetic variations \cite{wang2019deep}. Another module could process time-series data from EHRs to predict disease progression.
 
 Natural Language Processing (NLP) modules extract relevant information from unstructured clinical notes and medical literature. This allows the system to synthesize qualitative data and incorporate the latest research findings into its recommendations \cite{shah2019artificial}. Reinforcement learning agents might be employed to simulate various treatment pathways and learn optimal strategies for individual patients, considering their unique profiles and responses.
-\end{englishblock}
 
-\subsection{\texthebrew{הפקת פלט ויצירת המלצות}}
+\subsection{Output and Recommendation Generation}
 \label{subsec:output_recommendation}
-\begin{englishblock} % Wrap English text in englishblock
 The final stage involves generating actionable outputs and personalized treatment recommendations. This includes tailored drug dosages, specific therapeutic interventions, and preventive strategies based on the patient's risk profile. The system also provides risk assessments, highlighting potential adverse drug reactions or disease complications. These outputs are presented in a clear, interpretable format for clinicians.
 
 Crucially, the system incorporates Explainable AI (XAI) components to provide a rationale for its recommendations. This transparency allows healthcare providers to understand the underlying evidence and logic, facilitating informed decision-making and fostering trust in the AI agent's advice. The goal is to augment the clinician's expertise with data-driven insights, leading to optimized patient outcomes.
-\end{englishblock}
 
 \begin{figure}[H]
   \centering
@@ -469,33 +386,15 @@ Crucially, the system incorporates Explainable AI (XAI) components to provide a 
   \label{fig:ai_architecture}
 \end{figure}
 
-\section{\texthebrew{אתגרי סוכני בינה מלאכותית בשירותי הבריאות: טבלה מסכמת}}
-\label{sec:ai_agent_challenges_table}
-\begin{englishblock}
-This section provides a summary table outlining the pros and cons of different AI agent types in healthcare, including their primary function, key benefits, and associated risks. This overview helps to contextualize the challenges and opportunities discussed throughout the article.
-\end{englishblock}
-
-\begin{table}[H]
-    \centering
-    \caption{Pros and Cons of Different AI Agent Types in Healthcare}
-    \label{tab:ai_agent_pros_cons}
-    \begin{tabularx}{\textwidth}{>{\RaggedRight}p{2.5cm} >{\RaggedRight}p{3.5cm} >{\RaggedRight}X >{\RaggedRight\arraybackslash}X}
-        \toprule
-        \textbf{AI Agent Type} & \textbf{Primary Function} & \textbf{Key Benefits} & \textbf{Associated Risks} \\
-        \midrule
-        Diagnostic Support & Interprets medical images, patient symptoms, lab results to assist clinicians. & Enhances diagnostic accuracy and speed; reduces human error; aids in early disease detection. & Algorithmic bias leading to misdiagnosis; over-reliance by clinicians; accountability for errors. \\
-        \addlinespace
-        Therapeutic & Recommends personalized treatment plans, drug dosages, and intervention strategies. & Optimizes treatment efficacy; minimizes side effects; enables precision medicine; improves patient outcomes. & Data privacy breaches; lack of transparency in recommendations; potential for dehumanization of care. \\
-        \addlinespace
-        Administrative & Automates routine tasks like scheduling, billing, claims processing, and record management. & Reduces operational costs; improves efficiency; frees up human staff for patient-centric tasks; reduces burnout. & Job displacement concerns; integration complexity with legacy systems; data security vulnerabilities. \\
-        \addlinespace
-        Robotic Surgical Assistants & Provides precision and stability during complex surgical procedures. & Enhances surgical precision; reduces invasiveness; improves patient recovery times; expands surgical capabilities. & High upfront investment; technical malfunctions; ethical concerns regarding human oversight and control. \\
-        \bottomrule
-    \end{tabularx}
-\end{table}
-
 \section{\texthebrew{סוכני בינה מלאכותית בשירותי הבריאות: היבטים דו-לשוניים}}
 \label{sec:bidi_ai_healthcare}
+\begin{hebrewblock}
+סעיף זה מציג את ההיבטים הדו-לשוניים של סוכני בינה מלאכותית בשירותי הבריאות, תוך התמקדות בשימוש בשפה העברית. השילוב של בינה מלאכותית בסביבות רפואיות בישראל דורש התייחסות מיוחדת לשפה ולתרבות המקומית. הבנה מעמיקה של טקסטים רפואיים בעברית חיונית לפיתוח סוכנים יעילים.
+\end{hebrewblock}
+\begin{englishblock}
+This section presents the bilingual aspects of AI agents in healthcare, focusing on the use of the Hebrew language. The integration of AI in medical environments in Israel requires special attention to the local language and culture. A deep understanding of medical texts in Hebrew is essential for developing effective agents.
+\end{englishblock}
+
 \subsection{\texthebrew{אתגרי עיבוד שפה טבעית בעברית}}
 \label{subsec:hebrew_nlp_challenges}
 \begin{hebrewblock}
@@ -512,7 +411,7 @@ Natural Language Processing (NLP) in Hebrew presents unique challenges for AI ag
 \end{hebrewblock}
 \begin{englishblock}
 Implementing AI agents in Israeli hospitals requires adaptation to existing information systems and local work culture. Many medical systems in Israel use Hebrew, so AI agents must be able to process and generate information in this language. Training medical teams to use these agents in Hebrew is crucial.
-\end{englishblock}
+</englishblock>
 
 \subsection{\texthebrew{היבטים אתיים ותרבותיים מקומיים}}
 \label{subsec:local_ethical_cultural}
@@ -521,15 +420,13 @@ Implementing AI agents in Israeli hospitals requires adaptation to existing info
 \end{hebrewblock}
 \begin{englishblock}
 Local ethical and cultural aspects influence the development and deployment of AI agents in Israel. Cultural norms, religious sensitivities, and social considerations must be taken into account when designing AI systems. Ensuring data privacy and fair algorithms, while adhering to Israeli laws and regulations, is of paramount importance.
-\end{englishblock}
+</englishblock}
 
-\section{\texthebrew{מסקנה}}
+\section{Conclusion}
 \label{sec:conclusion}
-\begin{englishblock} % Wrap English text in englishblock
 AI agents are poised to fundamentally reshape healthcare, offering unprecedented opportunities to enhance diagnostic accuracy, personalize treatments, and optimize operational efficiencies. This article has explored their diverse applications, from image analysis to administrative automation, highlighting the sophisticated machine learning, natural language processing, and sensor fusion technologies that underpin their capabilities. The transformative potential of these agents is evident in their ability to augment human expertise and streamline complex medical processes.
 
 However, the successful and ethical integration of AI agents hinges on a proactive approach to addressing inherent challenges. Critical ethical considerations, including data privacy, algorithmic bias, and accountability for errors, demand robust frameworks and continuous vigilance. Furthermore, the evolving global regulatory landscape underscores the need for clear guidelines and continuous oversight to ensure patient safety and trust. Finally, the practical implementation requires substantial investment in infrastructure, comprehensive workforce retraining, and effective change management strategies. By navigating these complexities thoughtfully, healthcare systems can harness the full power of AI agents to deliver higher quality, more equitable, and more efficient patient care.
-\end{englishblock}
 
 \printbibliography[heading=bibintoc]
 
