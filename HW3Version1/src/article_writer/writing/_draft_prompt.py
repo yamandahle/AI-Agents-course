@@ -184,7 +184,62 @@ CONTENT REQUIREMENTS
           \\label{fig:accuracy}
         \\end{figure}
       NEVER use \\includegraphics — there are no image files. ALWAYS use pgfplots or tikzpicture.
-   c. Exactly one \\begin{table}[H] with REAL data. Use tabularx with \\textwidth so columns
+
+3. TIKZ FLOWCHART RULES — apply to EVERY tikzpicture that draws boxes and arrows:
+
+   a. LABEL CLEARANCE (mandatory on every arrow path label):
+      Every node placed on an arrow path MUST use fill=white and inner sep=2pt.
+      This creates a solid white background block that masks the arrow line beneath the text.
+      Required format:
+        \\draw[->] (A) -- (B)
+          node[midway, above, fill=white, inner sep=2pt, font=\\footnotesize] {Label};
+      NEVER write node[midway] without fill=white — the arrow line will bleed through the text.
+
+   b. FEEDBACK / RETURN PATHS (mandatory for any path that loops back):
+      NEVER draw a feedback or return path as a bare straight diagonal line (-- ).
+      Diagonal lines cross intermediate boxes and other arrows, creating unreadable collision.
+      Instead use ONE of these safe routing methods:
+
+      Method 1 — Orthogonal bend right of the stack (preferred):
+        \\draw[->] (bottom) -- ++(3cm,0) |- (top)
+          node[pos=0.25, right, fill=white, inner sep=2pt, font=\\footnotesize\\itshape] {Feedback};
+
+      Method 2 — Curved arc that clears all boxes:
+        \\draw[->] (bottom.east) to[out=0, in=0, looseness=1.4] (top.east)
+          node[midway, right, fill=white, inner sep=2pt, font=\\footnotesize] {Return};
+
+      Method 3 — Named intermediate waypoint node (invisible helper):
+        \\coordinate (mid) at ($(bottom.east) + (3cm,0)$);
+        \\draw[->] (bottom.east) -- (mid) -- (mid |- top.east) -- (top.east)
+          node[midway, above, fill=white, inner sep=2pt, font=\\footnotesize] {Signal};
+
+   c. ROUTING CLEARANCE for paths near boxes:
+      When a return path runs beside a column of boxes, shift it far enough right or left
+      using xshift so the line never touches a box border:
+        \\draw[->] (last) -- ++(2.5cm,0) |- (first);
+      Choose xshift ≥ 1.5cm beyond the rightmost box edge.
+
+   d. CLEAN EXAMPLE — system pipeline with feedback loop:
+      \\begin{tikzpicture}[
+          node distance=1.2cm,
+          box/.style={rectangle,draw,rounded corners=3pt,
+                      minimum width=3cm,minimum height=0.9cm,
+                      text centered,fill=blue!8,font=\\small}]
+        \\node[box] (input)  {Data Input};
+        \\node[box] (proc)   [below=of input]  {Processing};
+        \\node[box] (output) [below=of proc]   {Output};
+        % Forward arrows — straight, no crossing risk
+        \\draw[->] (input)  -- (proc)
+          node[midway, right, fill=white, inner sep=2pt, font=\\footnotesize] {Raw Data};
+        \\draw[->] (proc)   -- (output)
+          node[midway, right, fill=white, inner sep=2pt, font=\\footnotesize] {Processed};
+        % Feedback loop — orthogonal, shifts 2.5cm right of boxes
+        \\draw[->] (output.east) -- ++(2.5cm,0) |- (input.east)
+          node[pos=0.25, right, fill=white, inner sep=2pt, font=\\footnotesize\\itshape]
+          {Feedback Signal};
+      \\end{tikzpicture}
+
+4. Exactly one \\begin{table}[H] with REAL data. Use tabularx with \\textwidth so columns
       automatically fill the exact page width with zero overflow. Example:
         \\begin{table}[H]
           \\centering
@@ -304,8 +359,12 @@ HARD RULES
 - NO David Libre, DejaVu Serif, Times New Roman, or Arial fonts — use David CLM for Hebrew
 - Output starts with \\documentclass — no text before it
 - Output ends with \\end{document} — no text after it
-- ARROW LABELS: Every \\draw[->] edge label node MUST include fill=white and inner sep=2pt so
-  the text clears the arrow line and adjacent boxes. Required format:
-    \\draw[->] (A) -- (B) node[midway, above, fill=white, inner sep=2pt, font=\\footnotesize] {Label};
-  Do NOT write node[midway] without fill=white — the label will bleed over adjacent content.
+- TIKZ COLLISION RULES (see §3 above for full examples — violations cause FAIL in review):
+  ① Every arrow-path label node MUST carry fill=white and inner sep=2pt.
+    Required: node[midway, above, fill=white, inner sep=2pt, font=\\footnotesize] {Label}
+    Forbidden: node[midway] {Label}  ← arrow line bleeds through text
+  ② Feedback / return paths MUST use orthogonal routing (|-  or  -|  or  to[out,in]).
+    Required: \\draw[->] (last.east) -- ++(2.5cm,0) |- (first.east)
+    Forbidden: \\draw[->] (last) -- (first)  ← diagonal line crosses intermediate boxes
+  ③ Shift return paths ≥1.5cm beyond the rightmost box edge using xshift.
 """

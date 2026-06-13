@@ -291,6 +291,12 @@ class LatexSanitizer:
         re.DOTALL,
     )
 
+    # Fix 12: diagonal ++(x,y) coordinate waypoints in \draw paths
+    # Matches -- ++(x,y) where both x and y are non-zero (true diagonal)
+    _DIAGONAL_COORD_RE = re.compile(
+        r"--\s*\+\+\(\s*(-?[\d.]+(?:cm|pt|mm|em|ex)?)\s*,\s*(-?[\d.]+(?:cm|pt|mm|em|ex)?)\s*\)"
+    )
+
     def sanitize(self, tex_path: Path) -> Path:
         source = tex_path.read_text(encoding="utf-8")
         s, n0  = self._fix_wrong_main_language(source)   # MUST run first
@@ -305,14 +311,15 @@ class LatexSanitizer:
         s, n9  = self._fix_table_alignment(s)
         s, n10 = self._fix_arrow_labels(s)
         s, n11 = self._fix_invalid_cite_keys(s)
-        total = n0+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11
+        s, n12 = self._fix_diagonal_paths(s)
+        total = n0+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12
         if total:
             tex_path.write_text(s, encoding="utf-8")
             logger.info(
                 "Sanitizer applied: lang=%d env_tags=%d bidi_defs=%d figures=%d "
                 "tikz=%d cover_heb=%d bidi_body=%d metadata=%d ragged2e=%d "
-                "tables=%d arrows=%d cite_keys=%d",
-                n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11,
+                "tables=%d arrows=%d cite_keys=%d diag_paths=%d",
+                n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12,
             )
         return tex_path
 
@@ -664,6 +671,35 @@ class LatexSanitizer:
             return m.group(1) + injected + m.group(3)
 
         return _EDGE_NODE_RE.sub(_sub, line), fixes
+
+    # ── Fix 12: Convert diagonal TikZ coordinate waypoints to orthogonal ────────
+
+    def _fix_diagonal_paths(self, source: str) -> tuple[str, int]:
+        r"""Rewrite -- ++(x,y) diagonal segments as two-step orthogonal -- ++(x,0) -- ++(0,y).
+
+        A diagonal segment (both x and y non-zero) in a \draw path crosses anything that
+        lies between the start and end point.  Splitting into horizontal-then-vertical
+        segments routes the path around intermediate boxes.
+        """
+        fixes = 0
+        _unit_re = re.compile(r"[a-z]+$")
+
+        def _to_float(val: str) -> float:
+            return float(_unit_re.sub("", val) or "0")
+
+        def _replace(m: re.Match) -> str:
+            nonlocal fixes
+            x, y = m.group(1), m.group(2)
+            # Skip segments that are already axis-aligned (one dimension is zero)
+            if _to_float(x) == 0.0 or _to_float(y) == 0.0:
+                return m.group(0)
+            fixes += 1
+            return f"-- ++({x},0) -- ++(0,{y})"
+
+        result = self._DIAGONAL_COORD_RE.sub(_replace, source)
+        if fixes:
+            logger.info("Sanitizer: converted %d diagonal TikZ path segment(s) to orthogonal", fixes)
+        return result, fixes
 
     # ── Fix 10: Replace LLM-invented \cite{} keys with nearest curated key ────
 

@@ -23,10 +23,17 @@ Priority order for applying comments:
      - Section headings in Hebrew: \\section{{\\texthebrew{{...}}}}
      - Titlepage Hebrew title: {{\\hebrewfont\\Huge\\bfseries ...\\par}}
      - BiDi chapter must have ≥3 subsections, each with a Hebrew block then English block
-  2. Coverage violations (page count, missing equation/figure/table)
-  3. Accuracy and Citation issues
-  4. Structure violations (section order)
-  5. Terminology and Characters violations
+  2. TikZ spatial collision fixes (apply before any other figure edits):
+     - Every arrow-path label node MUST have fill=white and inner sep=2pt:
+         node[midway, above, fill=white, inner sep=2pt, font=\\footnotesize] {{Label}}
+     - Feedback / return paths MUST use orthogonal routing — never bare diagonals:
+         \\draw[->] (last.east) -- ++(2.5cm,0) |- (first.east)
+           node[pos=0.25, right, fill=white, inner sep=2pt, font=\\footnotesize] {{Feedback}};
+     - Shift return paths ≥1.5cm beyond the rightmost box border.
+  3. Coverage violations (page count, missing equation/figure/table)
+  4. Accuracy and Citation issues
+  5. Structure violations (section order)
+  6. Terminology and Characters violations
 
 Rules:
 - Return ONLY valid LaTeX source — no prose, no markdown outside LaTeX comments.
@@ -103,7 +110,7 @@ class Editor:
         return out_path
 
     def _format_comments(self, review: ArticleReview) -> str:
-        priority_order = ["Coverage", "Accuracy", "Citation", "Structure", "Terminology", "Characters"]
+        priority_order = ["TikzLayout", "Coverage", "Accuracy", "Citation", "Structure", "Terminology", "Characters"]
         sorted_comments = sorted(
             review.comments,
             key=lambda c: priority_order.index(c.profile)

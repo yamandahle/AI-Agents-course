@@ -28,14 +28,22 @@ Your task: identify the TOP 5 most critical violations, prioritised in this orde
      * English text INSIDE \\begin{english}...\\end{english} (not inside \\begin{hebrew})
      * Section heading in Hebrew using \\section{\\texthebrew{...}}
      * At least 3 subsections in the BiDi chapter, each with both a Hebrew and English block
-  3. Accuracy — factual errors, wrong statistics, incorrect claims vs research notes
-  4. Terminology — wrong domain terms, inconsistent naming
-  5. Characters — sentences over 25 words, paragraphs outside 4-7 sentence range
+  3. TikzLayout — spatial collisions in TikZ flowcharts and architecture diagrams.
+     REJECT the figure if ANY of these are true:
+     * A connection label node on an arrow path does NOT have fill=white or fill=pagecolor
+       as an explicit attribute (e.g. node[midway] without fill=white is a violation).
+     * A draw path uses bare -- to connect two non-adjacent nodes creating a diagonal line
+       that could cross an intermediate box or another arrow path. Feedback and return paths
+       MUST use orthogonal routing (|- or -| operators) or curved arcs (to[out,in]).
+     When flagging, cite the specific draw command and the missing attribute.
+  4. Accuracy — factual errors, wrong statistics, incorrect claims vs research notes
+  5. Terminology — wrong domain terms, inconsistent naming
+  6. Characters — sentences over 25 words, paragraphs outside 4-7 sentence range
 
 Select at most 5 comments total. Choose the highest-severity issues first.
 For each issue output a JSON object with these exact keys:
   - "profile": which profile or constraint is violated
-      (one of: "Structure", "Terminology", "Characters", "Coverage", "Accuracy", "Citation")
+      (one of: "Structure", "Terminology", "Characters", "Coverage", "Accuracy", "Citation", "TikzLayout")
   - "location": where in the article (e.g. "Abstract, sentence 2", "Section 2.3, para 1")
   - "comment": what is wrong — keep it to 1-2 lines
 
