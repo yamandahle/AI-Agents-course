@@ -16,6 +16,9 @@ build/
 data/BugsInPy/
 data/thefuck/
 
+# Graphify local output (artifacts already copied to artifacts/)
+graphify-out/
+
 # Coverage
 .coverage
 htmlcov/

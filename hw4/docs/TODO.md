@@ -18,31 +18,31 @@ status: in-progress
 - [x] Write `docs/PLAN_verify.md`
 - [x] Write `docs/TODO.md`
 
-## Stage 1 — Setup (see PLAN_scaffold.md)
-- [ ] Run `uv init .` inside `hw4/`
-- [ ] Create full folder structure (`src/hw4/`, `tests/`, `config/`, etc.)
-- [ ] Write `shared/version.py` — `VERSION = "1.00"`
-- [ ] Write `config/setup.json` — version, agent config, paths
-- [ ] Write `config/rate_limits.json` — openai + github rate limits
-- [ ] Configure `pyproject.toml` — dependencies, Ruff, coverage
-- [ ] Write `.env-example`
-- [ ] Write `.gitignore`
-- [ ] Write skeleton stubs — `sdk.py`, `gatekeeper.py`, all agent files
-- [ ] Verify `uv run python -c "import hw4"` works
-- [ ] Verify `uv run ruff check src/` → zero errors
-- [ ] Git commit: `feat: init hw4 project setup v1.00`
+## Stage 1 — Setup ✅
+- [x] Run `uv init .` inside `hw4/`
+- [x] Create full folder structure (`src/hw4/`, `tests/`, `config/`, etc.)
+- [x] Write `shared/version.py` — `VERSION = "1.00"`
+- [x] Write `config/setup.json` — version, agent config, paths
+- [x] Write `config/rate_limits.json` — openai + github rate limits
+- [x] Configure `pyproject.toml` — dependencies, Ruff, coverage
+- [x] Write `.env-example`
+- [x] Write `.gitignore`
+- [x] Write skeleton stubs — `sdk.py`, `gatekeeper.py`, all agent files
+- [x] Verify `uv run python -c "import hw4"` works
+- [x] Verify `uv run ruff check src/` → zero errors
+- [x] Git commit: `feat: init hw4 project setup v1.00`
 
-## Stage 2 — Grphify (see PLAN_grphify.md)
-- [ ] Add `grphify` dependency via uv
-- [ ] Clone `soarsmu/BugsInPy` into `data/BugsInPy/`
-- [ ] Extract `thefuck` source into `data/thefuck/`
-- [ ] Run Grphify → produce `artifacts/graph.json`, `index.md`, `hot.md`
-- [ ] Validate graph has ≥ 50 nodes and all 3 edge types
-- [ ] Set up Obsidian vault in `obsidian/`
-- [ ] Implement `src/hw4/services/graph_builder.py`
-- [ ] Implement `src/hw4/models/graph_models.py`
-- [ ] Write `tests/unit/test_graph_builder.py`
-- [ ] Git commit: `feat: add Grphify stage — clone thefuck, generate graph artifacts`
+## Stage 2 — Grphify ✅
+- [x] Add `grphify` dependency via uv (`graphifyy[anthropic]`)
+- [x] Clone `thefuck` source into `data/thefuck/`
+- [x] Run Grphify → produced `artifacts/graph.json` (2027 nodes, 4233 edges)
+- [x] Run cluster-only → 213 communities named, `GRAPH_REPORT.md` generated
+- [x] Validate graph has ≥ 50 nodes and multiple edge types
+- [x] Set up Obsidian vault in `obsidian/`
+- [x] Implement `src/hw4/services/graph_builder.py`
+- [x] Implement `src/hw4/models/graph_models.py`
+- [x] Write `tests/unit/test_graph_builder.py` — 6/6 tests pass
+- [x] Git commit: `feat: add Grphify stage — graph artifacts, GraphBuilderService, unit tests`
 
 ## Stage 3 — Agents (see PLAN_agents.md + PRD_crew_agents.md)
 - [ ] Implement `src/hw4/agents/graph_reader.py` — Agent 1
