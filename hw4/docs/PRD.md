@@ -8,9 +8,9 @@ status: draft
 
 ## 1. Goal
 
-Analyze the architecture of a real Python project (`thefuck`, via `soarsmu/BugsInPy`) using the
-Grphify tool, then deploy a CrewAI multi-agent crew to automatically detect architectural bugs
-(SPOFs, overloaded hubs), propose and apply fixes, and verify the result.
+Analyze the architecture of `cookiecutter/cookiecutter` using Grphify, then deploy a CrewAI
+multi-agent crew to detect architectural bugs (SPOFs, overloaded hubs), propose and apply fixes,
+and verify the result.
 
 ## 2. Target Repository
 
@@ -54,5 +54,5 @@ Grphify tool, then deploy a CrewAI multi-agent crew to automatically detect arch
 ## 6. Out of Scope
 
 - GUI or web interface
-- Modifying BugsInPy repo (read-only clone)
+- Modifying upstream cookiecutter beyond the scoped architectural fix
 - Fixing Python bugs (only architectural / structural bugs)

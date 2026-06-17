@@ -70,5 +70,5 @@ status: in-progress
 - [ ] Run full test suite — all pass, coverage ≥ 85%
 - [ ] Run Ruff — zero errors
 - [ ] Write `reports/verification.md`
-- [ ] Update `README.md` with findings and metrics summary
+- [ ] Write `README.md` from `docs/README_PLAN.md`
 - [ ] Git commit: `feat: add verification stage — re-run Grphify, compare metrics, final report`

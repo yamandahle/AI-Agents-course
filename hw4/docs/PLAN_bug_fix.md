@@ -53,7 +53,7 @@ Add `detect_bugs()` and `apply_fix()` methods to the SDK.
   and the fix result is returned correctly
 
 ## Done Checklist
-- [ ] At least 1 bug detected in the thefuck graph
+- [ ] At least 1 bug detected in the cookiecutter graph
 - [ ] Fix applied and `results/fix_diff.patch` saved
 - [ ] `results/bugs.json` and `results/fix_proposal.json` saved
 - [ ] All unit tests pass

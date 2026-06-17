@@ -14,8 +14,6 @@ build/
 
 # Data (large cloned repos)
 data/cookiecutter/
-data/httpie/
-data/thefuck/
 
 # Graphify local output (artifacts already copied to artifacts/)
 graphify-out/

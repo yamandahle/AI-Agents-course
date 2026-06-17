@@ -38,8 +38,8 @@ producing the graph artifacts that feed the CrewAI agents.
 ## 5. Service: `GraphBuilderService`
 
 Responsibilities:
-1. Clone `thefuck` source into `data/thefuck/`
-2. Run Grphify CLI on `data/thefuck/`
+1. Clone `cookiecutter` source into `data/cookiecutter/`
+2. Run Grphify CLI on `data/cookiecutter/cookiecutter/` (package only)
 3. Move outputs to `artifacts/`
 4. Parse `graph.json` and return a `Graph` dataclass
 5. Generate Obsidian vault files in `obsidian/`

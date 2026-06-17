@@ -63,7 +63,7 @@ Test graph loading and metric computation using a small mock `graph.json`.
 
 ## Git Commit
 ```
-feat: add Grphify stage — clone thefuck, generate graph artifacts
+feat: add Grphify stage — clone cookiecutter, generate graph artifacts
 ```
 
 ## Next
