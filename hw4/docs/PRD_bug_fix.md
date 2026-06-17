@@ -17,13 +17,13 @@ proposing fixes, and verifying the result.
 - **Definition:** A node whose removal disconnects the graph (or a major subgraph)
 - **Graph test:** Remove node → check if connected components increase
 - **Threshold:** Any node that increases component count by ≥ 1 when removed
-- **Example in thefuck:** `corrector.py` — all rule files depend on it
+- **Example in cookiecutter:** `main.py` — all other modules depend on it
 
 ### 2.2 Overloaded Hub
 - **Definition:** A node with degree (in + out edges) above a configured threshold
 - **Graph test:** `degree(node) > hub_degree_threshold` (default: 10)
 - **Risk:** One change breaks everything that depends on it
-- **Example in thefuck:** `shells/bash.py` — many rules import shell utilities from it
+- **Example in cookiecutter:** `generate.py` — many modules import template utilities from it
 
 ### 2.3 Weak Bridge
 - **Definition:** A single edge that connects two otherwise-disconnected communities

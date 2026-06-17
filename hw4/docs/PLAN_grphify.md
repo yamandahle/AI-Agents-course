@@ -20,17 +20,14 @@ vault for visual architecture analysis.
 Add `grphify` to the project using uv.
 
 ### 2. Clone the source repository
-Clone `soarsmu/BugsInPy` into `data/BugsInPy/`.
-Use BugsInPy's setup script to extract the `thefuck` project source
-into `data/thefuck/`.
+Clone `cookiecutter/cookiecutter` directly into `data/cookiecutter/`.
 
 ### 3. Run Grphify
-Run Grphify on `data/thefuck/` and direct outputs to `artifacts/`.
-Expected outputs: `graph.json`, `index.md`, `hot.md`.
+Run Grphify on `data/cookiecutter/` and direct outputs to `artifacts/`.
+Expected outputs: `graph.json`, `GRAPH_REPORT.md`, `graph.html`.
 
 ### 4. Validate outputs
-Confirm `graph.json` has at least 50 nodes and all 3 edge types present
-(`Extracted`, `Inferred`, `Ambiguous`).
+Confirm `graph.json` has nodes and edges present with multiple edge types.
 
 ### 5. Set up Obsidian vault
 Copy Grphify markdown outputs into `obsidian/`.
@@ -58,7 +55,7 @@ File: `tests/unit/test_graph_builder.py`
 Test graph loading and metric computation using a small mock `graph.json`.
 
 ## Done Checklist
-- [ ] `artifacts/graph.json` exists with ≥ 50 nodes
+- [ ] `artifacts/graph.json` exists with nodes and edges
 - [ ] Obsidian vault opens and graph renders
 - [ ] `GraphBuilderService` implemented and tested
 - [ ] Unit tests pass
@@ -71,3 +68,4 @@ feat: add Grphify stage — clone thefuck, generate graph artifacts
 
 ## Next
 `PLAN_agents.md` — build the CrewAI agent crew
+

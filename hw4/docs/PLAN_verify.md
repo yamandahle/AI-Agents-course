@@ -22,7 +22,7 @@ Before re-running Grphify, save the original graph metrics to
 `results/metrics_before.json` for comparison.
 
 ### 2. Re-run Grphify on the fixed source
-Run Grphify again on `data/thefuck/` after the fix is applied.
+Run Grphify again on `data/cookiecutter/` after the fix is applied.
 Save new outputs to `artifacts/graph_after.json`.
 
 ### 3. Compare metrics

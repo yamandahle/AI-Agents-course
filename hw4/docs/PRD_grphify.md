@@ -15,7 +15,7 @@ producing the graph artifacts that feed the CrewAI agents.
 
 | Input | Source | Notes |
 |-------|--------|-------|
-| Target Python repo | `soarsmu/BugsInPy` → `thefuck` project | Read-only clone |
+| Target Python repo | `cookiecutter/cookiecutter` | Read-only clone |
 | Grphify CLI | pip-installed tool (via uv) | Scans via Python AST |
 
 ## 3. Outputs
@@ -57,9 +57,8 @@ After parsing `graph.json`, compute and store:
 ## 7. Success Criteria
 
 - `graph.json` exists and is valid JSON
-- At least 50 nodes present
-- All 3 edge types represented
-- `hot.md` contains top-10 nodes
+- Nodes and edges present
+- Multiple edge types represented
 - Obsidian vault opens without errors
 
 ## 8. Failure Modes

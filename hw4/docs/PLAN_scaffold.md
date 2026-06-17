@@ -127,7 +127,7 @@ OPENAI_MODEL=gpt-4o-mini
 ```
 
 ### 8. `.gitignore`
-Standard Python + `.env` + uv artifacts + `data/thefuck/`
+Standard Python + `.env` + uv artifacts + `data/cookiecutter/`
 
 ### 9. Skeleton stubs
 - `sdk/sdk.py` — `HW4SDK` class, all methods as `pass`
@@ -147,4 +147,4 @@ feat: init hw4 project setup v1.00
 ```
 
 ## Next
-`PLAN_grphify.md` — clone thefuck and run Grphify
+`PLAN_grphify.md` — clone cookiecutter and run Grphify

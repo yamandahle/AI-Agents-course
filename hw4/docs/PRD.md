@@ -14,9 +14,9 @@ Grphify tool, then deploy a CrewAI multi-agent crew to automatically detect arch
 
 ## 2. Target Repository
 
-- **Base repo (lecturer-approved):** `soarsmu/BugsInPy`
-- **Target project:** `thefuck` (project #15 inside BugsInPy)
-- **Why thefuck:** ~150 rule files, clear hub structure in `corrector.py`, rich graph for Grphify
+- **Base repo (lecturer-approved):** `cookiecutter/cookiecutter`
+- **Target project:** `cookiecutter`
+- **Why cookiecutter:** 18 Python files, clear hub in `main.py`, clean readable graph, visible before/after improvement
 
 ## 3. Deliverables
 

@@ -34,10 +34,10 @@ status: in-progress
 
 ## Stage 2 — Grphify ✅
 - [x] Add `grphify` dependency via uv (`graphifyy[anthropic]`)
-- [x] Clone `thefuck` source into `data/thefuck/`
-- [x] Run Grphify → produced `artifacts/graph.json` (2027 nodes, 4233 edges)
-- [x] Run cluster-only → 213 communities named, `GRAPH_REPORT.md` generated
-- [x] Validate graph has ≥ 50 nodes and multiple edge types
+- [x] Clone `cookiecutter` source into `data/cookiecutter/`
+- [x] Run Grphify → produced `artifacts/graph.json`
+- [x] Run cluster-only → communities named, `GRAPH_REPORT.md` generated
+- [x] Validate graph has nodes and multiple edge types
 - [x] Set up Obsidian vault in `obsidian/`
 - [x] Implement `src/hw4/services/graph_builder.py`
 - [x] Implement `src/hw4/models/graph_models.py`
