@@ -1,1010 +1,550 @@
-# Graph Report - data\thefuck  (2026-06-17)
+# Graph Report - data\cookiecutter  (2026-06-17)
 
 ## Corpus Check
 - cluster-only mode — file stats not available
 
 ## Summary
-- 2027 nodes · 4233 edges · 213 communities (201 shown, 12 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 46 edges (avg confidence: 0.6)
+- 1264 nodes · 1876 edges · 149 communities (87 shown, 62 thin omitted)
+- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 99 edges (avg confidence: 0.54)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d327db1b`
+- Built from commit: `39e5460b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- [[_COMMUNITY_Sudo & Package Manager Rules|Sudo & Package Manager Rules]]
-- [[_COMMUNITY_History & Confirmation UI Tests|History & Confirmation UI Tests]]
-- [[_COMMUNITY_Git & ADB Command Rules|Git & ADB Command Rules]]
-- [[_COMMUNITY_Command Corrector Tests|Command Corrector Tests]]
-- [[_COMMUNITY_Shell Configuration Tracker|Shell Configuration Tracker]]
-- [[_COMMUNITY_Shell Base Class Methods|Shell Base Class Methods]]
-- [[_COMMUNITY_Lein & Omnienv Task Tests|Lein & Omnienv Task Tests]]
-- [[_COMMUNITY_Zsh Shell Tests|Zsh Shell Tests]]
-- [[_COMMUNITY_Core Fix Command Pipeline|Core Fix Command Pipeline]]
-- [[_COMMUNITY_UI Command Selector Tests|UI Command Selector Tests]]
-- [[_COMMUNITY_Alias & Logging Utilities|Alias & Logging Utilities]]
-- [[_COMMUNITY_Go & Fabric Command Rules|Go & Fabric Command Rules]]
-- [[_COMMUNITY_Pacman Package Manager Rules|Pacman Package Manager Rules]]
-- [[_COMMUNITY_Tcsh Shell Support|Tcsh Shell Support]]
-- [[_COMMUNITY_Settings & Config Loading|Settings & Config Loading]]
-- [[_COMMUNITY_Script Output Log Reader|Script Output Log Reader]]
-- [[_COMMUNITY_Unknown Command Replacement Rules|Unknown Command Replacement Rules]]
-- [[_COMMUNITY_Fish Shell Support|Fish Shell Support]]
-- [[_COMMUNITY_Cache Mechanism Tests|Cache Mechanism Tests]]
-- [[_COMMUNITY_Utils & Executables Tests|Utils & Executables Tests]]
-- [[_COMMUNITY_Brew Unknown Command Rules|Brew Unknown Command Rules]]
-- [[_COMMUNITY_Powershell Shell Support|Powershell Shell Support]]
-- [[_COMMUNITY_Docker Command Rules|Docker Command Rules]]
-- [[_COMMUNITY_No Command Fallback Rules|No Command Fallback Rules]]
-- [[_COMMUNITY_Bash Shell Tests|Bash Shell Tests]]
-- [[_COMMUNITY_Fish Shell Tests|Fish Shell Tests]]
-- [[_COMMUNITY_Argument Parser Tests|Argument Parser Tests]]
-- [[_COMMUNITY_Rule Loading & Matching|Rule Loading & Matching]]
-- [[_COMMUNITY_Project Documentation & Metadata|Project Documentation & Metadata]]
-- [[_COMMUNITY_Command Output Execution|Command Output Execution]]
-- [[_COMMUNITY_Config & Settings Tests|Config & Settings Tests]]
-- [[_COMMUNITY_Rerun Output Tests|Rerun Output Tests]]
-- [[_COMMUNITY_Brew Install Rules|Brew Install Rules]]
-- [[_COMMUNITY_NPM Script Rules|NPM Script Rules]]
-- [[_COMMUNITY_APT Invalid Operation Rules|APT Invalid Operation Rules]]
-- [[_COMMUNITY_DNF Invalid Command Rules|DNF Invalid Command Rules]]
-- [[_COMMUNITY_Shell Detection & Memoize|Shell Detection & Memoize]]
-- [[_COMMUNITY_Test Configuration Fixtures|Test Configuration Fixtures]]
-- [[_COMMUNITY_Dirty Untar Rules|Dirty Untar Rules]]
-- [[_COMMUNITY_Dirty Unzip Rules|Dirty Unzip Rules]]
-- [[_COMMUNITY_Fix File Editor Rules|Fix File Editor Rules]]
-- [[_COMMUNITY_Git Branch Flag Rules|Git Branch Flag Rules]]
-- [[_COMMUNITY_Git Checkout Rules|Git Checkout Rules]]
-- [[_COMMUNITY_Git Pull Uncommitted Changes|Git Pull Uncommitted Changes]]
-- [[_COMMUNITY_Path From History Rules|Path From History Rules]]
-- [[_COMMUNITY_Switch Keyboard Layout Rules|Switch Keyboard Layout Rules]]
-- [[_COMMUNITY_Bash Shell Support|Bash Shell Support]]
-- [[_COMMUNITY_Generic Shell Tests|Generic Shell Tests]]
-- [[_COMMUNITY_Platform IO Utilities|Platform IO Utilities]]
-- [[_COMMUNITY_Git Add Rules|Git Add Rules]]
-- [[_COMMUNITY_Git Push Rules|Git Push Rules]]
-- [[_COMMUNITY_Open URL Rules|Open URL Rules]]
-- [[_COMMUNITY_Port In Use Rules|Port In Use Rules]]
-- [[_COMMUNITY_Prove Recursive Rules|Prove Recursive Rules]]
-- [[_COMMUNITY_Shell History Fixtures|Shell History Fixtures]]
-- [[_COMMUNITY_APT Get Package Rules|APT Get Package Rules]]
-- [[_COMMUNITY_Brew Cask Dependency Rules|Brew Cask Dependency Rules]]
-- [[_COMMUNITY_Chmod Executable Rules|Chmod Executable Rules]]
-- [[_COMMUNITY_Docker Container Conflict Rules|Docker Container Conflict Rules]]
-- [[_COMMUNITY_Grep Argument Order Rules|Grep Argument Order Rules]]
-- [[_COMMUNITY_Gulp Task Rules|Gulp Task Rules]]
-- [[_COMMUNITY_Command History Rules|Command History Rules]]
-- [[_COMMUNITY_Symlink Order Rules|Symlink Order Rules]]
-- [[_COMMUNITY_Mercurial Command Rules|Mercurial Command Rules]]
-- [[_COMMUNITY_Missing Space Subcommand Rules|Missing Space Subcommand Rules]]
-- [[_COMMUNITY_Maven Lifecycle Phase Rules|Maven Lifecycle Phase Rules]]
-- [[_COMMUNITY_Pip Unknown Command Rules|Pip Unknown Command Rules]]
-- [[_COMMUNITY_Shell Prompt Literal Rules|Shell Prompt Literal Rules]]
-- [[_COMMUNITY_SCM Correction Rules|SCM Correction Rules]]
-- [[_COMMUNITY_Yarn Command Not Found Rules|Yarn Command Not Found Rules]]
-- [[_COMMUNITY_Yum Invalid Operation Rules|Yum Invalid Operation Rules]]
-- [[_COMMUNITY_Command Selector Logic|Command Selector Logic]]
-- [[_COMMUNITY_Shell Logger Output Reader|Shell Logger Output Reader]]
-- [[_COMMUNITY_Brew Link Rules|Brew Link Rules]]
-- [[_COMMUNITY_Brew Uninstall Rules|Brew Uninstall Rules]]
-- [[_COMMUNITY_Composer Command Rules|Composer Command Rules]]
-- [[_COMMUNITY_Alt Space Fix Rules|Alt Space Fix Rules]]
-- [[_COMMUNITY_Git Branch Exists Rules|Git Branch Exists Rules]]
-- [[_COMMUNITY_Git Main Master Rules|Git Main Master Rules]]
-- [[_COMMUNITY_Git Not Command Rules|Git Not Command Rules]]
-- [[_COMMUNITY_Git Push Branch Name Rules|Git Push Branch Name Rules]]
-- [[_COMMUNITY_Git RM Local Modifications|Git RM Local Modifications]]
-- [[_COMMUNITY_Git RM Recursive Rules|Git RM Recursive Rules]]
-- [[_COMMUNITY_Git RM Staged Rules|Git RM Staged Rules]]
-- [[_COMMUNITY_Gradle Task Rules|Gradle Task Rules]]
-- [[_COMMUNITY_Grunt Task Rules|Grunt Task Rules]]
-- [[_COMMUNITY_Ifconfig Device Rules|Ifconfig Device Rules]]
-- [[_COMMUNITY_Python Module Error Rules|Python Module Error Rules]]
-- [[_COMMUNITY_React Native Command Rules|React Native Command Rules]]
-- [[_COMMUNITY_SSH Known Host Rules|SSH Known Host Rules]]
-- [[_COMMUNITY_Sudo User Path Rules|Sudo User Path Rules]]
-- [[_COMMUNITY_Touch Command Rules|Touch Command Rules]]
-- [[_COMMUNITY_Whois Command Rules|Whois Command Rules]]
-- [[_COMMUNITY_Virtualenv Workon Rules|Virtualenv Workon Rules]]
-- [[_COMMUNITY_PTY Shell Logger Spawn|PTY Shell Logger Spawn]]
-- [[_COMMUNITY_ADB Unknown Command Tests|ADB Unknown Command Tests]]
-- [[_COMMUNITY_AG Literal Search Tests|AG Literal Search Tests]]
-- [[_COMMUNITY_AWS CLI Rules|AWS CLI Rules]]
-- [[_COMMUNITY_Cat Directory Rules|Cat Directory Rules]]
-- [[_COMMUNITY_Conda Mistype Rules|Conda Mistype Rules]]
-- [[_COMMUNITY_Django South Ghost Fix|Django South Ghost Fix]]
-- [[_COMMUNITY_Django South Merge Fix|Django South Merge Fix]]
-- [[_COMMUNITY_Git Bisect Usage Fix|Git Bisect Usage Fix]]
-- [[_COMMUNITY_Git Branch Delete Checked Out|Git Branch Delete Checked Out]]
-- [[_COMMUNITY_Git Branch List Fix|Git Branch List Fix]]
-- [[_COMMUNITY_Git Clone Duplicate Fix|Git Clone Duplicate Fix]]
-- [[_COMMUNITY_Git Commit Amend Fix|Git Commit Amend Fix]]
-- [[_COMMUNITY_Git Commit Reset Fix|Git Commit Reset Fix]]
-- [[_COMMUNITY_Git Flag Order Fix|Git Flag Order Fix]]
-- [[_COMMUNITY_Git Help Alias Fix|Git Help Alias Fix]]
-- [[_COMMUNITY_Git Pull Fix|Git Pull Fix]]
-- [[_COMMUNITY_Git Push Force Fix|Git Push Force Fix]]
-- [[_COMMUNITY_Git Push Pull Fix|Git Push Pull Fix]]
-- [[_COMMUNITY_Git Push No Commits|Git Push No Commits]]
-- [[_COMMUNITY_Git Rebase Merge Dir|Git Rebase Merge Dir]]
-- [[_COMMUNITY_Git Rebase No Changes|Git Rebase No Changes]]
-- [[_COMMUNITY_Git Remote Delete Fix|Git Remote Delete Fix]]
-- [[_COMMUNITY_Git Stash Fix|Git Stash Fix]]
-- [[_COMMUNITY_Git Stash Pop Fix|Git Stash Pop Fix]]
-- [[_COMMUNITY_Git Two Dashes Fix|Git Two Dashes Fix]]
-- [[_COMMUNITY_Gradle Wrapper Fix|Gradle Wrapper Fix]]
-- [[_COMMUNITY_Ln Hard Link Fix|Ln Hard Link Fix]]
-- [[_COMMUNITY_Long Form Help Fix|Long Form Help Fix]]
-- [[_COMMUNITY_Mkdir Parents Fix|Mkdir Parents Fix]]
-- [[_COMMUNITY_Maven No Command Fix|Maven No Command Fix]]
-- [[_COMMUNITY_NixOS Command Not Found|NixOS Command Not Found]]
-- [[_COMMUNITY_No Such File Fix|No Such File Fix]]
-- [[_COMMUNITY_NPM Run Script Fix|NPM Run Script Fix]]
-- [[_COMMUNITY_Pacman Invalid Option Fix|Pacman Invalid Option Fix]]
-- [[_COMMUNITY_PHP Server Fix|PHP Server Fix]]
-- [[_COMMUNITY_Rails Pending Migrations Fix|Rails Pending Migrations Fix]]
-- [[_COMMUNITY_Remove Directory Fix|Remove Directory Fix]]
-- [[_COMMUNITY_Remove Root Fix|Remove Root Fix]]
-- [[_COMMUNITY_sl ls Typo Fix|sl ls Typo Fix]]
-- [[_COMMUNITY_Sudo Command Fix|Sudo Command Fix]]
-- [[_COMMUNITY_Unknown Command Fix|Unknown Command Fix]]
-- [[_COMMUNITY_Unsudo Command Fix|Unsudo Command Fix]]
-- [[_COMMUNITY_Wrong Hyphen Subcommand Fix|Wrong Hyphen Subcommand Fix]]
-- [[_COMMUNITY_Yarn Command Replaced Fix|Yarn Command Replaced Fix]]
-- [[_COMMUNITY_Fix Command Raw Command|Fix Command Raw Command]]
-- [[_COMMUNITY_Apt Get Search Fix|Apt Get Search Fix]]
-- [[_COMMUNITY_Apt List Upgradable Fix|Apt List Upgradable Fix]]
-- [[_COMMUNITY_Apt Upgrade Fix|Apt Upgrade Fix]]
-- [[_COMMUNITY_Azure CLI Fix|Azure CLI Fix]]
-- [[_COMMUNITY_Brew Reinstall Fix|Brew Reinstall Fix]]
-- [[_COMMUNITY_Brew Update Formula Fix|Brew Update Formula Fix]]
-- [[_COMMUNITY_Cargo No Command Fix|Cargo No Command Fix]]
-- [[_COMMUNITY_cd cs Typo Fix|cd cs Typo Fix]]
-- [[_COMMUNITY_cd mkdir Fix|cd mkdir Fix]]
-- [[_COMMUNITY_cd Parent Fix|cd Parent Fix]]
-- [[_COMMUNITY_Chocolatey Install Fix|Chocolatey Install Fix]]
-- [[_COMMUNITY_cp Create Destination Fix|cp Create Destination Fix]]
-- [[_COMMUNITY_cp Omitting Directory Fix|cp Omitting Directory Fix]]
-- [[_COMMUNITY_Dry Command Fix|Dry Command Fix]]
-- [[_COMMUNITY_Git Add Force Fix|Git Add Force Fix]]
-- [[_COMMUNITY_Git Branch Delete Fix|Git Branch Delete Fix]]
-- [[_COMMUNITY_Git Clone Missing Fix|Git Clone Missing Fix]]
-- [[_COMMUNITY_Git Commit Add Fix|Git Commit Add Fix]]
-- [[_COMMUNITY_Git Diff No Index Fix|Git Diff No Index Fix]]
-- [[_COMMUNITY_Git Diff Staged Fix|Git Diff Staged Fix]]
-- [[_COMMUNITY_Git Fix Stash Fix|Git Fix Stash Fix]]
-- [[_COMMUNITY_Git Hook Bypass Fix|Git Hook Bypass Fix]]
-- [[_COMMUNITY_Git LFS Mistype Fix|Git LFS Mistype Fix]]
-- [[_COMMUNITY_Git Merge Unrelated Fix|Git Merge Unrelated Fix]]
-- [[_COMMUNITY_Git Tag Force Fix|Git Tag Force Fix]]
-- [[_COMMUNITY_Has Exists Script Fix|Has Exists Script Fix]]
-- [[_COMMUNITY_Heroku Multiple Apps Fix|Heroku Multiple Apps Fix]]
-- [[_COMMUNITY_Heroku Not Command Fix|Heroku Not Command Fix]]
-- [[_COMMUNITY_Man Command Fix|Man Command Fix]]
-- [[_COMMUNITY_Man No Space Fix|Man No Space Fix]]
-- [[_COMMUNITY_Python Command Fix|Python Command Fix]]
-- [[_COMMUNITY_Quotation Marks Fix|Quotation Marks Fix]]
-- [[_COMMUNITY_Remove Trailing Cedilla Fix|Remove Trailing Cedilla Fix]]
-- [[_COMMUNITY_Sed Unterminated s Fix|Sed Unterminated s Fix]]
-- [[_COMMUNITY_Terraform Init Fix|Terraform Init Fix]]
-- [[_COMMUNITY_Terraform No Command Fix|Terraform No Command Fix]]
-- [[_COMMUNITY_Tmux Ambiguous Fix|Tmux Ambiguous Fix]]
-- [[_COMMUNITY_Tsuru Login Fix|Tsuru Login Fix]]
-- [[_COMMUNITY_Vagrant Up Fix|Vagrant Up Fix]]
-- [[_COMMUNITY_Yarn Alias Fix|Yarn Alias Fix]]
-- [[_COMMUNITY_Closest Match Utility|Closest Match Utility]]
-- [[_COMMUNITY_Valid History Filter|Valid History Filter]]
-- [[_COMMUNITY_Package Setup Entrypoints|Package Setup Entrypoints]]
-- [[_COMMUNITY_cd Correction Match|cd Correction Match]]
-- [[_COMMUNITY_Docker Login Fix|Docker Login Fix]]
-- [[_COMMUNITY_Gem Unknown Command Fix|Gem Unknown Command Fix]]
-- [[_COMMUNITY_Go Run Fix|Go Run Fix]]
-- [[_COMMUNITY_Grep Recursive Fix|Grep Recursive Fix]]
-- [[_COMMUNITY_Java Command Fix|Java Command Fix]]
-- [[_COMMUNITY_Javac Command Fix|Javac Command Fix]]
-- [[_COMMUNITY_ls All Fix|ls All Fix]]
-- [[_COMMUNITY_ls Long Format Fix|ls Long Format Fix]]
-- [[_COMMUNITY_Pip Install Fix|Pip Install Fix]]
-- [[_COMMUNITY_Python Execute Fix|Python Execute Fix]]
-- [[_COMMUNITY_Systemctl Command Fix|Systemctl Command Fix]]
-- [[_COMMUNITY_Yarn Help Fix|Yarn Help Fix]]
-- [[_COMMUNITY_Directory Spellcheck Fix|Directory Spellcheck Fix]]
-- [[_COMMUNITY_Install Script|Install Script]]
+- [[_COMMUNITY_Cookiecutter Python API Usage|Cookiecutter Python API Usage]]
+- [[_COMMUNITY_Context Generation Tests|Context Generation Tests]]
+- [[_COMMUNITY_Zip File Handling Tests|Zip File Handling Tests]]
+- [[_COMMUNITY_Package Modules Documentation|Package Modules Documentation]]
+- [[_COMMUNITY_Hook Discovery and Execution|Hook Discovery and Execution]]
+- [[_COMMUNITY_Project File Generation|Project File Generation]]
+- [[_COMMUNITY_CLI Entry Point|CLI Entry Point]]
+- [[_COMMUNITY_User Config Tests|User Config Tests]]
+- [[_COMMUNITY_Logging Setup|Logging Setup]]
+- [[_COMMUNITY_User Prompt Rendering|User Prompt Rendering]]
+- [[_COMMUNITY_Hook Generation Tests|Hook Generation Tests]]
+- [[_COMMUNITY_Global Test Fixtures|Global Test Fixtures]]
+- [[_COMMUNITY_Template Prompt Selection|Template Prompt Selection]]
+- [[_COMMUNITY_Hook Discovery Functions|Hook Discovery Functions]]
+- [[_COMMUNITY_File Generation Tests|File Generation Tests]]
+- [[_COMMUNITY_Template File Variables|Template File Variables]]
+- [[_COMMUNITY_User Dict Prompt|User Dict Prompt]]
+- [[_COMMUNITY_CLI Interface Tests|CLI Interface Tests]]
+- [[_COMMUNITY_Advanced Usage Docs|Advanced Usage Docs]]
+- [[_COMMUNITY_File Utility Tests|File Utility Tests]]
+- [[_COMMUNITY_Time Extension Tests|Time Extension Tests]]
+- [[_COMMUNITY_Jinja2 Environment Loading|Jinja2 Environment Loading]]
+- [[_COMMUNITY_VCS Repository Handling|VCS Repository Handling]]
+- [[_COMMUNITY_CLI Invocation Tests|CLI Invocation Tests]]
+- [[_COMMUNITY_Repository Clone Tests|Repository Clone Tests]]
+- [[_COMMUNITY_Template Finder|Template Finder]]
+- [[_COMMUNITY_Replay Dump Tests|Replay Dump Tests]]
+- [[_COMMUNITY_File Generation Error Tests|File Generation Error Tests]]
+- [[_COMMUNITY_Config Loading Tests|Config Loading Tests]]
+- [[_COMMUNITY_Global Config Handling|Global Config Handling]]
+- [[_COMMUNITY_Jinja2 Extensions|Jinja2 Extensions]]
+- [[_COMMUNITY_No-Input Cookiecutter Tests|No-Input Cookiecutter Tests]]
+- [[_COMMUNITY_Template Variable Fixtures|Template Variable Fixtures]]
+- [[_COMMUNITY_Repo URL Detection|Repo URL Detection]]
+- [[_COMMUNITY_Output Directory Tests|Output Directory Tests]]
+- [[_COMMUNITY_Local Repo Detection Tests|Local Repo Detection Tests]]
+- [[_COMMUNITY_Custom Jinja2 Extensions|Custom Jinja2 Extensions]]
+- [[_COMMUNITY_Hello Jinja2 Extension|Hello Jinja2 Extension]]
+- [[_COMMUNITY_File Generation Newline Tests|File Generation Newline Tests]]
+- [[_COMMUNITY_Replay Read Write|Replay Read Write]]
+- [[_COMMUNITY_Prompt Module Tests|Prompt Module Tests]]
+- [[_COMMUNITY_Cookiecutter Utilities|Cookiecutter Utilities]]
+- [[_COMMUNITY_Exceptions Definitions|Exceptions Definitions]]
+- [[_COMMUNITY_Read User Variable Tests|Read User Variable Tests]]
+- [[_COMMUNITY_Repository Detection|Repository Detection]]
+- [[_COMMUNITY_Replay Load Tests|Replay Load Tests]]
+- [[_COMMUNITY_Choice Prompt Config Tests|Choice Prompt Config Tests]]
+- [[_COMMUNITY_Repo Clone Dir Tests|Repo Clone Dir Tests]]
+- [[_COMMUNITY_Nested Template Tests|Nested Template Tests]]
+- [[_COMMUNITY_Yes No Prompt Tests|Yes No Prompt Tests]]
+- [[_COMMUNITY_Pre-Prompt Hook Tests|Pre-Prompt Hook Tests]]
+- [[_COMMUNITY_Jinja2 Extension Init|Jinja2 Extension Init]]
+- [[_COMMUNITY_Abbreviation Expansion Tests|Abbreviation Expansion Tests]]
+- [[_COMMUNITY_Replay Feature Fixtures|Replay Feature Fixtures]]
+- [[_COMMUNITY_Replay Feature Tests|Replay Feature Tests]]
+- [[_COMMUNITY_Subdirectory Repo Detection|Subdirectory Repo Detection]]
+- [[_COMMUNITY_Output Folder Tests|Output Folder Tests]]
+- [[_COMMUNITY_Repo Type Identification|Repo Type Identification]]
+- [[_COMMUNITY_Hook Template Variables|Hook Template Variables]]
+- [[_COMMUNITY_Zip Download Utilities|Zip Download Utilities]]
+- [[_COMMUNITY_Pre-Prompt Hook Scripts|Pre-Prompt Hook Scripts]]
+- [[_COMMUNITY_Interactive Input Tests|Interactive Input Tests]]
+- [[_COMMUNITY_Boolean Prompt Tests|Boolean Prompt Tests]]
+- [[_COMMUNITY_Undefined Variable Exception|Undefined Variable Exception]]
+- [[_COMMUNITY_JSON Prompt Tests|JSON Prompt Tests]]
+- [[_COMMUNITY_Existing Cookiecutter Detection|Existing Cookiecutter Detection]]
+- [[_COMMUNITY_CLI Invocation Integration|CLI Invocation Integration]]
+- [[_COMMUNITY_Copy Without Render Tests|Copy Without Render Tests]]
+- [[_COMMUNITY_Copy Without Render Override|Copy Without Render Override]]
+- [[_COMMUNITY_Hook Backup File Tests|Hook Backup File Tests]]
+- [[_COMMUNITY_Render Variable Tests|Render Variable Tests]]
+- [[_COMMUNITY_User Choice Prompt Tests|User Choice Prompt Tests]]
+- [[_COMMUNITY_Project Metadata Config|Project Metadata Config]]
+- [[_COMMUNITY_Binary File Handling|Binary File Handling]]
+- [[_COMMUNITY_Datetime Template Parsing|Datetime Template Parsing]]
+- [[_COMMUNITY_Hook Error Abort Tests|Hook Error Abort Tests]]
+- [[_COMMUNITY_Exception Handling Tests|Exception Handling Tests]]
+- [[_COMMUNITY_Character Encoding Tests|Character Encoding Tests]]
+- [[_COMMUNITY_User Choice Error Tests|User Choice Error Tests]]
+- [[_COMMUNITY_Invalid Repo Error Tests|Invalid Repo Error Tests]]
+- [[_COMMUNITY_VCS Detection Tests|VCS Detection Tests]]
+- [[_COMMUNITY_Config Defaults Override|Config Defaults Override]]
+- [[_COMMUNITY_Sphinx Docs Config|Sphinx Docs Config]]
+- [[_COMMUNITY_Debug File Logging Tests|Debug File Logging Tests]]
+- [[_COMMUNITY_Shell Script Hook|Shell Script Hook]]
+- [[_COMMUNITY_Post Gen Shell Hook|Post Gen Shell Hook]]
+- [[_COMMUNITY_Pre Gen Shell Hook|Pre Gen Shell Hook]]
+- [[_COMMUNITY_Pre Prompt Shell Hook|Pre Prompt Shell Hook]]
+- [[_COMMUNITY_Pre Gen Shell Hook|Pre Gen Shell Hook]]
+- [[_COMMUNITY_Post Gen Shell Hook|Post Gen Shell Hook]]
+- [[_COMMUNITY_Pre Gen Shell Hook|Pre Gen Shell Hook]]
+- [[_COMMUNITY_File Permissions Variables|File Permissions Variables]]
+- [[_COMMUNITY_Version Info Utility|Version Info Utility]]
+- [[_COMMUNITY_Sample Python File|Sample Python File]]
+- [[_COMMUNITY_Cookiecutter Package Init|Cookiecutter Package Init]]
+- [[_COMMUNITY_Docs Build Config|Docs Build Config]]
+- [[_COMMUNITY_Docs Package Init|Docs Package Init]]
+- [[_COMMUNITY_Cookiecutter CLI Entry|Cookiecutter CLI Entry]]
+- [[_COMMUNITY_Integration Test Init|Integration Test Init]]
+- [[_COMMUNITY_CLI Replay Verbose Test|CLI Replay Verbose Test]]
+- [[_COMMUNITY_CLI Replay Project Generation|CLI Replay Project Generation]]
+- [[_COMMUNITY_CLI No-Input Replay Flag Conflict|CLI No-Input Replay Flag Conflict]]
+- [[_COMMUNITY_CLI Output Directory Flag|CLI Output Directory Flag]]
+- [[_COMMUNITY_CLI Help Flag|CLI Help Flag]]
+- [[_COMMUNITY_CLI Config File Option|CLI Config File Option]]
+- [[_COMMUNITY_CLI Default Config Overwrite|CLI Default Config Overwrite]]
+- [[_COMMUNITY_CLI Default Config Flag|CLI Default Config Flag]]
+- [[_COMMUNITY_CLI Undefined Variable Error|CLI Undefined Variable Error]]
+- [[_COMMUNITY_CLI Unknown Extension Error|CLI Unknown Extension Error]]
+- [[_COMMUNITY_Local Extension Test|Local Extension Test]]
+- [[_COMMUNITY_CLI Extra Context Replacement|CLI Extra Context Replacement]]
+- [[_COMMUNITY_CLI Invalid Argument Error|CLI Invalid Argument Error]]
+- [[_COMMUNITY_CLI Directory Option|CLI Directory Option]]
+- [[_COMMUNITY_CLI JSON Decoding Error|CLI JSON Decoding Error]]
+- [[_COMMUNITY_CLI Version Output|CLI Version Output]]
+- [[_COMMUNITY_CLI Pre-Prompt Hook Fail|CLI Pre-Prompt Hook Fail]]
+- [[_COMMUNITY_CLI Existing Output Directory Error|CLI Existing Output Directory Error]]
+- [[_COMMUNITY_CLI Basic Invocation|CLI Basic Invocation]]
+- [[_COMMUNITY_Post-Gen Hook Extensions|Post-Gen Hook Extensions]]
+- [[_COMMUNITY_Pre-Gen Hook Extensions|Pre-Gen Hook Extensions]]
+- [[_COMMUNITY_Mixed Line Endings File Generation|Mixed Line Endings File Generation]]
+- [[_COMMUNITY_Cookiecutter Sample File Template|Cookiecutter Sample File Template]]
+- [[_COMMUNITY_Windows Newline Conversion|Windows Newline Conversion]]
+- [[_COMMUNITY_Absolute Path File Generation|Absolute Path File Generation]]
+- [[_COMMUNITY_Generate Files Output Dir|Generate Files Output Dir]]
+- [[_COMMUNITY_Skip If File Exists Priority|Skip If File Exists Priority]]
+- [[_COMMUNITY_Skip If File Exists Safety|Skip If File Exists Safety]]
+- [[_COMMUNITY_Unicode Directory Name Generation|Unicode Directory Name Generation]]
+- [[_COMMUNITY_Binary Files Generation|Binary Files Generation]]
+- [[_COMMUNITY_RC File Backup Fixture|RC File Backup Fixture]]
+- [[_COMMUNITY_Custom Config Path Fixture|Custom Config Path Fixture]]
+- [[_COMMUNITY_Cookiecutter Sample File Template|Cookiecutter Sample File Template]]
+- [[_COMMUNITY_Post-Gen Hook Custom Folder|Post-Gen Hook Custom Folder]]
+- [[_COMMUNITY_Pre-Gen Hook Custom File|Pre-Gen Hook Custom File]]
+- [[_COMMUNITY_Post-Gen Hook Custom Folder|Post-Gen Hook Custom Folder]]
+- [[_COMMUNITY_Pre-Gen Hook Custom File|Pre-Gen Hook Custom File]]
+- [[_COMMUNITY_Bug Report Issue Template|Bug Report Issue Template]]
+- [[_COMMUNITY_Changelog 2.4.0 Release|Changelog 2.4.0 Release]]
+- [[_COMMUNITY_Changelog 2.5.0 Release|Changelog 2.5.0 Release]]
+- [[_COMMUNITY_Changelog 2.6.0 Release|Changelog 2.6.0 Release]]
+- [[_COMMUNITY_Codecov Configuration|Codecov Configuration]]
+- [[_COMMUNITY_Dependabot Configuration|Dependabot Configuration]]
+- [[_COMMUNITY_GitHub Issue Template|GitHub Issue Template]]
+- [[_COMMUNITY_Non-Templated TXT File|Non-Templated TXT File]]
+- [[_COMMUNITY_LF Newline TXT File|LF Newline TXT File]]
+- [[_COMMUNITY_GitHub Actions Test Workflow|GitHub Actions Test Workflow]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Command` - 507 edges
-2. `for_app()` - 87 edges
-3. `replace_argument()` - 69 edges
-4. `replace_command()` - 54 edges
-5. `git_support()` - 48 edges
-6. `Generic` - 38 edges
-7. `sudo_support()` - 31 edges
-8. `which()` - 29 edges
-9. `get_closest()` - 24 edges
-10. `memoize()` - 21 edges
+1. `cookiecutter()` - 33 edges
+2. `cli_runner()` - 32 edges
+3. `UndefinedVariableInTemplate` - 24 edges
+4. `Advanced Usage Index` - 21 edges
+5. `CookiecutterException` - 20 edges
+6. `StrictEnvironment` - 19 edges
+7. `Cookiecutter Package API Docs` - 17 edges
+8. `generate_files()` - 16 edges
+9. `ContextDecodingException` - 15 edges
+10. `FailedHookException` - 15 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Terminal demo of The Fuck correcting commands` --references--> `The Fuck - CLI Command Correction Tool`  [EXTRACTED]
-  example.gif → README.md
-- `Terminal demo of The Fuck in experimental instant mode` --references--> `Experimental Instant Mode`  [INFERRED]
-  example_instant_mode.gif → README.md
-- `TestGetRules` --uses--> `Command`  [INFERRED]
-  tests/test_corrector.py → thefuck/types.py
-- `TestCorrectedCommand` --uses--> `EmptyCommand`  [INFERRED]
-  tests/test_types.py → thefuck/exceptions.py
-- `TestCorrectedCommand` --uses--> `Command`  [INFERRED]
-  tests/test_types.py → thefuck/types.py
+- `Changelog 2.7.1` --references--> `JsonifyExtension`  [EXTRACTED]
+  CHANGELOG/2.7.1.md → cookiecutter/extensions.py
+- `Calling From Python Documentation` --references--> `cookiecutter()`  [EXTRACTED]
+  docs/advanced/calling_from_python.rst → cookiecutter/main.py
+- `Injecting Context Documentation` --references--> `cookiecutter()`  [EXTRACTED]
+  docs/advanced/injecting_context.rst → cookiecutter/main.py
+- `Replay Documentation` --references--> `cookiecutter()`  [EXTRACTED]
+  docs/advanced/replay.rst → cookiecutter/main.py
+- `Suppressing Prompts Documentation` --references--> `cookiecutter()`  [EXTRACTED]
+  docs/advanced/suppressing_prompts.rst → cookiecutter/main.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (213 total, 12 thin omitted)
+## Communities (149 total, 62 thin omitted)
 
-### Community 0 - "Sudo & Package Manager Rules"
+### Community 0 - "Cookiecutter Python API Usage"
 Cohesion: 0.05
-Nodes (12): Attempts to spellcheck and correct failed cd commands, Rule: git_clone_missing  Correct missing `git clone` command when pasting a gi, Fixes common java command mistake  Example: > java foo.java Error: Could not, Appends .java when compiling java files  Example:  > javac foo  error: Class, The confusion in systemctl's param order is massive., Removes sudo before calling fn and adds it after., sudo_support(), eager() (+4 more)
+Nodes (40): cookiecutter(), _patch_import_path_for_repo, Any, Path, Run Cookiecutter just as if using it from the command line.      :param template, Calling From Python Documentation, Replay Documentation, Test cookiecutter invocation with nested configuration structure. (+32 more)
 
-### Community 1 - "History & Confirmation UI Tests"
-Cohesion: 0.10
-Nodes (33): history_changed(), history_not_changed(), how_to_configure(), Ensures that history changed., Ensures that command can be selected with arrow keys., Ensures that fix can be refused when confirmation enabled., Ensures that command can be fixed when confirmation disabled., Ensures that command can be fixed when confirmation enabled. (+25 more)
+### Community 1 - "Context Generation Tests"
+Cohesion: 0.06
+Nodes (37): context_data(), Any, Verify generate context behaviour and context overwrite priorities., Verify `generate_context` correctly decodes non-ascii chars., Fixture. Populates template content for future tests., Verify `apply_overwrites_to_context` skips variables that are not in context., Verify `apply_overwrites_to_context` work with string variables., Verify variables overwrite for list if variable not in list ignored. (+29 more)
 
-### Community 2 - "Git & ADB Command Rules"
-Cohesion: 0.09
-Nodes (19): get_new_command(), match(), get_new_command(), match(), get_new_command(), match(), test_get_new_command(), test_match() (+11 more)
+### Community 2 - "Zip File Handling Tests"
+Cohesion: 0.07
+Nodes (35): Path, mock_download(), mock_download_with_empty_chunks(), Tests for function unzip() from zipfile module., Error in `unzip()`, if user can't provide a valid password., In `unzip()`, an empty file raises an error., In `unzip()`, a repository must have a top level directory., In `unzip()`, a corrupted zip file raises an error. (+27 more)
 
-### Community 3 - "Command Corrector Tests"
-Cohesion: 0.10
-Nodes (12): object, glob(), Ensures that the function removes duplicates and sorts commands., test_get_corrected_commands(), test_get_rules_rule_exception(), test_organize_commands(), TestGetRules, TestCommand (+4 more)
+### Community 3 - "Package Modules Documentation"
+Cohesion: 0.07
+Nodes (33): AUTHORS.md Credits, Code of Conduct, PyPA Code of Conduct, CONTRIBUTING.md Guide, cookiecutter.cli Module, cookiecutter.config Module, cookiecutter.environment Module, cookiecutter.exceptions Module (+25 more)
 
-### Community 4 - "Shell Configuration Tracker"
-Cohesion: 0.10
-Nodes (24): _configure(), _get_not_configured_usage_tracker_path(), _get_previous_command(), _get_shell_pid(), _is_already_configured(), _is_second_run(), main(), Returns parent process pid. (+16 more)
+### Community 4 - "Hook Discovery and Execution"
+Cohesion: 0.06
+Nodes (19): make_test_repo(), `find_hooks` should return None if the hook could not be found., `find_hooks` should return None if hook directory not found., Class to unite tests for hooks with different project paths., External hooks related tests setup fixture., External hooks related tests teardown fixture., Execute a hook script, independently of project generation., Test correct exception raise if run_script fails. (+11 more)
 
-### Community 5 - "Shell Base Class Methods"
+### Community 5 - "Project File Generation"
+Cohesion: 0.13
+Nodes (23): Confirm, apply_overwrites_to_context(), generate_context(), generate_file(), generate_files(), is_copy_only_path(), Any, Functions for generating a project from a project template. (+15 more)
+
+### Community 6 - "CLI Entry Point"
+Cohesion: 0.18
+Nodes (25): Context, list_installed_templates(), main(), Any, OrderedDict, Main `cookiecutter` CLI., Create a project from a Cookiecutter project template (TEMPLATE).      Cookiecut, Validate extra context. (+17 more)
+
+### Community 7 - "User Config Tests"
 Cohesion: 0.08
-Nodes (10): Generic, Return a shell-escaped version of the string s., Adds fixed command to shell history.          In most of shells we change hist, Returns shells builtin commands., Returns the version of the current shell, Returns the name and version of the current shell, Prepares command before running in app., Prepares command for running in shell. (+2 more)
+Nodes (25): custom_config(), Tests to verify correct work with user configs and system/user variables inside., Validate provided custom config path should be respected and parsed., Validate app configuration. User config path should match default path., Validate app configuration. User config path should be parsed from sys env., Validate `default_config=True` should ignore provided custom user config., Validate user pointers expanded in user configs., Fixture. Return user config path for current user. (+17 more)
 
-### Community 6 - "Lein & Omnienv Task Tests"
-Cohesion: 0.10
-Nodes (16): match(), match(), test_get_new_command(), test_match(), test goenv's specific output with quotes ('), test_get_new_command(), test_match(), test_match_goenv_output_quote() (+8 more)
+### Community 8 - "Logging Setup"
+Cohesion: 0.11
+Nodes (23): configure_logger(), Module for setting up logging., Configure logging for cookiecutter.      Set up logging to stdout with given lev, Logger, create_log_records(), debug_file(), debug_logger(), debug_messages() (+15 more)
 
-### Community 7 - "Zsh Shell Tests"
+### Community 9 - "User Prompt Rendering"
+Cohesion: 0.08
+Nodes (13): Verify call `read_user_variable` on request when human-readable prompts., Test prompts when human-readable labels for user choices., Verify template inside dictionary variable rendered., Verify nested structures like dict in dict, rendered correctly., Verify dict rendered correctly when human-readable prompts., Verify dict rendered correctly when human-readable prompts empty., Verify Jinja2 templating works in unicode prompts., Verify `read_user_variable` not called for private context variables. (+5 more)
+
+### Community 10 - "Hook Generation Tests"
 Cohesion: 0.09
-Nodes (3): TestZsh, Returns the version of the current shell, Zsh
+Nodes (23): Test work of python and shell hooks for generated projects., Verify project directory not created or removed if hook failed., Verify project directory not removed if exist before hook failed., Verify pre and post generate project shell hooks executed.      This test for .s, Remove some special folders which are created by the tests., Verify *.txt files not created, when accept_hooks=False., Test deprecation warning in generate._run_hook_from_repo_dir., Verify hooks directory not created in target location on files generation. (+15 more)
 
-### Community 8 - "Core Fix Command Pipeline"
-Cohesion: 0.14
-Nodes (19): fix_command(), Fixes previous command. Used when `thefuck` called without arguments., main(), get_corrected_commands(), get_loaded_rules(), get_rules(), get_rules_import_paths(), organize_commands() (+11 more)
+### Community 11 - "Global Test Fixtures"
+Cohesion: 0.09
+Nodes (22): backup_dir(), clean_system(), clone_dir(), isolated_filesystem(), output_dir(), Path, pytest fixtures which are globally available throughout the suite., Fixture that simulates the user's home directory. (+14 more)
 
-### Community 9 - "UI Command Selector Tests"
-Cohesion: 0.10
-Nodes (9): patch_get_key(), test_read_actions(), TestSelectCommand, CorrectedCommand, Corrected by rule command., Initializes instance with given fields.          :type script: basestring, Ignores `priority` field., Returns fixed commands script.          If `settings.repeat` is `True`, append (+1 more)
+### Community 12 - "Template Prompt Selection"
+Cohesion: 0.19
+Nodes (21): Exception for out-of-scope variables.      Raised when a template uses a variabl, UndefinedVariableInTemplate, choose_nested_template(), prompt_choice_for_config(), prompt_choice_for_template(), prompt_for_config(), _prompts_from_options(), Any (+13 more)
 
-### Community 10 - "Alias & Logging Utilities"
-Cohesion: 0.14
-Nodes (18): _get_alias(), print_alias(), test_get_alias(), test_print_alias(), already_configured(), color(), configured_successfully(), confirm_text() (+10 more)
-
-### Community 11 - "Go & Fabric Command Rules"
-Cohesion: 0.11
-Nodes (19): _get_between(), get_new_command(), match(), get_golang_commands(), get_new_command(), match(), _get_available_commands(), get_new_command() (+11 more)
-
-### Community 12 - "Pacman Package Manager Rules"
+### Community 13 - "Hook Discovery Functions"
 Cohesion: 0.16
-Nodes (18): get_new_command(), match(), get_new_command(), match(), Fixes wrong package names with pacman or yaourt.  For example the `llc` progra, test_get_new_command(), test_get_new_command_mocked(), test_match() (+10 more)
+Nodes (21): find_hook(), Any, Path, Functions for discovering and executing various cookiecutter hooks., Execute a script after rendering it with Jinja.      :param script_path: Absolut, Try to find and execute a hook from the specified project directory.      :param, Run hook from repo directory, clean project directory if hook fails.      :param, Run pre_prompt hook from repo directory.      :param repo_dir: Project template (+13 more)
 
-### Community 13 - "Tcsh Shell Support"
+### Community 14 - "File Generation Tests"
 Cohesion: 0.10
-Nodes (3): Returns the version of the current shell, Tcsh, TestTcsh
+Nodes (21): env(), expected_msg_regex(), Tests for `generate_file` function, part of `generate_files` function workflow., Fixture. Used to ensure that exception generated text contain full data., Verify correct exception raised on syntax error in file before generation., Verify that file generation use same line ending, as in source file., Fixture. Remove the test text file which is created by the tests.      Used for, Fixture. Set Jinja2 environment settings for other tests. (+13 more)
 
-### Community 14 - "Settings & Config Loading"
+### Community 15 - "Template File Variables"
+Cohesion: 0.18
+Nodes (21): Cookiecutter Variable: food, Cookiecutter Variable: repo_name, Cookiecutter Variable: test_name, Cookiecutter Variable: year, In Folder TXT (generate-files-line-end), Something TXT (generate-files-line-end), Not Rendered Dir README RST, Not Rendered Dir README RST (override) (+13 more)
+
+### Community 16 - "User Dict Prompt"
+Cohesion: 0.14
+Nodes (20): process_json(), Load user-supplied value as a JSON dict.      :param user_value: User-supplied v, Prompt the user to provide a dictionary of data.      :param var_name: Variable, read_user_dict(), Test `process_json`, `read_user_dict` functions in `cookiecutter.prompt`., Make sure that `json.loads` is not called when using default value., Test `process_json` for correct error on malformed input., Make sure that `read_user_dict` returns the default value.      Verify return of (+12 more)
+
+### Community 17 - "CLI Interface Tests"
+Cohesion: 0.10
+Nodes (20): debug_file(), help_cli_flag(), make_fake_project_dir(), output_dir_flag(), overwrite_cli_flag(), Collection of tests around cookiecutter's command-line interface., Pytest fixture return all `overwrite-if-exists` invocation options., Pytest fixture return all output-dir invocation options. (+12 more)
+
+### Community 18 - "Advanced Usage Docs"
 Cohesion: 0.13
-Nodes (10): dict, Transforms env-strings to python., Loads settings from env., Fills `settings` with values from `settings.py` and env., Returns Path object representing the user config resource, Returns user config dir, create it when it doesn't exist., Loads settings from file., Transforms rules list from env-string to python. (+2 more)
+Nodes (20): Cookiecutter Hooks (pre_prompt, pre_gen_project, post_gen_project), Jinja2 Templating Engine, Choice Variables Documentation, Copy Without Render Documentation, Dictionary Variables Documentation, Directories Documentation, Hooks Documentation, Human Readable Prompts Documentation (+12 more)
 
-### Community 15 - "Script Output Log Reader"
+### Community 19 - "File Utility Tests"
+Cohesion: 0.14
+Nodes (19): make_executable(), Path, Make `script_path` executable.      :param script_path: The file to change, make_readonly(), Tests for `cookiecutter.utils` module., Verify `utils.create_tmp_repo_dir` creates a copy., Change the access permissions to readonly for a given file., Verify `utils.force_delete` makes files writable. (+11 more)
+
+### Community 20 - "Time Extension Tests"
+Cohesion: 0.10
+Nodes (19): environment(), freeze(), Tests for the TimeExtension Jinja2 extension., Fixture. Add tested extension to environment., Fixture. Freeze time for all tests., Verify template parsing fails without a timezone., Verify default datetime format can be parsed., Verify that valid timezones are accepted. (+11 more)
+
+### Community 21 - "Jinja2 Environment Loading"
 Cohesion: 0.15
-Nodes (14): Exception, get_output(), _get_output_lines(), _get_script_group_lines(), _group_by_calls(), Reads script output from log.      :type script: str     :rtype: str | None, _skip_old_lines(), _GenConst (+6 more)
+Nodes (14): ExtensionLoaderMixin, Any, Jinja2 environment and extensions loading., Mixin providing sane loading of extensions specified in a given context.      Th, Initialize the Jinja2 Environment object while loading extensions.          Does, Return list of extensions as str to be passed on to the Jinja2 env.          If, Set the standard Cookiecutter StrictEnvironment.          Also loading extension, Exception for un-importable extension.      Raised when an environment is unable (+6 more)
 
-### Community 16 - "Unknown Command Replacement Rules"
+### Community 22 - "VCS Repository Handling"
+Cohesion: 0.18
+Nodes (16): Exception for un-cloneable repo.      Raised when a cookiecutter template can't, Exception for unknown repo types.      Raised if a repo's type cannot be determi, Exception when version control is unavailable.      Raised if the version contro, RepositoryCloneFailed, UnknownRepoType, VCSNotInstalled, prompt_and_delete(), Ask user if it's okay to delete the previously-downloaded file/directory.      I (+8 more)
+
+### Community 23 - "CLI Invocation Tests"
+Cohesion: 0.14
+Nodes (17): cli_runner(), Test cli invocation display log if called with `verbose` flag., Test cli invocation correctly pass --replay-file option., Fixture that returns a helper function to run the cookiecutter cli., Test cli invocation with `overwrite-if-exists` and `replay` flags., Verify --list-installed command correct invocation., Test cli invocation works with `accept-hooks` option., Test cli invocation in a template with pre_prompt hook. (+9 more)
+
+### Community 24 - "Repository Clone Tests"
+Cohesion: 0.12
+Nodes (16): Tests around cloning repositories and detection of errors at it., When `clone()` is called with a git/hg repo, the corresponding VCS \     command, In `clone()`, a `VCSNotInstalled` exception should be raised if no VCS \     is, In `clone()`, repository not found errors should raise an \     appropriate exce, In `clone()`, branch not found errors should raise an \     appropriate exceptio, In `clone()`, unknown subprocess errors should be raised., In `clone()`, repo URL's trailing slash should be stripped if one is \     prese, In `clone()`, if user doesn't want to reclone, Cookiecutter should exit \     wi (+8 more)
+
+### Community 25 - "Template Finder"
+Cohesion: 0.15
+Nodes (14): NonTemplatedInputDirException, Exception for when a project's input dir is not templated.      The name of the, find_template(), Environment, Path, Functions for finding Cookiecutter templates and other components., Determine which child directory of ``repo_dir`` is the project template.      :p, env() (+6 more)
+
+### Community 26 - "Replay Dump Tests"
+Cohesion: 0.13
+Nodes (15): mock_ensure_failure(), mock_ensure_success(), Fixture to return a valid template_name., Fixture to return a actual file name of the dump., Remove the replay file created by tests., Test that replay.dump raises if the context does not contain a key \     named ', Replace cookiecutter.replay.make_sure_path_exists function.      Used to mock in, Test that replay.dump raises when the replay_dir cannot be created. (+7 more)
+
+### Community 27 - "File Generation Error Tests"
 Cohesion: 0.11
-Nodes (20): _get_all_commands(), get_new_command(), _get_unknown_command(), get_new_command(), get_new_command(), get_new_command(), match(), get_new_command() (+12 more)
+Nodes (18): Tests for `generate_files` function and related errors raising.  Use the global, Verify `generate_files` raises when no directories to render exist.      Note: C, Verify generates files respect source files permissions.      simple.txt and scr, Verify overwrite_if_exists overwrites old files., Fixture. Populate context variable for future tests., Verify correct error raised when file name cannot be rendered., Verify correct error raised when file content cannot be rendered., Verify correct error raised when directory name is empty. (+10 more)
 
-### Community 17 - "Fish Shell Support"
-Cohesion: 0.13
-Nodes (5): Fish, _get_aliases(), _get_functions(), Returns the version of the current shell, Puts command script to shell history.
+### Community 28 - "Config Loading Tests"
+Cohesion: 0.12
+Nodes (15): Collection of tests around loading cookiecutter config., An empty config file results in the default config., Verify default and user config merged in expected way., An exception should be raised if top-level element is array., An exception should be raised if config file contains multiple docs., Verify valid config opened and rendered correctly., Check that `exceptions.ConfigDoesNotExistException` is raised when \     attempt, An invalid config file should raise an `InvalidConfiguration` \     exception. (+7 more)
 
-### Community 18 - "Cache Mechanism Tests"
-Cohesion: 0.16
-Nodes (4): TestCache, Cache, Lazy read cache and save changes at exit., Caches function result in temporary file.      Cache will be expired when modi
-
-### Community 19 - "Utils & Executables Tests"
-Cohesion: 0.15
-Nodes (14): test_default_settings(), test_for_app(), test_get_all_executables(), test_get_all_executables_exclude_paths(), test_get_all_executables_pathsep(), test_get_all_matched_commands(), test_is_app(), test_memoize() (+6 more)
-
-### Community 20 - "Brew Unknown Command Rules"
+### Community 29 - "Global Config Handling"
 Cohesion: 0.23
-Nodes (12): _brew_commands(), _get_brew_commands(), _get_brew_tap_specific_commands(), _get_directory_names_only(), get_new_command(), _is_brew_tap_cmd_naming(), match(), To get brew default commands on local environment (+4 more)
+Nodes (14): _expand_path(), get_config(), get_user_config(), merge_configs(), Any, Global configuration handling., Expand both environment variables and user home in the given path., Recursively update a dict with the key/value pair of another.      Dict values t (+6 more)
 
-### Community 21 - "Powershell Shell Support"
-Cohesion: 0.13
-Nodes (3): Powershell, Returns the version of the current shell, TestPowershell
-
-### Community 22 - "Docker Command Rules"
-Cohesion: 0.24
-Nodes (12): get_docker_commands(), get_new_command(), match(), _parse_commands(), output(), test_get_new_command(), test_get_new_management_command(), test_get_new_management_command_subcommand() (+4 more)
-
-### Community 23 - "No Command Fallback Rules"
+### Community 30 - "Jinja2 Extensions"
 Cohesion: 0.21
-Nodes (9): get_new_command(), _get_used_executables(), match(), test_get_new_command(), test_match(), test_not_match(), TestGetCloseMatches, get_close_matches() (+1 more)
+Nodes (12): JsonifyExtension, RandomStringExtension, Jinja2 Extension for dates and times., Jinja2 extension to convert a Python object to JSON., Jinja2 extension to create a random string., Jinja2 Extension to slugify string., Jinja2 Extension to generate uuid4 string., SlugifyExtension (+4 more)
 
-### Community 26 - "Argument Parser Tests"
-Cohesion: 0.17
-Nodes (6): test_parse(), Parser, Adds arguments to parser., It's too dangerous to use `-y` and `-r` together., Prepares arguments by:          - removing placeholder and moving arguments af, Argument parser that can handle arguments with our special     placeholder.
-
-### Community 27 - "Rule Loading & Matching"
-Cohesion: 0.13
-Nodes (8): load_source(), Creates rule instance from path.          :type path: pathlib.Path         :r, Returns `True` when rule enabled.          :rtype: bool, Returns `True` if rule matches the command.          :type command: Command, Returns generator with corrected commands.          :type command: Command, Rule for fixing commands., Initializes rule with given fields.          :type name: basestring         :, Rule
-
-### Community 28 - "Project Documentation & Metadata"
-Cohesion: 0.23
-Nodes (9): Command Object (script, output, stderr), VSCode Dev Container, Experimental Instant Mode, Rules Matching Engine, The Fuck - CLI Command Correction Tool, Terminal demo of The Fuck correcting commands, Terminal demo of The Fuck in experimental instant mode, GitHub Issue Template (+1 more)
-
-### Community 29 - "Command Output Execution"
-Cohesion: 0.16
-Nodes (11): get_output(), Get output of the script.      :param script: Console script.     :type scrip, get_output(), _kill_process(), Tries to kill the process otherwise just logs a debug message, the     process, Returns `True` if we can get output of the command in the     `settings.wait_co, Runs the script and obtains stdin/stderr.      :type script: str     :type ex, _wait_output() (+3 more)
-
-### Community 30 - "Config & Settings Tests"
+### Community 31 - "No-Input Cookiecutter Tests"
 Cohesion: 0.14
-Nodes (4): test_settings_defaults(), TestInitializeSettingsFile, TestSettingsFromEnv, TestSettingsFromFile
+Nodes (14): Test cookiecutter for work without any input.  Tests in this file execute `cooki, Verify temporary folder for zip unpacking dropped., Fixture. Remove special directories which are created during the tests., Verify `cookiecutter` create project dir on input with or without slash., Verify `cookiecutter` accept `extra_context` argument., Verify Jinja2 templating correctly works in `cookiecutter.json` file., Verify configured dictionary from `cookiecutter.json` correctly unpacked., remove_additional_dirs() (+6 more)
 
-### Community 32 - "Brew Install Rules"
-Cohesion: 0.23
-Nodes (6): get_new_command(), _get_suggestions(), match(), test_get_new_command(), test_match(), test_suggestions()
+### Community 32 - "Template Variable Fixtures"
+Cohesion: 0.19
+Nodes (14): Template: base-requirements.jinja, Template: click-requirements.jinja, Cookiecutter Variable: command_line_interface, Cookiecutter Variable: foobar (undefined), Cookiecutter Variable: github_username, Cookiecutter Variable: project_slug, Cookiecutter Variable: use_pytest, Template: pytest-requirements.jinja (+6 more)
 
-### Community 34 - "NPM Script Rules"
-Cohesion: 0.23
-Nodes (8): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match(), get_scripts(), Get custom npm scripts., test_get_scripts()
+### Community 33 - "Repo URL Detection"
+Cohesion: 0.21
+Nodes (13): is_repo_url(), is_zip_file(), Return True if value is a repository URL., Return True if value is a zip file., Tests for all supported cookiecutter template repository locations., Verify is_repo_url works., Fixture. Represent possible URI to different repositories types., Validate `repository.expand_abbreviations` correctly translate url. (+5 more)
 
-### Community 35 - "APT Invalid Operation Rules"
-Cohesion: 0.33
-Nodes (10): get_new_command(), _get_operations(), match(), _parse_apt_get_and_cache_operations(), _parse_apt_operations(), set_help(), test_get_new_command(), test_get_operations() (+2 more)
+### Community 34 - "Output Directory Tests"
+Cohesion: 0.16
+Nodes (13): context(), mock_gen_context(), mock_prompt(), mock_replay(), Tests for cookiecutter's output directory customization feature., Fixture to return a valid context as known from a cookiecutter.json., Fixture to prepare test template directory., Fixture. Automatically mock cookiecutter's function with expected output. (+5 more)
 
-### Community 36 - "DNF Invalid Command Rules"
-Cohesion: 0.32
-Nodes (9): get_new_command(), _get_operations(), match(), _parse_operations(), set_help(), test_get_new_command(), test_get_operations(), test_match() (+1 more)
+### Community 35 - "Local Repo Detection Tests"
+Cohesion: 0.25
+Nodes (8): Path, Tests around using locally cached cookiecutter template repositories., A valid local repository should be returned., A local repository without a cookiecutter.json should raise a \     `RepositoryN, An unknown local repository should raise a `RepositoryNotFound` \     exception., test_finds_local_repo(), test_local_repo_typo(), test_local_repo_with_no_context_raises()
 
-### Community 37 - "Shell Detection & Memoize"
+### Community 36 - "Custom Jinja2 Extensions"
+Cohesion: 0.18
+Nodes (10): Decorate a function to wrap it in a simplified jinja2 extension., simple_filter(), Local Extensions Documentation, FoobarExtension, Provides custom extension, exposing a ``foobar`` filter., Simple jinja2 extension for cookiecutter test purposes., Foobar Extension Constructor., Provide a simple function-based filter extension. (+2 more)
+
+### Community 37 - "Hello Jinja2 Extension"
+Cohesion: 0.15
+Nodes (9): HelloExtension, Provides custom extension, exposing a ``hello`` command., Hello Extension Constructor., Do actual tag replace when invoked by parser., Work when something match `tags` variable., Simple jinja2 extension for cookiecutter test purposes., Environment, Output (+1 more)
+
+### Community 38 - "File Generation Newline Tests"
+Cohesion: 0.25
+Nodes (11): Path, Verify windows source line end not changed during files generation., Verify correct error raised when directory name cannot be rendered., Verify new line not removed by templating engine after folder generation., test_generate_files_with_linux_newline(), test_generate_files_with_trailing_newline_forced_to_linux_by_context(), test_generate_files_with_windows_newline(), test_keep_project_dir_on_failure() (+3 more)
+
+### Community 39 - "Replay Read Write"
 Cohesion: 0.26
-Nodes (4): _get_shell_from_proc(), Package with shell specific actions, each shell class should implement `from_sh, memoize(), Caches previous calls to the function.
+Nodes (11): dump(), get_file_name(), load(), Any, Path, cookiecutter.replay.  -------------------, Get the name of file., Write json data to file. (+3 more)
 
-### Community 39 - "Dirty Untar Rules"
-Cohesion: 0.40
-Nodes (9): get_new_command(), _is_tar_extract(), match(), side_effect(), _tar_file(), tar_error(), test_get_new_command(), test_match() (+1 more)
+### Community 40 - "Prompt Module Tests"
+Cohesion: 0.20
+Nodes (11): patch_readline_on_win(), Tests for `cookiecutter.prompt` module., Fixture. Overwrite windows end of line to linux standard., Verify `prompt.prompt_for_config` raises correct error., In `prompt_and_delete()`, if the user agrees to delete/reclone the \     repo, t, Prompt should not ask if no input and rm dir.      In `prompt_and_delete()`, if, test_prompt_should_ask_and_rm_repo_dir(), test_prompt_should_ask_and_rm_repo_file() (+3 more)
 
-### Community 40 - "Dirty Unzip Rules"
-Cohesion: 0.40
-Nodes (9): get_new_command(), _is_bad_zip(), match(), side_effect(), _zip_file(), test_get_new_command(), test_match(), test_side_effect() (+1 more)
+### Community 41 - "Cookiecutter Utilities"
+Cohesion: 0.24
+Nodes (10): Create strict Jinja2 environment.      Jinja2 environment will raise error on un, StrictEnvironment, create_env_with_context(), force_delete(), Any, Helper functions used throughout Cookiecutter., Create a jinja environment using the provided context., Error handler for `shutil.rmtree()` equivalent to `rm -rf`.      Usage: `shutil. (+2 more)
 
-### Community 41 - "Fix File Editor Rules"
+### Community 42 - "Exceptions Definitions"
+Cohesion: 0.22
+Nodes (9): CookiecutterException, MissingProjectDir, All exceptions used in the Cookiecutter code base are defined here., Base exception class.      All Cookiecutter-specific exceptions should subclass, Exception for ambiguous project template directory.      Raised when Cookiecutte, Exception for missing generated project directory.      Raised during cleanup wh, UnknownTemplateDirException, Utility functions for handling and fetching repo archives in zip format. (+1 more)
+
+### Community 43 - "Read User Variable Tests"
+Cohesion: 0.22
+Nodes (10): Prompt user for variable and return the entered value or given default.      :pa, read_user_variable(), Test click function called correctly by cookiecutter.      Test for choice type, test_click_invocation(), mock_prompt(), test_read_user_variable., Return a mocked version of the 'Prompt.ask' function., Test `Prompt.ask` is run repeatedly until a valid answer is provided.      Test (+2 more)
+
+### Community 44 - "Repository Detection"
+Cohesion: 0.27
+Nodes (9): determine_repo_dir(), Cookiecutter repository functions., Determine if `repo_directory` contains a `cookiecutter.json` file.      :param r, Locate the repository directory from a template reference.      Applies reposito, repository_has_cookiecutter_json(), Tests for `repository_has_cookiecutter_json` function., Validate correct response if `cookiecutter.json` file exist., test_invalid_repository() (+1 more)
+
+### Community 45 - "Replay Load Tests"
+Cohesion: 0.18
+Nodes (10): Fixture to return a valid template_name., Fixture to return a actual file name of the dump., Test that replay.load raises if the loaded context does not contain \     'cooki, Test that replay.load raises if it cannot find a replay file., Test that replay.load runs json.load under the hood and that the context \     i, replay_file(), template_name(), test_io_error_if_no_replay_file() (+2 more)
+
+### Community 46 - "Choice Prompt Config Tests"
+Cohesion: 0.20
+Nodes (6): Class to unite choices prompt related tests with config test., Fixture. Just populate choices variable., Verify prompt_choice_for_config return first list option on no_input=True., Verify prompt_choice_for_config return user selection on no_input=False., Verify empty list returns empty string., TestPromptChoiceForConfig
+
+### Community 47 - "Repo Clone Dir Tests"
+Cohesion: 0.20
+Nodes (8): Collection of tests around cloning cookiecutter template repositories., URL to example Cookiecutter template on GitHub.      Note: when used, git clone, Verify repository url triggers clone function.      `clone()` should be called w, Verify cloned repository without `cookiecutter.json` file raises error., template_url(), test_repository_url_should_clone(), test_repository_url_with_no_context_file(), test_zipfile_unzip()
+
+### Community 48 - "Nested Template Tests"
+Cohesion: 0.27
+Nodes (10): Path, Test nested_templates generation., In `prompt_and_delete()`, if the user decline to delete/reclone the \     repo,, In `prompt_and_delete()`, if the user wants to keep their old \     cloned templ, test_cookiecutter_nested_templates(), test_cookiecutter_nested_templates_invalid_paths(), test_cookiecutter_nested_templates_invalid_win_paths(), test_prompt_should_ask_and_exit_on_user_no_answer() (+2 more)
+
+### Community 49 - "Yes No Prompt Tests"
+Cohesion: 0.25
+Nodes (8): Prompt the user to reply with 'yes' or 'no' (or equivalent values).      - These, read_user_yes_no(), Boolean Variables Documentation, test_read_user_yes_no., Test click function called correctly by cookiecutter.      Test for boolean type, Test `YesNoPrompt` process_response to convert str to bool., test_click_invocation(), test_yesno_prompt_process_response()
+
+### Community 50 - "Pre-Prompt Hook Tests"
 Cohesion: 0.31
-Nodes (7): get_new_command(), match(), _search(), test_get_new_command_with_settings(), test_match(), test_no_editor(), test_not_file()
+Nodes (8): Test work of python and shell hooks on repository., Remove the generate repo_dir., Verify pre_prompt.py runs and creates a copy of cookiecutter.json., Verify pre_prompt.py will fail when a given env var is present., remove_tmp_repo_dir(), test_run_pre_prompt_python_hook(), test_run_pre_prompt_python_hook_fail(), test_run_pre_prompt_shell_hook()
 
-### Community 42 - "Git Branch Flag Rules"
-Cohesion: 0.31
-Nodes (7): first_0flag(), get_new_command(), match(), test_get_new_command_branch_exists(), test_get_new_command_not_valid_object(), test_match(), test_not_match()
-
-### Community 43 - "Git Checkout Rules"
-Cohesion: 0.35
-Nodes (8): get_branches(), get_new_command(), match(), git_branch(), test_get_branches(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 44 - "Git Pull Uncommitted Changes"
-Cohesion: 0.29
-Nodes (6): get_new_command(), match(), test_get_new_command(), test_match(), test_get_new_command(), test_match()
-
-### Community 45 - "Path From History Rules"
-Cohesion: 0.31
-Nodes (7): _get_all_absolute_paths_from_history(), _get_destination(), get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 46 - "Switch Keyboard Layout Rules"
-Cohesion: 0.29
-Nodes (6): _decompose_korean(), _get_matched_layout(), get_new_command(), match(), _switch(), _switch_command()
-
-### Community 50 - "Git Add Rules"
-Cohesion: 0.33
-Nodes (6): _get_missing_file(), get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 51 - "Git Push Rules"
-Cohesion: 0.29
-Nodes (7): get_new_command(), _get_upstream_option_index(), match(), test_get_new_command(), test_match(), test_match_bitbucket(), test_not_match()
-
-### Community 52 - "Open URL Rules"
-Cohesion: 0.38
-Nodes (7): get_new_command(), is_arg_url(), match(), test_get_new_command(), test_is_arg_url(), test_match(), test_not_is_arg_url()
-
-### Community 53 - "Port In Use Rules"
-Cohesion: 0.38
-Nodes (7): get_new_command(), _get_pid_by_port(), _get_used_port(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 54 - "Prove Recursive Rules"
-Cohesion: 0.33
-Nodes (7): get_new_command(), _is_recursive(), _isdir(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 56 - "APT Get Package Rules"
-Cohesion: 0.44
-Nodes (7): _get_executable(), get_new_command(), get_package(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 57 - "Brew Cask Dependency Rules"
-Cohesion: 0.39
-Nodes (7): _get_cask_install_lines(), get_new_command(), _get_script_for_brew_cask(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 58 - "Chmod Executable Rules"
-Cohesion: 0.33
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 59 - "Docker Container Conflict Rules"
-Cohesion: 0.33
-Nodes (8): get_new_command(), match(), Prepends docker container rm -f {container ID} to     the previous docker image, Matches a command's output with docker's output     warning you that you need t, test_get_new_command(), test_match(), test_not_docker_command(), test_not_match()
-
-### Community 60 - "Grep Argument Order Rules"
-Cohesion: 0.39
-Nodes (6): _get_actual_file(), get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 61 - "Gulp Task Rules"
-Cohesion: 0.42
-Nodes (7): get_gulp_tasks(), get_new_command(), match(), output(), test_get_new_command(), test_match(), test_not_march()
-
-### Community 62 - "Command History Rules"
-Cohesion: 0.39
-Nodes (6): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match(), get_valid_history_without_current()
-
-### Community 63 - "Symlink Order Rules"
-Cohesion: 0.39
-Nodes (6): _get_destination(), get_new_command(), match(), When arguments order is wrong first argument will be destination., test_match(), test_not_match()
-
-### Community 64 - "Mercurial Command Rules"
-Cohesion: 0.42
-Nodes (7): extract_possibilities(), get_new_command(), match(), test_extract_possibilities(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 65 - "Missing Space Subcommand Rules"
-Cohesion: 0.39
-Nodes (6): _get_executable(), get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 66 - "Maven Lifecycle Phase Rules"
-Cohesion: 0.44
-Nodes (7): _get_failed_lifecycle(), get_new_command(), _getavailable_lifecycles(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 67 - "Pip Unknown Command Rules"
-Cohesion: 0.28
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 68 - "Shell Prompt Literal Rules"
-Cohesion: 0.33
-Nodes (6): get_new_command(), match(), Fixes error for commands containing one or more occurrences of the shell prompt, test_get_new_command(), test_match(), test_not_match()
-
-### Community 69 - "SCM Correction Rules"
-Cohesion: 0.39
-Nodes (6): _get_actual_scm(), get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 70 - "Yarn Command Not Found Rules"
-Cohesion: 0.36
-Nodes (6): test_get_new_command(), test_match(), test_not_match(), _get_all_tasks(), get_new_command(), match()
-
-### Community 71 - "Yum Invalid Operation Rules"
-Cohesion: 0.36
-Nodes (7): test_get_new_command(), test_get_operations(), test_match(), test_not_match(), get_new_command(), _get_operations(), match()
-
-### Community 72 - "Command Selector Logic"
-Cohesion: 0.28
-Nodes (4): CommandSelector, Helper for selecting rule from rules list., :type commands: Iterable[thefuck.types.CorrectedCommand], :rtype thefuck.types.CorrectedCommand
-
-### Community 73 - "Shell Logger Output Reader"
-Cohesion: 0.39
-Nodes (7): _get_last_n(), get_output(), _get_output_lines(), _get_socket_path(), is_available(), Returns `True` if shell logger socket available.      :rtype: book, Gets command output from shell logger.
-
-### Community 74 - "Brew Link Rules"
-Cohesion: 0.36
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 75 - "Brew Uninstall Rules"
-Cohesion: 0.36
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 76 - "Composer Command Rules"
-Cohesion: 0.32
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 77 - "Alt Space Fix Rules"
-Cohesion: 0.36
-Nodes (6): get_new_command(), match(), Replace the Alt+Space character by a simple space, The character before 'grep' is Alt+Space, which happens frequently     on the M, test_get_new_command(), test_match()
-
-### Community 78 - "Git Branch Exists Rules"
-Cohesion: 0.36
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 79 - "Git Main Master Rules"
-Cohesion: 0.39
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 80 - "Git Not Command Rules"
-Cohesion: 0.29
-Nodes (3): match(), test_get_new_command(), test_match()
-
-### Community 81 - "Git Push Branch Name Rules"
-Cohesion: 0.46
-Nodes (6): get_new_command(), match(), error_msg(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 82 - "Git RM Local Modifications"
-Cohesion: 0.39
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 83 - "Git RM Recursive Rules"
-Cohesion: 0.39
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 84 - "Git RM Staged Rules"
-Cohesion: 0.39
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 85 - "Gradle Task Rules"
-Cohesion: 0.36
-Nodes (6): _get_all_tasks(), get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 86 - "Grunt Task Rules"
-Cohesion: 0.36
-Nodes (6): _get_all_tasks(), get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 87 - "Ifconfig Device Rules"
-Cohesion: 0.36
-Nodes (6): get_new_command(), _get_possible_interfaces(), match(), test_get_new_comman(), test_match(), test_not_match()
-
-### Community 88 - "Python Module Error Rules"
-Cohesion: 0.39
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 89 - "React Native Command Rules"
-Cohesion: 0.43
-Nodes (6): _get_commands(), get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 90 - "SSH Known Host Rules"
-Cohesion: 0.36
-Nodes (6): get_new_command(), match(), side_effect(), test_get_new_command(), test_match(), test_side_effect()
-
-### Community 91 - "Sudo User Path Rules"
-Cohesion: 0.39
-Nodes (6): _get_command_name(), get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 92 - "Touch Command Rules"
-Cohesion: 0.46
-Nodes (6): output(), test_get_new_command(), test_match(), test_not_match(), get_new_command(), match()
-
-### Community 93 - "Whois Command Rules"
-Cohesion: 0.39
-Nodes (6): test_get_new_command(), test_match(), test_not_match(), get_new_command(), match(), What the `whois` command returns depends on the 'Whois server' it contacted
-
-### Community 94 - "Virtualenv Workon Rules"
-Cohesion: 0.39
-Nodes (6): test_get_new_command(), test_match(), test_not_match(), _get_all_environments(), get_new_command(), match()
-
-### Community 95 - "PTY Shell Logger Spawn"
-Cohesion: 0.38
-Nodes (5): Create a spawned process.      Modified version of pty.spawn with terminal siz, Logs shell output to the `output`.      Works like unix script command with `-, _set_pty_size(), shell_logger(), _spawn()
-
-### Community 96 - "ADB Unknown Command Tests"
-Cohesion: 0.43
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 97 - "AG Literal Search Tests"
-Cohesion: 0.43
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 98 - "AWS CLI Rules"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 99 - "Cat Directory Rules"
-Cohesion: 0.43
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 100 - "Conda Mistype Rules"
-Cohesion: 0.38
-Nodes (5): get_new_command(), match(), Match a mistyped command, test_get_new_command(), test_match()
-
-### Community 101 - "Django South Ghost Fix"
-Cohesion: 0.43
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 102 - "Django South Merge Fix"
-Cohesion: 0.43
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 103 - "Git Bisect Usage Fix"
-Cohesion: 0.43
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 104 - "Git Branch Delete Checked Out"
-Cohesion: 0.43
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 105 - "Git Branch List Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 106 - "Git Clone Duplicate Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 107 - "Git Commit Amend Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 108 - "Git Commit Reset Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 109 - "Git Flag Order Fix"
-Cohesion: 0.52
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 110 - "Git Help Alias Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 111 - "Git Pull Fix"
-Cohesion: 0.43
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 112 - "Git Push Force Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 113 - "Git Push Pull Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 114 - "Git Push No Commits"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 115 - "Git Rebase Merge Dir"
-Cohesion: 0.43
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 116 - "Git Rebase No Changes"
-Cohesion: 0.43
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 117 - "Git Remote Delete Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 118 - "Git Stash Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 119 - "Git Stash Pop Fix"
-Cohesion: 0.43
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 120 - "Git Two Dashes Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 121 - "Gradle Wrapper Fix"
-Cohesion: 0.43
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 122 - "Ln Hard Link Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 123 - "Long Form Help Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 124 - "Mkdir Parents Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 125 - "Maven No Command Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 126 - "NixOS Command Not Found"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 127 - "No Such File Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 128 - "NPM Run Script Fix"
-Cohesion: 0.43
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 129 - "Pacman Invalid Option Fix"
-Cohesion: 0.48
-Nodes (6): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match_bad_output(), test_not_match_good_output()
-
-### Community 130 - "PHP Server Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 131 - "Rails Pending Migrations Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 132 - "Remove Directory Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 133 - "Remove Root Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 134 - "sl ls Typo Fix"
-Cohesion: 0.43
-Nodes (5): get_new_command(), match(), This happens way too often  When typing really fast cause I'm a 1337 H4X0R, I, test_get_new_command(), test_match()
-
-### Community 135 - "Sudo Command Fix"
-Cohesion: 0.48
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 136 - "Unknown Command Fix"
-Cohesion: 0.48
-Nodes (5): test_get_new_command(), test_match(), test_not_match(), get_new_command(), match()
-
-### Community 137 - "Unsudo Command Fix"
-Cohesion: 0.48
-Nodes (5): test_get_new_command(), test_match(), test_not_match(), get_new_command(), match()
-
-### Community 138 - "Wrong Hyphen Subcommand Fix"
-Cohesion: 0.43
-Nodes (5): test_get_new_command(), test_match(), test_not_match(), get_new_command(), match()
-
-### Community 139 - "Yarn Command Replaced Fix"
-Cohesion: 0.48
-Nodes (5): test_get_new_command(), test_match(), test_not_match(), get_new_command(), match()
-
-### Community 141 - "Apt Get Search Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 142 - "Apt List Upgradable Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 143 - "Apt Upgrade Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 144 - "Azure CLI Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 145 - "Brew Reinstall Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 146 - "Brew Update Formula Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 147 - "Cargo No Command Fix"
-Cohesion: 0.53
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 148 - "cd cs Typo Fix"
-Cohesion: 0.53
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 149 - "cd mkdir Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 150 - "cd Parent Fix"
-Cohesion: 0.53
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 151 - "Chocolatey Install Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), not_test_match(), test_get_new_command(), test_match()
-
-### Community 152 - "cp Create Destination Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 153 - "cp Omitting Directory Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 154 - "Dry Command Fix"
-Cohesion: 0.53
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 155 - "Git Add Force Fix"
-Cohesion: 0.47
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 156 - "Git Branch Delete Fix"
-Cohesion: 0.47
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 157 - "Git Clone Missing Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 158 - "Git Commit Add Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 159 - "Git Diff No Index Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 160 - "Git Diff Staged Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 161 - "Git Fix Stash Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 162 - "Git Hook Bypass Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 163 - "Git LFS Mistype Fix"
-Cohesion: 0.40
-Nodes (4): match(), Match a mistyped command, test_get_new_command(), test_match()
-
-### Community 164 - "Git Merge Unrelated Fix"
-Cohesion: 0.53
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 165 - "Git Tag Force Fix"
-Cohesion: 0.47
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 166 - "Has Exists Script Fix"
-Cohesion: 0.53
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 167 - "Heroku Multiple Apps Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 168 - "Heroku Not Command Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 170 - "Man Command Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 171 - "Man No Space Fix"
-Cohesion: 0.53
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 172 - "Python Command Fix"
-Cohesion: 0.53
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 173 - "Quotation Marks Fix"
-Cohesion: 0.53
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 174 - "Remove Trailing Cedilla Fix"
-Cohesion: 0.53
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 175 - "Sed Unterminated s Fix"
-Cohesion: 0.47
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 176 - "Terraform Init Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 177 - "Terraform No Command Fix"
-Cohesion: 0.53
-Nodes (5): get_new_command(), match(), test_get_new_command(), test_match(), test_not_match()
-
-### Community 178 - "Tmux Ambiguous Fix"
-Cohesion: 0.53
-Nodes (4): test_get_new_command(), test_match(), get_new_command(), match()
-
-### Community 179 - "Tsuru Login Fix"
-Cohesion: 0.53
-Nodes (5): test_get_new_command(), test_match(), test_not_match(), get_new_command(), match()
-
-### Community 180 - "Vagrant Up Fix"
-Cohesion: 0.53
-Nodes (5): test_get_new_command(), test_match(), test_not_match(), get_new_command(), match()
-
-### Community 181 - "Yarn Alias Fix"
-Cohesion: 0.53
-Nodes (4): test_get_new_command(), test_match(), get_new_command(), match()
-
-### Community 182 - "Closest Match Utility"
-Cohesion: 0.47
-Nodes (3): TestGetClosest, get_closest(), Returns closest match or just first from possibilities.
-
-### Community 185 - "cd Correction Match"
-Cohesion: 0.60
-Nodes (4): match(), Match function copied from cd_mkdir.py, test_match(), test_not_match()
-
-### Community 186 - "Docker Login Fix"
-Cohesion: 0.60
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 187 - "Gem Unknown Command Fix"
-Cohesion: 0.60
-Nodes (3): match(), test_match(), test_not_match()
-
-### Community 188 - "Go Run Fix"
-Cohesion: 0.60
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 189 - "Grep Recursive Fix"
-Cohesion: 0.60
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 190 - "Java Command Fix"
-Cohesion: 0.60
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 191 - "Javac Command Fix"
-Cohesion: 0.60
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 192 - "ls All Fix"
-Cohesion: 0.60
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 193 - "ls Long Format Fix"
-Cohesion: 0.60
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 194 - "Pip Install Fix"
-Cohesion: 0.60
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 195 - "Python Execute Fix"
-Cohesion: 0.60
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 196 - "Systemctl Command Fix"
-Cohesion: 0.60
-Nodes (4): get_new_command(), match(), test_get_new_command(), test_match()
-
-### Community 197 - "Yarn Help Fix"
-Cohesion: 0.60
-Nodes (4): test_get_new_command(), test_match(), get_new_command(), match()
-
-### Community 199 - "Directory Spellcheck Fix"
+### Community 51 - "Jinja2 Extension Init"
 Cohesion: 0.50
-Nodes (4): get_new_command(), _get_sub_dirs(), Returns a list of the child directories of the given parent directory, Attempt to rebuild the path string by spellchecking the directories.     If it
+Nodes (3): Environment, Initialize the extension with the given environment., Jinja2 Extension Constructor.
+
+### Community 52 - "Abbreviation Expansion Tests"
+Cohesion: 0.32
+Nodes (7): expand_abbreviations(), Expand abbreviations in a template name.      :param template: The project templ, Collection of tests around common path and url shorthands., Verify abbreviation unpacking., Verify abbreviation unpacking raises error on incorrect index., test_abbreviation_expansion(), test_abbreviation_expansion_prefix_not_0_in_braces()
+
+### Community 53 - "Replay Feature Fixtures"
+Cohesion: 0.25
+Nodes (7): context(), mock_user_config(), pytest fixtures for testing cookiecutter's replay feature., Fixture to test directory., Fixture to mock user config., Fixture to return a valid context as known from a cookiecutter.json., replay_test_dir()
+
+### Community 54 - "Replay Feature Tests"
+Cohesion: 0.29
+Nodes (7): Make sure that replay.get_file_name generates a valid json file path., Test `cookiecutter` raise exception on unacceptable `replay` request., Test `cookiecutter` calling correct functions on `replay`., test_get_replay_file_name(), test_main_does_not_invoke_dump_but_load(), test_main_does_not_invoke_load_but_dump(), test_raise_on_invalid_mode()
+
+### Community 55 - "Subdirectory Repo Detection"
+Cohesion: 0.20
+Nodes (9): cloned_cookiecutter_path(), Tests around locally cached cookiecutter template repositories., Fixture. Return simple string as template name., Fixture. Prepare folder structure for tests in this file., Find `cookiecutter.json` in sub folder created by `cloned_cookiecutter_path`., Wrong pointing to `cookiecutter.json` sub-directory should raise., template(), test_local_repo_typo() (+1 more)
+
+### Community 56 - "Output Folder Tests"
+Cohesion: 0.25
+Nodes (7): tests_output_folder.  Test formerly known from a unittest residing in test_gener, Remove the output folder after test., Tests should correctly create content, as output_folder does not yet exist., Tests should raise error as output folder created before `generate_files`., remove_output_folder(), test_exception_when_output_folder_exists(), test_output_folder()
+
+### Community 57 - "Repo Type Identification"
+Cohesion: 0.25
+Nodes (7): Collection of tests around repository type identification., Verify different correct repositories url syntax is correctly transformed., Fixture. Return wrong formatted repository url., Verify different incorrect repositories url syntax trigger error raising., test_identify_known_repo(), test_identify_raise_on_unknown_repo(), unknown_repo_type_url()
+
+### Community 58 - "Hook Template Variables"
+Cohesion: 0.33
+Nodes (7): Cookiecutter Variable: pyhooks, Cookiecutter Variable: shellhooks, Template Variable: pyshellhooks, PyHooks README RST, ShellHooks Empty README RST, ShellHooks README RST, ShellHooks Win README RST
+
+### Community 59 - "Zip Download Utilities"
+Cohesion: 0.29
+Nodes (7): Prompt the user to enter a password.      :param question: Question to the user, read_repo_password(), Download and unpack a zipfile at a given URI.      This will download the zipfil, unzip(), local_repo_url(), Fixture. Represent possible paths to zip file., zipfile()
+
+### Community 60 - "Pre-Prompt Hook Scripts"
+Cohesion: 0.38
+Nodes (6): backup_configuration(), main(), Simple pre-prompt hook that will fail if a specific env var is set., Check if we can run the  cookiecutter., Create a backup of cookiecutter.json., Path
+
+### Community 61 - "Interactive Input Tests"
+Cohesion: 0.33
+Nodes (6): Test main cookiecutter invocation with user input enabled (mocked)., Remove special directories which are created during the tests., Verify simple cookiecutter run results, without extra_context provided., remove_additional_dirs(), test_cookiecutter_input_extra_context(), test_cookiecutter_local_with_input()
+
+### Community 62 - "Boolean Prompt Tests"
+Cohesion: 0.29
+Nodes (4): Verify correct function called for select(list) variables., Class to unite boolean prompt related tests., Verify boolean parameter sent to prompt for config with no input., TestReadUserYesNo
+
+### Community 63 - "Undefined Variable Exception"
+Cohesion: 0.27
+Nodes (4): Any, Exception for out-of-scope variables., Text representation of UndefinedVariableInTemplate., TemplateError
+
+### Community 64 - "JSON Prompt Tests"
+Cohesion: 0.33
+Nodes (5): JsonPrompt, A prompt that returns a dict from JSON string., Convert choices to a dict., Test `JsonPrompt` process_response to convert str to json., test_json_prompt_process_response()
+
+### Community 65 - "Existing Cookiecutter Detection"
+Cohesion: 0.25
+Nodes (7): cloned_cookiecutter_path(), Tests around detection whether cookiecutter templates are cached locally., Fixture. Return simple string as template name., Fixture. Create fake project directory in special user folder., Should find folder created by `cloned_cookiecutter_path` and return it.      Thi, template(), test_should_find_existing_cookiecutter()
+
+### Community 66 - "CLI Invocation Integration"
+Cohesion: 0.33
+Nodes (5): project_dir(), test_cookiecutter_invocation.  Tests to make sure that cookiecutter can be calle, Return test project folder name and remove it after the test., Should create a project and exit with 0 code on cli invocation., test_should_invoke_main()
+
+### Community 67 - "Copy Without Render Tests"
+Cohesion: 0.33
+Nodes (5): Verify correct work of `_copy_without_render` context option., Fixture. Remove the folder that is created by the test., Verify correct work of `_copy_without_render` context option.      Some files/di, remove_test_dir(), test_generate_copy_without_render_extensions()
+
+### Community 68 - "Copy Without Render Override"
+Cohesion: 0.33
+Nodes (5): Verify correct work of `_copy_without_render` context option., Fixture. Remove the folder that is created by the test., Verify correct work of `_copy_without_render` context option.      Some files/di, remove_test_dir(), test_generate_copy_without_render_extensions()
+
+### Community 69 - "Hook Backup File Tests"
+Cohesion: 0.33
+Nodes (5): dir_with_hooks(), Tests for `cookiecutter.hooks` module., Yield a directory that contains hook backup files., Test `find_hook` correctly use `valid_hook` verification function., test_ignore_hook_backup_files()
+
+### Community 70 - "Render Variable Tests"
+Cohesion: 0.33
+Nodes (4): Class to unite simple and complex tests for render_variable function., Verify simple items correctly rendered to strings., Verify tree items correctly rendered., TestRenderVariable
+
+### Community 71 - "User Choice Prompt Tests"
+Cohesion: 0.33
+Nodes (4): Class to unite choices prompt related tests., Verify correct function called for string input variables., Verify Jinja2 templating engine works inside choices variables., TestReadUserChoice
+
+### Community 72 - "Project Metadata Config"
+Cohesion: 0.40
+Nodes (4): Changelog 2.7.1, cookiecutter.json Template Config, GitHub Actions Publish Workflow, SECURITY.md Security Policy
+
+### Community 73 - "Binary File Handling"
+Cohesion: 0.83
+Nodes (4): Cookiecutter Variable: binary_test, Logo PNG (nested level 1), Logo PNG (root binary test input), Binary Test Readme
+
+### Community 74 - "Datetime Template Parsing"
+Cohesion: 0.50
+Nodes (3): Output, Parser, Parse datetime template and add datetime value.
+
+### Community 75 - "Hook Error Abort Tests"
+Cohesion: 0.50
+Nodes (3): test_abort_generate_on_hook_error.  Tests to ensure cookiecutter properly exits, Verify pre- and pos-gen errors raises correct error code from script.      This, test_hooks_raises_errors()
+
+### Community 76 - "Exception Handling Tests"
+Cohesion: 0.50
+Nodes (3): Collection of tests around general exception handling., Verify string representation of errors formatted in expected form., test_undefined_variable_to_str()
+
+### Community 77 - "Character Encoding Tests"
+Cohesion: 0.50
+Nodes (3): Collection of tests around character encodings., Make sure that the systems preferred encoding is not `ascii`.      Otherwise `cl, test_not_ascii()
+
+### Community 78 - "User Choice Error Tests"
+Cohesion: 0.50
+Nodes (3): Tests around prompting for and handling of choice variables., Test function called by cookiecutter raise expected errors.      Test for choice, test_raise_if_options_is_not_a_non_empty_list()
+
+### Community 79 - "Invalid Repo Error Tests"
+Cohesion: 0.50
+Nodes (3): Testing invalid cookiecutter template repositories., Cookiecutter invocation with non-exist repository should raise error., test_should_raise_error_if_repo_does_not_exist()
+
+### Community 80 - "VCS Detection Tests"
+Cohesion: 0.50
+Nodes (3): Collection of tests around VCS detection., Verify `is_vcs_installed` function correctly handles `which` answer., test_is_vcs_installed()
+
+### Community 81 - "Config Defaults Override"
+Cohesion: 0.67
+Nodes (3): Path, A config file that overrides 1 of 3 defaults., test_get_config_with_defaults()
+
+### Community 82 - "Sphinx Docs Config"
+Cohesion: 0.67
+Nodes (3): Sphinx docs/conf.py, Docs Requirements, .readthedocs.yaml Configuration
+
+### Community 83 - "Debug File Logging Tests"
+Cohesion: 0.67
+Nodes (3): Test cli invocation writes log to `debug-file` if flag enabled.      Case for no, test_debug_file_non_verbose(), test_debug_file_verbose()
 
 ## Knowledge Gaps
-- **3 isolated node(s):** `install.sh script`, `GitHub Issue Template`, `VSCode Dev Container`
+- **65 isolated node(s):** `TemplateError`, `Any`, `Parser`, `Output`, `Logger` (+60 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **62 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Command` connect `Lein & Omnienv Task Tests` to `Git & ADB Command Rules`, `Command Corrector Tests`, `Go & Fabric Command Rules`, `Pacman Package Manager Rules`, `Script Output Log Reader`, `Unknown Command Replacement Rules`, `Cache Mechanism Tests`, `Utils & Executables Tests`, `Brew Unknown Command Rules`, `Docker Command Rules`, `No Command Fallback Rules`, `Command Output Execution`, `Brew Install Rules`, `NPM Script Rules`, `APT Invalid Operation Rules`, `DNF Invalid Command Rules`, `Dirty Untar Rules`, `Dirty Unzip Rules`, `Fix File Editor Rules`, `Git Branch Flag Rules`, `Git Checkout Rules`, `Git Pull Uncommitted Changes`, `Path From History Rules`, `Switch Keyboard Layout Rules`, `Git Add Rules`, `Git Push Rules`, `Open URL Rules`, `Port In Use Rules`, `Prove Recursive Rules`, `APT Get Package Rules`, `Brew Cask Dependency Rules`, `Chmod Executable Rules`, `Docker Container Conflict Rules`, `Grep Argument Order Rules`, `Gulp Task Rules`, `Command History Rules`, `Symlink Order Rules`, `Mercurial Command Rules`, `Missing Space Subcommand Rules`, `Maven Lifecycle Phase Rules`, `Pip Unknown Command Rules`, `Shell Prompt Literal Rules`, `SCM Correction Rules`, `Yarn Command Not Found Rules`, `Yum Invalid Operation Rules`, `Brew Link Rules`, `Brew Uninstall Rules`, `Composer Command Rules`, `Alt Space Fix Rules`, `Git Branch Exists Rules`, `Git Main Master Rules`, `Git Not Command Rules`, `Git Push Branch Name Rules`, `Git RM Local Modifications`, `Git RM Recursive Rules`, `Git RM Staged Rules`, `Gradle Task Rules`, `Grunt Task Rules`, `Ifconfig Device Rules`, `Python Module Error Rules`, `React Native Command Rules`, `SSH Known Host Rules`, `Sudo User Path Rules`, `Touch Command Rules`, `Whois Command Rules`, `Virtualenv Workon Rules`, `ADB Unknown Command Tests`, `AG Literal Search Tests`, `AWS CLI Rules`, `Cat Directory Rules`, `Conda Mistype Rules`, `Django South Ghost Fix`, `Django South Merge Fix`, `Git Bisect Usage Fix`, `Git Branch Delete Checked Out`, `Git Branch List Fix`, `Git Clone Duplicate Fix`, `Git Commit Amend Fix`, `Git Commit Reset Fix`, `Git Flag Order Fix`, `Git Help Alias Fix`, `Git Pull Fix`, `Git Push Force Fix`, `Git Push Pull Fix`, `Git Push No Commits`, `Git Rebase Merge Dir`, `Git Rebase No Changes`, `Git Remote Delete Fix`, `Git Stash Fix`, `Git Stash Pop Fix`, `Git Two Dashes Fix`, `Gradle Wrapper Fix`, `Ln Hard Link Fix`, `Long Form Help Fix`, `Mkdir Parents Fix`, `Maven No Command Fix`, `NixOS Command Not Found`, `No Such File Fix`, `NPM Run Script Fix`, `Pacman Invalid Option Fix`, `PHP Server Fix`, `Rails Pending Migrations Fix`, `Remove Directory Fix`, `Remove Root Fix`, `sl ls Typo Fix`, `Sudo Command Fix`, `Unknown Command Fix`, `Unsudo Command Fix`, `Wrong Hyphen Subcommand Fix`, `Yarn Command Replaced Fix`, `Apt Get Search Fix`, `Apt List Upgradable Fix`, `Apt Upgrade Fix`, `Azure CLI Fix`, `Brew Reinstall Fix`, `Brew Update Formula Fix`, `Cargo No Command Fix`, `cd cs Typo Fix`, `cd mkdir Fix`, `cd Parent Fix`, `Chocolatey Install Fix`, `cp Create Destination Fix`, `cp Omitting Directory Fix`, `Dry Command Fix`, `Git Add Force Fix`, `Git Branch Delete Fix`, `Git Clone Missing Fix`, `Git Commit Add Fix`, `Git Diff No Index Fix`, `Git Diff Staged Fix`, `Git Fix Stash Fix`, `Git Hook Bypass Fix`, `Git LFS Mistype Fix`, `Git Merge Unrelated Fix`, `Git Tag Force Fix`, `Has Exists Script Fix`, `Heroku Multiple Apps Fix`, `Heroku Not Command Fix`, `Man Command Fix`, `Man No Space Fix`, `Python Command Fix`, `Quotation Marks Fix`, `Remove Trailing Cedilla Fix`, `Sed Unterminated s Fix`, `Terraform Init Fix`, `Terraform No Command Fix`, `Tmux Ambiguous Fix`, `Tsuru Login Fix`, `Vagrant Up Fix`, `Yarn Alias Fix`, `Closest Match Utility`, `Valid History Filter`, `cd Correction Match`, `Docker Login Fix`, `Gem Unknown Command Fix`, `Go Run Fix`, `Grep Recursive Fix`, `Java Command Fix`, `Javac Command Fix`, `ls All Fix`, `ls Long Format Fix`, `Pip Install Fix`, `Python Execute Fix`, `Systemctl Command Fix`, `Yarn Help Fix`?**
-  _High betweenness centrality (0.471) - this node is a cross-community bridge._
-- **Why does `TestBash` connect `Bash Shell Tests` to `Shell History Fixtures`, `Command Corrector Tests`, `Shell Detection & Memoize`, `Bash Shell Support`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
-- **Why does `Generic` connect `Shell Base Class Methods` to `Command Corrector Tests`, `Shell Detection & Memoize`, `Zsh Shell Tests`, `Tcsh Shell Support`, `Bash Shell Support`, `Generic Shell Tests`, `Fish Shell Support`, `Powershell Shell Support`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
-- **Are the 9 inferred relationships involving `Command` (e.g. with `TestGetRules` and `TestCommand`) actually correct?**
-  _`Command` has 9 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Yield write_script() argument tuples for a distribution's     console_scripts a`, `install.sh script`, `Adds `--enable-functional` argument.` to the rest of the system?**
-  _124 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Sudo & Package Manager Rules` be split into smaller, more focused modules?**
-  _Cohesion score 0.05427905427905428 - nodes in this community are weakly interconnected._
-- **Should `History & Confirmation UI Tests` be split into smaller, more focused modules?**
-  _Cohesion score 0.10452961672473868 - nodes in this community are weakly interconnected._
+- **Why does `cookiecutter()` connect `Cookiecutter Python API Usage` to `Package Modules Documentation`, `Project File Generation`, `CLI Entry Point`, `Replay Read Write`, `Template Prompt Selection`, `Hook Discovery Functions`, `Repository Detection`, `CLI Interface Tests`, `Advanced Usage Docs`, `Global Config Handling`?**
+  _High betweenness centrality (0.105) - this node is a cross-community bridge._
+- **Why does `StrictEnvironment` connect `Cookiecutter Utilities` to `File Generation Tests`, `CLI Interface Tests`, `File Utility Tests`, `Jinja2 Environment Loading`, `Jinja2 Extensions`?**
+  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+- **Why does `cookiecutter.main Module` connect `Package Modules Documentation` to `Project Metadata Config`, `Cookiecutter Python API Usage`?**
+  _High betweenness centrality (0.043) - this node is a cross-community bridge._
+- **Are the 5 inferred relationships involving `Path` (e.g. with `ContextDecodingException` and `EmptyDirNameException`) actually correct?**
+  _`Path` has 5 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 14 inferred relationships involving `UndefinedVariableInTemplate` (e.g. with `Context` and `Any`) actually correct?**
+  _`UndefinedVariableInTemplate` has 14 INFERRED edges - model-reasoned connections that need verification._
+- **What connects `Allow cookiecutter to be executable from a checkout or zip file.`, `Main package for Cookiecutter.`, `Allow cookiecutter to be executable through `python -m cookiecutter`.` to the rest of the system?**
+  _527 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Cookiecutter Python API Usage` be split into smaller, more focused modules?**
+  _Cohesion score 0.04964539007092199 - nodes in this community are weakly interconnected._
