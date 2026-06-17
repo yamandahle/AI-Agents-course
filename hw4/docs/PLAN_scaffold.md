@@ -13,10 +13,12 @@ skeleton files. No logic yet — just the project skeleton.
 ## Steps
 
 ### 1. Initialize uv
+Run from inside the `hw4/` folder:
 ```
-uv init hw4
+uv init .
 ```
-Creates: `pyproject.toml`, `uv.lock`, `.python-version`
+- Project name: `hw4`, layout: `src/hw4/`
+- Creates: `pyproject.toml`, `uv.lock`, `.python-version`
 
 ### 2. Folder Structure
 ```
