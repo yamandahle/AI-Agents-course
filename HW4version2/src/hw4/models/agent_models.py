@@ -10,6 +10,8 @@ FunctionalBugStatus = Literal["OPEN", "CONFIRMED_HISTORICAL", "NOT_DETECTED"]
 
 @dataclass
 class ArchitecturalBug:
+    """A structural defect detected in the code dependency graph."""
+
     bug_type: BugType
     node_name: str
     severity: Severity
@@ -17,17 +19,21 @@ class ArchitecturalBug:
     source_file: str = ""
 
     def to_dict(self) -> dict[str, Any]:
+        """Return a plain dict representation suitable for JSON serialisation."""
         return asdict(self)
 
 
 @dataclass
 class FixProposal:
+    """A proposed structural refactor targeting one architectural bug."""
+
     bug: ArchitecturalBug
     target_file: str
     change_description: str
     rationale: str
 
     def to_dict(self) -> dict[str, Any]:
+        """Return a plain dict representation suitable for JSON serialisation."""
         data = asdict(self)
         data["bug"] = self.bug.to_dict()
         return data
@@ -35,6 +41,8 @@ class FixProposal:
 
 @dataclass
 class FunctionalBug:
+    """A known functional bug from the BugsInPy catalogue cross-referenced with the graph."""
+
     bugsinpy_id: int
     source_file: str
     description: str
@@ -45,11 +53,14 @@ class FunctionalBug:
     test_file: str
 
     def to_dict(self) -> dict[str, Any]:
+        """Return a plain dict representation suitable for JSON serialisation."""
         return asdict(self)
 
 
 @dataclass
 class GraphSummary:
+    """Structural summary of the code dependency graph produced by the Graph Navigator."""
+
     node_count: int
     edge_count: int
     community_count: int
@@ -62,6 +73,7 @@ class GraphSummary:
     estimated_tokens: int = 0
 
     def to_dict(self) -> dict[str, Any]:
+        """Return a plain dict representation suitable for JSON serialisation."""
         return {
             "node_count": self.node_count,
             "edge_count": self.edge_count,
@@ -78,6 +90,8 @@ class GraphSummary:
 
 @dataclass
 class VerificationReport:
+    """Summary of whether the applied fix passed all quality checks."""
+
     fix_applied: bool
     tests_passed: bool
     centrality_delta: float
@@ -86,4 +100,5 @@ class VerificationReport:
     proposals_count: int = 0
 
     def to_dict(self) -> dict[str, Any]:
+        """Return a plain dict representation suitable for JSON serialisation."""
         return asdict(self)

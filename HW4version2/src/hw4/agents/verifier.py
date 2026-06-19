@@ -18,6 +18,7 @@ class VerifierAgent:
         bugs_count: int,
         proposals: list[FixProposal],
     ) -> VerificationReport:
+        """Compare current metrics against the baseline and return a VerificationReport."""
         baseline = self._load_baseline()
         delta = 0.0
         if baseline:

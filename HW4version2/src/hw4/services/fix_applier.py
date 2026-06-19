@@ -12,6 +12,8 @@ from hw4.shared.gatekeeper import ApiGatekeeper
 
 @dataclass
 class FixResult:
+    """Result of applying a fix proposal to the cookiecutter source tree."""
+
     branch: str
     patch_path: str
     target_file: str
@@ -27,6 +29,7 @@ class FixApplierService:
         self._repo_root = Path(paths["data"]) / "cookiecutter"
 
     def apply_from_file(self, proposals_path: str | None = None) -> FixResult:
+        """Load fix proposals from disk, apply the best one, and return the FixResult."""
         path = Path(proposals_path) if proposals_path else self._results / "fix_proposals.json"
         proposals = json.loads(path.read_text(encoding="utf-8"))
         proposal = self._select_proposal(proposals)

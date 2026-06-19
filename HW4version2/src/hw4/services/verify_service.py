@@ -14,6 +14,8 @@ from hw4.shared.gatekeeper import ApiGatekeeper
 
 @dataclass
 class VerifyResult:
+    """Result of the VerifyService run — graph metrics comparison and quality check outcomes."""
+
     metrics_comparison: dict[str, Any]
     tests_passed: bool
     coverage_percent: float
@@ -22,6 +24,8 @@ class VerifyResult:
 
 
 class VerifyService:
+    """Re-scans the graph after the fix is applied and runs pytest + ruff to confirm quality."""
+
     def __init__(
         self,
         gatekeeper: ApiGatekeeper,
@@ -36,6 +40,7 @@ class VerifyService:
         self._graph_builder = GraphBuilderService(gatekeeper, config)
 
     def run(self) -> VerifyResult:
+        """Re-scan the graph, run pytest and ruff, and return a VerifyResult."""
         pkg = self._root / self._paths["data"] / "cookiecutter" / "cookiecutter"
         artifacts = self._root / self._paths["artifacts"]
         results = self._root / self._paths["results"]

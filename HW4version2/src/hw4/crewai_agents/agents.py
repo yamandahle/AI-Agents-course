@@ -14,6 +14,7 @@ from hw4.shared.provider import ProviderConfig, load_provider
 
 
 def build_agents(provider: ProviderConfig | None = None) -> dict[str, Agent]:
+    """Construct the four CrewAI agents and return them keyed by role slug."""
     if provider is None:
         provider = load_provider()
     llm = LLM(model=provider.model, api_key=provider.api_key, temperature=0.2)

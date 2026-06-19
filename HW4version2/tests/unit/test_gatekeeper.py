@@ -112,3 +112,39 @@ def test_wait_if_rate_limited_prunes_old_timestamps(monkeypatch) -> None:
     gk._call_times = [old, old]
     gk._wait_if_rate_limited()
     assert slept == []  # old calls pruned; under limit again
+
+
+# ── concurrent_max enforcement ────────────────────────────────────────────────
+
+def test_concurrent_max_queues_excess_calls() -> None:
+    import threading as _threading
+
+    gk = _gk(concurrent_max=1, requests_per_minute=60, max_retries=1)
+    active: list[int] = []  # count of calls running simultaneously
+    max_active: list[int] = [0]
+    lock = _threading.Lock()
+
+    def tracked_call() -> str:
+        with lock:
+            active.append(1)
+            max_active[0] = max(max_active[0], len(active))
+        time.sleep(0.05)
+        with lock:
+            active.pop()
+        return "done"
+
+    results: list[str] = []
+
+    def run() -> None:
+        results.append(gk.execute(tracked_call))
+
+    t1 = _threading.Thread(target=run)
+    t2 = _threading.Thread(target=run)
+    t1.start()
+    t2.start()
+    t1.join(timeout=5)
+    t2.join(timeout=5)
+
+    assert len(results) == 2
+    # concurrent_max=1 means at most 1 call ran at the same time
+    assert max_active[0] == 1

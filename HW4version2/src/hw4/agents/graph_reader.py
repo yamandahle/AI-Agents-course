@@ -22,6 +22,7 @@ class GraphReaderAgent:
         self._max_chars = max_chars
 
     def run(self) -> GraphSummary:
+        """Load the graph, compute metrics, and return a token-efficient GraphSummary."""
         graph = self._graph_builder.load_graph(self._graph_path)
         metrics = self._graph_builder.compute_metrics(graph)
         hot_excerpt = self._read_excerpt("hot.md")

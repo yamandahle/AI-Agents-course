@@ -33,12 +33,15 @@ _PROVIDER_DEFAULTS: dict[str, dict[str, str]] = {
 
 @dataclass(frozen=True)
 class ProviderConfig:
+    """Immutable configuration for one LLM provider (name, key, model, rate-limit key)."""
+
     name: str
     api_key: str
     model: str
     rate_limit_key: str
 
     def is_configured(self) -> bool:
+        """Return True when api_key is set and is not the placeholder value."""
         return bool(self.api_key) and self.api_key != "your_key_here"
 
 

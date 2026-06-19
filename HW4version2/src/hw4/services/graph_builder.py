@@ -13,11 +13,14 @@ from hw4.shared.gatekeeper import ApiGatekeeper
 
 
 class GraphBuilderService:
+    """Wraps the Grphify CLI to build and load the code dependency graph."""
+
     def __init__(self, gatekeeper: ApiGatekeeper, config: dict) -> None:
         self._gatekeeper = gatekeeper
         self._config = config
 
     def clone_repo(self, url: str, dest: str) -> None:
+        """Clone a git repository from url into dest via the gatekeeper."""
         self._gatekeeper.execute(
             subprocess.run,
             ["git", "clone", url, dest],
@@ -26,10 +29,12 @@ class GraphBuilderService:
 
     @staticmethod
     def graphify_out_dir(artifacts_dir: Path) -> Path:
+        """Return the path where Grphify writes its output files."""
         return artifacts_dir / "graphify-out"
 
     @staticmethod
     def package_dir(project_root: Path, paths: dict) -> Path:
+        """Return the cookiecutter package directory to scan."""
         return project_root / paths["data"] / "cookiecutter" / "cookiecutter"
 
     def run_grphify(
@@ -38,6 +43,7 @@ class GraphBuilderService:
         artifacts_dir: str | Path,
         backend: str = "claude",
     ) -> Path:
+        """Run the Grphify extract command on source_path and return the output directory."""
         out_parent = Path(artifacts_dir)
         self._gatekeeper.execute(
             subprocess.run,
@@ -60,6 +66,7 @@ class GraphBuilderService:
         graphify_out: Path,
         project_root: Path,
     ) -> None:
+        """Run Grphify update to refresh the graph after a code change."""
         env = {**os.environ, "GRAPHIFY_OUT": str(graphify_out.resolve())}
         pkg_arg = package.resolve().relative_to(project_root.resolve()).as_posix()
         self._gatekeeper.execute(
@@ -79,6 +86,7 @@ class GraphBuilderService:
         html_name: str = "graph.html",
         report_name: str = "GRAPH_REPORT.md",
     ) -> None:
+        """Copy graph.json, graph.html, and GRAPH_REPORT.md from graphify_out into artifacts."""
         for src_name, dst_name in (
             ("graph.json", json_name),
             ("graph.html", html_name),
@@ -89,6 +97,7 @@ class GraphBuilderService:
                 (artifacts / dst_name).write_bytes(src.read_bytes())
 
     def load_graph(self, graph_json_path: str) -> Graph:
+        """Parse a Grphify graph.json file and return a Graph instance."""
         data = json.loads(Path(graph_json_path).read_text(encoding="utf-8"))
         nodes = [
             Node(
@@ -111,6 +120,7 @@ class GraphBuilderService:
         return Graph(nodes=nodes, edges=edges)
 
     def compute_metrics(self, graph: Graph) -> GraphMetrics:
+        """Compute degree, community count, bridge count, and top-hub rankings for graph."""
         degree: Counter = Counter()
         for e in graph.edges:
             degree[e.source] += 1

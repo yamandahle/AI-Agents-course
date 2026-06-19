@@ -7,11 +7,14 @@ from hw4.models.graph_models import Graph
 
 
 class BugDetectorService:
+    """Detects HUB, SPOF, and WEAK_BRIDGE defects from a code dependency graph."""
+
     def __init__(self, hub_degree_threshold: int = 10, max_bugs: int = 5) -> None:
         self._hub_threshold = hub_degree_threshold
         self._max_bugs = max_bugs
 
     def detect(self, graph: Graph, summary: GraphSummary) -> list[ArchitecturalBug]:
+        """Return up to max_bugs ranked architectural bugs found in graph."""
         bugs: list[ArchitecturalBug] = []
         bugs.extend(self._find_hubs(graph))
         bugs.extend(self._find_spofs(graph))

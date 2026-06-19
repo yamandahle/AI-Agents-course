@@ -38,6 +38,7 @@ class FixProposerAgent:
         self._max_file_chars = max_file_chars
 
     def run(self, bugs: list[ArchitecturalBug], summary: GraphSummary) -> list[FixProposal]:
+        """Generate one FixProposal per bug, optionally refined by LLM."""
         proposals: list[FixProposal] = []
         for bug in bugs:
             proposals.append(self._propose(bug, summary))

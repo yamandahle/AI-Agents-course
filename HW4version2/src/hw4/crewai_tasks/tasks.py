@@ -14,6 +14,7 @@ def build_tasks(
     cookiecutter_pkg_dir: str,
     project_root: str = ".",
 ) -> list[Task]:
+    """Build the four context-chained CrewAI tasks and return them in execution order."""
     graph_summary_task = Task(
         description=(
             f"1. Call Load Graph Metrics with path='{graph_path}'. "

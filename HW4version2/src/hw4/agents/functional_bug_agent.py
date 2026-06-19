@@ -11,4 +11,5 @@ class FunctionalBugAgent:
         self._detector = detector
 
     def run(self, summary: GraphSummary) -> list[FunctionalBug]:
+        """Run the functional bug detector against the graph-hot files."""
         return self._detector.detect(summary)

@@ -28,6 +28,7 @@ class CrewRunnerService:
         self._llm = LlmClient(gatekeeper)
 
     def run(self) -> dict[str, Any]:
+        """Execute all pipeline agents in sequence and persist results to disk."""
         artifacts = Path(self._paths["artifacts"])
         obsidian = Path(self._paths["obsidian"])
         results = Path(self._paths["results"])

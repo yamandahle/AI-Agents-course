@@ -10,6 +10,7 @@ def render_verification_report(
     coverage: float,
     ruff_clean: bool,
 ) -> str:
+    """Render a Markdown verification report from the fix proposal and metrics comparison."""
     bug = proposal.get("bug", {})
     hub = comparison["main_cookiecutter_hub_degree"]
     tests = "PASS" if tests_passed else "FAIL"

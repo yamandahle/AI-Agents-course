@@ -23,9 +23,11 @@ class LlmClient:
         self._provider: ProviderConfig = load_provider()
 
     def is_configured(self) -> bool:
+        """Return True when a real API key is available for the active provider."""
         return self._provider.is_configured()
 
     def complete(self, system: str, user: str) -> str:
+        """Send a chat completion request and return the model's text response."""
         if not self.is_configured():
             return ""
 

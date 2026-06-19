@@ -15,6 +15,8 @@ from hw4.shared.provider import load_provider
 
 
 class HW4SDK:
+    """Public entry point for the EX04 pipeline — all pipeline logic flows through here."""
+
     def __init__(self, config_dir: str = "config") -> None:
         self.config = ConfigManager(config_dir)
         self.gatekeeper = self._build_gatekeeper()
@@ -36,6 +38,7 @@ class HW4SDK:
         )
 
     def run_grphify(self, backend: str = "claude", project_root: str = ".") -> None:
+        """Run the Grphify static analysis pass and sync deliverables to artifacts/."""
         root = Path(project_root)
         paths = self.config.get("paths")
         artifacts = root / paths["artifacts"]
@@ -44,6 +47,7 @@ class HW4SDK:
         self.graph_builder.sync_deliverables(graphify_out, artifacts)
 
     def run_agents(self) -> dict[str, Any]:
+        """Run the four CrewAI agents in sequence and return their combined outputs."""
         runner = CrewRunnerService(
             self.gatekeeper,
             self.config.get("agents"),
@@ -52,6 +56,7 @@ class HW4SDK:
         return runner.run()
 
     def detect_bugs(self) -> list[dict]:
+        """Detect architectural bugs in the current graph and return a ranked list."""
         graph_path = self.config.get("paths", "artifacts") + "graph.json"
         graph = self.graph_builder.load_graph(graph_path)
         summary_metrics = self.graph_builder.compute_metrics(graph)
@@ -73,11 +78,13 @@ class HW4SDK:
         return [bug.to_dict() for bug in bugs]
 
     def apply_fix(self) -> FixResult:
+        """Apply the LLM-generated fix from v2_fix_proposal.json and commit the result."""
         llm = LlmClient(self.gatekeeper)
         applier = GenericFixApplier(llm, self.gatekeeper, self.config.get("paths"))
         return applier.apply_from_proposal()
 
     def verify(self) -> VerifyResult:
+        """Re-scan the graph, run pytest, and produce the verification report."""
         return VerifyService(
             self.gatekeeper,
             self.config.get("agents"),

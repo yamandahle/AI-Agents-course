@@ -34,6 +34,7 @@ class CrewRunnerV2:
         self._provider = load_provider()
 
     def run(self) -> dict[str, Any]:
+        """Kick off the CrewAI crew with retry logic and return collected agent outputs."""
         agents = build_agents(provider=self._provider)
         artifacts = Path(self._paths["artifacts"])
         data = Path(self._paths["data"])

@@ -53,6 +53,7 @@ class FunctionalBugDetectorService:
         self._catalog = json.loads(catalog_path.read_text(encoding="utf-8"))["bugs"]
 
     def detect(self, summary: GraphSummary) -> list[FunctionalBug]:
+        """Scan catalog entries whose files overlap the graph hot-spots and return FunctionalBugs."""
         hot_files = self._hot_files(summary)
         bugs: list[FunctionalBug] = []
         for entry in self._catalog:

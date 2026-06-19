@@ -20,6 +20,7 @@ class BugDetectorAgent:
         self._llm = llm
 
     def run(self, summary: GraphSummary) -> list[ArchitecturalBug]:
+        """Detect bugs from the graph and optionally enrich explanations via LLM."""
         bugs = self._detector.detect(self._graph, summary)
         if self._llm and self._llm.is_configured() and bugs:
             self._enrich_with_llm(bugs, summary)

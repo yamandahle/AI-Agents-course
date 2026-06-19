@@ -10,6 +10,7 @@ from hw4.services.graph_builder import GraphBuilderService
 
 
 def hub_degree(hubs: list, node_id: str) -> int:
+    """Return the degree of node_id from a (node, degree) hub list, or 0 if absent."""
     return next((degree for node, degree in hubs if node == node_id), 0)
 
 
@@ -18,6 +19,7 @@ def build_metrics_dict(
     graph_builder: GraphBuilderService,
     hub_threshold: int = 10,
 ) -> dict[str, Any]:
+    """Compute a flat metrics dict from graph, including bug counts and hub degrees."""
     metrics = graph_builder.compute_metrics(graph)
     summary = GraphSummary(
         metrics.node_count,
@@ -51,6 +53,7 @@ def build_metrics_dict(
 
 
 def compare_metrics(before: dict, after: dict) -> dict[str, Any]:
+    """Build a before/after comparison dict for all tracked graph metrics."""
     before_hub = hub_degree(before.get("top_hubs", []), "main_cookiecutter")
     after_hub = after["target_hub_degree"]
     return {
