@@ -5,11 +5,12 @@ from typing import Any
 
 from hw4.services.bug_detector import BugDetectorService
 from hw4.services.crew_runner import CrewRunnerService
-from hw4.services.fix_applier import FixApplierService, FixResult
+from hw4.services.generic_fix_applier import FixResult, GenericFixApplier
 from hw4.services.graph_builder import GraphBuilderService
 from hw4.services.verify_service import VerifyResult, VerifyService
 from hw4.shared.config import ConfigManager
 from hw4.shared.gatekeeper import ApiGatekeeper, RateLimitConfig
+from hw4.shared.llm_client import LlmClient
 from hw4.shared.provider import load_provider
 
 
@@ -72,8 +73,9 @@ class HW4SDK:
         return [bug.to_dict() for bug in bugs]
 
     def apply_fix(self) -> FixResult:
-        applier = FixApplierService(self.gatekeeper, self.config.get("paths"))
-        return applier.apply_from_file()
+        llm = LlmClient(self.gatekeeper)
+        applier = GenericFixApplier(llm, self.gatekeeper, self.config.get("paths"))
+        return applier.apply_from_proposal()
 
     def verify(self) -> VerifyResult:
         return VerifyService(

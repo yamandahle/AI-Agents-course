@@ -32,8 +32,8 @@ print("✓ results/v2_bugs.json")
 print("✓ results/v2_fix_proposal.json")
 print("✓ results/v2_verification.json\n")
 
-# Stage 3 — Apply fix
-print("── STAGE 3: Apply fix ─────────────────────────────────────")
+# Stage 3 — Apply fix (LLM-generated, works on any Python codebase)
+print("── STAGE 3: Apply fix (LLM-generated) ────────────────────")
 fix = sdk.apply_fix()
 print(f"✓ branch     : {fix.branch}")
 print(f"✓ committed  : {fix.committed}")

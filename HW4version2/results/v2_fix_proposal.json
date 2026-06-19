@@ -5,12 +5,12 @@
     "node_name": "exceptions_undefinedvariableintemplate",
     "source_file": "N/A",
     "severity": "HIGH",
-    "explanation": "The node 'exceptions_undefinedvariableintemplate' is a HUB with a high degree of 21, indicating a central and potentially over-connected component."
+    "explanation": "Node 'exceptions_undefinedvariableintemplate' is a HUB with a high degree of 21, indicating a central and highly connected component."
   },
   "target_file": "data/cookiecutter/cookiecutter/exceptions.py",
-  "new_module_name": "template_exceptions",
-  "change_description": "Move the `UndefinedVariableInTemplate` exception class and any other exceptions specifically related to template processing (e.g., those related to Jinja2 or variable rendering) from `data/cookiecutter/cookiecutter/exceptions.py` to a new module named `data/cookiecutter/cookiecutter/template_exceptions.py`. All existing import statements across the codebase that reference `UndefinedVariableInTemplate` will be updated to import from the new `template_exceptions` module.",
-  "rationale": "The `exceptions.py` file currently serves as a monolithic hub for all custom exceptions, leading to high coupling and a high hub degree for individual exceptions like `UndefinedVariableInTemplate`. By extracting `UndefinedVariableInTemplate` and other template-specific exceptions into a dedicated `template_exceptions.py` module, we achieve a clearer separation of concerns. This reduces the number of dependencies on the main `exceptions.py` file, making it less coupled and improving its cohesion. Modules that specifically handle template rendering will now depend on `template_exceptions.py` instead of the broader `exceptions.py`, thereby directly reducing the hub degree of the original `exceptions` module and improving overall modularity.",
-  "estimated_degree_reduction": 21
+  "new_module_name": "template_exceptions.py",
+  "change_description": "Extract the `UndefinedVariableInTemplate` exception class and any other exceptions specifically related to template rendering (e.g., those directly involving `jinja2.TemplateError`) from `exceptions.py` into a new module named `template_exceptions.py`. This includes moving relevant imports such as `from jinja2 import TemplateError`.",
+  "rationale": "The `exceptions.py` file currently serves as a central hub for all Cookiecutter-specific exceptions. By isolating template-specific exceptions like `UndefinedVariableInTemplate` into a dedicated `template_exceptions.py` module, we reduce the coupling of the main `exceptions` module to the templating engine (Jinja2). This makes `exceptions.py` more focused on general application exceptions and improves modularity. Modules that specifically handle template-related errors will now import from `template_exceptions.py`, thereby reducing the number of dependencies on the `exceptions.py` file and lowering its hub degree.",
+  "estimated_degree_reduction": 7
 }
 ```

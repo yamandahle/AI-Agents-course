@@ -63,8 +63,10 @@ def build_tasks(
             "retry_instruction from that verdict explicitly."
         ),
         expected_output=(
-            "JSON with: bug (the chosen ArchitecturalBug object), target_file, "
-            "new_module_name, change_description, rationale, estimated_degree_reduction (int)."
+            "JSON with: bug (the chosen ArchitecturalBug object), "
+            f"target_file (FULL relative path from project root, e.g. '{cookiecutter_pkg_dir}/exceptions.py'), "
+            "new_module_name (filename only, e.g. 'template_exceptions.py'), "
+            "change_description, rationale, estimated_degree_reduction (int)."
         ),
         agent=agents["fix_strategist"],
         context=[graph_summary_task, bug_detection_task],
@@ -73,23 +75,31 @@ def build_tasks(
 
     verification_task = Task(
         description=(
-            f"You received the fix proposal. "
+            "You received the graph summary (before-fix metrics), the bug list, "
+            "and the fix proposal. Perform these steps in order:\n"
             f"1. Run unit tests with project_root='{project_root}' using Run Unit Tests. "
-            f"2. Call Load Graph Metrics on '{graph_after_path}' (the post-fix graph). "
-            "3. Compare node_count, edge_count, community_count to the before values "
-            "   in the graph summary from the Graph Navigator. "
-            "4. Produce a verdict: PASS if tests green AND coverage >= 85% AND "
-            "   at least one metric improved. Otherwise FAIL. "
-            "5. For a FAIL, write a specific retry_instruction telling the Fix Strategist "
-            "   exactly what to change (e.g. 'move X to Y instead of Z')."
+            "Record tests_passed (bool) and coverage_percent (float).\n"
+            "2. From the graph summary already in your context, read the degree of the "
+            "top hub node (first entry in top_10_hubs). Call this top_hub_degree_before.\n"
+            "3. From the fix proposal already in your context, read estimated_degree_reduction.\n"
+            "4. Compute: top_hub_degree_after_estimate = "
+            "top_hub_degree_before - estimated_degree_reduction.\n"
+            "5. Set metrics_improved = true if estimated_degree_reduction > 0, else false.\n"
+            "6. Produce a PASS verdict if ALL of: tests_passed == true, "
+            "coverage_percent >= 85, metrics_improved == true. "
+            "Otherwise FAIL.\n"
+            "7. For FAIL, write a specific retry_instruction for the Fix Strategist "
+            "explaining exactly what must change."
         ),
         expected_output=(
             "JSON with: verdict (PASS|FAIL), tests_passed (bool), coverage_percent (float), "
-            "metrics_improved (bool), metrics_delta (dict of before/after values), "
+            "metrics_improved (bool), "
+            "metrics_delta ({top_hub_degree_before, estimated_degree_reduction, "
+            "top_hub_degree_after_estimate}), "
             "failure_reason (str or null), retry_instruction (str or null)."
         ),
         agent=agents["quality_gate"],
-        context=[bug_detection_task, fix_proposal_task],
+        context=[graph_summary_task, bug_detection_task, fix_proposal_task],
         output_file="results/v2_verification.json",
     )
 

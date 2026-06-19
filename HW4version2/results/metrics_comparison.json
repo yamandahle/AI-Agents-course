@@ -2,32 +2,32 @@
   "bug_fixed": "cookiecutter() HUB in main.py",
   "node_count": {
     "before": 269,
-    "after": 283
+    "after": 276
   },
   "edge_count": {
     "before": 504,
-    "after": 523
+    "after": 500
   },
   "community_count": {
     "before": 15,
-    "after": 16
+    "after": 15
   },
   "bridge_count": {
     "before": 127,
-    "after": 138
+    "after": 132
   },
   "main_cookiecutter_hub_degree": {
     "before": 16,
-    "after": 14
+    "after": 16
   },
-  "orchestration_hub_sum_after": 43,
+  "orchestration_hub_sum_after": 0,
   "spof_count": {
     "before": 10,
-    "after": 10
+    "after": 14
   },
   "hub_count": {
     "before": 10,
-    "after": 10
+    "after": 6
   },
-  "improved": true
+  "improved": false
 }

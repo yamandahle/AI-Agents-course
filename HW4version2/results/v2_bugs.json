@@ -5,35 +5,35 @@
     "node_name": "exceptions_undefinedvariableintemplate",
     "source_file": "N/A",
     "severity": "HIGH",
-    "explanation": "The node 'exceptions_undefinedvariableintemplate' is a HUB with a high degree of 21, indicating a central and potentially over-connected component."
+    "explanation": "Node 'exceptions_undefinedvariableintemplate' is a HUB with a high degree of 21, indicating a central and highly connected component."
   },
   {
     "bug_type": "HUB",
     "node_name": "exceptions_cookiecutterexception",
     "source_file": "N/A",
     "severity": "HIGH",
-    "explanation": "The node 'exceptions_cookiecutterexception' is a HUB with a high degree of 20, suggesting it is a critical and highly interconnected part of the system."
+    "explanation": "Node 'exceptions_cookiecutterexception' is a HUB with a high degree of 20, indicating a central and highly connected component."
   },
   {
     "bug_type": "HUB",
     "node_name": "exceptions",
     "source_file": "N/A",
     "severity": "HIGH",
-    "explanation": "The node 'exceptions' is a HUB with a high degree of 19, indicating it plays a central role in the system's exception handling."
+    "explanation": "Node 'exceptions' is a HUB with a high degree of 19, indicating a central and highly connected component."
   },
   {
     "bug_type": "HUB",
     "node_name": "prompt",
     "source_file": "N/A",
     "severity": "HIGH",
-    "explanation": "The node 'prompt' is a HUB with a high degree of 16, suggesting it is a highly connected component involved in user interaction."
+    "explanation": "Node 'prompt' is a HUB with a high degree of 16, indicating a central and highly connected component."
   },
   {
     "bug_type": "HUB",
-    "node_name": "generate_generate_files",
+    "node_name": "main_cookiecutter",
     "source_file": "N/A",
     "severity": "MEDIUM",
-    "explanation": "The node 'generate_generate_files' is a HUB with a degree of 13, indicating it is a significant but not excessively connected component."
+    "explanation": "Node 'main_cookiecutter' is a HUB with a degree of 14, indicating a central and highly connected component."
   }
 ]
 ```

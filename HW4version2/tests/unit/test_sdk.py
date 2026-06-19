@@ -28,12 +28,12 @@ def test_sdk_verify_delegates_to_verify_service() -> None:
 
 
 def test_sdk_apply_fix_delegates() -> None:
-    from hw4.services.fix_applier import FixResult
+    from hw4.services.generic_fix_applier import FixResult
 
     sdk = HW4SDK("config")
     fake = FixResult("fix/test", "results/fix_diff.patch", "main.py", True)
-    with patch("hw4.sdk.sdk.FixApplierService") as mock_applier:
-        mock_applier.return_value.apply_from_file.return_value = fake
+    with patch("hw4.sdk.sdk.GenericFixApplier") as mock_applier:
+        mock_applier.return_value.apply_from_proposal.return_value = fake
         result = sdk.apply_fix()
     assert result.branch == "fix/test"
 

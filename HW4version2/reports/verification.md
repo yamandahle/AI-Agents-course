@@ -11,19 +11,19 @@
 
 | Metric | Before | After |
 |--------|--------|-------|
-| Nodes | 269 | 283 |
-| Edges | 504 | 523 |
-| Communities | 15 | 16 |
-| Bridges | 127 | 138 |
-| `main_cookiecutter` hub degree | 16 | 14 |
-| Orchestration hub sum (after) | — | 43 |
+| Nodes | 269 | 276 |
+| Edges | 504 | 500 |
+| Communities | 15 | 15 |
+| Bridges | 127 | 132 |
+| `main_cookiecutter` hub degree | 16 | 16 |
+| Orchestration hub sum (after) | — | 0 |
 
 ## Quality checks
 
 | Check | Result |
 |-------|--------|
-| Unit tests | FAIL |
-| Coverage | 77.0% |
+| Unit tests | PASS |
+| Coverage | 93.0% |
 | Ruff | PASS |
 
 ## Conclusion

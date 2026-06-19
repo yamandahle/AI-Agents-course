@@ -72,7 +72,7 @@ def test_tasks_have_context_chaining() -> None:
     assert call_records[0] == []  # graph_summary: no context
     assert len(call_records[1]) == 1  # bug_detection: context = [graph_summary]
     assert len(call_records[2]) == 2  # fix_proposal: context = [graph_summary, bug_detection]
-    assert len(call_records[3]) == 2  # verification: context = [bug_detection, fix_proposal]
+    assert len(call_records[3]) == 3  # verification: context = [graph_summary, bug_detection, fix_proposal]
 
 
 def test_tasks_embed_paths_in_description() -> None:
