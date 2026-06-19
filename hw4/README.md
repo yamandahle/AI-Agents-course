@@ -24,7 +24,7 @@ We work on **[cookiecutter](https://github.com/cookiecutter/cookiecutter)** — 
 |--------|--------|
 | Small enough | Only **18 Python files** in the package (`cookiecutter/cookiecutter/`) |
 | Clear graph | ~269 nodes, readable communities, visible hot spots |
-| Real hub bug | `cookiecutter()` in `main.py` is a coordination hub (degree 16) |
+| Real hub bug | `UndefinedVariableInTemplate` in `exceptions.py` (degree **21**) — highest hub in the graph |
 | BugsInPy overlap | The same repo exists in [BugsInPy cookiecutter bugs](https://github.com/soarsmu/BugsInPy/tree/master/projects/cookiecutter/bugs) — we can check if our graph finds the same files |
 
 We scan **the package only**, not the full cookiecutter repository. That keeps the graph focused and the fix scoped.
@@ -35,8 +35,8 @@ We scan **the package only**, not the full cookiecutter repository. That keeps t
 
 ```
 hw4/
-├── src/hw4/           # Our code: SDK, agents, services
-├── tests/unit/        # Unit tests (29 tests, ~85% coverage)
+├── src/hw4/           # SDK, CrewAI v2 agents, services
+├── tests/unit/        # 114 tests, ~91% coverage
 ├── config/            # setup.json, rate_limits.json
 ├── artifacts/         # Graph outputs (graph.json, graph.html, reports)
 ├── results/           # Agent output, metrics, fix patch
@@ -67,7 +67,7 @@ hw4/
 cd hw4
 uv sync
 cp .env-example .env
-# Edit .env and add your OPENAI_API_KEY
+# Set LLM_PROVIDER=gemini|openai|anthropic and the matching API key
 ```
 
 Clone cookiecutter locally (one time):
@@ -76,25 +76,33 @@ Clone cookiecutter locally (one time):
 git clone https://github.com/cookiecutter/cookiecutter.git data/cookiecutter
 ```
 
-### Run the pipeline (Python SDK)
+### Run the pipeline (needs API keys)
+
+```bash
+uv run python run_pipeline.py
+```
+
+Or step by step in Python:
 
 ```python
 from hw4.sdk.sdk import HW4SDK
 
 sdk = HW4SDK()
 
-sdk.run_grphify()      # Step 1: build graph → artifacts/
-sdk.run_agents()       # Step 2: agents find bugs → results/
-sdk.apply_fix()        # Step 3: apply hub fix on main.py
-sdk.verify()           # Step 4: re-scan + compare metrics + run tests
+sdk.run_grphify()      # Step 1: build graph → artifacts/  (needs key)
+sdk.run_agents()       # Step 2: CrewAI v2 agents → results/  (needs key)
+sdk.apply_fix()        # Step 3: LLM refactor → template_exceptions.py  (needs key)
+sdk.verify()           # Step 4: graph update + pytest + ruff  (no key)
 ```
 
-### Run tests and linter
+### Run tests and linter (no API key needed)
 
 ```bash
 uv run pytest tests/unit -q
 uv run ruff check src tests
 ```
+
+Pre-generated results in `results/` and `artifacts/` — you can review the submission without re-running the pipeline.
 
 ---
 
@@ -115,14 +123,14 @@ Grphify reads Python files and builds a graph:
 
 Output goes to `artifacts/` (graph.json, graph.html, index.md, hot.md).
 
-### Step 2 — Graph-first agents (CrewAI)
+### Step 2 — Graph-first agents (CrewAI v2)
 
-Four agents run in order:
+Four CrewAI agents run in sequence with tools and context chaining:
 
-1. **Graph Reader** — reads `graph.json` + `hot.md`, builds a short summary (not the full repo)
-2. **Bug Detector** — finds **HUB** nodes where degree > 10 (too many connections)
-3. **Fix Proposer** — picks one bug and suggests a structural fix
-4. **Verifier** — checks if the fix should improve the graph
+1. **Graph Navigator** — loads graph metrics + Obsidian navigation files
+2. **Architect Detective** — finds **HUB** nodes (degree > 10), SPOF, weak bridges
+3. **Fix Strategist** — picks the top hub and proposes a refactor (new module + rationale)
+4. **Quality Gate** — runs tests, checks coverage, returns PASS/FAIL verdict
 
 **Why graph-first?**
 
@@ -148,10 +156,10 @@ The agents only open hot files from the graph — not every file in the repo.
 
 ### Step 4 — Apply fix
 
-We chose the **HUB on `cookiecutter()` in `main.py`**:
+We chose the **HUB on `exceptions_undefinedvariableintemplate` in `exceptions.py`**:
 
-- **Problem:** one function does too much — hard to change, high coupling
-- **Fix:** move logic to `orchestration.py`, keep `main.py` as a thin entry point
+- **Problem:** `exceptions.py` is a central hub with degree 21 — every module that handles template errors imports from it directly
+- **Fix:** extract template-specific exceptions (led by `UndefinedVariableInTemplate`) into a new `template_exceptions.py`, keep `exceptions.py` for general app exceptions
 - **Patch:** `results/fix_diff.patch`
 
 ### Step 5 — Verify
@@ -183,7 +191,7 @@ flowchart LR
     end
     subgraph stage3 [Stage 3 — Fix]
         AP[Fix Applier]
-        ORCH[orchestration.py]
+        TEX[template_exceptions.py]
     end
     subgraph stage4 [Stage 4 — Verify]
         UP[graphify update]
@@ -192,7 +200,7 @@ flowchart LR
     end
     CC --> G --> JSON --> GR --> BD --> FP
     BD --> FBC[BugsInPy cross-check]
-    FP --> AP --> ORCH --> UP --> MET --> TST
+    FP --> AP --> TEX --> UP --> MET --> TST
 ```
 
 ### OOP schema (hw4 code)
@@ -218,36 +226,22 @@ classDiagram
         +load_graph()
         +compute_metrics()
     }
-    class CrewRunnerService {
+    class CrewRunnerV2 {
         +run()
     }
-    class FixApplierService {
-        +apply_from_file()
+    class GenericFixApplier {
+        +apply_from_proposal()
     }
     class VerifyService {
         +run()
     }
-    class GraphReaderAgent
-    class BugDetectorAgent
-    class FixProposerAgent
-    class VerifierAgent
-    class FunctionalBugAgent
-    class BugDetectorService
-    class FunctionalBugDetectorService
 
     HW4SDK --> ConfigManager
     HW4SDK --> ApiGatekeeper
     HW4SDK --> GraphBuilderService
-    HW4SDK --> CrewRunnerService
-    HW4SDK --> FixApplierService
+    HW4SDK --> CrewRunnerV2
+    HW4SDK --> GenericFixApplier
     HW4SDK --> VerifyService
-    CrewRunnerService --> GraphReaderAgent
-    CrewRunnerService --> BugDetectorAgent
-    CrewRunnerService --> FixProposerAgent
-    CrewRunnerService --> VerifierAgent
-    CrewRunnerService --> FunctionalBugAgent
-    BugDetectorAgent --> BugDetectorService
-    FunctionalBugAgent --> FunctionalBugDetectorService
     VerifyService --> GraphBuilderService
 ```
 
@@ -259,23 +253,23 @@ classDiagram
 
 | Metric | Before | After |
 |--------|--------|-------|
-| Nodes | 269 | 283 |
-| Edges | 504 | 529 |
-| Communities | 15 | 16 |
-| `cookiecutter()` hub degree | 16 | 20 |
-| Orchestration hub sum | — | 43 |
+| Nodes | 269 | 276 |
+| Edges | 504 | 500 |
+| Communities | 15 | 15 |
+| `UndefinedVariableInTemplate` hub degree | 21 | not in top 10 |
+| Hub count (degree > 10) | 10 | 6 |
 
-**How to read this:** the entry function still coordinates the pipeline, so its degree can stay high. The fix **splits the work** into `orchestration.py` — new smaller nodes instead of one big block. The verify step marks this as **improved: true**.
+**How to read this:** extracting `UndefinedVariableInTemplate` into `template_exceptions.py` removed it from the top hubs entirely. Hub count dropped from 10 to 6 — a 40% reduction. The verify step marks this as **improved: true**.
 
 ### 6.2 Top hubs found (before fix)
 
 | Node | File | Degree |
 |------|------|--------|
-| `UndefinedVariableInTemplate` | exceptions.py | 21 |
+| **`UndefinedVariableInTemplate`** | **exceptions.py** | **21** ← we fixed this |
 | `CookiecutterException` | exceptions.py | 20 |
-| `exceptions.py` | exceptions.py | 19 |
-| **`cookiecutter()`** | **main.py** | **16** ← we fixed this |
-| `prompt.py` | prompt.py | 16 |
+| `exceptions` module | exceptions.py | 19 |
+| `prompt` module | prompt.py | 16 |
+| `cookiecutter()` | main.py | 14 |
 
 Full list: `results/bugs.json`
 
@@ -296,7 +290,7 @@ This shows: **agents guided by the graph reach the same files as the BugsInPy be
 
 | What we did | What we did not do |
 |-------------|-------------------|
-| Fixed the **architectural HUB** in `main.py` | Did not patch the 4 functional BugsInPy bugs (out of scope) |
+| Fixed the **architectural HUB** in `exceptions.py` | Did not patch the 4 functional BugsInPy bugs (out of scope) |
 | Validated overlap with BugsInPy | Used historical commits to confirm the match |
 
 ---
@@ -308,7 +302,7 @@ This shows: **agents guided by the graph reach the same files as the BugsInPy be
 | Obsidian graph (before) | Before-fix graph in Obsidian |
 | HTML graph (before) | Interactive graph in browser |
 | Graph after fix | Graph after hub refactor |
-| Tests passing | 29 unit tests |
+| Tests passing | 114 unit tests |
 
 ![Obsidian graph before fix](assets/obsidian_graph.png)
 
@@ -324,13 +318,14 @@ This shows: **agents guided by the graph reach the same files as the BugsInPy be
 
 | Check | Result | Where to see it |
 |-------|--------|-----------------|
-| Unit tests | **29 passed** | `assets/tests_pass.png` |
-| Test coverage | **~86%** | `reports/verification.md` |
+| Unit tests | **114 passed** | `assets/tests_pass.png` |
+| Test coverage | **~91%** | `reports/verification.md` |
 | Ruff linter | **0 errors** | `reports/verification.md` |
 | Graph re-built after fix | yes | `artifacts/graph_after.json` |
 | Metrics improved | yes (`improved: true`) | `results/metrics_comparison.json` |
 | Fix applied | yes | `results/fix_diff.patch` |
-| Agents found bugs | yes | `results/bugs.json` |
+| Agents found bugs | yes (5 HUB bugs) | `results/bugs.json` |
+| CrewAI verdict | **PASS** | `results/v2_verification.json` |
 | BugsInPy file match | **4/4** | `results/functional_bugs.json` |
 | Token savings | **~97%** | `results/token_stats.json` |
 
@@ -340,12 +335,12 @@ This shows: **agents guided by the graph reach the same files as the BugsInPy be
 
 We built a full pipeline for **EX04**:
 
-1. Scanned **cookiecutter** with Grphify and got a clear architecture graph
+1. Scanned **cookiecutter** with Grphify and got a clear architecture graph (269 nodes, 504 edges)
 2. Ran **graph-guided CrewAI agents** that use ~97% fewer tokens than reading all code
-3. Found **architectural hub bugs**, including `cookiecutter()` in `main.py`
+3. Found **architectural hub bugs**, led by `UndefinedVariableInTemplate` (degree 21) in `exceptions.py`
 4. Showed our hot files **match all 4 BugsInPy cookiecutter bugs** — the graph finds real problem areas
-5. **Fixed** the main hub by extracting logic to `orchestration.py`
-6. **Verified** with new graph metrics, passing tests, and clean lint
+5. **Fixed** the top hub by extracting template exceptions into `template_exceptions.py`
+6. **Verified** with new graph metrics (hub count 10→6, 40% reduction), passing tests (114 tests, ~91% coverage), and clean lint
 
 The project meets the assignment goals: graph analysis, multi-agent detection, one focused fix, and proof it works.
 
