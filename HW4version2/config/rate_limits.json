@@ -6,28 +6,32 @@
       "requests_per_hour": 500,
       "concurrent_max": 5,
       "retry_after_seconds": 30,
-      "max_retries": 3
+      "max_retries": 3,
+      "queue_max_depth": 50
     },
     "gemini": {
       "requests_per_minute": 15,
       "requests_per_hour": 500,
       "concurrent_max": 3,
       "retry_after_seconds": 30,
-      "max_retries": 3
+      "max_retries": 3,
+      "queue_max_depth": 30
     },
     "anthropic": {
       "requests_per_minute": 50,
       "requests_per_hour": 1000,
       "concurrent_max": 5,
       "retry_after_seconds": 30,
-      "max_retries": 3
+      "max_retries": 3,
+      "queue_max_depth": 50
     },
     "github": {
       "requests_per_minute": 10,
       "requests_per_hour": 100,
       "concurrent_max": 2,
       "retry_after_seconds": 60,
-      "max_retries": 3
+      "max_retries": 3,
+      "queue_max_depth": 20
     }
   }
 }

@@ -379,6 +379,41 @@ public function/class, no hardcoded secrets).
 
 ---
 
+## Extension Points
+
+The system is built around three clean seams where you can plug in new behaviour without touching the core pipeline.
+
+### 1. Add a new LLM provider
+
+The provider layer is defined in `src/hw4/shared/provider.py`. To add a new provider (e.g. Mistral):
+
+1. Add env vars to `.env-example`:  `MISTRAL_API_KEY=your_key_here`
+2. Add a service block to `config/rate_limits.json` (set `queue_max_depth`, `concurrent_max`, etc.)
+3. Extend `ProviderConfig` with the new name and instantiate `LLMClient` with it.
+
+No pipeline code changes are needed — `ApiGatekeeper` wraps all calls automatically.
+
+### 2. Swap the bug detector
+
+`BugDetectorService` in `src/hw4/services/bug_detector.py` is the only consumer of bug-detection logic. To replace it with a different algorithm:
+
+1. Create `src/hw4/services/my_detector.py` returning a `list[ArchitecturalBug]`.
+2. In `HW4SDK.detect_bugs()` (`src/hw4/sdk/sdk.py`), swap the import.
+3. Existing tests in `tests/unit/test_bug_detector.py` serve as the acceptance criteria.
+
+### 3. Add a new CrewAI agent
+
+Agents and tasks are registered in two files:
+
+| File | What to touch |
+|------|--------------|
+| `src/hw4/crewai_agents/agents.py` | Add a new `Agent(role=..., goal=..., tools=[...])` entry to `build_agents()` |
+| `src/hw4/crewai_tasks/tasks.py`   | Add a new `Task(description=..., agent=..., context=[...])` to `build_tasks()` |
+
+The `CrewRunnerV2` in `src/hw4/services/crew_runner_v2.py` picks up all tasks automatically from the list returned by `build_tasks()`.
+
+---
+
 ## License
 
 MIT License — Copyright 2026 Nagham. All rights reserved.
