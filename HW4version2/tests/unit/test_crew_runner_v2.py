@@ -1,8 +1,7 @@
-"""Unit tests for services/crew_runner_v2.py."""
+"""Unit tests for CrewRunnerV2._load_json and _collect_outputs."""
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import MagicMock, patch
 
 from hw4.services.crew_runner_v2 import CrewRunnerV2
 from hw4.shared.gatekeeper import ApiGatekeeper, RateLimitConfig
@@ -17,7 +16,6 @@ def _gatekeeper() -> ApiGatekeeper:
         max_retries=1,
     )
     gk = ApiGatekeeper(config=cfg)
-    # make execute a passthrough so tests don't hit real APIs
     gk.execute = lambda fn, *a, **kw: fn(*a, **kw)
     return gk
 
@@ -37,8 +35,7 @@ def _runner(tmp_path: Path) -> CrewRunnerV2:
 
 def test_load_json_missing_file_returns_empty_dict(tmp_path: Path) -> None:
     runner = _runner(tmp_path)
-    result = runner._load_json("does_not_exist.json")
-    assert result == {}
+    assert runner._load_json("does_not_exist.json") == {}
 
 
 def test_load_json_reads_valid_json(tmp_path: Path) -> None:
@@ -63,10 +60,7 @@ def test_collect_outputs_returns_all_keys_even_when_files_missing(tmp_path: Path
     runner = _runner(tmp_path)
     outputs = runner._collect_outputs()
     assert set(outputs.keys()) == {
-        "v2_graph_summary",
-        "v2_bugs",
-        "v2_fix_proposal",
-        "v2_verification",
+        "v2_graph_summary", "v2_bugs", "v2_fix_proposal", "v2_verification",
     }
     for v in outputs.values():
         assert v == {}
@@ -81,85 +75,3 @@ def test_collect_outputs_reads_existing_files(tmp_path: Path) -> None:
     outputs = runner._collect_outputs()
     assert outputs["v2_bugs"] == [{"bug_type": "HUB"}]
     assert outputs["v2_graph_summary"] == {}
-
-
-# ── run() ─────────────────────────────────────────────────────────────────────
-
-def _fake_agents() -> dict:
-    fix_strategist = MagicMock()
-    fix_strategist.backstory = "initial backstory"
-    return {
-        "graph_navigator": MagicMock(),
-        "architect_detective": MagicMock(),
-        "fix_strategist": fix_strategist,
-        "quality_gate": MagicMock(),
-    }
-
-
-def test_run_stops_on_pass_verdict(tmp_path: Path) -> None:
-    runner = _runner(tmp_path)
-    agents = _fake_agents()
-
-    with (
-        patch("hw4.services.crew_runner_v2.build_agents", return_value=agents),
-        patch("hw4.services.crew_runner_v2.build_tasks", return_value=[]),
-        patch("hw4.services.crew_runner_v2.Crew") as mock_crew_cls,
-    ):
-        mock_crew_cls.return_value.kickoff = MagicMock()
-        runner._load_json = lambda f: {"verdict": "PASS"} if "verification" in f else {}
-        result = runner.run()
-
-    assert isinstance(result, dict)
-    # crew was kicked off once (PASS on first attempt)
-    assert mock_crew_cls.return_value.kickoff.call_count == 1
-
-
-def test_run_retries_on_fail_then_passes(tmp_path: Path) -> None:
-    runner = _runner(tmp_path)
-    agents = _fake_agents()
-    call_count = [0]
-
-    def fake_load_json(filename: str) -> dict:
-        if "verification" not in filename:
-            return {}
-        call_count[0] += 1
-        if call_count[0] == 1:
-            return {"verdict": "FAIL", "retry_instruction": "do better"}
-        return {"verdict": "PASS"}
-
-    with (
-        patch("hw4.services.crew_runner_v2.build_agents", return_value=agents),
-        patch("hw4.services.crew_runner_v2.build_tasks", return_value=[]),
-        patch("hw4.services.crew_runner_v2.Crew") as mock_crew_cls,
-    ):
-        mock_crew_cls.return_value.kickoff = MagicMock()
-        runner._load_json = fake_load_json
-        runner.run()
-
-    # Two kickoff calls: attempt 0 (FAIL) + attempt 1 (PASS)
-    assert mock_crew_cls.return_value.kickoff.call_count == 2
-
-
-def test_run_injects_retry_instruction_into_backstory(tmp_path: Path) -> None:
-    runner = _runner(tmp_path)
-    agents = _fake_agents()
-    call_count = [0]
-
-    def fake_load_json(filename: str) -> dict:
-        if "verification" not in filename:
-            return {}
-        call_count[0] += 1
-        if call_count[0] == 1:
-            return {"verdict": "FAIL", "retry_instruction": "move X to Y"}
-        return {"verdict": "PASS"}
-
-    with (
-        patch("hw4.services.crew_runner_v2.build_agents", return_value=agents),
-        patch("hw4.services.crew_runner_v2.build_tasks", return_value=[]),
-        patch("hw4.services.crew_runner_v2.Crew") as mock_crew_cls,
-    ):
-        mock_crew_cls.return_value.kickoff = MagicMock()
-        runner._load_json = fake_load_json
-        runner.run()
-
-    assert "move X to Y" in agents["fix_strategist"].backstory

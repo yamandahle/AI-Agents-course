@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import json
+
+import pytest
+
 from hw4.shared.config import ConfigManager
 
 
@@ -31,3 +35,14 @@ def test_rate_limit_unknown_returns_empty_dict() -> None:
     config = ConfigManager("config")
     limits = config.get_rate_limit("unknown_provider")
     assert isinstance(limits, dict)
+
+
+def test_version_mismatch_raises(tmp_path) -> None:
+    cfg_dir = tmp_path / "config"
+    cfg_dir.mkdir()
+    (cfg_dir / "setup.json").write_text(
+        json.dumps({"version": "0.00", "agents": {}, "paths": {}})
+    )
+    (cfg_dir / "rate_limits.json").write_text(json.dumps({"services": {}}))
+    with pytest.raises(RuntimeError, match="version mismatch"):
+        ConfigManager(str(cfg_dir))

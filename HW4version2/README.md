@@ -363,3 +363,32 @@ The project meets the assignment goals: graph analysis, multi-agent detection, o
 **Course:** EX04 — Reverse Engineering with Grphify + CrewAI (Dr. Yoram Segal)
 
 **Version:** 1.00
+
+---
+
+## Contributing
+
+1. Fork the repository and create a feature branch: `git checkout -b feat/your-feature`.
+2. Write tests first (TDD — red → green → refactor). Every new public function needs at least one test.
+3. Ensure `uv run pytest tests/` passes and `uv run ruff check src/ tests/` reports **0 errors**.
+4. Keep every source and test file ≤ 150 lines. Split by responsibility if needed.
+5. Open a Pull Request with a clear description of *what* changed and *why*.
+
+Code style: follow existing conventions (ruff lint rules E/F/W/I/N/UP/B/C4/SIM, docstrings on every
+public function/class, no hardcoded secrets).
+
+---
+
+## License
+
+MIT License — Copyright 2026 Nagham. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute,
+sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions: The above copyright notice and this
+permission notice shall be included in all copies or substantial portions of the Software.
+
+Third-party libraries are used under their respective open-source licenses — see `pyproject.toml`
+for the full dependency list.

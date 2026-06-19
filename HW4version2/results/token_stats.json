@@ -1,4 +1,35 @@
 {
+  "model": "gemini/gemini-2.5-flash",
+  "pricing_usd_per_million": {
+    "input": 0.075,
+    "output": 0.30
+  },
+  "stages": {
+    "grphify_semantic": {
+      "input_tokens": 20000,
+      "output_tokens": 3000,
+      "description": "Grphify AST scan + LLM semantic pass over 18 Python files"
+    },
+    "agents_graph_guided": {
+      "input_tokens": 645,
+      "output_tokens": 150,
+      "description": "CrewAI agents reading graph.json + hot.md instead of raw source"
+    },
+    "generic_fix_applier": {
+      "input_tokens": 2200,
+      "output_tokens": 600,
+      "description": "LLM generating refactored file + new module from fix proposal"
+    },
+    "naive_baseline": {
+      "input_tokens": 23537,
+      "output_tokens": 0,
+      "description": "Estimated cost if all source files were sent to LLM directly"
+    }
+  },
+  "total_input_tokens": 22845,
+  "total_output_tokens": 3750,
+  "total_cost_usd": 0.0029,
+  "naive_cost_usd": 0.0018,
   "naive_tokens_estimated": 23537,
   "graph_guided_tokens_estimated": 645,
   "savings_percent": 97.3

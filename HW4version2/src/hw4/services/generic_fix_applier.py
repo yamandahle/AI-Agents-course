@@ -3,17 +3,18 @@
 from __future__ import annotations
 
 import json
-import re
-import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
 from hw4.shared.gatekeeper import ApiGatekeeper
+from hw4.shared.git_ops import branch_name, export_diff, find_git_root, git_run
 from hw4.shared.llm_client import LlmClient
 
 
 @dataclass
 class FixResult:
+    """Result of applying a fix proposal."""
+
     branch: str
     patch_path: str
     target_file: str
@@ -31,8 +32,7 @@ _SYSTEM = (
 
 
 class GenericFixApplier:
-    """Reads a fix proposal produced by the CrewAI agents and applies it to the
-    target source file using the LLM to generate the actual code changes.
+    """Reads a fix proposal produced by the CrewAI agents and applies it via LLM.
 
     Works on any Python codebase — no paths are hardcoded.
     """
@@ -48,12 +48,12 @@ class GenericFixApplier:
         self._results = Path(paths["results"])
 
     def apply_from_proposal(self, proposal_path: str | None = None) -> FixResult:
+        """Load proposal, generate code via LLM, write files, commit, export diff."""
         proposal = self._load_proposal(proposal_path)
-        target = Path(proposal["target_file"]).resolve()
+        target = self._resolve_target(Path(proposal["target_file"]).resolve())
         new_module_name = proposal["new_module_name"]
         description = proposal["change_description"]
 
-        target = self._resolve_target(target)
         original = target.read_text(encoding="utf-8")
         modified, new_module_content = self._generate_fix(
             original, target.name, new_module_name, description
@@ -63,19 +63,26 @@ class GenericFixApplier:
         target.write_text(modified, encoding="utf-8")
         new_module_path.write_text(new_module_content, encoding="utf-8")
 
-        repo_root = self._find_git_root(target)
-        branch = self._branch_name(proposal)
-        self._git(repo_root, ["checkout", "-b", branch])
-        self._git(repo_root, ["add", str(target.relative_to(repo_root)),
-                              str(new_module_path.relative_to(repo_root))])
+        repo_root = find_git_root(target)
+        br = branch_name(proposal)
+        git_run(repo_root, ["checkout", "-b", br], self._gatekeeper)
+        git_run(
+            repo_root,
+            ["add", str(target.relative_to(repo_root)),
+             str(new_module_path.relative_to(repo_root))],
+            self._gatekeeper,
+        )
         bug = proposal.get("bug", {})
-        self._git(repo_root, ["commit", "-m",
-                              f"refactor: fix {bug.get('bug_type','HUB')} "
-                              f"in {bug.get('node_name', target.stem)} (EX04)"])
-
-        patch_path = self._export_diff(repo_root)
+        git_run(
+            repo_root,
+            ["commit", "-m",
+             f"refactor: fix {bug.get('bug_type', 'HUB')} "
+             f"in {bug.get('node_name', target.stem)} (EX04)"],
+            self._gatekeeper,
+        )
+        patch_path = export_diff(repo_root, self._results, self._gatekeeper)
         return FixResult(
-            branch=branch,
+            branch=br,
             patch_path=str(patch_path),
             target_file=str(target),
             committed=True,
@@ -84,6 +91,7 @@ class GenericFixApplier:
     # ── internal ─────────────────────────────────────────────────────────────
 
     def _load_proposal(self, path: str | None) -> dict:
+        """Read proposal JSON, stripping markdown fences if present."""
         p = Path(path) if path else self._results / "v2_fix_proposal.json"
         text = p.read_text(encoding="utf-8").strip()
         if text.startswith("```"):
@@ -99,6 +107,7 @@ class GenericFixApplier:
         new_module: str,
         description: str,
     ) -> tuple[str, str]:
+        """Call LLM to produce modified file and new module content."""
         user = (
             f"Refactor the Python file '{filename}' according to the instruction below.\n\n"
             f"INSTRUCTION:\n{description}\n\n"
@@ -110,10 +119,10 @@ class GenericFixApplier:
             f"{_DELIMITER_NEW}\n"
             f"<complete content of {new_module}>"
         )
-        response = self._llm.complete(_SYSTEM, user)
-        return self._parse_response(response)
+        return self._parse_response(self._llm.complete(_SYSTEM, user))
 
     def _parse_response(self, response: str) -> tuple[str, str]:
+        """Split LLM response on delimiters; raise ValueError if malformed."""
         if _DELIMITER_MODIFIED not in response or _DELIMITER_NEW not in response:
             raise ValueError(
                 f"LLM response missing required delimiters.\n"
@@ -125,10 +134,9 @@ class GenericFixApplier:
         return modified.strip(), new_module.strip()
 
     def _resolve_target(self, path: Path) -> Path:
-        """Resolve target file; fall back to searching under data/ if not found directly."""
+        """Return resolved path; fall back to searching under data/ if not found."""
         if path.exists():
             return path.resolve()
-        # LLM sometimes returns just the filename — search under data/
         matches = list(Path("data").rglob(path.name)) if Path("data").exists() else []
         if len(matches) == 1:
             return matches[0].resolve()
@@ -139,38 +147,3 @@ class GenericFixApplier:
             f"Cannot find '{path}'. "
             "Ensure target_file in the fix proposal is the full relative path from project root."
         )
-
-    def _find_git_root(self, path: Path) -> Path:
-        current = path.parent
-        while current != current.parent:
-            if (current / ".git").exists():
-                return current
-            current = current.parent
-        raise FileNotFoundError(f"No .git directory found above {path}")
-
-    def _branch_name(self, proposal: dict) -> str:
-        bug = proposal.get("bug", {})
-        bug_type = bug.get("bug_type", "fix").lower()
-        node = re.sub(r"[^a-z0-9]+", "-", bug.get("node_name", "unknown").lower()).strip("-")
-        return f"fix/{bug_type}-{node[:40]}"
-
-    def _git(self, repo_root: Path, args: list[str]) -> None:
-        self._gatekeeper.execute(
-            subprocess.run,
-            ["git", *args],
-            cwd=repo_root,
-            check=True,
-        )
-
-    def _export_diff(self, repo_root: Path) -> Path:
-        result = self._gatekeeper.execute(
-            subprocess.run,
-            ["git", "diff", "HEAD~1", "HEAD"],
-            cwd=repo_root,
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        patch_path = self._results / "fix_diff.patch"
-        patch_path.write_text(result.stdout or "", encoding="utf-8")
-        return patch_path
