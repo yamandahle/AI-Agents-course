@@ -24,7 +24,7 @@ I write `README.md` at the end. I save artifacts below as I work and tick boxes 
 8. Grphify + Obsidian — `index.md`, `hot.md`, edge types
 9. Agent workflow — graph first, code second, token comparison
 10. Fix — patch + short explanation
-11. Before / after — hub degree, SPOF count, screenshots
+11. Verification — hub metrics after code fix (not a scan comparison)
 12. Tests — pytest ≥85%, ruff zero errors
 13. Extensions — one original idea
 14. License and credits
@@ -65,15 +65,15 @@ I write `README.md` at the end. I save artifacts below as I work and tick boxes 
 
 ## Stage 2 — Grphify
 
+Package-only scan: `data/cookiecutter/cookiecutter/` (18 files). This is the working graph.
+
 | Save | Path |
 |------|------|
-| Before graph | `artifacts/graph_before.json` |
+| Graph | `artifacts/graph.json` |
 | Report + HTML | `artifacts/GRAPH_REPORT.md`, `artifacts/graph.html` |
 | Obsidian | `obsidian/index.md`, `obsidian/hot.md` |
-| Baseline metrics | `results/metrics_before.json` |
-| Screenshots | `assets/obsidian_graph.png`, `assets/hub_before.png` |
-
-Scan path: `data/cookiecutter/cookiecutter/` (18 source files).
+| Metrics (pre-fix baseline) | `results/metrics_before.json` |
+| Screenshot | `assets/obsidian_graph.png` |
 
 ---
 
@@ -100,14 +100,16 @@ Scan path: `data/cookiecutter/cookiecutter/` (18 source files).
 
 ---
 
-## Stage 5 — Verify
+## Stage 5 — Verify (after code fix)
+
+Re-run Grphify on the edited package, then compare metrics to the pre-fix baseline.
 
 | Save | Path |
 |------|------|
-| After graph | `artifacts/graph_after.json` |
+| Graph after fix | `artifacts/graph_after.json` |
 | Metrics | `results/metrics_after.json`, `results/metrics_comparison.json` |
 | Report | `reports/verification.md` |
-| Screenshot | `assets/hub_after.png`, `assets/tests_pass.png` |
+| Screenshot | `assets/tests_pass.png` |
 
 ---
 

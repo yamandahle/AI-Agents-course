@@ -45,21 +45,21 @@ status: in-progress
 - [x] Git commit: `feat: add Grphify stage — graph artifacts, GraphBuilderService, unit tests`
 
 ## Stage 3 — Agents (see PLAN_agents.md + PRD_crew_agents.md)
-- [ ] Implement `src/hw4/agents/graph_reader.py` — Agent 1
-- [ ] Implement `src/hw4/agents/bug_detector_agent.py` — Agent 2
-- [ ] Implement `src/hw4/agents/fix_proposer.py` — Agent 3
-- [ ] Implement `src/hw4/agents/verifier.py` — Agent 4
-- [ ] Implement `src/hw4/services/crew_runner.py` — assemble the crew
-- [ ] Wire all LLM calls through `ApiGatekeeper`
-- [ ] Write unit tests for each agent (mock inputs, no real LLM)
+- [x] Implement `src/hw4/agents/graph_reader.py` — Agent 1
+- [x] Implement `src/hw4/agents/bug_detector_agent.py` — Agent 2
+- [x] Implement `src/hw4/agents/fix_proposer.py` — Agent 3
+- [x] Implement `src/hw4/agents/verifier.py` — Agent 4
+- [x] Implement `src/hw4/services/crew_runner.py` — assemble the crew
+- [x] Wire all LLM calls through `ApiGatekeeper`
+- [x] Write unit tests for each agent (mock inputs, no real LLM)
 - [ ] Git commit: `feat: add CrewAI agents — graph reader, bug detector, fix proposer, verifier`
 
 ## Stage 4 — Bug Fix (see PLAN_bug_fix.md + PRD_bug_fix.md)
-- [ ] Implement `src/hw4/services/bug_detector.py` — SPOF, hub, bridge detection
+- [x] Implement `src/hw4/services/bug_detector.py` — SPOF, hub, bridge detection
 - [ ] Implement `src/hw4/services/fix_applier.py` — apply fix, save diff
 - [ ] Add `detect_bugs()` and `apply_fix()` to `sdk/sdk.py`
-- [ ] Save `results/bugs.json`, `results/fix_proposal.json`, `results/fix_diff.patch`
-- [ ] Write `tests/unit/test_bug_detector.py`
+- [x] Save `results/bugs.json`, `results/fix_proposals.json`, `results/token_stats.json`
+- [x] Write `tests/unit/test_bug_detector.py`
 - [ ] Write `tests/unit/test_fix_applier.py`
 - [ ] Git commit: `feat: add bug detection and fix applier services`
 
