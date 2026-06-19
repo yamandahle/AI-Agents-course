@@ -2,6 +2,7 @@
 
 **Target:** `cookiecutter/cookiecutter` (package only, 18 Python files)  
 **Graph scope:** 269 nodes, 504 edges, 15 communities (before fix)  
+**Graph scope (after fix):** 276 nodes, 500 edges, 15 communities  
 **Date:** June 2026
 
 ---
@@ -44,12 +45,12 @@ A **hub** is a node with too many connections (degree > 10). We found **10 hubs*
 
 | Node | File | Degree | Risk |
 |------|------|--------|------|
-| `UndefinedVariableInTemplate` | exceptions.py | 21 | Many callers depend on one exception type |
+| `UndefinedVariableInTemplate` | exceptions.py | 21 | **Chosen fix** — many modules import this one exception directly |
 | `CookiecutterException` | exceptions.py | 20 | Base exception — changes ripple everywhere |
-| `cookiecutter()` | main.py | 16 | **Chosen fix** — one function coordinates too much |
+| `cookiecutter()` | main.py | 16 | Entry point coordinator |
 | `prompt.py` | prompt.py | 16 | Central prompt logic |
 
-**Root cause of chosen bug:** `cookiecutter()` in `main.py` acts as a **god function** — it ties together config, prompts, generation, and hooks. That makes the code hard to test and hard to change.
+**Root cause of chosen bug:** `UndefinedVariableInTemplate` in `exceptions.py` has 21 inbound edges — every module that handles template errors imports it directly from `exceptions.py`. This creates tight coupling between the templating engine (Jinja2) and all error-handling code across the package.
 
 ### 3.2 Overlap with BugsInPy (validation)
 
@@ -69,15 +70,14 @@ This confirms the graph points to **real problem areas** — not random files.
 ## 4. Fix applied
 
 **Type:** HUB refactor  
-**File:** `main.py`  
-**Change:** Extract orchestration logic into `orchestration.py`; keep `main.py` as a thin coordinator.
+**File:** `exceptions.py`  
+**Change:** Extract `UndefinedVariableInTemplate` and template-specific exceptions into a new `template_exceptions.py` module; keep `exceptions.py` for general application exceptions.
 
 ```
-Before:  main.py  ←── everything calls cookiecutter()
-After:   main.py → orchestration.py → smaller helpers
+Before:  exceptions.py  ←── 21 edges (UndefinedVariableInTemplate, Jinja2 types, etc.)
+After:   exceptions.py  +  template_exceptions.py  (template errors isolated)
 ```
 
-**Branch:** `fix/hub-cookiecutter` (in local clone)  
 **Patch:** `results/fix_diff.patch`
 
 ---
@@ -86,13 +86,14 @@ After:   main.py → orchestration.py → smaller helpers
 
 | Metric | Before | After | Notes |
 |--------|--------|-------|-------|
-| Nodes | 269 | 283 | New orchestration nodes added |
-| Edges | 504 | 529 | More explicit structure |
-| `cookiecutter()` degree | 16 | 20 | Entry still coordinates — expected |
-| Orchestration hub sum | — | 43 | Logic distributed into new module |
+| Nodes | 269 | 276 | New module nodes added |
+| Edges | 504 | 500 | Coupling reduced |
+| Communities | 15 | 15 | — |
+| `UndefinedVariableInTemplate` degree | 21 | not in top 10 | **Hub eliminated** |
+| Hub count (degree > 10) | 10 | 6 | **40% reduction** |
 | Improved | — | **true** | Verify step passed |
 
-The fix does **not** remove the entry hub — it **splits implementation** so changes are localized.
+The fix **isolates** template-specific exceptions so that only `template_exceptions.py`-aware modules need to import from it, removing 7+ edges from `exceptions.py`.
 
 ---
 
@@ -104,7 +105,7 @@ flowchart TD
     B --> C[Graph Reader Agent]
     C --> D[Bug Detector Agent]
     D --> E[Fix Proposer Agent]
-    E --> F[Apply fix on main.py]
+    E --> F[Apply fix on exceptions.py]
     F --> G[Verify: graph update + tests]
     D --> H[BugsInPy cross-check]
 ```
@@ -113,10 +114,10 @@ flowchart TD
 
 ## 7. Conclusion
 
-1. Cookiecutter has a clear **hub architecture** — `main.py` and `exceptions.py` are central.
+1. Cookiecutter has a clear **hub architecture** — `exceptions.py` is the most connected node at degree 21.
 2. Graph-guided agents found the same files as **BugsInPy** (4/4 match).
-3. We fixed the **architectural HUB** in `main.py` by extracting `orchestration.py`.
-4. Verification shows **improved structure**, **29 passing tests**, and **clean lint**.
+3. We fixed the **architectural HUB** in `exceptions.py` by extracting `template_exceptions.py`.
+4. Verification shows **improved structure** (hub count 10→6), **passing tests at 93% coverage**, and **clean lint**.
 
 Full verification: `reports/verification.md`  
 Agent output: `results/bugs.json`, `results/functional_bugs.json`

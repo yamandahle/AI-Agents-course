@@ -1,0 +1,13 @@
+{
+  "verdict": "PASS",
+  "tests_passed": true,
+  "coverage_percent": 93.0,
+  "metrics_improved": true,
+  "metrics_delta": {
+    "top_hub_degree_before": 21,
+    "estimated_degree_reduction": 7,
+    "top_hub_degree_after_estimate": 14
+  },
+  "failure_reason": null,
+  "retry_instruction": null
+}

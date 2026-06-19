@@ -1,37 +1,37 @@
 [
   {
     "bug_type": "HUB",
-    "node_name": "cookiecutter()",
+    "node_name": "exceptions_undefinedvariableintemplate",
+    "source_file": "cookiecutter/exceptions.py",
     "severity": "HIGH",
-    "explanation": "Hub degree 16 exceeds threshold 10.",
-    "source_file": "main.py"
+    "explanation": "Node 'exceptions_undefinedvariableintemplate' is a HUB with a high degree of 21, indicating a central and highly connected component."
   },
   {
     "bug_type": "HUB",
-    "node_name": "UndefinedVariableInTemplate",
+    "node_name": "exceptions_cookiecutterexception",
+    "source_file": "cookiecutter/exceptions.py",
     "severity": "HIGH",
-    "explanation": "Hub degree 21 exceeds threshold 10.",
-    "source_file": "exceptions.py"
+    "explanation": "Node 'exceptions_cookiecutterexception' is a HUB with a high degree of 20, indicating a central and highly connected component."
   },
   {
     "bug_type": "HUB",
-    "node_name": "exceptions.py",
+    "node_name": "exceptions",
+    "source_file": "cookiecutter/exceptions.py",
     "severity": "HIGH",
-    "explanation": "Hub degree 19 exceeds threshold 10.",
-    "source_file": "exceptions.py"
+    "explanation": "Node 'exceptions' is a HUB with a high degree of 19, indicating a central and highly connected component."
   },
   {
     "bug_type": "HUB",
-    "node_name": "CookiecutterException",
+    "node_name": "prompt",
+    "source_file": "cookiecutter/prompt.py",
     "severity": "HIGH",
-    "explanation": "Hub degree 20 exceeds threshold 10.",
-    "source_file": "exceptions.py"
+    "explanation": "Node 'prompt' is a HUB with a high degree of 16, indicating a central and highly connected component."
   },
   {
     "bug_type": "HUB",
-    "node_name": "prompt.py",
-    "severity": "HIGH",
-    "explanation": "Hub degree 16 exceeds threshold 10.",
-    "source_file": "prompt.py"
+    "node_name": "main_cookiecutter",
+    "source_file": "cookiecutter/main.py",
+    "severity": "MEDIUM",
+    "explanation": "Node 'main_cookiecutter' is a HUB with a degree of 14, indicating a central and highly connected component."
   }
 ]

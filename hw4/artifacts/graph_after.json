@@ -30,18 +30,18 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "main_py_main",
-      "community": 5,
+      "community": 4,
       "norm_label": "main.py"
     },
     {
-      "label": "Main entry point for the `cookiecutter` command.  The code in this module is a",
+      "label": "Main entry point for the `cookiecutter` command.  The code in this module is als",
       "file_type": "rationale",
       "source_file": "main.py",
       "source_location": "L1",
       "_origin": "ast",
       "id": "main_py_main_rationale_1",
-      "community": 5,
-      "norm_label": "main entry point for the `cookiecutter` command.  the code in this module is a"
+      "community": 4,
+      "norm_label": "main entry point for the `cookiecutter` command.  the code in this module is als"
     },
     {
       "label": "cli.py",
@@ -457,7 +457,7 @@
       "label": "CookiecutterException",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L11",
+      "source_location": "L6",
       "_origin": "ast",
       "id": "exceptions_cookiecutterexception",
       "community": 0,
@@ -477,7 +477,7 @@
       "label": "NonTemplatedInputDirException",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L19",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "exceptions_nontemplatedinputdirexception",
       "community": 11,
@@ -487,7 +487,7 @@
       "label": "UnknownTemplateDirException",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L28",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "exceptions_unknowntemplatedirexception",
       "community": 0,
@@ -497,7 +497,7 @@
       "label": "MissingProjectDir",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L39",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "exceptions_missingprojectdir",
       "community": 0,
@@ -507,7 +507,7 @@
       "label": "ConfigDoesNotExistException",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L50",
+      "source_location": "L45",
       "_origin": "ast",
       "id": "exceptions_configdoesnotexistexception",
       "community": 8,
@@ -517,7 +517,7 @@
       "label": "InvalidConfiguration",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L59",
+      "source_location": "L54",
       "_origin": "ast",
       "id": "exceptions_invalidconfiguration",
       "community": 8,
@@ -527,7 +527,7 @@
       "label": "UnknownRepoType",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L68",
+      "source_location": "L63",
       "_origin": "ast",
       "id": "exceptions_unknownrepotype",
       "community": 0,
@@ -537,7 +537,7 @@
       "label": "VCSNotInstalled",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L76",
+      "source_location": "L71",
       "_origin": "ast",
       "id": "exceptions_vcsnotinstalled",
       "community": 10,
@@ -547,7 +547,7 @@
       "label": "ContextDecodingException",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L84",
+      "source_location": "L79",
       "_origin": "ast",
       "id": "exceptions_contextdecodingexception",
       "community": 0,
@@ -557,7 +557,7 @@
       "label": "OutputDirExistsException",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L92",
+      "source_location": "L87",
       "_origin": "ast",
       "id": "exceptions_outputdirexistsexception",
       "community": 0,
@@ -567,7 +567,7 @@
       "label": "EmptyDirNameException",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L100",
+      "source_location": "L95",
       "_origin": "ast",
       "id": "exceptions_emptydirnameexception",
       "community": 0,
@@ -577,7 +577,7 @@
       "label": "InvalidModeException",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L108",
+      "source_location": "L103",
       "_origin": "ast",
       "id": "exceptions_invalidmodeexception",
       "community": 0,
@@ -587,67 +587,17 @@
       "label": "FailedHookException",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L117",
+      "source_location": "L112",
       "_origin": "ast",
       "id": "exceptions_failedhookexception",
-      "community": 0,
+      "community": 1,
       "norm_label": "failedhookexception"
-    },
-    {
-      "label": "UndefinedVariableInTemplate",
-      "file_type": "code",
-      "source_file": "exceptions.py",
-      "source_location": "L125",
-      "_origin": "ast",
-      "id": "exceptions_undefinedvariableintemplate",
-      "community": 0,
-      "norm_label": "undefinedvariableintemplate"
-    },
-    {
-      "label": ".__init__()",
-      "file_type": "code",
-      "source_file": "exceptions.py",
-      "source_location": "L133",
-      "_origin": "ast",
-      "id": "exceptions_undefinedvariableintemplate_init",
-      "community": 12,
-      "norm_label": ".__init__()"
-    },
-    {
-      "label": "TemplateError",
-      "file_type": "code",
-      "source_file": "exceptions.py",
-      "source_location": "L133",
-      "_origin": "ast",
-      "id": "templateerror",
-      "community": 12,
-      "norm_label": "templateerror"
-    },
-    {
-      "label": "Any",
-      "file_type": "code",
-      "source_file": "exceptions.py",
-      "source_location": "L133",
-      "_origin": "ast",
-      "id": "exceptions_py_any",
-      "community": 12,
-      "norm_label": "any"
-    },
-    {
-      "label": ".__str__()",
-      "file_type": "code",
-      "source_file": "exceptions.py",
-      "source_location": "L141",
-      "_origin": "ast",
-      "id": "exceptions_undefinedvariableintemplate_str",
-      "community": 0,
-      "norm_label": ".__str__()"
     },
     {
       "label": "UnknownExtension",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L150",
+      "source_location": "L120",
       "_origin": "ast",
       "id": "exceptions_unknownextension",
       "community": 0,
@@ -657,7 +607,7 @@
       "label": "RepositoryNotFound",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L158",
+      "source_location": "L128",
       "_origin": "ast",
       "id": "exceptions_repositorynotfound",
       "community": 0,
@@ -667,7 +617,7 @@
       "label": "RepositoryCloneFailed",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L166",
+      "source_location": "L136",
       "_origin": "ast",
       "id": "exceptions_repositoryclonefailed",
       "community": 0,
@@ -677,7 +627,7 @@
       "label": "InvalidZipRepository",
       "file_type": "code",
       "source_file": "exceptions.py",
-      "source_location": "L174",
+      "source_location": "L144",
       "_origin": "ast",
       "id": "exceptions_invalidziprepository",
       "community": 0,
@@ -697,9 +647,9 @@
       "label": "Base exception class.      All Cookiecutter-specific exceptions should subclass",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L12",
+      "source_location": "L7",
       "_origin": "ast",
-      "id": "exceptions_rationale_12",
+      "id": "exceptions_rationale_7",
       "community": 0,
       "norm_label": "base exception class.      all cookiecutter-specific exceptions should subclass"
     },
@@ -707,9 +657,9 @@
       "label": "Exception for when a project's input dir is not templated.      The name of the",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L20",
+      "source_location": "L15",
       "_origin": "ast",
-      "id": "exceptions_rationale_20",
+      "id": "exceptions_rationale_15",
       "community": 11,
       "norm_label": "exception for when a project's input dir is not templated.      the name of the"
     },
@@ -717,9 +667,9 @@
       "label": "Exception for ambiguous project template directory.      Raised when Cookiecutte",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L29",
+      "source_location": "L24",
       "_origin": "ast",
-      "id": "exceptions_rationale_29",
+      "id": "exceptions_rationale_24",
       "community": 0,
       "norm_label": "exception for ambiguous project template directory.      raised when cookiecutte"
     },
@@ -727,9 +677,9 @@
       "label": "Exception for missing generated project directory.      Raised during cleanup wh",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L40",
+      "source_location": "L35",
       "_origin": "ast",
-      "id": "exceptions_rationale_40",
+      "id": "exceptions_rationale_35",
       "community": 0,
       "norm_label": "exception for missing generated project directory.      raised during cleanup wh"
     },
@@ -737,9 +687,9 @@
       "label": "Exception for missing config file.      Raised when get_config() is passed a pat",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L51",
+      "source_location": "L46",
       "_origin": "ast",
-      "id": "exceptions_rationale_51",
+      "id": "exceptions_rationale_46",
       "community": 8,
       "norm_label": "exception for missing config file.      raised when get_config() is passed a pat"
     },
@@ -747,9 +697,9 @@
       "label": "Exception for invalid configuration file.      Raised if the global configuratio",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L60",
+      "source_location": "L55",
       "_origin": "ast",
-      "id": "exceptions_rationale_60",
+      "id": "exceptions_rationale_55",
       "community": 8,
       "norm_label": "exception for invalid configuration file.      raised if the global configuratio"
     },
@@ -757,9 +707,9 @@
       "label": "Exception for unknown repo types.      Raised if a repo's type cannot be determi",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L69",
+      "source_location": "L64",
       "_origin": "ast",
-      "id": "exceptions_rationale_69",
+      "id": "exceptions_rationale_64",
       "community": 0,
       "norm_label": "exception for unknown repo types.      raised if a repo's type cannot be determi"
     },
@@ -767,9 +717,9 @@
       "label": "Exception when version control is unavailable.      Raised if the version contro",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L77",
+      "source_location": "L72",
       "_origin": "ast",
-      "id": "exceptions_rationale_77",
+      "id": "exceptions_rationale_72",
       "community": 10,
       "norm_label": "exception when version control is unavailable.      raised if the version contro"
     },
@@ -777,9 +727,9 @@
       "label": "Exception for failed JSON decoding.      Raised when a project's JSON context fi",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L85",
+      "source_location": "L80",
       "_origin": "ast",
-      "id": "exceptions_rationale_85",
+      "id": "exceptions_rationale_80",
       "community": 0,
       "norm_label": "exception for failed json decoding.      raised when a project's json context fi"
     },
@@ -787,9 +737,9 @@
       "label": "Exception for existing output directory.      Raised when the output directory o",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L93",
+      "source_location": "L88",
       "_origin": "ast",
-      "id": "exceptions_rationale_93",
+      "id": "exceptions_rationale_88",
       "community": 0,
       "norm_label": "exception for existing output directory.      raised when the output directory o"
     },
@@ -797,9 +747,9 @@
       "label": "Exception for a empty directory name.      Raised when the directory name provid",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L101",
+      "source_location": "L96",
       "_origin": "ast",
-      "id": "exceptions_rationale_101",
+      "id": "exceptions_rationale_96",
       "community": 0,
       "norm_label": "exception for a empty directory name.      raised when the directory name provid"
     },
@@ -807,9 +757,9 @@
       "label": "Exception for incompatible modes.      Raised when cookiecutter is called with b",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L109",
+      "source_location": "L104",
       "_origin": "ast",
-      "id": "exceptions_rationale_109",
+      "id": "exceptions_rationale_104",
       "community": 0,
       "norm_label": "exception for incompatible modes.      raised when cookiecutter is called with b"
     },
@@ -817,49 +767,19 @@
       "label": "Exception for hook failures.      Raised when a hook script fails.",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L118",
+      "source_location": "L113",
       "_origin": "ast",
-      "id": "exceptions_rationale_118",
-      "community": 0,
+      "id": "exceptions_rationale_113",
+      "community": 1,
       "norm_label": "exception for hook failures.      raised when a hook script fails."
-    },
-    {
-      "label": "Exception for out-of-scope variables.      Raised when a template uses a variabl",
-      "file_type": "rationale",
-      "source_file": "exceptions.py",
-      "source_location": "L126",
-      "_origin": "ast",
-      "id": "exceptions_rationale_126",
-      "community": 0,
-      "norm_label": "exception for out-of-scope variables.      raised when a template uses a variabl"
-    },
-    {
-      "label": "Exception for out-of-scope variables.",
-      "file_type": "rationale",
-      "source_file": "exceptions.py",
-      "source_location": "L136",
-      "_origin": "ast",
-      "id": "exceptions_rationale_136",
-      "community": 12,
-      "norm_label": "exception for out-of-scope variables."
-    },
-    {
-      "label": "Text representation of UndefinedVariableInTemplate.",
-      "file_type": "rationale",
-      "source_file": "exceptions.py",
-      "source_location": "L142",
-      "_origin": "ast",
-      "id": "exceptions_rationale_142",
-      "community": 0,
-      "norm_label": "text representation of undefinedvariableintemplate."
     },
     {
       "label": "Exception for un-importable extension.      Raised when an environment is unable",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L151",
+      "source_location": "L121",
       "_origin": "ast",
-      "id": "exceptions_rationale_151",
+      "id": "exceptions_rationale_121",
       "community": 0,
       "norm_label": "exception for un-importable extension.      raised when an environment is unable"
     },
@@ -867,9 +787,9 @@
       "label": "Exception for missing repo.      Raised when the specified cookiecutter reposito",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L159",
+      "source_location": "L129",
       "_origin": "ast",
-      "id": "exceptions_rationale_159",
+      "id": "exceptions_rationale_129",
       "community": 0,
       "norm_label": "exception for missing repo.      raised when the specified cookiecutter reposito"
     },
@@ -877,9 +797,9 @@
       "label": "Exception for un-cloneable repo.      Raised when a cookiecutter template can't",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L167",
+      "source_location": "L137",
       "_origin": "ast",
-      "id": "exceptions_rationale_167",
+      "id": "exceptions_rationale_137",
       "community": 0,
       "norm_label": "exception for un-cloneable repo.      raised when a cookiecutter template can't"
     },
@@ -887,9 +807,9 @@
       "label": "Exception for bad zip repo.      Raised when the specified cookiecutter reposito",
       "file_type": "rationale",
       "source_file": "exceptions.py",
-      "source_location": "L175",
+      "source_location": "L145",
       "_origin": "ast",
-      "id": "exceptions_rationale_175",
+      "id": "exceptions_rationale_145",
       "community": 0,
       "norm_label": "exception for bad zip repo.      raised when the specified cookiecutter reposito"
     },
@@ -1240,7 +1160,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "generate",
-      "community": 4,
+      "community": 5,
       "norm_label": "generate.py"
     },
     {
@@ -1250,7 +1170,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "generate_is_copy_only_path",
-      "community": 4,
+      "community": 5,
       "norm_label": "is_copy_only_path()"
     },
     {
@@ -1260,7 +1180,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "generate_py_any",
-      "community": 4,
+      "community": 5,
       "norm_label": "any"
     },
     {
@@ -1270,7 +1190,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "generate_apply_overwrites_to_context",
-      "community": 4,
+      "community": 5,
       "norm_label": "apply_overwrites_to_context()"
     },
     {
@@ -1280,7 +1200,7 @@
       "source_location": "L126",
       "_origin": "ast",
       "id": "generate_generate_context",
-      "community": 4,
+      "community": 5,
       "norm_label": "generate_context()"
     },
     {
@@ -1290,7 +1210,7 @@
       "source_location": "L175",
       "_origin": "ast",
       "id": "generate_generate_file",
-      "community": 4,
+      "community": 5,
       "norm_label": "generate_file()"
     },
     {
@@ -1330,7 +1250,7 @@
       "source_location": "L300",
       "_origin": "ast",
       "id": "generate_run_hook_from_repo_dir",
-      "community": 4,
+      "community": 5,
       "norm_label": "_run_hook_from_repo_dir()"
     },
     {
@@ -1340,7 +1260,7 @@
       "source_location": "L327",
       "_origin": "ast",
       "id": "generate_generate_files",
-      "community": 4,
+      "community": 5,
       "norm_label": "generate_files()"
     },
     {
@@ -1350,7 +1270,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "generate_rationale_1",
-      "community": 4,
+      "community": 5,
       "norm_label": "functions for generating a project from a project template."
     },
     {
@@ -1360,7 +1280,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "generate_rationale_40",
-      "community": 4,
+      "community": 5,
       "norm_label": "check whether the given `path` should only be copied and not rendered.      retu"
     },
     {
@@ -1370,7 +1290,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "generate_rationale_65",
-      "community": 4,
+      "community": 5,
       "norm_label": "modify the given context in place based on the overwrite_context."
     },
     {
@@ -1380,7 +1300,7 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "generate_rationale_131",
-      "community": 4,
+      "community": 5,
       "norm_label": "generate the context for a cookiecutter project template.      loads the json fi"
     },
     {
@@ -1390,7 +1310,7 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "generate_rationale_182",
-      "community": 4,
+      "community": 5,
       "norm_label": "render filename of infile as name of outfile, handle infile correctly.      deal"
     },
     {
@@ -1410,7 +1330,7 @@
       "source_location": "L307",
       "_origin": "ast",
       "id": "generate_rationale_307",
-      "community": 4,
+      "community": 5,
       "norm_label": "run hook from repo directory, clean project directory if hook fails.      :param"
     },
     {
@@ -1420,7 +1340,7 @@
       "source_location": "L336",
       "_origin": "ast",
       "id": "generate_rationale_336",
-      "community": 4,
+      "community": 5,
       "norm_label": "render the templates and saves them to files.      :param repo_dir: project temp"
     },
     {
@@ -1657,171 +1577,81 @@
       "label": "cookiecutter()",
       "file_type": "code",
       "source_file": "main.py",
-      "source_location": "L27",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "main_cookiecutter",
-      "community": 5,
+      "community": 4,
       "norm_label": "cookiecutter()"
     },
     {
       "label": "Any",
       "file_type": "code",
       "source_file": "main.py",
-      "source_location": "L27",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "main_py_any",
-      "community": 5,
+      "community": 4,
       "norm_label": "any"
     },
     {
-      "label": "Run Cookiecutter just as if using it from the command line.",
-      "file_type": "rationale",
+      "label": "_patch_import_path_for_repo",
+      "file_type": "code",
       "source_file": "main.py",
-      "source_location": "L43",
+      "source_location": "L203",
       "_origin": "ast",
-      "id": "main_rationale_43",
-      "community": 5,
-      "norm_label": "run cookiecutter just as if using it from the command line."
-    },
-    {
-      "label": "orchestration.py",
-      "file_type": "code",
-      "source_file": "orchestration.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "orchestration",
-      "community": 5,
-      "norm_label": "orchestration.py"
-    },
-    {
-      "label": "patch_import_path_for_repo",
-      "file_type": "code",
-      "source_file": "orchestration.py",
-      "source_location": "L21",
-      "_origin": "ast",
-      "id": "orchestration_patch_import_path_for_repo",
-      "community": 5,
-      "norm_label": "patch_import_path_for_repo"
+      "id": "main_patch_import_path_for_repo",
+      "community": 4,
+      "norm_label": "_patch_import_path_for_repo"
     },
     {
       "label": ".__init__()",
       "file_type": "code",
-      "source_file": "orchestration.py",
-      "source_location": "L24",
+      "source_file": "main.py",
+      "source_location": "L204",
       "_origin": "ast",
-      "id": "orchestration_patch_import_path_for_repo_init",
-      "community": 5,
+      "id": "main_patch_import_path_for_repo_init",
+      "community": 4,
       "norm_label": ".__init__()"
     },
     {
       "label": "Path",
       "file_type": "code",
-      "source_file": "orchestration.py",
-      "source_location": "L24",
+      "source_file": "main.py",
+      "source_location": "L204",
       "_origin": "ast",
-      "id": "orchestration_py_path",
-      "community": 5,
+      "id": "main_py_path",
+      "community": 4,
       "norm_label": "path"
     },
     {
       "label": ".__enter__()",
       "file_type": "code",
-      "source_file": "orchestration.py",
-      "source_location": "L27",
+      "source_file": "main.py",
+      "source_location": "L207",
       "_origin": "ast",
-      "id": "orchestration_patch_import_path_for_repo_enter",
-      "community": 5,
+      "id": "main_patch_import_path_for_repo_enter",
+      "community": 4,
       "norm_label": ".__enter__()"
     },
     {
       "label": ".__exit__()",
       "file_type": "code",
-      "source_file": "orchestration.py",
-      "source_location": "L31",
+      "source_file": "main.py",
+      "source_location": "L211",
       "_origin": "ast",
-      "id": "orchestration_patch_import_path_for_repo_exit",
-      "community": 5,
+      "id": "main_patch_import_path_for_repo_exit",
+      "community": 4,
       "norm_label": ".__exit__()"
     },
     {
-      "label": "setup_repository()",
-      "file_type": "code",
-      "source_file": "orchestration.py",
-      "source_location": "L35",
-      "_origin": "ast",
-      "id": "orchestration_setup_repository",
-      "community": 5,
-      "norm_label": "setup_repository()"
-    },
-    {
-      "label": "build_context()",
-      "file_type": "code",
-      "source_file": "orchestration.py",
-      "source_location": "L65",
-      "_origin": "ast",
-      "id": "orchestration_build_context",
-      "community": 5,
-      "norm_label": "build_context()"
-    },
-    {
-      "label": "Any",
-      "file_type": "code",
-      "source_file": "orchestration.py",
-      "source_location": "L65",
-      "_origin": "ast",
-      "id": "orchestration_py_any",
-      "community": 5,
-      "norm_label": "any"
-    },
-    {
-      "label": "enrich_context()",
-      "file_type": "code",
-      "source_file": "orchestration.py",
-      "source_location": "L103",
-      "_origin": "ast",
-      "id": "orchestration_enrich_context",
-      "community": 5,
-      "norm_label": "enrich_context()"
-    },
-    {
-      "label": "run_generation()",
-      "file_type": "code",
-      "source_file": "orchestration.py",
-      "source_location": "L119",
-      "_origin": "ast",
-      "id": "orchestration_run_generation",
-      "community": 5,
-      "norm_label": "run_generation()"
-    },
-    {
-      "label": "cleanup_repos()",
-      "file_type": "code",
-      "source_file": "orchestration.py",
-      "source_location": "L141",
-      "_origin": "ast",
-      "id": "orchestration_cleanup_repos",
-      "community": 5,
-      "norm_label": "cleanup_repos()"
-    },
-    {
-      "label": "Orchestration helpers extracted from main to reduce hub coupling.",
+      "label": "Run Cookiecutter just as if using it from the command line.      :param template",
       "file_type": "rationale",
-      "source_file": "orchestration.py",
-      "source_location": "L1",
+      "source_file": "main.py",
+      "source_location": "L45",
       "_origin": "ast",
-      "id": "orchestration_rationale_1",
-      "community": 5,
-      "norm_label": "orchestration helpers extracted from main to reduce hub coupling."
-    },
-    {
-      "label": "Temporarily add template repo to sys.path.",
-      "file_type": "rationale",
-      "source_file": "orchestration.py",
-      "source_location": "L22",
-      "_origin": "ast",
-      "id": "orchestration_rationale_22",
-      "community": 5,
-      "norm_label": "temporarily add template repo to sys.path."
+      "id": "main_rationale_45",
+      "community": 4,
+      "norm_label": "run cookiecutter just as if using it from the command line.      :param template"
     },
     {
       "label": "prompt.py",
@@ -1850,7 +1680,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "prompt_yesnoprompt",
-      "community": 4,
+      "community": 5,
       "norm_label": "yesnoprompt"
     },
     {
@@ -1860,7 +1690,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "confirm",
-      "community": 4,
+      "community": 5,
       "norm_label": "confirm"
     },
     {
@@ -1870,7 +1700,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "prompt_yesnoprompt_process_response",
-      "community": 4,
+      "community": 5,
       "norm_label": ".process_response()"
     },
     {
@@ -1890,7 +1720,7 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "prompt_read_repo_password",
-      "community": 2,
+      "community": 6,
       "norm_label": "read_repo_password()"
     },
     {
@@ -2090,7 +1920,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "prompt_rationale_46",
-      "community": 4,
+      "community": 5,
       "norm_label": "a prompt that returns a boolean for yes/no questions."
     },
     {
@@ -2100,7 +1930,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "prompt_rationale_52",
-      "community": 4,
+      "community": 5,
       "norm_label": "convert choices to a bool."
     },
     {
@@ -2120,7 +1950,7 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "prompt_rationale_84",
-      "community": 2,
+      "community": 6,
       "norm_label": "prompt the user to enter a password.      :param question: question to the user"
     },
     {
@@ -2250,7 +2080,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "replay",
-      "community": 5,
+      "community": 4,
       "norm_label": "replay.py"
     },
     {
@@ -2260,7 +2090,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "replay_get_file_name",
-      "community": 5,
+      "community": 4,
       "norm_label": "get_file_name()"
     },
     {
@@ -2270,7 +2100,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "replay_py_path",
-      "community": 5,
+      "community": 4,
       "norm_label": "path"
     },
     {
@@ -2280,7 +2110,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "replay_dump",
-      "community": 5,
+      "community": 4,
       "norm_label": "dump()"
     },
     {
@@ -2290,7 +2120,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "replay_py_any",
-      "community": 5,
+      "community": 4,
       "norm_label": "any"
     },
     {
@@ -2300,7 +2130,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "replay_load",
-      "community": 5,
+      "community": 4,
       "norm_label": "load()"
     },
     {
@@ -2310,7 +2140,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "replay_rationale_1",
-      "community": 5,
+      "community": 4,
       "norm_label": "cookiecutter.replay.  -------------------"
     },
     {
@@ -2320,7 +2150,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "replay_rationale_20",
-      "community": 5,
+      "community": 4,
       "norm_label": "get the name of file."
     },
     {
@@ -2330,7 +2160,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "replay_rationale_27",
-      "community": 5,
+      "community": 4,
       "norm_label": "write json data to file."
     },
     {
@@ -2340,7 +2170,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "replay_rationale_41",
-      "community": 5,
+      "community": 4,
       "norm_label": "read json data from file."
     },
     {
@@ -2474,6 +2304,106 @@
       "norm_label": "locate the repository directory from a template reference.      applies reposito"
     },
     {
+      "label": "template_exceptions.py",
+      "file_type": "code",
+      "source_file": "template_exceptions.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "template_exceptions",
+      "community": 12,
+      "norm_label": "template_exceptions.py"
+    },
+    {
+      "label": "UndefinedVariableInTemplate",
+      "file_type": "code",
+      "source_file": "template_exceptions.py",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "template_exceptions_undefinedvariableintemplate",
+      "community": 12,
+      "norm_label": "undefinedvariableintemplate"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "template_exceptions.py",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "template_exceptions_undefinedvariableintemplate_init",
+      "community": 12,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": "TemplateError",
+      "file_type": "code",
+      "source_file": "template_exceptions.py",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "templateerror",
+      "community": 12,
+      "norm_label": "templateerror"
+    },
+    {
+      "label": "Any",
+      "file_type": "code",
+      "source_file": "template_exceptions.py",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "template_exceptions_py_any",
+      "community": 12,
+      "norm_label": "any"
+    },
+    {
+      "label": ".__str__()",
+      "file_type": "code",
+      "source_file": "template_exceptions.py",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "template_exceptions_undefinedvariableintemplate_str",
+      "community": 12,
+      "norm_label": ".__str__()"
+    },
+    {
+      "label": "Template-related exceptions for Cookiecutter.",
+      "file_type": "rationale",
+      "source_file": "template_exceptions.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "template_exceptions_rationale_1",
+      "community": 12,
+      "norm_label": "template-related exceptions for cookiecutter."
+    },
+    {
+      "label": "Exception for out-of-scope variables.      Raised when a template uses a variabl",
+      "file_type": "rationale",
+      "source_file": "template_exceptions.py",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "template_exceptions_rationale_14",
+      "community": 12,
+      "norm_label": "exception for out-of-scope variables.      raised when a template uses a variabl"
+    },
+    {
+      "label": "Exception for out-of-scope variables.",
+      "file_type": "rationale",
+      "source_file": "template_exceptions.py",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "template_exceptions_rationale_24",
+      "community": 12,
+      "norm_label": "exception for out-of-scope variables."
+    },
+    {
+      "label": "Text representation of UndefinedVariableInTemplate.",
+      "file_type": "rationale",
+      "source_file": "template_exceptions.py",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "template_exceptions_rationale_30",
+      "community": 12,
+      "norm_label": "text representation of undefinedvariableintemplate."
+    },
+    {
       "label": "utils.py",
       "file_type": "code",
       "source_file": "utils.py",
@@ -2500,7 +2430,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "utils_rmtree",
-      "community": 5,
+      "community": 1,
       "norm_label": "rmtree()"
     },
     {
@@ -2630,7 +2560,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "utils_rationale_36",
-      "community": 5,
+      "community": 1,
       "norm_label": "remove a directory and all its contents. like rm -rf on unix.      :param path:"
     },
     {
@@ -2790,7 +2720,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "zipfile",
-      "community": 15,
+      "community": 6,
       "norm_label": "zipfile.py"
     },
     {
@@ -2800,7 +2730,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "zipfile_unzip",
-      "community": 0,
+      "community": 6,
       "norm_label": "unzip()"
     },
     {
@@ -2810,7 +2740,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "zipfile_py_path",
-      "community": 0,
+      "community": 6,
       "norm_label": "path"
     },
     {
@@ -2820,7 +2750,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "zipfile_rationale_1",
-      "community": 15,
+      "community": 6,
       "norm_label": "utility functions for handling and fetching repo archives in zip format."
     },
     {
@@ -2830,7 +2760,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "zipfile_rationale_24",
-      "community": 0,
+      "community": 6,
       "norm_label": "download and unpack a zipfile at a given uri.      this will download the zipfil"
     }
   ],
@@ -2849,11 +2779,21 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "main.py",
-      "source_location": "L29",
+      "source_location": "L27",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "main_py_main",
       "target": "main_cookiecutter"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L203",
+      "weight": 1.0,
+      "source": "main_py_main",
+      "target": "main_patch_import_path_for_repo",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
@@ -3056,16 +2996,6 @@
       "weight": 0.8,
       "confidence_score": 0.5,
       "source": "context",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "cli.py",
-      "source_location": "L22",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "context",
       "target": "exceptions_unknownextension"
     },
     {
@@ -3156,16 +3086,6 @@
       "weight": 0.8,
       "confidence_score": 0.5,
       "source": "parameter",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "cli.py",
-      "source_location": "L22",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "parameter",
       "target": "exceptions_unknownextension"
     },
     {
@@ -3247,16 +3167,6 @@
       "confidence_score": 0.5,
       "source": "cli_py_ordereddict",
       "target": "exceptions_repositorynotfound"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "cli.py",
-      "source_location": "L22",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "cli_py_ordereddict",
-      "target": "exceptions_undefinedvariableintemplate"
     },
     {
       "relation": "uses",
@@ -3401,16 +3311,6 @@
       "confidence_score": 0.5,
       "source": "cli_py_any",
       "target": "exceptions_repositorynotfound"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "cli.py",
-      "source_location": "L22",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "cli_py_any",
-      "target": "exceptions_undefinedvariableintemplate"
     },
     {
       "relation": "uses",
@@ -3700,7 +3600,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "main.py",
-      "source_location": "L79",
+      "source_location": "L51",
       "weight": 1.0,
       "source": "main_cookiecutter",
       "target": "config_get_user_config"
@@ -4095,16 +3995,6 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L125",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "exceptions.py",
       "source_location": "L150",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -4150,6 +4040,17 @@
       "confidence_score": 1.0,
       "source": "exceptions_rationale_1",
       "target": "exceptions"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "template_exceptions.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "template_exceptions",
+      "target": "exceptions",
+      "confidence_score": 1.0
     },
     {
       "relation": "inherits",
@@ -4265,11 +4166,11 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L12",
+      "source_location": "L7",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_12",
-      "target": "exceptions_cookiecutterexception"
+      "source": "exceptions_rationale_7",
+      "target": "exceptions_cookiecutterexception",
+      "confidence_score": 1.0
     },
     {
       "relation": "inherits",
@@ -4289,16 +4190,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "exceptions_repositorynotfound",
-      "target": "exceptions_cookiecutterexception"
-    },
-    {
-      "relation": "inherits",
-      "confidence": "EXTRACTED",
-      "source_file": "exceptions.py",
-      "source_location": "L125",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_undefinedvariableintemplate",
       "target": "exceptions_cookiecutterexception"
     },
     {
@@ -4342,14 +4233,55 @@
       "target": "exceptions_cookiecutterexception"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "template_exceptions.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "template_exceptions",
+      "target": "exceptions_cookiecutterexception",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "template_exceptions.py",
+      "source_location": "L7",
+      "weight": 0.8,
+      "source": "template_exceptions_py_any",
+      "target": "exceptions_cookiecutterexception",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "template_exceptions.py",
+      "source_location": "L7",
+      "weight": 0.8,
+      "source": "template_exceptions_undefinedvariableintemplate",
+      "target": "exceptions_cookiecutterexception",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "template_exceptions.py",
+      "source_location": "L7",
+      "weight": 0.8,
+      "source": "templateerror",
+      "target": "exceptions_cookiecutterexception",
+      "confidence_score": 0.5
+    },
+    {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L20",
+      "source_location": "L15",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_20",
-      "target": "exceptions_nontemplatedinputdirexception"
+      "source": "exceptions_rationale_15",
+      "target": "exceptions_nontemplatedinputdirexception",
+      "confidence_score": 1.0
     },
     {
       "relation": "uses",
@@ -4375,51 +4307,51 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L29",
+      "source_location": "L24",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_29",
-      "target": "exceptions_unknowntemplatedirexception"
+      "source": "exceptions_rationale_24",
+      "target": "exceptions_unknowntemplatedirexception",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L40",
+      "source_location": "L35",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_40",
-      "target": "exceptions_missingprojectdir"
+      "source": "exceptions_rationale_35",
+      "target": "exceptions_missingprojectdir",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L51",
+      "source_location": "L46",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_51",
-      "target": "exceptions_configdoesnotexistexception"
+      "source": "exceptions_rationale_46",
+      "target": "exceptions_configdoesnotexistexception",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L60",
+      "source_location": "L55",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_60",
-      "target": "exceptions_invalidconfiguration"
+      "source": "exceptions_rationale_55",
+      "target": "exceptions_invalidconfiguration",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L69",
+      "source_location": "L64",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_69",
-      "target": "exceptions_unknownrepotype"
+      "source": "exceptions_rationale_64",
+      "target": "exceptions_unknownrepotype",
+      "confidence_score": 1.0
     },
     {
       "relation": "uses",
@@ -4435,11 +4367,11 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L77",
+      "source_location": "L72",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_77",
-      "target": "exceptions_vcsnotinstalled"
+      "source": "exceptions_rationale_72",
+      "target": "exceptions_vcsnotinstalled",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -4466,11 +4398,11 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L85",
+      "source_location": "L80",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_85",
-      "target": "exceptions_contextdecodingexception"
+      "source": "exceptions_rationale_80",
+      "target": "exceptions_contextdecodingexception",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -4517,11 +4449,11 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L93",
+      "source_location": "L88",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_93",
-      "target": "exceptions_outputdirexistsexception"
+      "source": "exceptions_rationale_88",
+      "target": "exceptions_outputdirexistsexception",
+      "confidence_score": 1.0
     },
     {
       "relation": "uses",
@@ -4568,11 +4500,11 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L101",
+      "source_location": "L96",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_101",
-      "target": "exceptions_emptydirnameexception"
+      "source": "exceptions_rationale_96",
+      "target": "exceptions_emptydirnameexception",
+      "confidence_score": 1.0
     },
     {
       "relation": "uses",
@@ -4619,11 +4551,11 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L109",
+      "source_location": "L104",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_109",
-      "target": "exceptions_invalidmodeexception"
+      "source": "exceptions_rationale_104",
+      "target": "exceptions_invalidmodeexception",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -4631,7 +4563,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "main.py",
-      "source_location": "L77",
+      "source_location": "L49",
       "weight": 1.0,
       "source": "main_cookiecutter",
       "target": "exceptions_invalidmodeexception"
@@ -4642,19 +4574,39 @@
       "source_file": "main.py",
       "source_location": "L18",
       "weight": 0.8,
+      "source": "main_patch_import_path_for_repo",
+      "target": "exceptions_invalidmodeexception",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "main.py",
+      "source_location": "L14",
+      "weight": 0.8,
       "confidence_score": 0.5,
       "source": "main_py_any",
       "target": "exceptions_invalidmodeexception"
     },
     {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "main.py",
+      "source_location": "L18",
+      "weight": 0.8,
+      "source": "main_py_path",
+      "target": "exceptions_invalidmodeexception",
+      "confidence_score": 0.5
+    },
+    {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L118",
+      "source_location": "L113",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_118",
-      "target": "exceptions_failedhookexception"
+      "source": "exceptions_rationale_113",
+      "target": "exceptions_failedhookexception",
+      "confidence_score": 1.0
     },
     {
       "relation": "uses",
@@ -4702,215 +4654,21 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L126",
+      "source_location": "L121",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_126",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "exceptions.py",
-      "source_location": "L133",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_undefinedvariableintemplate",
-      "target": "exceptions_undefinedvariableintemplate_init"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "exceptions.py",
-      "source_location": "L141",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_undefinedvariableintemplate",
-      "target": "exceptions_undefinedvariableintemplate_str"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "generate.py",
-      "source_location": "L364",
-      "weight": 1.0,
-      "source": "generate_generate_files",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "generate.py",
-      "source_location": "L20",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "generate_py_any",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "generate.py",
-      "source_location": "L20",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "generate_py_environment",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "generate.py",
-      "source_location": "L20",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "generate_py_path",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "prompt.py",
-      "source_location": "L18",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "prompt_jsonprompt",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "prompt.py",
-      "source_location": "L340",
-      "weight": 1.0,
-      "source": "prompt_prompt_for_config",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "prompt.py",
-      "source_location": "L18",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "prompt_py_any",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "prompt.py",
-      "source_location": "L18",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "prompt_py_environment",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "prompt.py",
-      "source_location": "L18",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "prompt_py_ordereddict",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "prompt.py",
-      "source_location": "L18",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "prompt_py_path",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "prompt.py",
-      "source_location": "L18",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "prompt_yesnoprompt",
-      "target": "exceptions_undefinedvariableintemplate"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "prompt.py",
-      "source_location": "L18",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "raw",
-      "target": "exceptions_undefinedvariableintemplate"
+      "source": "exceptions_rationale_121",
+      "target": "exceptions_unknownextension",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L136",
+      "source_location": "L129",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_136",
-      "target": "exceptions_undefinedvariableintemplate_init"
-    },
-    {
-      "relation": "references",
-      "context": "generic_arg",
-      "confidence": "EXTRACTED",
-      "source_file": "exceptions.py",
-      "source_location": "L133",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_undefinedvariableintemplate_init",
-      "target": "exceptions_py_any"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "exceptions.py",
-      "source_location": "L133",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_undefinedvariableintemplate_init",
-      "target": "templateerror"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "exceptions.py",
-      "source_location": "L142",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_142",
-      "target": "exceptions_undefinedvariableintemplate_str"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "exceptions.py",
-      "source_location": "L151",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_151",
-      "target": "exceptions_unknownextension"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "exceptions.py",
-      "source_location": "L159",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_159",
-      "target": "exceptions_repositorynotfound"
+      "source": "exceptions_rationale_129",
+      "target": "exceptions_repositorynotfound",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -4958,11 +4716,11 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L167",
+      "source_location": "L137",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_167",
-      "target": "exceptions_repositoryclonefailed"
+      "source": "exceptions_rationale_137",
+      "target": "exceptions_repositoryclonefailed",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -4989,19 +4747,9 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "exceptions.py",
-      "source_location": "L175",
+      "source_location": "L145",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "exceptions_rationale_159",
-      "target": "exceptions_invalidziprepository"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "exceptions.py",
-      "source_location": "L175",
-      "weight": 1.0,
-      "source": "exceptions_rationale_175",
+      "source": "exceptions_rationale_145",
       "target": "exceptions_invalidziprepository",
       "confidence_score": 1.0
     },
@@ -5772,17 +5520,6 @@
       "target": "generate_generate_context"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "orchestration.py",
-      "source_location": "L81",
-      "weight": 1.0,
-      "source": "orchestration_build_context",
-      "target": "generate_generate_context"
-    },
-    {
       "relation": "references",
       "context": "parameter_type",
       "confidence": "EXTRACTED",
@@ -5948,6 +5685,17 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "generate.py",
+      "source_location": "L364",
+      "weight": 1.0,
+      "source": "generate_generate_files",
+      "target": "template_exceptions_undefinedvariableintemplate"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "generate.py",
       "source_location": "L351",
       "weight": 1.0,
       "source": "generate_generate_files",
@@ -5994,17 +5742,6 @@
       "source_location": "L185",
       "weight": 1.0,
       "source": "main_cookiecutter",
-      "target": "generate_generate_files"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "orchestration.py",
-      "source_location": "L130",
-      "weight": 1.0,
-      "source": "orchestration_run_generation",
       "target": "generate_generate_files"
     },
     {
@@ -6389,17 +6126,6 @@
       "target": "hooks_run_pre_prompt_hook"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "orchestration.py",
-      "source_location": "L54",
-      "weight": 1.0,
-      "source": "orchestration_setup_repository",
-      "target": "hooks_run_pre_prompt_hook"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "log.py",
@@ -6441,11 +6167,22 @@
       "target": "log_configure_logger"
     },
     {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L98",
+      "weight": 1.0,
+      "source": "main_cookiecutter",
+      "target": "main_patch_import_path_for_repo",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "references",
       "context": "generic_arg",
       "confidence": "EXTRACTED",
       "source_file": "main.py",
-      "source_location": "L29",
+      "source_location": "L27",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "main_cookiecutter",
@@ -6457,62 +6194,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "main.py",
-      "source_location": "L64",
-      "weight": 1.0,
-      "source": "main_cookiecutter",
-      "target": "orchestration_build_context"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "main.py",
-      "source_location": "L114",
-      "weight": 1.0,
-      "source": "main_cookiecutter",
-      "target": "orchestration_cleanup_repos"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "main.py",
-      "source_location": "L71",
-      "weight": 1.0,
-      "source": "main_cookiecutter",
-      "target": "orchestration_enrich_context"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "main.py",
-      "source_location": "L104",
-      "weight": 1.0,
-      "source": "main_cookiecutter",
-      "target": "orchestration_run_generation"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "main.py",
-      "source_location": "L55",
-      "weight": 1.0,
-      "source": "main_cookiecutter",
-      "target": "orchestration_setup_repository"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "main.py",
-      "source_location": "L145",
+      "source_location": "L77",
       "weight": 1.0,
       "source": "main_cookiecutter",
       "target": "prompt_choose_nested_template"
@@ -6523,7 +6205,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "main.py",
-      "source_location": "L164",
+      "source_location": "L98",
       "weight": 1.0,
       "source": "main_cookiecutter",
       "target": "prompt_prompt_for_config"
@@ -6534,7 +6216,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "main.py",
-      "source_location": "L181",
+      "source_location": "L102",
       "weight": 1.0,
       "source": "main_cookiecutter",
       "target": "replay_dump"
@@ -6576,209 +6258,52 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "main.py",
-      "source_location": "L43",
+      "source_location": "L45",
       "weight": 1.0,
-      "source": "main_rationale_43",
+      "source": "main_rationale_45",
       "target": "main_cookiecutter",
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L65",
+      "source_file": "main.py",
+      "source_location": "L207",
       "weight": 1.0,
-      "source": "orchestration",
-      "target": "orchestration_build_context",
+      "source": "main_patch_import_path_for_repo",
+      "target": "main_patch_import_path_for_repo_enter",
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L141",
+      "source_file": "main.py",
+      "source_location": "L211",
       "weight": 1.0,
-      "source": "orchestration",
-      "target": "orchestration_cleanup_repos",
+      "source": "main_patch_import_path_for_repo",
+      "target": "main_patch_import_path_for_repo_exit",
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L103",
+      "source_file": "main.py",
+      "source_location": "L204",
       "weight": 1.0,
-      "source": "orchestration",
-      "target": "orchestration_enrich_context",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L21",
-      "weight": 1.0,
-      "source": "orchestration",
-      "target": "orchestration_patch_import_path_for_repo",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L119",
-      "weight": 1.0,
-      "source": "orchestration",
-      "target": "orchestration_run_generation",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "orchestration",
-      "target": "orchestration_setup_repository",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "orchestration_rationale_1",
-      "target": "orchestration",
+      "source": "main_patch_import_path_for_repo",
+      "target": "main_patch_import_path_for_repo_init",
       "confidence_score": 1.0
     },
     {
       "relation": "references",
       "context": "parameter_type",
       "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L65",
+      "source_file": "main.py",
+      "source_location": "L204",
       "weight": 1.0,
-      "source": "orchestration_build_context",
-      "target": "orchestration_patch_import_path_for_repo",
+      "source": "main_patch_import_path_for_repo_init",
+      "target": "main_py_path",
       "confidence_score": 1.0
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L27",
-      "weight": 1.0,
-      "source": "orchestration_patch_import_path_for_repo",
-      "target": "orchestration_patch_import_path_for_repo_enter",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L31",
-      "weight": 1.0,
-      "source": "orchestration_patch_import_path_for_repo",
-      "target": "orchestration_patch_import_path_for_repo_exit",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L24",
-      "weight": 1.0,
-      "source": "orchestration_patch_import_path_for_repo",
-      "target": "orchestration_patch_import_path_for_repo_init",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L22",
-      "weight": 1.0,
-      "source": "orchestration_rationale_22",
-      "target": "orchestration_patch_import_path_for_repo",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L119",
-      "weight": 1.0,
-      "source": "orchestration_run_generation",
-      "target": "orchestration_patch_import_path_for_repo",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "references",
-      "context": "generic_arg",
-      "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "orchestration_setup_repository",
-      "target": "orchestration_patch_import_path_for_repo",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L24",
-      "weight": 1.0,
-      "source": "orchestration_patch_import_path_for_repo_init",
-      "target": "orchestration_py_path",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "orchestration.py",
-      "source_location": "L44",
-      "weight": 1.0,
-      "source": "orchestration_setup_repository",
-      "target": "repository_determine_repo_dir"
-    },
-    {
-      "relation": "references",
-      "context": "generic_arg",
-      "confidence": "EXTRACTED",
-      "source_file": "orchestration.py",
-      "source_location": "L65",
-      "weight": 1.0,
-      "source": "orchestration_build_context",
-      "target": "orchestration_py_any",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "orchestration.py",
-      "source_location": "L77",
-      "weight": 1.0,
-      "source": "orchestration_build_context",
-      "target": "replay_load"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "orchestration.py",
-      "source_location": "L148",
-      "weight": 1.0,
-      "source": "orchestration_cleanup_repos",
-      "target": "utils_rmtree"
     },
     {
       "relation": "contains",
@@ -7434,6 +6959,17 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "prompt.py",
+      "source_location": "L340",
+      "weight": 1.0,
+      "source": "prompt_prompt_for_config",
+      "target": "template_exceptions_undefinedvariableintemplate"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "prompt.py",
       "source_location": "L293",
       "weight": 1.0,
       "source": "prompt_prompt_for_config",
@@ -7883,6 +7419,98 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "template_exceptions.py",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "template_exceptions",
+      "target": "template_exceptions_undefinedvariableintemplate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "template_exceptions.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "template_exceptions_rationale_1",
+      "target": "template_exceptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "template_exceptions.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "template_exceptions_rationale_14",
+      "target": "template_exceptions_undefinedvariableintemplate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "template_exceptions.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "template_exceptions_undefinedvariableintemplate",
+      "target": "template_exceptions_undefinedvariableintemplate_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "template_exceptions.py",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "template_exceptions_undefinedvariableintemplate",
+      "target": "template_exceptions_undefinedvariableintemplate_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "template_exceptions.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "template_exceptions_rationale_24",
+      "target": "template_exceptions_undefinedvariableintemplate_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "template_exceptions.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "template_exceptions_undefinedvariableintemplate_init",
+      "target": "template_exceptions_py_any",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "template_exceptions.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "template_exceptions_undefinedvariableintemplate_init",
+      "target": "templateerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "template_exceptions.py",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "template_exceptions_rationale_30",
+      "target": "template_exceptions_undefinedvariableintemplate_str",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "utils.py",
       "source_location": "L102",
       "weight": 1.0,
@@ -8317,5 +7945,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "83cb2ff8dce96fadcda673ad37a63054affb1c26"
+  "built_at_commit": "bb462d163891567d1f46494284c78d9dd5fef16e"
 }

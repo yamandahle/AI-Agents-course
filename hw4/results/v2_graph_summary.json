@@ -1,0 +1,19 @@
+{
+  "node_count": 278,
+  "edge_count": 517,
+  "community_count": 15,
+  "bridge_count": 133,
+  "top_10_hubs": [
+    ["exceptions_undefinedvariableintemplate", 21],
+    ["exceptions_cookiecutterexception", 20],
+    ["exceptions", 19],
+    ["prompt", 16],
+    ["main_cookiecutter", 14],
+    ["generate_generate_files", 14],
+    ["cli_py_any", 12],
+    ["generate_py_any", 12],
+    ["prompt_prompt_for_config", 12],
+    ["cli_py_ordereddict", 11]
+  ],
+  "interpretation": "The graph analysis reveals 278 nodes and 517 edges, organized into 15 communities with 133 bridges, indicating a moderately modular architecture with significant inter-community connections. Exception handling components, particularly `exceptions_undefinedvariableintemplate` and `exceptions_cookiecutterexception`, along with the `prompt` module, are identified as the top architectural hot-spots due to their high degree of connectivity, suggesting they are central to the system's error management and user interaction flows."
+}

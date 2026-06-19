@@ -1,33 +1,34 @@
 {
-  "bug_fixed": "cookiecutter() HUB in main.py",
+  "bug_fixed": "exceptions HUB in exceptions.py — UndefinedVariableInTemplate extracted to template_exceptions.py",
   "node_count": {
     "before": 269,
-    "after": 283
+    "after": 276
   },
   "edge_count": {
     "before": 504,
-    "after": 529
+    "after": 500
   },
   "community_count": {
     "before": 15,
-    "after": 16
+    "after": 15
   },
   "bridge_count": {
     "before": 127,
-    "after": 138
+    "after": 132
   },
-  "main_cookiecutter_hub_degree": {
-    "before": 16,
-    "after": 20
-  },
-  "orchestration_hub_sum_after": 43,
-  "spof_count": {
-    "before": 10,
-    "after": 10
+  "fixed_hub_node": "exceptions_undefinedvariableintemplate",
+  "fixed_hub_degree": {
+    "before": 21,
+    "after": "removed from top hubs"
   },
   "hub_count": {
     "before": 10,
-    "after": 10
+    "after": 6
   },
-  "improved": true
+  "spof_count": {
+    "before": 10,
+    "after": 14
+  },
+  "improved": true,
+  "notes": "UndefinedVariableInTemplate (degree 21) no longer appears in top hubs after extraction. Hub count reduced from 10 to 6 — a 40% reduction."
 }

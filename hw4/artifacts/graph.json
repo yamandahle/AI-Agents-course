@@ -11,8 +11,7 @@
       "_origin": "ast",
       "community": 13,
       "norm_label": "__init__.py",
-      "id": "init",
-      "community_name": "Community 13"
+      "id": "init"
     },
     {
       "label": "Main package for Cookiecutter.",
@@ -22,30 +21,27 @@
       "_origin": "ast",
       "community": 13,
       "norm_label": "main package for cookiecutter.",
-      "id": "init_rationale_1",
-      "community_name": "Community 13"
+      "id": "init_rationale_1"
     },
     {
-      "label": "__main__.py",
+      "label": "main.py",
       "file_type": "code",
-      "source_file": "__main__.py",
+      "source_file": "main.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 5,
-      "norm_label": "__main__.py",
-      "id": "main_py_main",
-      "community_name": "Community 5"
+      "community": 4,
+      "norm_label": "main.py",
+      "id": "main_py_main"
     },
     {
-      "label": "Allow cookiecutter to be executable through `python -m cookiecutter`.",
+      "label": "Main entry point for the `cookiecutter` command.  The code in this module is als",
       "file_type": "rationale",
-      "source_file": "__main__.py",
+      "source_file": "main.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 5,
-      "norm_label": "allow cookiecutter to be executable through `python -m cookiecutter`.",
-      "id": "main_py_main_rationale_1",
-      "community_name": "Community 5"
+      "community": 4,
+      "norm_label": "main entry point for the `cookiecutter` command.  the code in this module is als",
+      "id": "main_py_main_rationale_1"
     },
     {
       "label": "cli.py",
@@ -55,8 +51,7 @@
       "_origin": "ast",
       "community": 9,
       "norm_label": "cli.py",
-      "id": "cli",
-      "community_name": "Community 9"
+      "id": "cli"
     },
     {
       "label": "version_msg()",
@@ -66,8 +61,7 @@
       "_origin": "ast",
       "community": 9,
       "norm_label": "version_msg()",
-      "id": "cli_version_msg",
-      "community_name": "Community 9"
+      "id": "cli_version_msg"
     },
     {
       "label": "validate_extra_context()",
@@ -77,8 +71,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "validate_extra_context()",
-      "id": "cli_validate_extra_context",
-      "community_name": "Community 0"
+      "id": "cli_validate_extra_context"
     },
     {
       "label": "Context",
@@ -88,8 +81,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "context",
-      "id": "context",
-      "community_name": "Community 0"
+      "id": "context"
     },
     {
       "label": "Parameter",
@@ -99,8 +91,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "parameter",
-      "id": "parameter",
-      "community_name": "Community 0"
+      "id": "parameter"
     },
     {
       "label": "OrderedDict",
@@ -110,8 +101,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "ordereddict",
-      "id": "cli_py_ordereddict",
-      "community_name": "Community 0"
+      "id": "cli_py_ordereddict"
     },
     {
       "label": "list_installed_templates()",
@@ -121,8 +111,7 @@
       "_origin": "ast",
       "community": 9,
       "norm_label": "list_installed_templates()",
-      "id": "cli_list_installed_templates",
-      "community_name": "Community 9"
+      "id": "cli_list_installed_templates"
     },
     {
       "label": "Any",
@@ -132,8 +121,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "any",
-      "id": "cli_py_any",
-      "community_name": "Community 0"
+      "id": "cli_py_any"
     },
     {
       "label": "main()",
@@ -143,8 +131,7 @@
       "_origin": "ast",
       "community": 9,
       "norm_label": "main()",
-      "id": "cli_main",
-      "community_name": "Community 9"
+      "id": "cli_main"
     },
     {
       "label": "Main `cookiecutter` CLI.",
@@ -154,8 +141,7 @@
       "_origin": "ast",
       "community": 9,
       "norm_label": "main `cookiecutter` cli.",
-      "id": "cli_rationale_1",
-      "community_name": "Community 9"
+      "id": "cli_rationale_1"
     },
     {
       "label": "Return the Cookiecutter version, location and Python powering it.",
@@ -165,8 +151,7 @@
       "_origin": "ast",
       "community": 9,
       "norm_label": "return the cookiecutter version, location and python powering it.",
-      "id": "cli_rationale_39",
-      "community_name": "Community 9"
+      "id": "cli_rationale_39"
     },
     {
       "label": "Validate extra context.",
@@ -176,8 +161,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "validate extra context.",
-      "id": "cli_rationale_48",
-      "community_name": "Community 0"
+      "id": "cli_rationale_48"
     },
     {
       "label": "List installed (locally cloned) templates. Use cookiecutter --list-installed.",
@@ -187,8 +171,7 @@
       "_origin": "ast",
       "community": 9,
       "norm_label": "list installed (locally cloned) templates. use cookiecutter --list-installed.",
-      "id": "cli_rationale_65",
-      "community_name": "Community 9"
+      "id": "cli_rationale_65"
     },
     {
       "label": "Create a project from a Cookiecutter project template (TEMPLATE).      Cookiecut",
@@ -198,8 +181,7 @@
       "_origin": "ast",
       "community": 9,
       "norm_label": "create a project from a cookiecutter project template (template).      cookiecut",
-      "id": "cli_rationale_190",
-      "community_name": "Community 9"
+      "id": "cli_rationale_190"
     },
     {
       "label": "config.py",
@@ -209,8 +191,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "config.py",
-      "id": "config",
-      "community_name": "Community 8"
+      "id": "config"
     },
     {
       "label": "_expand_path()",
@@ -220,8 +201,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "_expand_path()",
-      "id": "config_expand_path",
-      "community_name": "Community 8"
+      "id": "config_expand_path"
     },
     {
       "label": "merge_configs()",
@@ -231,8 +211,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "merge_configs()",
-      "id": "config_merge_configs",
-      "community_name": "Community 8"
+      "id": "config_merge_configs"
     },
     {
       "label": "Any",
@@ -242,8 +221,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "any",
-      "id": "config_py_any",
-      "community_name": "Community 8"
+      "id": "config_py_any"
     },
     {
       "label": "get_config()",
@@ -253,8 +231,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "get_config()",
-      "id": "config_get_config",
-      "community_name": "Community 8"
+      "id": "config_get_config"
     },
     {
       "label": "Path",
@@ -264,8 +241,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "path",
-      "id": "config_py_path",
-      "community_name": "Community 8"
+      "id": "config_py_path"
     },
     {
       "label": "get_user_config()",
@@ -275,8 +251,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "get_user_config()",
-      "id": "config_get_user_config",
-      "community_name": "Community 8"
+      "id": "config_get_user_config"
     },
     {
       "label": "Global configuration handling.",
@@ -286,8 +261,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "global configuration handling.",
-      "id": "config_rationale_1",
-      "community_name": "Community 8"
+      "id": "config_rationale_1"
     },
     {
       "label": "Expand both environment variables and user home in the given path.",
@@ -297,8 +271,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "expand both environment variables and user home in the given path.",
-      "id": "config_rationale_37",
-      "community_name": "Community 8"
+      "id": "config_rationale_37"
     },
     {
       "label": "Recursively update a dict with the key/value pair of another.      Dict values t",
@@ -308,8 +281,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "recursively update a dict with the key/value pair of another.      dict values t",
-      "id": "config_rationale_43",
-      "community_name": "Community 8"
+      "id": "config_rationale_43"
     },
     {
       "label": "Retrieve the config from the specified path, returning a config dict.",
@@ -319,8 +291,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "retrieve the config from the specified path, returning a config dict.",
-      "id": "config_rationale_62",
-      "community_name": "Community 8"
+      "id": "config_rationale_62"
     },
     {
       "label": "Return the user config as a dict.      If ``default_config`` is True, ignore ``c",
@@ -330,8 +301,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "return the user config as a dict.      if ``default_config`` is true, ignore ``c",
-      "id": "config_rationale_93",
-      "community_name": "Community 8"
+      "id": "config_rationale_93"
     },
     {
       "label": "environment.py",
@@ -341,8 +311,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "environment.py",
-      "id": "environment_py_environment",
-      "community_name": "Community 7"
+      "id": "environment_py_environment"
     },
     {
       "label": "ExtensionLoaderMixin",
@@ -352,8 +321,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "extensionloadermixin",
-      "id": "environment_extensionloadermixin",
-      "community_name": "Community 7"
+      "id": "environment_extensionloadermixin"
     },
     {
       "label": ".__init__()",
@@ -363,8 +331,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": ".__init__()",
-      "id": "environment_extensionloadermixin_init",
-      "community_name": "Community 7"
+      "id": "environment_extensionloadermixin_init"
     },
     {
       "label": "Any",
@@ -374,8 +341,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "any",
-      "id": "environment_py_any",
-      "community_name": "Community 7"
+      "id": "environment_py_any"
     },
     {
       "label": "._read_extensions()",
@@ -385,8 +351,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "._read_extensions()",
-      "id": "environment_extensionloadermixin_read_extensions",
-      "community_name": "Community 7"
+      "id": "environment_extensionloadermixin_read_extensions"
     },
     {
       "label": "StrictEnvironment",
@@ -396,8 +361,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "strictenvironment",
-      "id": "environment_strictenvironment",
-      "community_name": "Community 7"
+      "id": "environment_strictenvironment"
     },
     {
       "label": "Environment",
@@ -407,8 +371,7 @@
       "_origin": "ast",
       "community": 14,
       "norm_label": "environment",
-      "id": "environment",
-      "community_name": "Community 14"
+      "id": "environment"
     },
     {
       "label": ".__init__()",
@@ -418,8 +381,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": ".__init__()",
-      "id": "environment_strictenvironment_init",
-      "community_name": "Community 7"
+      "id": "environment_strictenvironment_init"
     },
     {
       "label": "Jinja2 environment and extensions loading.",
@@ -429,8 +391,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "jinja2 environment and extensions loading.",
-      "id": "environment_rationale_1",
-      "community_name": "Community 7"
+      "id": "environment_rationale_1"
     },
     {
       "label": "Mixin providing sane loading of extensions specified in a given context.      Th",
@@ -440,8 +401,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "mixin providing sane loading of extensions specified in a given context.      th",
-      "id": "environment_rationale_13",
-      "community_name": "Community 7"
+      "id": "environment_rationale_13"
     },
     {
       "label": "Initialize the Jinja2 Environment object while loading extensions.          Does",
@@ -451,8 +411,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "initialize the jinja2 environment object while loading extensions.          does",
-      "id": "environment_rationale_20",
-      "community_name": "Community 7"
+      "id": "environment_rationale_20"
     },
     {
       "label": "Return list of extensions as str to be passed on to the Jinja2 env.          If",
@@ -462,8 +421,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "return list of extensions as str to be passed on to the jinja2 env.          if",
-      "id": "environment_rationale_46",
-      "community_name": "Community 7"
+      "id": "environment_rationale_46"
     },
     {
       "label": "Create strict Jinja2 environment.      Jinja2 environment will raise error on un",
@@ -473,8 +431,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "create strict jinja2 environment.      jinja2 environment will raise error on un",
-      "id": "environment_rationale_60",
-      "community_name": "Community 7"
+      "id": "environment_rationale_60"
     },
     {
       "label": "Set the standard Cookiecutter StrictEnvironment.          Also loading extension",
@@ -484,8 +441,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "set the standard cookiecutter strictenvironment.          also loading extension",
-      "id": "environment_rationale_67",
-      "community_name": "Community 7"
+      "id": "environment_rationale_67"
     },
     {
       "label": "exceptions.py",
@@ -495,8 +451,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "exceptions.py",
-      "id": "exceptions",
-      "community_name": "Community 0"
+      "id": "exceptions"
     },
     {
       "label": "CookiecutterException",
@@ -506,8 +461,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "cookiecutterexception",
-      "id": "exceptions_cookiecutterexception",
-      "community_name": "Community 0"
+      "id": "exceptions_cookiecutterexception"
     },
     {
       "label": "Exception",
@@ -517,8 +471,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "exception",
-      "id": "exception",
-      "community_name": "Community 0"
+      "id": "exception"
     },
     {
       "label": "NonTemplatedInputDirException",
@@ -528,8 +481,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "nontemplatedinputdirexception",
-      "id": "exceptions_nontemplatedinputdirexception",
-      "community_name": "Community 11"
+      "id": "exceptions_nontemplatedinputdirexception"
     },
     {
       "label": "UnknownTemplateDirException",
@@ -539,8 +491,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "unknowntemplatedirexception",
-      "id": "exceptions_unknowntemplatedirexception",
-      "community_name": "Community 0"
+      "id": "exceptions_unknowntemplatedirexception"
     },
     {
       "label": "MissingProjectDir",
@@ -550,8 +501,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "missingprojectdir",
-      "id": "exceptions_missingprojectdir",
-      "community_name": "Community 0"
+      "id": "exceptions_missingprojectdir"
     },
     {
       "label": "ConfigDoesNotExistException",
@@ -561,8 +511,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "configdoesnotexistexception",
-      "id": "exceptions_configdoesnotexistexception",
-      "community_name": "Community 8"
+      "id": "exceptions_configdoesnotexistexception"
     },
     {
       "label": "InvalidConfiguration",
@@ -572,8 +521,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "invalidconfiguration",
-      "id": "exceptions_invalidconfiguration",
-      "community_name": "Community 8"
+      "id": "exceptions_invalidconfiguration"
     },
     {
       "label": "UnknownRepoType",
@@ -583,8 +531,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "unknownrepotype",
-      "id": "exceptions_unknownrepotype",
-      "community_name": "Community 0"
+      "id": "exceptions_unknownrepotype"
     },
     {
       "label": "VCSNotInstalled",
@@ -594,8 +541,7 @@
       "_origin": "ast",
       "community": 10,
       "norm_label": "vcsnotinstalled",
-      "id": "exceptions_vcsnotinstalled",
-      "community_name": "Community 10"
+      "id": "exceptions_vcsnotinstalled"
     },
     {
       "label": "ContextDecodingException",
@@ -605,8 +551,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "contextdecodingexception",
-      "id": "exceptions_contextdecodingexception",
-      "community_name": "Community 0"
+      "id": "exceptions_contextdecodingexception"
     },
     {
       "label": "OutputDirExistsException",
@@ -616,8 +561,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "outputdirexistsexception",
-      "id": "exceptions_outputdirexistsexception",
-      "community_name": "Community 0"
+      "id": "exceptions_outputdirexistsexception"
     },
     {
       "label": "EmptyDirNameException",
@@ -627,8 +571,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "emptydirnameexception",
-      "id": "exceptions_emptydirnameexception",
-      "community_name": "Community 0"
+      "id": "exceptions_emptydirnameexception"
     },
     {
       "label": "InvalidModeException",
@@ -638,8 +581,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "invalidmodeexception",
-      "id": "exceptions_invalidmodeexception",
-      "community_name": "Community 0"
+      "id": "exceptions_invalidmodeexception"
     },
     {
       "label": "FailedHookException",
@@ -649,8 +591,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "failedhookexception",
-      "id": "exceptions_failedhookexception",
-      "community_name": "Community 1"
+      "id": "exceptions_failedhookexception"
     },
     {
       "label": "UndefinedVariableInTemplate",
@@ -660,8 +601,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "undefinedvariableintemplate",
-      "id": "exceptions_undefinedvariableintemplate",
-      "community_name": "Community 0"
+      "id": "exceptions_undefinedvariableintemplate"
     },
     {
       "label": ".__init__()",
@@ -671,8 +611,7 @@
       "_origin": "ast",
       "community": 12,
       "norm_label": ".__init__()",
-      "id": "exceptions_undefinedvariableintemplate_init",
-      "community_name": "Community 12"
+      "id": "exceptions_undefinedvariableintemplate_init"
     },
     {
       "label": "TemplateError",
@@ -682,8 +621,7 @@
       "_origin": "ast",
       "community": 12,
       "norm_label": "templateerror",
-      "id": "templateerror",
-      "community_name": "Community 12"
+      "id": "templateerror"
     },
     {
       "label": "Any",
@@ -693,8 +631,7 @@
       "_origin": "ast",
       "community": 12,
       "norm_label": "any",
-      "id": "exceptions_py_any",
-      "community_name": "Community 12"
+      "id": "exceptions_py_any"
     },
     {
       "label": ".__str__()",
@@ -704,8 +641,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": ".__str__()",
-      "id": "exceptions_undefinedvariableintemplate_str",
-      "community_name": "Community 0"
+      "id": "exceptions_undefinedvariableintemplate_str"
     },
     {
       "label": "UnknownExtension",
@@ -713,10 +649,9 @@
       "source_file": "exceptions.py",
       "source_location": "L150",
       "_origin": "ast",
-      "community": 7,
+      "community": 0,
       "norm_label": "unknownextension",
-      "id": "exceptions_unknownextension",
-      "community_name": "Community 7"
+      "id": "exceptions_unknownextension"
     },
     {
       "label": "RepositoryNotFound",
@@ -726,8 +661,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "repositorynotfound",
-      "id": "exceptions_repositorynotfound",
-      "community_name": "Community 0"
+      "id": "exceptions_repositorynotfound"
     },
     {
       "label": "RepositoryCloneFailed",
@@ -737,8 +671,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "repositoryclonefailed",
-      "id": "exceptions_repositoryclonefailed",
-      "community_name": "Community 0"
+      "id": "exceptions_repositoryclonefailed"
     },
     {
       "label": "InvalidZipRepository",
@@ -748,8 +681,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "invalidziprepository",
-      "id": "exceptions_invalidziprepository",
-      "community_name": "Community 0"
+      "id": "exceptions_invalidziprepository"
     },
     {
       "label": "All exceptions used in the Cookiecutter code base are defined here.",
@@ -759,8 +691,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "all exceptions used in the cookiecutter code base are defined here.",
-      "id": "exceptions_rationale_1",
-      "community_name": "Community 0"
+      "id": "exceptions_rationale_1"
     },
     {
       "label": "Base exception class.      All Cookiecutter-specific exceptions should subclass",
@@ -770,8 +701,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "base exception class.      all cookiecutter-specific exceptions should subclass",
-      "id": "exceptions_rationale_12",
-      "community_name": "Community 0"
+      "id": "exceptions_rationale_12"
     },
     {
       "label": "Exception for when a project's input dir is not templated.      The name of the",
@@ -781,8 +711,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "exception for when a project's input dir is not templated.      the name of the",
-      "id": "exceptions_rationale_20",
-      "community_name": "Community 11"
+      "id": "exceptions_rationale_20"
     },
     {
       "label": "Exception for ambiguous project template directory.      Raised when Cookiecutte",
@@ -792,8 +721,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "exception for ambiguous project template directory.      raised when cookiecutte",
-      "id": "exceptions_rationale_29",
-      "community_name": "Community 0"
+      "id": "exceptions_rationale_29"
     },
     {
       "label": "Exception for missing generated project directory.      Raised during cleanup wh",
@@ -803,8 +731,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "exception for missing generated project directory.      raised during cleanup wh",
-      "id": "exceptions_rationale_40",
-      "community_name": "Community 0"
+      "id": "exceptions_rationale_40"
     },
     {
       "label": "Exception for missing config file.      Raised when get_config() is passed a pat",
@@ -814,8 +741,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "exception for missing config file.      raised when get_config() is passed a pat",
-      "id": "exceptions_rationale_51",
-      "community_name": "Community 8"
+      "id": "exceptions_rationale_51"
     },
     {
       "label": "Exception for invalid configuration file.      Raised if the global configuratio",
@@ -825,8 +751,7 @@
       "_origin": "ast",
       "community": 8,
       "norm_label": "exception for invalid configuration file.      raised if the global configuratio",
-      "id": "exceptions_rationale_60",
-      "community_name": "Community 8"
+      "id": "exceptions_rationale_60"
     },
     {
       "label": "Exception for unknown repo types.      Raised if a repo's type cannot be determi",
@@ -836,8 +761,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "exception for unknown repo types.      raised if a repo's type cannot be determi",
-      "id": "exceptions_rationale_69",
-      "community_name": "Community 0"
+      "id": "exceptions_rationale_69"
     },
     {
       "label": "Exception when version control is unavailable.      Raised if the version contro",
@@ -847,8 +771,7 @@
       "_origin": "ast",
       "community": 10,
       "norm_label": "exception when version control is unavailable.      raised if the version contro",
-      "id": "exceptions_rationale_77",
-      "community_name": "Community 10"
+      "id": "exceptions_rationale_77"
     },
     {
       "label": "Exception for failed JSON decoding.      Raised when a project's JSON context fi",
@@ -858,8 +781,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "exception for failed json decoding.      raised when a project's json context fi",
-      "id": "exceptions_rationale_85",
-      "community_name": "Community 0"
+      "id": "exceptions_rationale_85"
     },
     {
       "label": "Exception for existing output directory.      Raised when the output directory o",
@@ -869,8 +791,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "exception for existing output directory.      raised when the output directory o",
-      "id": "exceptions_rationale_93",
-      "community_name": "Community 0"
+      "id": "exceptions_rationale_93"
     },
     {
       "label": "Exception for a empty directory name.      Raised when the directory name provid",
@@ -880,8 +801,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "exception for a empty directory name.      raised when the directory name provid",
-      "id": "exceptions_rationale_101",
-      "community_name": "Community 0"
+      "id": "exceptions_rationale_101"
     },
     {
       "label": "Exception for incompatible modes.      Raised when cookiecutter is called with b",
@@ -891,8 +811,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "exception for incompatible modes.      raised when cookiecutter is called with b",
-      "id": "exceptions_rationale_109",
-      "community_name": "Community 0"
+      "id": "exceptions_rationale_109"
     },
     {
       "label": "Exception for hook failures.      Raised when a hook script fails.",
@@ -902,8 +821,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "exception for hook failures.      raised when a hook script fails.",
-      "id": "exceptions_rationale_118",
-      "community_name": "Community 1"
+      "id": "exceptions_rationale_118"
     },
     {
       "label": "Exception for out-of-scope variables.      Raised when a template uses a variabl",
@@ -913,8 +831,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "exception for out-of-scope variables.      raised when a template uses a variabl",
-      "id": "exceptions_rationale_126",
-      "community_name": "Community 0"
+      "id": "exceptions_rationale_126"
     },
     {
       "label": "Exception for out-of-scope variables.",
@@ -924,8 +841,7 @@
       "_origin": "ast",
       "community": 12,
       "norm_label": "exception for out-of-scope variables.",
-      "id": "exceptions_rationale_136",
-      "community_name": "Community 12"
+      "id": "exceptions_rationale_136"
     },
     {
       "label": "Text representation of UndefinedVariableInTemplate.",
@@ -935,8 +851,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "text representation of undefinedvariableintemplate.",
-      "id": "exceptions_rationale_142",
-      "community_name": "Community 0"
+      "id": "exceptions_rationale_142"
     },
     {
       "label": "Exception for un-importable extension.      Raised when an environment is unable",
@@ -944,10 +859,9 @@
       "source_file": "exceptions.py",
       "source_location": "L151",
       "_origin": "ast",
-      "community": 7,
+      "community": 0,
       "norm_label": "exception for un-importable extension.      raised when an environment is unable",
-      "id": "exceptions_rationale_151",
-      "community_name": "Community 7"
+      "id": "exceptions_rationale_151"
     },
     {
       "label": "Exception for missing repo.      Raised when the specified cookiecutter reposito",
@@ -957,8 +871,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "exception for missing repo.      raised when the specified cookiecutter reposito",
-      "id": "exceptions_rationale_159",
-      "community_name": "Community 0"
+      "id": "exceptions_rationale_159"
     },
     {
       "label": "Exception for un-cloneable repo.      Raised when a cookiecutter template can't",
@@ -968,8 +881,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "exception for un-cloneable repo.      raised when a cookiecutter template can't",
-      "id": "exceptions_rationale_167",
-      "community_name": "Community 0"
+      "id": "exceptions_rationale_167"
     },
     {
       "label": "extensions.py",
@@ -979,8 +891,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "extensions.py",
-      "id": "extensions",
-      "community_name": "Community 3"
+      "id": "extensions"
     },
     {
       "label": "JsonifyExtension",
@@ -990,8 +901,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "jsonifyextension",
-      "id": "extensions_jsonifyextension",
-      "community_name": "Community 3"
+      "id": "extensions_jsonifyextension"
     },
     {
       "label": ".__init__()",
@@ -1001,8 +911,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": ".__init__()",
-      "id": "extensions_jsonifyextension_init",
-      "community_name": "Community 3"
+      "id": "extensions_jsonifyextension_init"
     },
     {
       "label": "Environment",
@@ -1012,8 +921,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "environment",
-      "id": "extensions_py_environment",
-      "community_name": "Community 3"
+      "id": "extensions_py_environment"
     },
     {
       "label": "RandomStringExtension",
@@ -1023,8 +931,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "randomstringextension",
-      "id": "extensions_randomstringextension",
-      "community_name": "Community 3"
+      "id": "extensions_randomstringextension"
     },
     {
       "label": ".__init__()",
@@ -1034,8 +941,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": ".__init__()",
-      "id": "extensions_randomstringextension_init",
-      "community_name": "Community 3"
+      "id": "extensions_randomstringextension_init"
     },
     {
       "label": "SlugifyExtension",
@@ -1045,8 +951,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "slugifyextension",
-      "id": "extensions_slugifyextension",
-      "community_name": "Community 3"
+      "id": "extensions_slugifyextension"
     },
     {
       "label": ".__init__()",
@@ -1056,8 +961,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": ".__init__()",
-      "id": "extensions_slugifyextension_init",
-      "community_name": "Community 3"
+      "id": "extensions_slugifyextension_init"
     },
     {
       "label": "UUIDExtension",
@@ -1067,8 +971,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "uuidextension",
-      "id": "extensions_uuidextension",
-      "community_name": "Community 3"
+      "id": "extensions_uuidextension"
     },
     {
       "label": ".__init__()",
@@ -1078,8 +981,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": ".__init__()",
-      "id": "extensions_uuidextension_init",
-      "community_name": "Community 3"
+      "id": "extensions_uuidextension_init"
     },
     {
       "label": "TimeExtension",
@@ -1089,8 +991,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "timeextension",
-      "id": "extensions_timeextension",
-      "community_name": "Community 3"
+      "id": "extensions_timeextension"
     },
     {
       "label": ".__init__()",
@@ -1100,8 +1001,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": ".__init__()",
-      "id": "extensions_timeextension_init",
-      "community_name": "Community 3"
+      "id": "extensions_timeextension_init"
     },
     {
       "label": "._datetime()",
@@ -1111,8 +1011,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "._datetime()",
-      "id": "extensions_timeextension_datetime",
-      "community_name": "Community 3"
+      "id": "extensions_timeextension_datetime"
     },
     {
       "label": "._now()",
@@ -1122,8 +1021,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "._now()",
-      "id": "extensions_timeextension_now",
-      "community_name": "Community 3"
+      "id": "extensions_timeextension_now"
     },
     {
       "label": ".parse()",
@@ -1133,8 +1031,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": ".parse()",
-      "id": "extensions_timeextension_parse",
-      "community_name": "Community 3"
+      "id": "extensions_timeextension_parse"
     },
     {
       "label": "Parser",
@@ -1144,8 +1041,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "parser",
-      "id": "parser",
-      "community_name": "Community 3"
+      "id": "parser"
     },
     {
       "label": "Output",
@@ -1155,8 +1051,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "output",
-      "id": "output",
-      "community_name": "Community 3"
+      "id": "output"
     },
     {
       "label": "Jinja2 extension to convert a Python object to JSON.",
@@ -1166,8 +1061,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "jinja2 extension to convert a python object to json.",
-      "id": "extensions_rationale_25",
-      "community_name": "Community 3"
+      "id": "extensions_rationale_25"
     },
     {
       "label": "Initialize the extension with the given environment.",
@@ -1177,8 +1071,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "initialize the extension with the given environment.",
-      "id": "extensions_rationale_28",
-      "community_name": "Community 3"
+      "id": "extensions_rationale_28"
     },
     {
       "label": "Jinja2 extension to create a random string.",
@@ -1188,8 +1081,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "jinja2 extension to create a random string.",
-      "id": "extensions_rationale_38",
-      "community_name": "Community 3"
+      "id": "extensions_rationale_38"
     },
     {
       "label": "Jinja2 Extension Constructor.",
@@ -1199,8 +1091,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "jinja2 extension constructor.",
-      "id": "extensions_rationale_41",
-      "community_name": "Community 3"
+      "id": "extensions_rationale_41"
     },
     {
       "label": "Jinja2 Extension to slugify string.",
@@ -1210,8 +1101,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "jinja2 extension to slugify string.",
-      "id": "extensions_rationale_55",
-      "community_name": "Community 3"
+      "id": "extensions_rationale_55"
     },
     {
       "label": "Jinja2 Extension to generate uuid4 string.",
@@ -1221,8 +1111,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "jinja2 extension to generate uuid4 string.",
-      "id": "extensions_rationale_97",
-      "community_name": "Community 3"
+      "id": "extensions_rationale_97"
     },
     {
       "label": "Jinja2 Extension for dates and times.",
@@ -1232,8 +1121,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "jinja2 extension for dates and times.",
-      "id": "extensions_rationale_111",
-      "community_name": "Community 3"
+      "id": "extensions_rationale_111"
     },
     {
       "label": "Parse datetime template and add datetime value.",
@@ -1243,8 +1131,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "parse datetime template and add datetime value.",
-      "id": "extensions_rationale_147",
-      "community_name": "Community 3"
+      "id": "extensions_rationale_147"
     },
     {
       "label": "find.py",
@@ -1254,8 +1141,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "find.py",
-      "id": "find",
-      "community_name": "Community 11"
+      "id": "find"
     },
     {
       "label": "find_template()",
@@ -1265,8 +1151,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "find_template()",
-      "id": "find_find_template",
-      "community_name": "Community 11"
+      "id": "find_find_template"
     },
     {
       "label": "Path",
@@ -1276,8 +1161,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "path",
-      "id": "find_py_path",
-      "community_name": "Community 11"
+      "id": "find_py_path"
     },
     {
       "label": "Environment",
@@ -1287,8 +1171,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "environment",
-      "id": "find_py_environment",
-      "community_name": "Community 11"
+      "id": "find_py_environment"
     },
     {
       "label": "Functions for finding Cookiecutter templates and other components.",
@@ -1298,8 +1181,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "functions for finding cookiecutter templates and other components.",
-      "id": "find_rationale_1",
-      "community_name": "Community 11"
+      "id": "find_rationale_1"
     },
     {
       "label": "Determine which child directory of ``repo_dir`` is the project template.      :p",
@@ -1309,8 +1191,7 @@
       "_origin": "ast",
       "community": 11,
       "norm_label": "determine which child directory of ``repo_dir`` is the project template.      :p",
-      "id": "find_rationale_19",
-      "community_name": "Community 11"
+      "id": "find_rationale_19"
     },
     {
       "label": "generate.py",
@@ -1318,10 +1199,9 @@
       "source_file": "generate.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "generate.py",
-      "id": "generate",
-      "community_name": "Community 4"
+      "id": "generate"
     },
     {
       "label": "is_copy_only_path()",
@@ -1329,10 +1209,9 @@
       "source_file": "generate.py",
       "source_location": "L39",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "is_copy_only_path()",
-      "id": "generate_is_copy_only_path",
-      "community_name": "Community 4"
+      "id": "generate_is_copy_only_path"
     },
     {
       "label": "Any",
@@ -1340,10 +1219,9 @@
       "source_file": "generate.py",
       "source_location": "L39",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "any",
-      "id": "generate_py_any",
-      "community_name": "Community 4"
+      "id": "generate_py_any"
     },
     {
       "label": "apply_overwrites_to_context()",
@@ -1351,10 +1229,9 @@
       "source_file": "generate.py",
       "source_location": "L59",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "apply_overwrites_to_context()",
-      "id": "generate_apply_overwrites_to_context",
-      "community_name": "Community 4"
+      "id": "generate_apply_overwrites_to_context"
     },
     {
       "label": "generate_context()",
@@ -1362,10 +1239,9 @@
       "source_file": "generate.py",
       "source_location": "L126",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "generate_context()",
-      "id": "generate_generate_context",
-      "community_name": "Community 4"
+      "id": "generate_generate_context"
     },
     {
       "label": "generate_file()",
@@ -1373,10 +1249,9 @@
       "source_file": "generate.py",
       "source_location": "L175",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "generate_file()",
-      "id": "generate_generate_file",
-      "community_name": "Community 4"
+      "id": "generate_generate_file"
     },
     {
       "label": "Environment",
@@ -1386,8 +1261,7 @@
       "_origin": "ast",
       "community": 0,
       "norm_label": "environment",
-      "id": "generate_py_environment",
-      "community_name": "Community 0"
+      "id": "generate_py_environment"
     },
     {
       "label": "render_and_create_dir()",
@@ -1395,10 +1269,9 @@
       "source_file": "generate.py",
       "source_location": "L263",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "render_and_create_dir()",
-      "id": "generate_render_and_create_dir",
-      "community_name": "Community 4"
+      "id": "generate_render_and_create_dir"
     },
     {
       "label": "Path",
@@ -1406,10 +1279,9 @@
       "source_file": "generate.py",
       "source_location": "L263",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "path",
-      "id": "generate_py_path",
-      "community_name": "Community 4"
+      "id": "generate_py_path"
     },
     {
       "label": "_run_hook_from_repo_dir()",
@@ -1417,10 +1289,9 @@
       "source_file": "generate.py",
       "source_location": "L300",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "_run_hook_from_repo_dir()",
-      "id": "generate_run_hook_from_repo_dir",
-      "community_name": "Community 4"
+      "id": "generate_run_hook_from_repo_dir"
     },
     {
       "label": "generate_files()",
@@ -1428,10 +1299,9 @@
       "source_file": "generate.py",
       "source_location": "L327",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "generate_files()",
-      "id": "generate_generate_files",
-      "community_name": "Community 4"
+      "id": "generate_generate_files"
     },
     {
       "label": "Functions for generating a project from a project template.",
@@ -1439,10 +1309,9 @@
       "source_file": "generate.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "functions for generating a project from a project template.",
-      "id": "generate_rationale_1",
-      "community_name": "Community 4"
+      "id": "generate_rationale_1"
     },
     {
       "label": "Check whether the given `path` should only be copied and not rendered.      Retu",
@@ -1450,10 +1319,9 @@
       "source_file": "generate.py",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "check whether the given `path` should only be copied and not rendered.      retu",
-      "id": "generate_rationale_40",
-      "community_name": "Community 4"
+      "id": "generate_rationale_40"
     },
     {
       "label": "Modify the given context in place based on the overwrite_context.",
@@ -1461,10 +1329,9 @@
       "source_file": "generate.py",
       "source_location": "L65",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "modify the given context in place based on the overwrite_context.",
-      "id": "generate_rationale_65",
-      "community_name": "Community 4"
+      "id": "generate_rationale_65"
     },
     {
       "label": "Generate the context for a Cookiecutter project template.      Loads the JSON fi",
@@ -1472,10 +1339,9 @@
       "source_file": "generate.py",
       "source_location": "L131",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "generate the context for a cookiecutter project template.      loads the json fi",
-      "id": "generate_rationale_131",
-      "community_name": "Community 4"
+      "id": "generate_rationale_131"
     },
     {
       "label": "Render filename of infile as name of outfile, handle infile correctly.      Deal",
@@ -1483,10 +1349,9 @@
       "source_file": "generate.py",
       "source_location": "L182",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "render filename of infile as name of outfile, handle infile correctly.      deal",
-      "id": "generate_rationale_182",
-      "community_name": "Community 4"
+      "id": "generate_rationale_182"
     },
     {
       "label": "Render name of a directory, create the directory, return its path.",
@@ -1494,10 +1359,9 @@
       "source_file": "generate.py",
       "source_location": "L270",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "render name of a directory, create the directory, return its path.",
-      "id": "generate_rationale_270",
-      "community_name": "Community 4"
+      "id": "generate_rationale_270"
     },
     {
       "label": "Run hook from repo directory, clean project directory if hook fails.      :param",
@@ -1505,10 +1369,9 @@
       "source_file": "generate.py",
       "source_location": "L307",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "run hook from repo directory, clean project directory if hook fails.      :param",
-      "id": "generate_rationale_307",
-      "community_name": "Community 4"
+      "id": "generate_rationale_307"
     },
     {
       "label": "Render the templates and saves them to files.      :param repo_dir: Project temp",
@@ -1516,10 +1379,9 @@
       "source_file": "generate.py",
       "source_location": "L336",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "render the templates and saves them to files.      :param repo_dir: project temp",
-      "id": "generate_rationale_336",
-      "community_name": "Community 4"
+      "id": "generate_rationale_336"
     },
     {
       "label": "hooks.py",
@@ -1529,8 +1391,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "hooks.py",
-      "id": "hooks",
-      "community_name": "Community 1"
+      "id": "hooks"
     },
     {
       "label": "valid_hook()",
@@ -1540,8 +1401,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "valid_hook()",
-      "id": "hooks_valid_hook",
-      "community_name": "Community 1"
+      "id": "hooks_valid_hook"
     },
     {
       "label": "find_hook()",
@@ -1551,8 +1411,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "find_hook()",
-      "id": "hooks_find_hook",
-      "community_name": "Community 1"
+      "id": "hooks_find_hook"
     },
     {
       "label": "run_script()",
@@ -1562,8 +1421,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "run_script()",
-      "id": "hooks_run_script",
-      "community_name": "Community 1"
+      "id": "hooks_run_script"
     },
     {
       "label": "Path",
@@ -1573,8 +1431,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "path",
-      "id": "hooks_py_path",
-      "community_name": "Community 1"
+      "id": "hooks_py_path"
     },
     {
       "label": "run_script_with_context()",
@@ -1584,8 +1441,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "run_script_with_context()",
-      "id": "hooks_run_script_with_context",
-      "community_name": "Community 1"
+      "id": "hooks_run_script_with_context"
     },
     {
       "label": "Any",
@@ -1595,8 +1451,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "any",
-      "id": "hooks_py_any",
-      "community_name": "Community 1"
+      "id": "hooks_py_any"
     },
     {
       "label": "run_hook()",
@@ -1606,8 +1461,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "run_hook()",
-      "id": "hooks_run_hook",
-      "community_name": "Community 1"
+      "id": "hooks_run_hook"
     },
     {
       "label": "run_hook_from_repo_dir()",
@@ -1617,8 +1471,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "run_hook_from_repo_dir()",
-      "id": "hooks_run_hook_from_repo_dir",
-      "community_name": "Community 1"
+      "id": "hooks_run_hook_from_repo_dir"
     },
     {
       "label": "run_pre_prompt_hook()",
@@ -1628,8 +1481,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "run_pre_prompt_hook()",
-      "id": "hooks_run_pre_prompt_hook",
-      "community_name": "Community 1"
+      "id": "hooks_run_pre_prompt_hook"
     },
     {
       "label": "Functions for discovering and executing various cookiecutter hooks.",
@@ -1639,8 +1491,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "functions for discovering and executing various cookiecutter hooks.",
-      "id": "hooks_rationale_1",
-      "community_name": "Community 1"
+      "id": "hooks_rationale_1"
     },
     {
       "label": "Determine if a hook file is valid.      :param hook_file: The hook file to consi",
@@ -1650,8 +1501,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "determine if a hook file is valid.      :param hook_file: the hook file to consi",
-      "id": "hooks_rationale_36",
-      "community_name": "Community 1"
+      "id": "hooks_rationale_36"
     },
     {
       "label": "Return a dict of all hook scripts provided.      Must be called with the project",
@@ -1661,8 +1511,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "return a dict of all hook scripts provided.      must be called with the project",
-      "id": "hooks_rationale_52",
-      "community_name": "Community 1"
+      "id": "hooks_rationale_52"
     },
     {
       "label": "Execute a script from a working directory.      :param script_path: Absolute pat",
@@ -1672,8 +1521,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "execute a script from a working directory.      :param script_path: absolute pat",
-      "id": "hooks_rationale_81",
-      "community_name": "Community 1"
+      "id": "hooks_rationale_81"
     },
     {
       "label": "Execute a script after rendering it with Jinja.      :param script_path: Absolut",
@@ -1683,8 +1531,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "execute a script after rendering it with jinja.      :param script_path: absolut",
-      "id": "hooks_rationale_111",
-      "community_name": "Community 1"
+      "id": "hooks_rationale_111"
     },
     {
       "label": "Try to find and execute a hook from the specified project directory.      :param",
@@ -1694,8 +1541,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "try to find and execute a hook from the specified project directory.      :param",
-      "id": "hooks_rationale_131",
-      "community_name": "Community 1"
+      "id": "hooks_rationale_131"
     },
     {
       "label": "Run hook from repo directory, clean project directory if hook fails.      :param",
@@ -1705,8 +1551,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "run hook from repo directory, clean project directory if hook fails.      :param",
-      "id": "hooks_rationale_154",
-      "community_name": "Community 1"
+      "id": "hooks_rationale_154"
     },
     {
       "label": "Run pre_prompt hook from repo directory.      :param repo_dir: Project template",
@@ -1716,8 +1561,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "run pre_prompt hook from repo directory.      :param repo_dir: project template",
-      "id": "hooks_rationale_181",
-      "community_name": "Community 1"
+      "id": "hooks_rationale_181"
     },
     {
       "label": "log.py",
@@ -1727,8 +1571,7 @@
       "_origin": "ast",
       "community": 9,
       "norm_label": "log.py",
-      "id": "log",
-      "community_name": "Community 9"
+      "id": "log"
     },
     {
       "label": "configure_logger()",
@@ -1738,8 +1581,7 @@
       "_origin": "ast",
       "community": 9,
       "norm_label": "configure_logger()",
-      "id": "log_configure_logger",
-      "community_name": "Community 9"
+      "id": "log_configure_logger"
     },
     {
       "label": "Logger",
@@ -1749,8 +1591,7 @@
       "_origin": "ast",
       "community": 9,
       "norm_label": "logger",
-      "id": "logger",
-      "community_name": "Community 9"
+      "id": "logger"
     },
     {
       "label": "Module for setting up logging.",
@@ -1760,8 +1601,7 @@
       "_origin": "ast",
       "community": 9,
       "norm_label": "module for setting up logging.",
-      "id": "log_rationale_1",
-      "community_name": "Community 9"
+      "id": "log_rationale_1"
     },
     {
       "label": "Configure logging for cookiecutter.      Set up logging to stdout with given lev",
@@ -1771,96 +1611,177 @@
       "_origin": "ast",
       "community": 9,
       "norm_label": "configure logging for cookiecutter.      set up logging to stdout with given lev",
-      "id": "log_rationale_25",
-      "community_name": "Community 9"
+      "id": "log_rationale_25"
     },
     {
       "label": "cookiecutter()",
       "file_type": "code",
       "source_file": "main.py",
-      "source_location": "L29",
+      "source_location": "L27",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": "cookiecutter()",
-      "id": "main_cookiecutter",
-      "community_name": "Community 5"
+      "id": "main_cookiecutter"
     },
     {
       "label": "Any",
       "file_type": "code",
       "source_file": "main.py",
-      "source_location": "L29",
+      "source_location": "L27",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": "any",
-      "id": "main_py_any",
-      "community_name": "Community 5"
+      "id": "main_py_any"
     },
     {
-      "label": "_patch_import_path_for_repo",
-      "file_type": "code",
+      "label": "Run Cookiecutter just as if using it from the command line.",
+      "file_type": "rationale",
       "source_file": "main.py",
-      "source_location": "L203",
+      "source_location": "L43",
       "_origin": "ast",
-      "community": 5,
-      "norm_label": "_patch_import_path_for_repo",
-      "id": "main_patch_import_path_for_repo",
-      "community_name": "Community 5"
+      "community": 4,
+      "norm_label": "run cookiecutter just as if using it from the command line.",
+      "id": "main_rationale_43"
+    },
+    {
+      "label": "orchestration.py",
+      "file_type": "code",
+      "source_file": "orchestration.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "orchestration.py",
+      "id": "orchestration"
+    },
+    {
+      "label": "patch_import_path_for_repo",
+      "file_type": "code",
+      "source_file": "orchestration.py",
+      "source_location": "L21",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "patch_import_path_for_repo",
+      "id": "orchestration_patch_import_path_for_repo"
     },
     {
       "label": ".__init__()",
       "file_type": "code",
-      "source_file": "main.py",
-      "source_location": "L204",
+      "source_file": "orchestration.py",
+      "source_location": "L24",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": ".__init__()",
-      "id": "main_patch_import_path_for_repo_init",
-      "community_name": "Community 5"
+      "id": "orchestration_patch_import_path_for_repo_init"
     },
     {
       "label": "Path",
       "file_type": "code",
-      "source_file": "main.py",
-      "source_location": "L204",
+      "source_file": "orchestration.py",
+      "source_location": "L24",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": "path",
-      "id": "main_py_path",
-      "community_name": "Community 5"
+      "id": "orchestration_py_path"
     },
     {
       "label": ".__enter__()",
       "file_type": "code",
-      "source_file": "main.py",
-      "source_location": "L207",
+      "source_file": "orchestration.py",
+      "source_location": "L27",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": ".__enter__()",
-      "id": "main_patch_import_path_for_repo_enter",
-      "community_name": "Community 5"
+      "id": "orchestration_patch_import_path_for_repo_enter"
     },
     {
       "label": ".__exit__()",
       "file_type": "code",
-      "source_file": "main.py",
-      "source_location": "L211",
+      "source_file": "orchestration.py",
+      "source_location": "L31",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": ".__exit__()",
-      "id": "main_patch_import_path_for_repo_exit",
-      "community_name": "Community 5"
+      "id": "orchestration_patch_import_path_for_repo_exit"
     },
     {
-      "label": "Run Cookiecutter just as if using it from the command line.      :param template",
-      "file_type": "rationale",
-      "source_file": "main.py",
-      "source_location": "L45",
+      "label": "setup_repository()",
+      "file_type": "code",
+      "source_file": "orchestration.py",
+      "source_location": "L35",
       "_origin": "ast",
-      "community": 5,
-      "norm_label": "run cookiecutter just as if using it from the command line.      :param template",
-      "id": "main_rationale_45",
-      "community_name": "Community 5"
+      "community": 4,
+      "norm_label": "setup_repository()",
+      "id": "orchestration_setup_repository"
+    },
+    {
+      "label": "build_context()",
+      "file_type": "code",
+      "source_file": "orchestration.py",
+      "source_location": "L65",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "build_context()",
+      "id": "orchestration_build_context"
+    },
+    {
+      "label": "Any",
+      "file_type": "code",
+      "source_file": "orchestration.py",
+      "source_location": "L65",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "any",
+      "id": "orchestration_py_any"
+    },
+    {
+      "label": "enrich_context()",
+      "file_type": "code",
+      "source_file": "orchestration.py",
+      "source_location": "L103",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "enrich_context()",
+      "id": "orchestration_enrich_context"
+    },
+    {
+      "label": "run_generation()",
+      "file_type": "code",
+      "source_file": "orchestration.py",
+      "source_location": "L119",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "run_generation()",
+      "id": "orchestration_run_generation"
+    },
+    {
+      "label": "cleanup_repos()",
+      "file_type": "code",
+      "source_file": "orchestration.py",
+      "source_location": "L141",
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "cleanup_repos()",
+      "id": "orchestration_cleanup_repos"
+    },
+    {
+      "label": "Orchestration helpers extracted from main to reduce hub coupling.",
+      "file_type": "rationale",
+      "source_file": "orchestration.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "orchestration helpers extracted from main to reduce hub coupling.",
+      "id": "orchestration_rationale_1"
+    },
+    {
+      "label": "Temporarily add template repo to sys.path.",
+      "file_type": "rationale",
+      "source_file": "orchestration.py",
+      "source_location": "L22",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "temporarily add template repo to sys.path.",
+      "id": "orchestration_rationale_22"
     },
     {
       "label": "prompt.py",
@@ -1870,8 +1791,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "prompt.py",
-      "id": "prompt",
-      "community_name": "Community 2"
+      "id": "prompt"
     },
     {
       "label": "read_user_variable()",
@@ -1881,8 +1801,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "read_user_variable()",
-      "id": "prompt_read_user_variable",
-      "community_name": "Community 2"
+      "id": "prompt_read_user_variable"
     },
     {
       "label": "YesNoPrompt",
@@ -1890,10 +1809,9 @@
       "source_file": "prompt.py",
       "source_location": "L45",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "yesnoprompt",
-      "id": "prompt_yesnoprompt",
-      "community_name": "Community 4"
+      "id": "prompt_yesnoprompt"
     },
     {
       "label": "Confirm",
@@ -1901,10 +1819,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "confirm",
-      "id": "confirm",
-      "community_name": "Community 4"
+      "id": "confirm"
     },
     {
       "label": ".process_response()",
@@ -1912,10 +1829,9 @@
       "source_file": "prompt.py",
       "source_location": "L51",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": ".process_response()",
-      "id": "prompt_yesnoprompt_process_response",
-      "community_name": "Community 4"
+      "id": "prompt_yesnoprompt_process_response"
     },
     {
       "label": "read_user_yes_no()",
@@ -1925,8 +1841,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "read_user_yes_no()",
-      "id": "prompt_read_user_yes_no",
-      "community_name": "Community 2"
+      "id": "prompt_read_user_yes_no"
     },
     {
       "label": "read_repo_password()",
@@ -1936,8 +1851,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "read_repo_password()",
-      "id": "prompt_read_repo_password",
-      "community_name": "Community 6"
+      "id": "prompt_read_repo_password"
     },
     {
       "label": "read_user_choice()",
@@ -1947,8 +1861,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "read_user_choice()",
-      "id": "prompt_read_user_choice",
-      "community_name": "Community 2"
+      "id": "prompt_read_user_choice"
     },
     {
       "label": "process_json()",
@@ -1958,8 +1871,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "process_json()",
-      "id": "prompt_process_json",
-      "community_name": "Community 2"
+      "id": "prompt_process_json"
     },
     {
       "label": "JsonPrompt",
@@ -1969,8 +1881,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "jsonprompt",
-      "id": "prompt_jsonprompt",
-      "community_name": "Community 2"
+      "id": "prompt_jsonprompt"
     },
     {
       "label": ".process_response()",
@@ -1980,8 +1891,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": ".process_response()",
-      "id": "prompt_jsonprompt_process_response",
-      "community_name": "Community 2"
+      "id": "prompt_jsonprompt_process_response"
     },
     {
       "label": "Any",
@@ -1991,8 +1901,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "any",
-      "id": "prompt_py_any",
-      "community_name": "Community 2"
+      "id": "prompt_py_any"
     },
     {
       "label": "read_user_dict()",
@@ -2002,8 +1911,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "read_user_dict()",
-      "id": "prompt_read_user_dict",
-      "community_name": "Community 2"
+      "id": "prompt_read_user_dict"
     },
     {
       "label": "render_variable()",
@@ -2013,8 +1921,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "render_variable()",
-      "id": "prompt_render_variable",
-      "community_name": "Community 2"
+      "id": "prompt_render_variable"
     },
     {
       "label": "Environment",
@@ -2024,8 +1931,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "environment",
-      "id": "prompt_py_environment",
-      "community_name": "Community 2"
+      "id": "prompt_py_environment"
     },
     {
       "label": "_Raw",
@@ -2035,8 +1941,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "_raw",
-      "id": "raw",
-      "community_name": "Community 2"
+      "id": "raw"
     },
     {
       "label": "_prompts_from_options()",
@@ -2046,8 +1951,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "_prompts_from_options()",
-      "id": "prompt_prompts_from_options",
-      "community_name": "Community 2"
+      "id": "prompt_prompts_from_options"
     },
     {
       "label": "prompt_choice_for_template()",
@@ -2057,8 +1961,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "prompt_choice_for_template()",
-      "id": "prompt_prompt_choice_for_template",
-      "community_name": "Community 2"
+      "id": "prompt_prompt_choice_for_template"
     },
     {
       "label": "OrderedDict",
@@ -2068,8 +1971,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "ordereddict",
-      "id": "prompt_py_ordereddict",
-      "community_name": "Community 2"
+      "id": "prompt_py_ordereddict"
     },
     {
       "label": "prompt_choice_for_config()",
@@ -2079,8 +1981,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "prompt_choice_for_config()",
-      "id": "prompt_prompt_choice_for_config",
-      "community_name": "Community 2"
+      "id": "prompt_prompt_choice_for_config"
     },
     {
       "label": "prompt_for_config()",
@@ -2090,8 +1991,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "prompt_for_config()",
-      "id": "prompt_prompt_for_config",
-      "community_name": "Community 2"
+      "id": "prompt_prompt_for_config"
     },
     {
       "label": "choose_nested_template()",
@@ -2101,8 +2001,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "choose_nested_template()",
-      "id": "prompt_choose_nested_template",
-      "community_name": "Community 2"
+      "id": "prompt_choose_nested_template"
     },
     {
       "label": "Path",
@@ -2112,8 +2011,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "path",
-      "id": "prompt_py_path",
-      "community_name": "Community 2"
+      "id": "prompt_py_path"
     },
     {
       "label": "prompt_and_delete()",
@@ -2123,8 +2021,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "prompt_and_delete()",
-      "id": "prompt_prompt_and_delete",
-      "community_name": "Community 2"
+      "id": "prompt_prompt_and_delete"
     },
     {
       "label": "Functions for prompting the user for project info.",
@@ -2134,8 +2031,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "functions for prompting the user for project info.",
-      "id": "prompt_rationale_1",
-      "community_name": "Community 2"
+      "id": "prompt_rationale_1"
     },
     {
       "label": "Prompt user for variable and return the entered value or given default.      :pa",
@@ -2145,8 +2041,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "prompt user for variable and return the entered value or given default.      :pa",
-      "id": "prompt_rationale_26",
-      "community_name": "Community 2"
+      "id": "prompt_rationale_26"
     },
     {
       "label": "A prompt that returns a boolean for yes/no questions.",
@@ -2154,10 +2049,9 @@
       "source_file": "prompt.py",
       "source_location": "L46",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "a prompt that returns a boolean for yes/no questions.",
-      "id": "prompt_rationale_46",
-      "community_name": "Community 4"
+      "id": "prompt_rationale_46"
     },
     {
       "label": "Convert choices to a bool.",
@@ -2165,10 +2059,9 @@
       "source_file": "prompt.py",
       "source_location": "L52",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "convert choices to a bool.",
-      "id": "prompt_rationale_52",
-      "community_name": "Community 4"
+      "id": "prompt_rationale_52"
     },
     {
       "label": "Prompt the user to reply with 'yes' or 'no' (or equivalent values).      - These",
@@ -2178,8 +2071,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "prompt the user to reply with 'yes' or 'no' (or equivalent values).      - these",
-      "id": "prompt_rationale_62",
-      "community_name": "Community 2"
+      "id": "prompt_rationale_62"
     },
     {
       "label": "Prompt the user to enter a password.      :param question: Question to the user",
@@ -2189,8 +2081,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "prompt the user to enter a password.      :param question: question to the user",
-      "id": "prompt_rationale_84",
-      "community_name": "Community 6"
+      "id": "prompt_rationale_84"
     },
     {
       "label": "Prompt the user to choose from several options for the given variable.      The",
@@ -2200,8 +2091,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "prompt the user to choose from several options for the given variable.      the",
-      "id": "prompt_rationale_92",
-      "community_name": "Community 2"
+      "id": "prompt_rationale_92"
     },
     {
       "label": "Load user-supplied value as a JSON dict.      :param user_value: User-supplied v",
@@ -2211,8 +2101,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "load user-supplied value as a json dict.      :param user_value: user-supplied v",
-      "id": "prompt_rationale_142",
-      "community_name": "Community 2"
+      "id": "prompt_rationale_142"
     },
     {
       "label": "A prompt that returns a dict from JSON string.",
@@ -2222,8 +2111,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "a prompt that returns a dict from json string.",
-      "id": "prompt_rationale_162",
-      "community_name": "Community 2"
+      "id": "prompt_rationale_162"
     },
     {
       "label": "Convert choices to a dict.",
@@ -2233,8 +2121,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "convert choices to a dict.",
-      "id": "prompt_rationale_170",
-      "community_name": "Community 2"
+      "id": "prompt_rationale_170"
     },
     {
       "label": "Prompt the user to provide a dictionary of data.      :param var_name: Variable",
@@ -2244,8 +2131,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "prompt the user to provide a dictionary of data.      :param var_name: variable",
-      "id": "prompt_rationale_175",
-      "community_name": "Community 2"
+      "id": "prompt_rationale_175"
     },
     {
       "label": "Render the next variable to be displayed in the user prompt.      Inside the pro",
@@ -2255,8 +2141,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "render the next variable to be displayed in the user prompt.      inside the pro",
-      "id": "prompt_rationale_204",
-      "community_name": "Community 2"
+      "id": "prompt_rationale_204"
     },
     {
       "label": "Process template options and return friendly prompt information.",
@@ -2266,8 +2151,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "process template options and return friendly prompt information.",
-      "id": "prompt_rationale_240",
-      "community_name": "Community 2"
+      "id": "prompt_rationale_240"
     },
     {
       "label": "Prompt user with a set of options to choose from.      :param no_input: Do not p",
@@ -2277,8 +2161,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "prompt user with a set of options to choose from.      :param no_input: do not p",
-      "id": "prompt_rationale_253",
-      "community_name": "Community 2"
+      "id": "prompt_rationale_253"
     },
     {
       "label": "Prompt user to enter a new config.      :param dict context: Source for field na",
@@ -2288,8 +2171,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "prompt user to enter a new config.      :param dict context: source for field na",
-      "id": "prompt_rationale_287",
-      "community_name": "Community 2"
+      "id": "prompt_rationale_287"
     },
     {
       "label": "Prompt user to select the nested template to use.      :param context: Source fo",
@@ -2299,8 +2181,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "prompt user to select the nested template to use.      :param context: source fo",
-      "id": "prompt_rationale_369",
-      "community_name": "Community 2"
+      "id": "prompt_rationale_369"
     },
     {
       "label": "Ask user if it's okay to delete the previously-downloaded file/directory.      I",
@@ -2310,8 +2191,7 @@
       "_origin": "ast",
       "community": 2,
       "norm_label": "ask user if it's okay to delete the previously-downloaded file/directory.      i",
-      "id": "prompt_rationale_407",
-      "community_name": "Community 2"
+      "id": "prompt_rationale_407"
     },
     {
       "label": "replay.py",
@@ -2319,10 +2199,9 @@
       "source_file": "replay.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": "replay.py",
-      "id": "replay",
-      "community_name": "Community 5"
+      "id": "replay"
     },
     {
       "label": "get_file_name()",
@@ -2330,10 +2209,9 @@
       "source_file": "replay.py",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": "get_file_name()",
-      "id": "replay_get_file_name",
-      "community_name": "Community 5"
+      "id": "replay_get_file_name"
     },
     {
       "label": "Path",
@@ -2341,10 +2219,9 @@
       "source_file": "replay.py",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": "path",
-      "id": "replay_py_path",
-      "community_name": "Community 5"
+      "id": "replay_py_path"
     },
     {
       "label": "dump()",
@@ -2352,10 +2229,9 @@
       "source_file": "replay.py",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": "dump()",
-      "id": "replay_dump",
-      "community_name": "Community 5"
+      "id": "replay_dump"
     },
     {
       "label": "Any",
@@ -2363,10 +2239,9 @@
       "source_file": "replay.py",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": "any",
-      "id": "replay_py_any",
-      "community_name": "Community 5"
+      "id": "replay_py_any"
     },
     {
       "label": "load()",
@@ -2374,10 +2249,9 @@
       "source_file": "replay.py",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": "load()",
-      "id": "replay_load",
-      "community_name": "Community 5"
+      "id": "replay_load"
     },
     {
       "label": "cookiecutter.replay.  -------------------",
@@ -2385,10 +2259,9 @@
       "source_file": "replay.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": "cookiecutter.replay.  -------------------",
-      "id": "replay_rationale_1",
-      "community_name": "Community 5"
+      "id": "replay_rationale_1"
     },
     {
       "label": "Get the name of file.",
@@ -2396,10 +2269,9 @@
       "source_file": "replay.py",
       "source_location": "L20",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": "get the name of file.",
-      "id": "replay_rationale_20",
-      "community_name": "Community 5"
+      "id": "replay_rationale_20"
     },
     {
       "label": "Write json data to file.",
@@ -2407,10 +2279,9 @@
       "source_file": "replay.py",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": "write json data to file.",
-      "id": "replay_rationale_27",
-      "community_name": "Community 5"
+      "id": "replay_rationale_27"
     },
     {
       "label": "Read json data from file.",
@@ -2418,10 +2289,9 @@
       "source_file": "replay.py",
       "source_location": "L41",
       "_origin": "ast",
-      "community": 5,
+      "community": 4,
       "norm_label": "read json data from file.",
-      "id": "replay_rationale_41",
-      "community_name": "Community 5"
+      "id": "replay_rationale_41"
     },
     {
       "label": "repository.py",
@@ -2431,8 +2301,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "repository.py",
-      "id": "repository",
-      "community_name": "Community 6"
+      "id": "repository"
     },
     {
       "label": "is_repo_url()",
@@ -2442,8 +2311,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "is_repo_url()",
-      "id": "repository_is_repo_url",
-      "community_name": "Community 6"
+      "id": "repository_is_repo_url"
     },
     {
       "label": "is_zip_file()",
@@ -2453,8 +2321,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "is_zip_file()",
-      "id": "repository_is_zip_file",
-      "community_name": "Community 6"
+      "id": "repository_is_zip_file"
     },
     {
       "label": "expand_abbreviations()",
@@ -2464,8 +2331,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "expand_abbreviations()",
-      "id": "repository_expand_abbreviations",
-      "community_name": "Community 6"
+      "id": "repository_expand_abbreviations"
     },
     {
       "label": "repository_has_cookiecutter_json()",
@@ -2475,8 +2341,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "repository_has_cookiecutter_json()",
-      "id": "repository_repository_has_cookiecutter_json",
-      "community_name": "Community 6"
+      "id": "repository_repository_has_cookiecutter_json"
     },
     {
       "label": "determine_repo_dir()",
@@ -2486,8 +2351,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "determine_repo_dir()",
-      "id": "repository_determine_repo_dir",
-      "community_name": "Community 6"
+      "id": "repository_determine_repo_dir"
     },
     {
       "label": "Path",
@@ -2497,8 +2361,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "path",
-      "id": "repository_py_path",
-      "community_name": "Community 6"
+      "id": "repository_py_path"
     },
     {
       "label": "Cookiecutter repository functions.",
@@ -2508,8 +2371,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "cookiecutter repository functions.",
-      "id": "repository_rationale_1",
-      "community_name": "Community 6"
+      "id": "repository_rationale_1"
     },
     {
       "label": "Return True if value is a repository URL.",
@@ -2519,8 +2381,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "return true if value is a repository url.",
-      "id": "repository_rationale_29",
-      "community_name": "Community 6"
+      "id": "repository_rationale_29"
     },
     {
       "label": "Return True if value is a zip file.",
@@ -2530,8 +2391,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "return true if value is a zip file.",
-      "id": "repository_rationale_34",
-      "community_name": "Community 6"
+      "id": "repository_rationale_34"
     },
     {
       "label": "Expand abbreviations in a template name.      :param template: The project templ",
@@ -2541,8 +2401,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "expand abbreviations in a template name.      :param template: the project templ",
-      "id": "repository_rationale_39",
-      "community_name": "Community 6"
+      "id": "repository_rationale_39"
     },
     {
       "label": "Determine if `repo_directory` contains a `cookiecutter.json` file.      :param r",
@@ -2552,8 +2411,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "determine if `repo_directory` contains a `cookiecutter.json` file.      :param r",
-      "id": "repository_rationale_57",
-      "community_name": "Community 6"
+      "id": "repository_rationale_57"
     },
     {
       "label": "Locate the repository directory from a template reference.      Applies reposito",
@@ -2563,8 +2421,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "locate the repository directory from a template reference.      applies reposito",
-      "id": "repository_rationale_79",
-      "community_name": "Community 6"
+      "id": "repository_rationale_79"
     },
     {
       "label": "utils.py",
@@ -2574,8 +2431,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "utils.py",
-      "id": "utils",
-      "community_name": "Community 1"
+      "id": "utils"
     },
     {
       "label": "force_delete()",
@@ -2585,8 +2441,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "force_delete()",
-      "id": "utils_force_delete",
-      "community_name": "Community 1"
+      "id": "utils_force_delete"
     },
     {
       "label": "rmtree()",
@@ -2596,8 +2451,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "rmtree()",
-      "id": "utils_rmtree",
-      "community_name": "Community 1"
+      "id": "utils_rmtree"
     },
     {
       "label": "Path",
@@ -2607,8 +2461,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "path",
-      "id": "utils_py_path",
-      "community_name": "Community 1"
+      "id": "utils_py_path"
     },
     {
       "label": "make_sure_path_exists()",
@@ -2618,8 +2471,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "make_sure_path_exists()",
-      "id": "utils_make_sure_path_exists",
-      "community_name": "Community 1"
+      "id": "utils_make_sure_path_exists"
     },
     {
       "label": "work_in()",
@@ -2629,8 +2481,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "work_in()",
-      "id": "utils_work_in",
-      "community_name": "Community 1"
+      "id": "utils_work_in"
     },
     {
       "label": "make_executable()",
@@ -2640,8 +2491,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "make_executable()",
-      "id": "utils_make_executable",
-      "community_name": "Community 1"
+      "id": "utils_make_executable"
     },
     {
       "label": "simple_filter()",
@@ -2651,8 +2501,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "simple_filter()",
-      "id": "utils_simple_filter",
-      "community_name": "Community 3"
+      "id": "utils_simple_filter"
     },
     {
       "label": "Extension",
@@ -2662,8 +2511,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "extension",
-      "id": "utils_py_extension",
-      "community_name": "Community 3"
+      "id": "utils_py_extension"
     },
     {
       "label": "create_tmp_repo_dir()",
@@ -2673,8 +2521,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "create_tmp_repo_dir()",
-      "id": "utils_create_tmp_repo_dir",
-      "community_name": "Community 1"
+      "id": "utils_create_tmp_repo_dir"
     },
     {
       "label": "create_env_with_context()",
@@ -2684,8 +2531,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "create_env_with_context()",
-      "id": "utils_create_env_with_context",
-      "community_name": "Community 7"
+      "id": "utils_create_env_with_context"
     },
     {
       "label": "Any",
@@ -2695,8 +2541,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "any",
-      "id": "utils_py_any",
-      "community_name": "Community 7"
+      "id": "utils_py_any"
     },
     {
       "label": "StrictEnvironment",
@@ -2706,8 +2551,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "strictenvironment",
-      "id": "strictenvironment",
-      "community_name": "Community 7"
+      "id": "strictenvironment"
     },
     {
       "label": "Helper functions used throughout Cookiecutter.",
@@ -2717,8 +2561,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "helper functions used throughout cookiecutter.",
-      "id": "utils_rationale_1",
-      "community_name": "Community 1"
+      "id": "utils_rationale_1"
     },
     {
       "label": "Error handler for `shutil.rmtree()` equivalent to `rm -rf`.      Usage: `shutil.",
@@ -2728,8 +2571,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "error handler for `shutil.rmtree()` equivalent to `rm -rf`.      usage: `shutil.",
-      "id": "utils_rationale_26",
-      "community_name": "Community 1"
+      "id": "utils_rationale_26"
     },
     {
       "label": "Remove a directory and all its contents. Like rm -rf on Unix.      :param path:",
@@ -2739,8 +2581,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "remove a directory and all its contents. like rm -rf on unix.      :param path:",
-      "id": "utils_rationale_36",
-      "community_name": "Community 1"
+      "id": "utils_rationale_36"
     },
     {
       "label": "Ensure that a directory exists.      :param path: A directory tree path for crea",
@@ -2750,8 +2591,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "ensure that a directory exists.      :param path: a directory tree path for crea",
-      "id": "utils_rationale_44",
-      "community_name": "Community 1"
+      "id": "utils_rationale_44"
     },
     {
       "label": "Context manager version of os.chdir.      When exited, returns to the working di",
@@ -2761,8 +2601,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "context manager version of os.chdir.      when exited, returns to the working di",
-      "id": "utils_rationale_58",
-      "community_name": "Community 1"
+      "id": "utils_rationale_58"
     },
     {
       "label": "Make `script_path` executable.      :param script_path: The file to change",
@@ -2772,8 +2611,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "make `script_path` executable.      :param script_path: the file to change",
-      "id": "utils_rationale_72",
-      "community_name": "Community 1"
+      "id": "utils_rationale_72"
     },
     {
       "label": "Decorate a function to wrap it in a simplified jinja2 extension.",
@@ -2783,8 +2621,7 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "decorate a function to wrap it in a simplified jinja2 extension.",
-      "id": "utils_rationale_81",
-      "community_name": "Community 3"
+      "id": "utils_rationale_81"
     },
     {
       "label": "Create a temporary dir with a copy of the contents of repo_dir.",
@@ -2794,8 +2631,7 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "create a temporary dir with a copy of the contents of repo_dir.",
-      "id": "utils_rationale_93",
-      "community_name": "Community 1"
+      "id": "utils_rationale_93"
     },
     {
       "label": "Create a jinja environment using the provided context.",
@@ -2805,8 +2641,7 @@
       "_origin": "ast",
       "community": 7,
       "norm_label": "create a jinja environment using the provided context.",
-      "id": "utils_rationale_103",
-      "community_name": "Community 7"
+      "id": "utils_rationale_103"
     },
     {
       "label": "vcs.py",
@@ -2816,8 +2651,7 @@
       "_origin": "ast",
       "community": 10,
       "norm_label": "vcs.py",
-      "id": "vcs",
-      "community_name": "Community 10"
+      "id": "vcs"
     },
     {
       "label": "identify_repo()",
@@ -2827,8 +2661,7 @@
       "_origin": "ast",
       "community": 10,
       "norm_label": "identify_repo()",
-      "id": "vcs_identify_repo",
-      "community_name": "Community 10"
+      "id": "vcs_identify_repo"
     },
     {
       "label": "is_vcs_installed()",
@@ -2838,8 +2671,7 @@
       "_origin": "ast",
       "community": 10,
       "norm_label": "is_vcs_installed()",
-      "id": "vcs_is_vcs_installed",
-      "community_name": "Community 10"
+      "id": "vcs_is_vcs_installed"
     },
     {
       "label": "clone()",
@@ -2849,8 +2681,7 @@
       "_origin": "ast",
       "community": 10,
       "norm_label": "clone()",
-      "id": "vcs_clone",
-      "community_name": "Community 10"
+      "id": "vcs_clone"
     },
     {
       "label": "Path",
@@ -2860,8 +2691,7 @@
       "_origin": "ast",
       "community": 10,
       "norm_label": "path",
-      "id": "vcs_py_path",
-      "community_name": "Community 10"
+      "id": "vcs_py_path"
     },
     {
       "label": "Helper functions for working with version control systems.",
@@ -2871,8 +2701,7 @@
       "_origin": "ast",
       "community": 10,
       "norm_label": "helper functions for working with version control systems.",
-      "id": "vcs_rationale_1",
-      "community_name": "Community 10"
+      "id": "vcs_rationale_1"
     },
     {
       "label": "Determine if `repo_url` should be treated as a URL to a git or hg repo.      Rep",
@@ -2882,8 +2711,7 @@
       "_origin": "ast",
       "community": 10,
       "norm_label": "determine if `repo_url` should be treated as a url to a git or hg repo.      rep",
-      "id": "vcs_rationale_34",
-      "community_name": "Community 10"
+      "id": "vcs_rationale_34"
     },
     {
       "label": "Check if the version control system for a repo type is installed.      :param re",
@@ -2893,8 +2721,7 @@
       "_origin": "ast",
       "community": 10,
       "norm_label": "check if the version control system for a repo type is installed.      :param re",
-      "id": "vcs_rationale_55",
-      "community_name": "Community 10"
+      "id": "vcs_rationale_55"
     },
     {
       "label": "Clone a repo to the current directory.      :param repo_url: Repo URL of unknown",
@@ -2904,8 +2731,7 @@
       "_origin": "ast",
       "community": 10,
       "norm_label": "clone a repo to the current directory.      :param repo_url: repo url of unknown",
-      "id": "vcs_rationale_69",
-      "community_name": "Community 10"
+      "id": "vcs_rationale_69"
     },
     {
       "label": "zipfile.py",
@@ -2915,8 +2741,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "zipfile.py",
-      "id": "zipfile",
-      "community_name": "Community 6"
+      "id": "zipfile"
     },
     {
       "label": "unzip()",
@@ -2926,8 +2751,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "unzip()",
-      "id": "zipfile_unzip",
-      "community_name": "Community 6"
+      "id": "zipfile_unzip"
     },
     {
       "label": "Path",
@@ -2937,8 +2761,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "path",
-      "id": "zipfile_py_path",
-      "community_name": "Community 6"
+      "id": "zipfile_py_path"
     },
     {
       "label": "Utility functions for handling and fetching repo archives in zip format.",
@@ -2948,8 +2771,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "utility functions for handling and fetching repo archives in zip format.",
-      "id": "zipfile_rationale_1",
-      "community_name": "Community 6"
+      "id": "zipfile_rationale_1"
     },
     {
       "label": "Download and unpack a zipfile at a given URI.      This will download the zipfil",
@@ -2959,8 +2781,7 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "download and unpack a zipfile at a given uri.      this will download the zipfil",
-      "id": "zipfile_rationale_24",
-      "community_name": "Community 6"
+      "id": "zipfile_rationale_24"
     }
   ],
   "links": [
@@ -2978,21 +2799,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "main.py",
-      "source_location": "L29",
+      "source_location": "L27",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "main_py_main",
       "target": "main_cookiecutter"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "main.py",
-      "source_location": "L203",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_py_main",
-      "target": "main_patch_import_path_for_repo"
     },
     {
       "relation": "rationale_for",
@@ -3839,7 +3650,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "main.py",
-      "source_location": "L79",
+      "source_location": "L51",
       "weight": 1.0,
       "source": "main_cookiecutter",
       "target": "config_get_user_config"
@@ -4770,7 +4581,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "main.py",
-      "source_location": "L77",
+      "source_location": "L49",
       "weight": 1.0,
       "source": "main_cookiecutter",
       "target": "exceptions_invalidmodeexception"
@@ -4779,30 +4590,10 @@
       "relation": "uses",
       "confidence": "INFERRED",
       "source_file": "main.py",
-      "source_location": "L18",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "main_patch_import_path_for_repo",
-      "target": "exceptions_invalidmodeexception"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "main.py",
-      "source_location": "L18",
+      "source_location": "L14",
       "weight": 0.8,
       "confidence_score": 0.5,
       "source": "main_py_any",
-      "target": "exceptions_invalidmodeexception"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "main.py",
-      "source_location": "L18",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "main_py_path",
       "target": "exceptions_invalidmodeexception"
     },
     {
@@ -5884,10 +5675,10 @@
       "context": "call",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
-      "source_file": "main.py",
-      "source_location": "L112",
+      "source_file": "orchestration.py",
+      "source_location": "L81",
       "weight": 1.0,
-      "source": "main_cookiecutter",
+      "source": "orchestration_build_context",
       "target": "generate_generate_context"
     },
     {
@@ -6098,10 +5889,10 @@
       "context": "call",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
-      "source_file": "main.py",
-      "source_location": "L185",
+      "source_file": "orchestration.py",
+      "source_location": "L130",
       "weight": 1.0,
-      "source": "main_cookiecutter",
+      "source": "orchestration_run_generation",
       "target": "generate_generate_files"
     },
     {
@@ -6479,10 +6270,10 @@
       "context": "call",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
-      "source_file": "main.py",
-      "source_location": "L94",
+      "source_file": "orchestration.py",
+      "source_location": "L54",
       "weight": 1.0,
-      "source": "main_cookiecutter",
+      "source": "orchestration_setup_repository",
       "target": "hooks_run_pre_prompt_hook"
     },
     {
@@ -6527,22 +6318,11 @@
       "target": "log_configure_logger"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "main.py",
-      "source_location": "L98",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_cookiecutter",
-      "target": "main_patch_import_path_for_repo"
-    },
-    {
       "relation": "references",
       "context": "generic_arg",
       "confidence": "EXTRACTED",
       "source_file": "main.py",
-      "source_location": "L29",
+      "source_location": "L27",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "main_cookiecutter",
@@ -6554,7 +6334,62 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "main.py",
-      "source_location": "L145",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "main_cookiecutter",
+      "target": "orchestration_build_context"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "main.py",
+      "source_location": "L114",
+      "weight": 1.0,
+      "source": "main_cookiecutter",
+      "target": "orchestration_cleanup_repos"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "main.py",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "main_cookiecutter",
+      "target": "orchestration_enrich_context"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "main.py",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "main_cookiecutter",
+      "target": "orchestration_run_generation"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "main.py",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "main_cookiecutter",
+      "target": "orchestration_setup_repository"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "main.py",
+      "source_location": "L77",
       "weight": 1.0,
       "source": "main_cookiecutter",
       "target": "prompt_choose_nested_template"
@@ -6565,7 +6400,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "main.py",
-      "source_location": "L164",
+      "source_location": "L98",
       "weight": 1.0,
       "source": "main_cookiecutter",
       "target": "prompt_prompt_for_config"
@@ -6576,20 +6411,206 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "main.py",
-      "source_location": "L181",
+      "source_location": "L102",
       "weight": 1.0,
       "source": "main_cookiecutter",
       "target": "replay_dump"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L43",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "main_rationale_43",
+      "target": "main_cookiecutter"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L65",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration",
+      "target": "orchestration_build_context"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L141",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration",
+      "target": "orchestration_cleanup_repos"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L103",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration",
+      "target": "orchestration_enrich_context"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration",
+      "target": "orchestration_patch_import_path_for_repo"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L119",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration",
+      "target": "orchestration_run_generation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L35",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration",
+      "target": "orchestration_setup_repository"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration_rationale_1",
+      "target": "orchestration"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L65",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration_build_context",
+      "target": "orchestration_patch_import_path_for_repo"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration_patch_import_path_for_repo",
+      "target": "orchestration_patch_import_path_for_repo_enter"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration_patch_import_path_for_repo",
+      "target": "orchestration_patch_import_path_for_repo_exit"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration_patch_import_path_for_repo",
+      "target": "orchestration_patch_import_path_for_repo_init"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration_rationale_22",
+      "target": "orchestration_patch_import_path_for_repo"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L119",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration_run_generation",
+      "target": "orchestration_patch_import_path_for_repo"
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L35",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration_setup_repository",
+      "target": "orchestration_patch_import_path_for_repo"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration_patch_import_path_for_repo_init",
+      "target": "orchestration_py_path"
     },
     {
       "relation": "calls",
       "context": "call",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
-      "source_file": "main.py",
-      "source_location": "L103",
+      "source_file": "orchestration.py",
+      "source_location": "L44",
       "weight": 1.0,
-      "source": "main_cookiecutter",
+      "source": "orchestration_setup_repository",
+      "target": "repository_determine_repo_dir"
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestration.py",
+      "source_location": "L65",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orchestration_build_context",
+      "target": "orchestration_py_any"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "orchestration.py",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "orchestration_build_context",
       "target": "replay_load"
     },
     {
@@ -6597,73 +6618,11 @@
       "context": "call",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
-      "source_file": "main.py",
-      "source_location": "L83",
+      "source_file": "orchestration.py",
+      "source_location": "L148",
       "weight": 1.0,
-      "source": "main_cookiecutter",
-      "target": "repository_determine_repo_dir"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "main.py",
-      "source_location": "L197",
-      "weight": 1.0,
-      "source": "main_cookiecutter",
+      "source": "orchestration_cleanup_repos",
       "target": "utils_rmtree"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "main.py",
-      "source_location": "L45",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_rationale_45",
-      "target": "main_cookiecutter"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "main.py",
-      "source_location": "L207",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_patch_import_path_for_repo",
-      "target": "main_patch_import_path_for_repo_enter"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "main.py",
-      "source_location": "L211",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_patch_import_path_for_repo",
-      "target": "main_patch_import_path_for_repo_exit"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "main.py",
-      "source_location": "L204",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_patch_import_path_for_repo",
-      "target": "main_patch_import_path_for_repo_init"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "main.py",
-      "source_location": "L204",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_patch_import_path_for_repo_init",
-      "target": "main_py_path"
     },
     {
       "relation": "contains",
@@ -8181,5 +8140,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b217773efad3bb7ab60153f64da9c81cf1a1ea65"
+  "built_at_commit": "bb462d163891567d1f46494284c78d9dd5fef16e"
 }

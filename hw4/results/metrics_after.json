@@ -1,25 +1,21 @@
 {
   "scope": "data/cookiecutter/cookiecutter",
-  "node_count": 283,
-  "edge_count": 529,
-  "community_count": 16,
-  "bridge_count": 138,
+  "node_count": 276,
+  "edge_count": 500,
+  "community_count": 15,
+  "bridge_count": 132,
   "top_hubs": [
     [
-      "exceptions_undefinedvariableintemplate",
-      21
-    ],
-    [
-      "main_cookiecutter",
-      20
-    ],
-    [
       "exceptions_cookiecutterexception",
-      20
+      23
     ],
     [
       "exceptions",
       19
+    ],
+    [
+      "main_cookiecutter",
+      16
     ],
     [
       "prompt",
@@ -27,37 +23,42 @@
     ],
     [
       "generate_generate_files",
-      15
-    ],
-    [
-      "cli_py_any",
-      12
-    ],
-    [
-      "generate_py_any",
-      12
+      14
     ],
     [
       "prompt_prompt_for_config",
       12
     ],
     [
-      "repository_determine_repo_dir",
-      12
+      "exceptions_contextdecodingexception",
+      11
+    ],
+    [
+      "exceptions_emptydirnameexception",
+      11
+    ],
+    [
+      "exceptions_failedhookexception",
+      11
+    ],
+    [
+      "exceptions_invalidmodeexception",
+      11
     ]
   ],
   "edge_type_counts": {
-    "rationale_for": 121,
-    "contains": 90,
-    "references": 80,
-    "uses": 84,
-    "calls": 109,
-    "inherits": 26,
+    "rationale_for": 119,
+    "contains": 85,
+    "references": 76,
+    "uses": 75,
+    "calls": 99,
+    "inherits": 25,
     "method": 18,
-    "imports_from": 1
+    "imports_from": 2,
+    "imports": 1
   },
-  "target_hub_degree": 20,
-  "orchestration_hub_sum": 43,
-  "spof_count": 10,
-  "hub_count": 10
+  "target_hub_degree": 16,
+  "orchestration_hub_sum": 0,
+  "spof_count": 14,
+  "hub_count": 6
 }
