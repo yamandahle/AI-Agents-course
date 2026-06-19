@@ -1,0 +1,16 @@
+{
+  "version": "1.00",
+  "project": "hw4-ex04",
+  "agents": {
+    "top_n_nodes": 20,
+    "max_prompt_tokens": 2000,
+    "hub_degree_threshold": 10
+  },
+  "paths": {
+    "artifacts": "artifacts/",
+    "results": "results/",
+    "obsidian": "obsidian/",
+    "data": "data/",
+    "reports": "reports/"
+  }
+}

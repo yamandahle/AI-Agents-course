@@ -1,0 +1,42 @@
+[
+  {
+    "bugsinpy_id": 1,
+    "source_file": "cookiecutter/generate.py",
+    "description": "generate_context opens cookiecutter.json without encoding=utf-8",
+    "severity": "MEDIUM",
+    "status": "CONFIRMED_HISTORICAL",
+    "graph_hub_match": true,
+    "buggy_commit": "c15633745df6abdb24e02746b82aadb20b8cdf8c",
+    "test_file": "tests/test_generate_context.py"
+  },
+  {
+    "bugsinpy_id": 2,
+    "source_file": "cookiecutter/hooks.py",
+    "description": "find_hook returns one script instead of all matching hook scripts",
+    "severity": "MEDIUM",
+    "status": "CONFIRMED_HISTORICAL",
+    "graph_hub_match": true,
+    "buggy_commit": "d7e7b28811e474e14d1bed747115e47dcdd15ba3",
+    "test_file": "tests/test_hooks.py"
+  },
+  {
+    "bugsinpy_id": 3,
+    "source_file": "cookiecutter/prompt.py",
+    "description": "read_user_choice click.prompt missing show_choices=False",
+    "severity": "MEDIUM",
+    "status": "CONFIRMED_HISTORICAL",
+    "graph_hub_match": true,
+    "buggy_commit": "5c282f020a8db7e5e7c4e7b51b010556ca31fb7f",
+    "test_file": "tests/test_read_user_choice.py"
+  },
+  {
+    "bugsinpy_id": 4,
+    "source_file": "cookiecutter/exceptions.py",
+    "description": "FailedHookException missing from exceptions.py",
+    "severity": "MEDIUM",
+    "status": "CONFIRMED_HISTORICAL",
+    "graph_hub_match": true,
+    "buggy_commit": "9568ab6ecd2d6836646006c59473c4a4ac0dee04",
+    "test_file": "tests/test_hooks.py"
+  }
+]

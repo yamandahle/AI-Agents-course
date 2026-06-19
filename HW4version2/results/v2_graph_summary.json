@@ -1,0 +1,51 @@
+```json
+{
+  "node_count": 273,
+  "edge_count": 502,
+  "community_count": 15,
+  "bridge_count": 129,
+  "top_10_hubs": [
+    [
+      "exceptions_undefinedvariableintemplate",
+      21
+    ],
+    [
+      "exceptions_cookiecutterexception",
+      20
+    ],
+    [
+      "exceptions",
+      19
+    ],
+    [
+      "prompt",
+      16
+    ],
+    [
+      "generate_generate_files",
+      13
+    ],
+    [
+      "cli_py_any",
+      12
+    ],
+    [
+      "generate_py_any",
+      12
+    ],
+    [
+      "prompt_prompt_for_config",
+      12
+    ],
+    [
+      "cli_py_ordereddict",
+      11
+    ],
+    [
+      "context",
+      11
+    ]
+  ],
+  "interpretation": "The system comprises 273 nodes and 502 edges, structured into 15 distinct communities, with 129 bridge nodes facilitating inter-community communication. Key architectural hot-spots include the `exceptions` module, specifically `UndefinedVariableInTemplate` and `CookiecutterException`, alongside the `cookiecutter()` function in `main.py` and `generate_files()` in `generate.py`, which exhibit high connectivity and central roles in system orchestration and file generation."
+}
+```
