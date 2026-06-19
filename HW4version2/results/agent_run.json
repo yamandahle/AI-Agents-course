@@ -1,0 +1,213 @@
+{
+  "graph_summary": {
+    "node_count": 269,
+    "edge_count": 504,
+    "community_count": 15,
+    "top_hubs": [
+      [
+        "exceptions_undefinedvariableintemplate",
+        21
+      ],
+      [
+        "exceptions_cookiecutterexception",
+        20
+      ],
+      [
+        "exceptions",
+        19
+      ],
+      [
+        "main_cookiecutter",
+        16
+      ],
+      [
+        "prompt",
+        16
+      ],
+      [
+        "generate_generate_files",
+        14
+      ],
+      [
+        "cli_py_any",
+        12
+      ],
+      [
+        "generate_py_any",
+        12
+      ],
+      [
+        "prompt_prompt_for_config",
+        12
+      ],
+      [
+        "cli_py_ordereddict",
+        11
+      ]
+    ],
+    "bridge_count": 127,
+    "hot_excerpt": "# Hot zone \u2014 architecture investigation\n\nTop nodes by degree (package-only graph). I start bug research here.\n\n| Rank | Node | Edges | File | Risk |\n|------|------|-------|------|------|\n| 1 | `UndefinedVariableInTemplate` | 21 | exceptions.py | Exception hub |\n| 2 | `CookiecutterException` | 20 | exceptions.py | Base exception hub |\n| 3 | `cookiecutter()` | 16 | main.py | SPOF / orchestrator |\n| 4 | `generate_files()` | 14 | generate.py | Overloaded hub |\n| 5 | `prompt_for_config()` | 12 | prompt.py | Prompt hub |\n| 6 | `Context` | 11 | generate.py | Shared data object |\n| 7 | `Parameter` | 11 | prompt.py | Prompt model |\n\n## Primary suspect\n\n**`cookiecutter()` in `main.py`** \u2014 central orchestrator. Many modules depend on it.\n\n## Secondary suspect\n\n**`generate_files()` in `generate.py`** \u2014 high fan-in from generation workflow.\n\n## Links\n\n- [[index.md]]\n- [[GRAPH_REPORT.md]]\n",
+    "index_excerpt": "# Cookiecutter architecture index\n\nScope: `cookiecutter/` package only (18 Python files). Tests and docs excluded.\n\n## Graph summary\n\n- 269 nodes \u00b7 504 edges \u00b7 15 communities\n- 72% EXTRACTED \u00b7 28% INFERRED\n\n## Modules\n\n| Module | Role |\n|--------|------|\n| [[cookiecutter/main.py]] | Entry: `cookiecutter()` orchestrates the run |\n| [[cookiecutter/cli.py]] | CLI argument parsing |\n| [[cookiecutter/generate.py]] | File and context generation |\n| [[cookiecutter/prompt.py]] | User prompts and config |\n| [[cookiecutter/hooks.py]] | Pre/post generation hooks |\n| [[cookiecutter/repository.py]] | Template repo detection |\n| [[cookiecutter/vcs.py]] | Git clone helpers |\n| [[cookiecutter/zipfile.py]] | Zip template handling |\n| [[cookiecutter/config.py]] | User and default config |\n| [[cookiecutter/environment.py]] | Jinja2 environment |\n| [[cookiecutter/extensions.py]] | Jinja2 extensions |\n| [[cookiecutter/exceptions.py]] | Exception hierarchy |\n| [[cookiecutter/utils.py]] | Shared utilities |\n| [[cookiecutter/replay.py]] | Replay saved runs |\n| [[cookiecutter/log.py]] | Logging setup |\n| [[cookiecutter/find.py]] | Template discovery |\n\n## Navigation\n\n- [[hot.md]] \u2014 hubs for bug investigation\n- [[GRAPH_REPORT.md]] \u2014 full Grphify report\n\n## Research focus\n\n1. Hub: `cookiecutter()` in `main.py`\n2. Hub: `generate_files()` in `generate.py`\n3. Exception hub: `exceptions.py` (many dependents)\n",
+    "navigation_files": [
+      "index.md",
+      "hot.md",
+      "artifacts\\graph.json"
+    ],
+    "files_read": 2,
+    "estimated_tokens": 645
+  },
+  "bugs": [
+    {
+      "bug_type": "HUB",
+      "node_name": "cookiecutter()",
+      "severity": "HIGH",
+      "explanation": "Hub degree 16 exceeds threshold 10.",
+      "source_file": "main.py"
+    },
+    {
+      "bug_type": "HUB",
+      "node_name": "UndefinedVariableInTemplate",
+      "severity": "HIGH",
+      "explanation": "Hub degree 21 exceeds threshold 10.",
+      "source_file": "exceptions.py"
+    },
+    {
+      "bug_type": "HUB",
+      "node_name": "exceptions.py",
+      "severity": "HIGH",
+      "explanation": "Hub degree 19 exceeds threshold 10.",
+      "source_file": "exceptions.py"
+    },
+    {
+      "bug_type": "HUB",
+      "node_name": "CookiecutterException",
+      "severity": "HIGH",
+      "explanation": "Hub degree 20 exceeds threshold 10.",
+      "source_file": "exceptions.py"
+    },
+    {
+      "bug_type": "HUB",
+      "node_name": "prompt.py",
+      "severity": "HIGH",
+      "explanation": "Hub degree 16 exceeds threshold 10.",
+      "source_file": "prompt.py"
+    }
+  ],
+  "functional_bugs": [
+    {
+      "bugsinpy_id": 1,
+      "source_file": "cookiecutter/generate.py",
+      "description": "generate_context opens cookiecutter.json without encoding=utf-8",
+      "severity": "MEDIUM",
+      "status": "CONFIRMED_HISTORICAL",
+      "graph_hub_match": true,
+      "buggy_commit": "c15633745df6abdb24e02746b82aadb20b8cdf8c",
+      "test_file": "tests/test_generate_context.py"
+    },
+    {
+      "bugsinpy_id": 2,
+      "source_file": "cookiecutter/hooks.py",
+      "description": "find_hook returns one script instead of all matching hook scripts",
+      "severity": "MEDIUM",
+      "status": "CONFIRMED_HISTORICAL",
+      "graph_hub_match": true,
+      "buggy_commit": "d7e7b28811e474e14d1bed747115e47dcdd15ba3",
+      "test_file": "tests/test_hooks.py"
+    },
+    {
+      "bugsinpy_id": 3,
+      "source_file": "cookiecutter/prompt.py",
+      "description": "read_user_choice click.prompt missing show_choices=False",
+      "severity": "MEDIUM",
+      "status": "CONFIRMED_HISTORICAL",
+      "graph_hub_match": true,
+      "buggy_commit": "5c282f020a8db7e5e7c4e7b51b010556ca31fb7f",
+      "test_file": "tests/test_read_user_choice.py"
+    },
+    {
+      "bugsinpy_id": 4,
+      "source_file": "cookiecutter/exceptions.py",
+      "description": "FailedHookException missing from exceptions.py",
+      "severity": "MEDIUM",
+      "status": "CONFIRMED_HISTORICAL",
+      "graph_hub_match": true,
+      "buggy_commit": "9568ab6ecd2d6836646006c59473c4a4ac0dee04",
+      "test_file": "tests/test_hooks.py"
+    }
+  ],
+  "proposals": [
+    {
+      "bug": {
+        "bug_type": "HUB",
+        "node_name": "cookiecutter()",
+        "severity": "HIGH",
+        "explanation": "Hub degree 16 exceeds threshold 10.",
+        "source_file": "main.py"
+      },
+      "target_file": "main.py",
+      "change_description": "Move helper utilities into smaller focused modules and keep the hub as a thin coordinator.",
+      "rationale": "Lower fan-in/fan-out so changes stay localized."
+    },
+    {
+      "bug": {
+        "bug_type": "HUB",
+        "node_name": "UndefinedVariableInTemplate",
+        "severity": "HIGH",
+        "explanation": "Hub degree 21 exceeds threshold 10.",
+        "source_file": "exceptions.py"
+      },
+      "target_file": "exceptions.py",
+      "change_description": "Move helper utilities into smaller focused modules and keep the hub as a thin coordinator.",
+      "rationale": "Lower fan-in/fan-out so changes stay localized."
+    },
+    {
+      "bug": {
+        "bug_type": "HUB",
+        "node_name": "exceptions.py",
+        "severity": "HIGH",
+        "explanation": "Hub degree 19 exceeds threshold 10.",
+        "source_file": "exceptions.py"
+      },
+      "target_file": "exceptions.py",
+      "change_description": "Move helper utilities into smaller focused modules and keep the hub as a thin coordinator.",
+      "rationale": "Lower fan-in/fan-out so changes stay localized."
+    },
+    {
+      "bug": {
+        "bug_type": "HUB",
+        "node_name": "CookiecutterException",
+        "severity": "HIGH",
+        "explanation": "Hub degree 20 exceeds threshold 10.",
+        "source_file": "exceptions.py"
+      },
+      "target_file": "exceptions.py",
+      "change_description": "Move helper utilities into smaller focused modules and keep the hub as a thin coordinator.",
+      "rationale": "Lower fan-in/fan-out so changes stay localized."
+    },
+    {
+      "bug": {
+        "bug_type": "HUB",
+        "node_name": "prompt.py",
+        "severity": "HIGH",
+        "explanation": "Hub degree 16 exceeds threshold 10.",
+        "source_file": "prompt.py"
+      },
+      "target_file": "prompt.py",
+      "change_description": "Move helper utilities into smaller focused modules and keep the hub as a thin coordinator.",
+      "rationale": "Lower fan-in/fan-out so changes stay localized."
+    }
+  ],
+  "verification": {
+    "fix_applied": false,
+    "tests_passed": true,
+    "centrality_delta": 0.0,
+    "summary": "Pre-fix verification: bugs and proposals generated. Apply fix in next stage, then re-run Grphify.",
+    "bugs_found": 5,
+    "proposals_count": 5
+  },
+  "token_stats": {
+    "naive_tokens_estimated": 23537,
+    "graph_guided_tokens_estimated": 645,
+    "savings_percent": 97.3
+  }
+}

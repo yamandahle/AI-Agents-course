@@ -1,0 +1,37 @@
+[
+  {
+    "bug_type": "HUB",
+    "node_name": "cookiecutter()",
+    "severity": "HIGH",
+    "explanation": "Hub degree 16 exceeds threshold 10.",
+    "source_file": "main.py"
+  },
+  {
+    "bug_type": "HUB",
+    "node_name": "UndefinedVariableInTemplate",
+    "severity": "HIGH",
+    "explanation": "Hub degree 21 exceeds threshold 10.",
+    "source_file": "exceptions.py"
+  },
+  {
+    "bug_type": "HUB",
+    "node_name": "exceptions.py",
+    "severity": "HIGH",
+    "explanation": "Hub degree 19 exceeds threshold 10.",
+    "source_file": "exceptions.py"
+  },
+  {
+    "bug_type": "HUB",
+    "node_name": "CookiecutterException",
+    "severity": "HIGH",
+    "explanation": "Hub degree 20 exceeds threshold 10.",
+    "source_file": "exceptions.py"
+  },
+  {
+    "bug_type": "HUB",
+    "node_name": "prompt.py",
+    "severity": "HIGH",
+    "explanation": "Hub degree 16 exceeds threshold 10.",
+    "source_file": "prompt.py"
+  }
+]

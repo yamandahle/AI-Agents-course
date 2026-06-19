@@ -1,0 +1,64 @@
+{
+  "scope": "data/cookiecutter/cookiecutter",
+  "node_count": 276,
+  "edge_count": 500,
+  "community_count": 15,
+  "bridge_count": 132,
+  "top_hubs": [
+    [
+      "exceptions_cookiecutterexception",
+      23
+    ],
+    [
+      "exceptions",
+      19
+    ],
+    [
+      "main_cookiecutter",
+      16
+    ],
+    [
+      "prompt",
+      16
+    ],
+    [
+      "generate_generate_files",
+      14
+    ],
+    [
+      "prompt_prompt_for_config",
+      12
+    ],
+    [
+      "exceptions_contextdecodingexception",
+      11
+    ],
+    [
+      "exceptions_emptydirnameexception",
+      11
+    ],
+    [
+      "exceptions_failedhookexception",
+      11
+    ],
+    [
+      "exceptions_invalidmodeexception",
+      11
+    ]
+  ],
+  "edge_type_counts": {
+    "rationale_for": 119,
+    "contains": 85,
+    "references": 76,
+    "uses": 75,
+    "calls": 99,
+    "inherits": 25,
+    "method": 18,
+    "imports_from": 2,
+    "imports": 1
+  },
+  "target_hub_degree": 16,
+  "orchestration_hub_sum": 0,
+  "spof_count": 14,
+  "hub_count": 6
+}

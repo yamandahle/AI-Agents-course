@@ -1,0 +1,58 @@
+{
+  "scope": "data/cookiecutter/cookiecutter (package only, 18 files)",
+  "node_count": 269,
+  "edge_count": 504,
+  "community_count": 15,
+  "bridge_count": 127,
+  "top_hubs": [
+    [
+      "exceptions_undefinedvariableintemplate",
+      21
+    ],
+    [
+      "exceptions_cookiecutterexception",
+      20
+    ],
+    [
+      "exceptions",
+      19
+    ],
+    [
+      "main_cookiecutter",
+      16
+    ],
+    [
+      "prompt",
+      16
+    ],
+    [
+      "generate_generate_files",
+      14
+    ],
+    [
+      "cli_py_any",
+      12
+    ],
+    [
+      "generate_py_any",
+      12
+    ],
+    [
+      "prompt_prompt_for_config",
+      12
+    ],
+    [
+      "cli_py_ordereddict",
+      11
+    ]
+  ],
+  "edge_type_counts": {
+    "rationale_for": 114,
+    "contains": 85,
+    "references": 76,
+    "uses": 86,
+    "calls": 99,
+    "inherits": 26,
+    "method": 18
+  }
+}
