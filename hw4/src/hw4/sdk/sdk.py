@@ -2,8 +2,11 @@ from __future__ import annotations
 
 from typing import Any
 
+from hw4.services.bug_detector import BugDetectorService
 from hw4.services.crew_runner import CrewRunnerService
+from hw4.services.fix_applier import FixApplierService, FixResult
 from hw4.services.graph_builder import GraphBuilderService
+from hw4.services.verify_service import VerifyResult, VerifyService
 from hw4.shared.config import ConfigManager
 from hw4.shared.gatekeeper import ApiGatekeeper, RateLimitConfig
 
@@ -40,11 +43,34 @@ class HW4SDK:
         )
         return runner.run()
 
-    def detect_bugs(self) -> dict[str, Any]:
-        return self.run_agents()
+    def detect_bugs(self) -> list[dict]:
+        graph_path = self.config.get("paths", "artifacts") + "graph.json"
+        graph = self.graph_builder.load_graph(graph_path)
+        summary_metrics = self.graph_builder.compute_metrics(graph)
+        from hw4.models.agent_models import GraphSummary
 
-    def apply_fix(self) -> None:
-        pass
+        summary = GraphSummary(
+            node_count=summary_metrics.node_count,
+            edge_count=summary_metrics.edge_count,
+            community_count=summary_metrics.community_count,
+            top_hubs=summary_metrics.top_hubs,
+            bridge_count=summary_metrics.bridge_count,
+            hot_excerpt="",
+            index_excerpt="",
+        )
+        detector = BugDetectorService(
+            hub_degree_threshold=self.config.get("agents", "hub_degree_threshold"),
+        )
+        bugs = detector.detect(graph, summary)
+        return [bug.to_dict() for bug in bugs]
 
-    def verify(self) -> None:
-        pass
+    def apply_fix(self) -> FixResult:
+        applier = FixApplierService(self.gatekeeper, self.config.get("paths"))
+        return applier.apply_from_file()
+
+    def verify(self) -> VerifyResult:
+        return VerifyService(
+            self.gatekeeper,
+            self.config.get("agents"),
+            self.config.get("paths"),
+        ).run()
