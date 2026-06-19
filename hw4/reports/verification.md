@@ -23,7 +23,7 @@
 | Check | Result |
 |-------|--------|
 | Unit tests | PASS |
-| Coverage | 85.0% |
+| Coverage | 86.0% |
 | Ruff | PASS |
 
 ## Conclusion

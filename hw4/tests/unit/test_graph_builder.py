@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import tempfile
+from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
@@ -77,3 +78,27 @@ def test_compute_metrics_counts_edge_types(service: GraphBuilderService, graph_j
     metrics = service.compute_metrics(graph)
     assert "calls" in metrics.edge_type_counts
     assert metrics.edge_type_counts["calls"] == 4
+
+
+def test_graphify_out_dir_under_artifacts() -> None:
+    artifacts = Path("artifacts")
+    assert GraphBuilderService.graphify_out_dir(artifacts) == Path("artifacts/graphify-out")
+
+
+def test_sync_deliverables_copies_outputs(tmp_path: Path) -> None:
+    graphify_out = tmp_path / "graphify-out"
+    artifacts = tmp_path / "artifacts"
+    graphify_out.mkdir()
+    artifacts.mkdir()
+    (graphify_out / "graph.json").write_text('{"nodes":[],"links":[]}', encoding="utf-8")
+    (graphify_out / "graph.html").write_text("<html></html>", encoding="utf-8")
+
+    service = GraphBuilderService(MagicMock(), {"top_n_nodes": 5})
+    service.sync_deliverables(
+        graphify_out,
+        artifacts,
+        json_name="graph_after.json",
+        html_name="graph_after.html",
+    )
+    assert (artifacts / "graph_after.json").exists()
+    assert (artifacts / "graph_after.html").read_text(encoding="utf-8") == "<html></html>"

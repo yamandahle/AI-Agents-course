@@ -42,12 +42,16 @@ class VerifyService:
         reports = self._root / self._paths["reports"]
         reports.mkdir(parents=True, exist_ok=True)
 
-        self._run_graphify_update(pkg)
-        after_dst = artifacts / "graph_after.json"
-        after_dst.write_text(
-            (pkg / "graphify-out" / "graph.json").read_text(encoding="utf-8"),
-            encoding="utf-8",
+        graphify_out = self._graph_builder.graphify_out_dir(artifacts)
+        self._graph_builder.run_graphify_update(pkg, graphify_out, self._root)
+        self._graph_builder.sync_deliverables(
+            graphify_out,
+            artifacts,
+            json_name="graph_after.json",
+            html_name="graph_after.html",
+            report_name="GRAPH_REPORT_AFTER.md",
         )
+        after_dst = artifacts / "graph_after.json"
 
         before = self._enrich_before(results / "metrics_before.json", artifacts / "graph.json")
         threshold = self._config.get("hub_degree_threshold", 10)
@@ -90,14 +94,6 @@ class VerifyService:
 
     def _compare(self, before: dict, after: dict) -> dict[str, Any]:
         return compare_metrics(before, after)
-
-    def _run_graphify_update(self, pkg: Path) -> None:
-        self._gatekeeper.execute(
-            subprocess.run,
-            ["graphify", "update", "."],
-            cwd=pkg,
-            check=True,
-        )
 
     def _run_tests(self) -> tuple[bool, float]:
         result = self._gatekeeper.execute(

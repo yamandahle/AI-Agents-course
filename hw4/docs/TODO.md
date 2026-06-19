@@ -22,8 +22,8 @@ Legend: `[x]` = done · `[ ]` = still to do
 - [x] Write `docs/PLAN_verify.md`
 - [x] Write `docs/TODO.md`
 - [x] Write `docs/README_PLAN.md`
-- [ ] Write `docs/PLAN.md` (umbrella plan — mentioned in submission guidelines V3)
-- [ ] Fill `docs/PROMPT_LOG.md` with real prompt entries
+- [x] Write `docs/PLAN.md` (umbrella plan — mentioned in submission guidelines V3)
+- [x] Fill `docs/PROMPT_LOG.md` with real prompt entries
 
 ## Stage 1 — Setup ✅
 - [x] Run `uv init .` inside `hw4/`
@@ -106,18 +106,18 @@ Legend: `[x]` = done · `[ ]` = still to do
 ## Stage 6 — README & submission (remaining)
 
 ### Must have (PRD + guidelines V3)
-- [ ] Write `README.md` from `docs/README_PLAN.md`
+- [x] Write `README.md` from `docs/README_PLAN.md`
 - [ ] Git push all Stage 4–5 code + results + reports
 
 ### Recommended (README_PLAN deliverables)
-- [ ] Write `reports/architecture_analysis.md`
-- [ ] Screenshot `assets/tests_pass.png` (pytest output)
-- [ ] Diagrams `assets/block_diagram.png`, `assets/oop_schema.png` (optional but in plan)
+- [x] Write `reports/architecture_analysis.md`
+- [x] Screenshot `assets/tests_pass.png` (pytest output)
+- [x] Diagrams in `README.md` (mermaid block diagram + OOP schema)
 
 ### Nice to have
-- [ ] Implement `HW4SDK.run_grphify()` (currently stub — verify uses graphify directly)
-- [ ] Write `docs/PLAN.md` umbrella document
-- [ ] Fill `docs/PROMPT_LOG.md`
+- [x] Implement `HW4SDK.run_grphify()` (uses `artifacts/graphify-out/`)
+- [x] Write `docs/PLAN.md` umbrella document
+- [x] Fill `docs/PROMPT_LOG.md`
 
 ---
 
@@ -130,8 +130,8 @@ Legend: `[x]` = done · `[ ]` = still to do
 | `PLAN_agents.md` | 4 agents, crew_runner, JSON results | ✅ done |
 | `PLAN_bug_fix.md` | bug_detector, fix_applier, patch | ✅ done |
 | `PLAN_verify.md` | graph_after, metrics compare, verification.md | ✅ done |
-| `README_PLAN.md` | README.md final write-up | ❌ not started |
-| Submission guidelines | PROMPT_LOG, PLAN.md, architecture report | ⚠️ partial |
+| `README_PLAN.md` | README.md final write-up | ✅ done |
+| Submission guidelines | PROMPT_LOG, PLAN.md, architecture report | ✅ done |
 
 ---
 

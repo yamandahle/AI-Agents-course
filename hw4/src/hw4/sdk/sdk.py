@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
 from hw4.services.bug_detector import BugDetectorService
@@ -32,8 +33,13 @@ class HW4SDK:
             )
         )
 
-    def run_grphify(self) -> None:
-        pass
+    def run_grphify(self, backend: str = "claude", project_root: str = ".") -> None:
+        root = Path(project_root)
+        paths = self.config.get("paths")
+        artifacts = root / paths["artifacts"]
+        package = self.graph_builder.package_dir(root, paths)
+        graphify_out = self.graph_builder.run_grphify(package, artifacts, backend=backend)
+        self.graph_builder.sync_deliverables(graphify_out, artifacts)
 
     def run_agents(self) -> dict[str, Any]:
         runner = CrewRunnerService(

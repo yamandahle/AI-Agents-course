@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 from collections import Counter
 from pathlib import Path
@@ -23,12 +24,69 @@ class GraphBuilderService:
             check=True,
         )
 
-    def run_grphify(self, source_path: str, backend: str = "claude") -> None:
+    @staticmethod
+    def graphify_out_dir(artifacts_dir: Path) -> Path:
+        return artifacts_dir / "graphify-out"
+
+    @staticmethod
+    def package_dir(project_root: Path, paths: dict) -> Path:
+        return project_root / paths["data"] / "cookiecutter" / "cookiecutter"
+
+    def run_grphify(
+        self,
+        source_path: str | Path,
+        artifacts_dir: str | Path,
+        backend: str = "claude",
+    ) -> Path:
+        out_parent = Path(artifacts_dir)
         self._gatekeeper.execute(
             subprocess.run,
-            ["graphify", "extract", source_path, "--backend", backend],
+            [
+                "graphify",
+                "extract",
+                str(source_path),
+                "--backend",
+                backend,
+                "--out",
+                str(out_parent),
+            ],
             check=True,
         )
+        return self.graphify_out_dir(out_parent)
+
+    def run_graphify_update(
+        self,
+        package: Path,
+        graphify_out: Path,
+        project_root: Path,
+    ) -> None:
+        env = {**os.environ, "GRAPHIFY_OUT": str(graphify_out.resolve())}
+        pkg_arg = package.resolve().relative_to(project_root.resolve()).as_posix()
+        self._gatekeeper.execute(
+            subprocess.run,
+            ["graphify", "update", pkg_arg],
+            cwd=project_root,
+            env=env,
+            check=True,
+        )
+
+    def sync_deliverables(
+        self,
+        graphify_out: Path,
+        artifacts: Path,
+        *,
+        json_name: str = "graph.json",
+        html_name: str = "graph.html",
+        report_name: str = "GRAPH_REPORT.md",
+    ) -> None:
+        for src_name, dst_name in (
+            ("graph.json", json_name),
+            ("graph.html", html_name),
+            ("GRAPH_REPORT.md", report_name),
+        ):
+            src = graphify_out / src_name
+            if src.exists():
+                (artifacts / dst_name).write_bytes(src.read_bytes())
 
     def load_graph(self, graph_json_path: str) -> Graph:
         data = json.loads(Path(graph_json_path).read_text(encoding="utf-8"))

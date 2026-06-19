@@ -39,8 +39,8 @@ Legend: ✅ saved · ⬜ not yet
 - [x] Config in JSON, secrets in `.env`, no hardcoded values
 - [x] Files ≤ 150 lines, version 1.00, `uv` only
 - [x] `docs/PRD.md`, `docs/TODO.md`, mechanism PRDs
-- [ ] `docs/PLAN.md` (umbrella — only `PLAN_*.md` exist so far)
-- [ ] `docs/PROMPT_LOG.md` filled with real entries
+- [x] `docs/PLAN.md` (umbrella — links all `PLAN_*.md`)
+- [x] `docs/PROMPT_LOG.md` filled with real entries
 - [x] Screenshots in `assets/` (partial — see below)
 
 ---
@@ -53,8 +53,8 @@ Legend: ✅ saved · ⬜ not yet
 | Plans | `docs/PLAN_*.md` | ✅ |
 | Tasks | `docs/TODO.md` | ✅ |
 | Mechanism PRDs | `docs/PRD_grphify.md`, `PRD_crew_agents.md`, `PRD_bug_fix.md` | ✅ |
-| Umbrella plan | `docs/PLAN.md` | ⬜ |
-| Prompt log | `docs/PROMPT_LOG.md` | ⬜ template only |
+| Umbrella plan | `docs/PLAN.md` | ✅ |
+| Prompt log | `docs/PROMPT_LOG.md` | ✅ |
 
 ---
 
@@ -93,7 +93,7 @@ Package-only scan: `data/cookiecutter/cookiecutter/` (18 files). This is the wor
 | Bugs found | `results/bugs.json` | ✅ |
 | Fix proposals | `results/fix_proposals.json` | ✅ |
 | Token comparison | `results/token_stats.json` | ✅ (combined naive + graph-guided) |
-| Prompts | `docs/PROMPT_LOG.md` | ⬜ |
+| Prompts | `docs/PROMPT_LOG.md` | ✅ |
 
 ---
 
@@ -103,8 +103,8 @@ Package-only scan: `data/cookiecutter/cookiecutter/` (18 files). This is the wor
 |------|------|--------|
 | Chosen proposal | `results/fix_proposal.json` | ✅ |
 | Patch | `results/fix_diff.patch` | ✅ |
-| Architecture report | `reports/architecture_analysis.md` | ⬜ |
-| Diagrams | `assets/block_diagram.png`, `assets/oop_schema.png` | ⬜ |
+| Architecture report | `reports/architecture_analysis.md` | ✅ |
+| Diagrams | `README.md` (mermaid) | ✅ |
 
 **Bug chosen:** HUB on `cookiecutter()` in `main.py` — extract to `orchestration.py`.
 
@@ -118,7 +118,7 @@ Package-only scan: `data/cookiecutter/cookiecutter/` (18 files). This is the wor
 | Metrics after | `results/metrics_after.json` | ✅ |
 | Comparison | `results/metrics_comparison.json` | ✅ |
 | Report | `reports/verification.md` | ✅ |
-| Screenshot | `assets/tests_pass.png` | ⬜ |
+| Screenshot | `assets/tests_pass.png` | ✅ |
 
 ---
 
@@ -126,7 +126,7 @@ Package-only scan: `data/cookiecutter/cookiecutter/` (18 files). This is the wor
 
 | Save | Path | Status |
 |------|------|--------|
-| Final README | `README.md` | ⬜ |
+| Final README | `README.md` | ✅ |
 
 ```bash
 uv run ruff check src/
