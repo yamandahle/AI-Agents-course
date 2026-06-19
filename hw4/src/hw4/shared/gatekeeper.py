@@ -40,10 +40,17 @@ class ApiGatekeeper:
 
     def _wait_if_rate_limited(self) -> None:
         now = time.time()
-        self._call_times = [t for t in self._call_times if now - t < 60]
-        if len(self._call_times) >= self.config.requests_per_minute:
-            wait = 60 - (now - self._call_times[0])
-            logger.info("Rate limit reached, waiting %.1f seconds", wait)
+        self._call_times = [t for t in self._call_times if now - t < 3600]
+
+        recent_minute = [t for t in self._call_times if now - t < 60]
+        if len(recent_minute) >= self.config.requests_per_minute:
+            wait = 60 - (now - recent_minute[0])
+            logger.info("Per-minute rate limit reached, waiting %.1f seconds", wait)
+            time.sleep(max(wait, 0))
+
+        if len(self._call_times) >= self.config.requests_per_hour:
+            wait = 3600 - (now - self._call_times[0])
+            logger.info("Per-hour rate limit reached, waiting %.1f seconds", wait)
             time.sleep(max(wait, 0))
 
     def _record_call(self) -> None:

@@ -80,10 +80,16 @@ class CrewRunnerService:
     def _kickoff_crew(self, summary, bugs) -> None:
         if not self._llm.is_configured():
             return
+        from crewai import LLM  # noqa: PLC0415
+
+        from hw4.shared.provider import load_provider  # noqa: PLC0415
+        provider = load_provider()
+        crewai_llm = LLM(model=provider.model, api_key=provider.api_key)
         analyst = Agent(
             role="Graph Analyst",
             goal="Summarize architectural risks from graph navigation files.",
             backstory="Expert in dependency graphs and reverse engineering.",
+            llm=crewai_llm,
             verbose=False,
         )
         task = Task(

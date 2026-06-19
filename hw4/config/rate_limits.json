@@ -1,9 +1,23 @@
 {
-  "version": "1.00",
+  "version": "1.01",
   "services": {
     "openai": {
       "requests_per_minute": 30,
       "requests_per_hour": 500,
+      "concurrent_max": 5,
+      "retry_after_seconds": 30,
+      "max_retries": 3
+    },
+    "gemini": {
+      "requests_per_minute": 15,
+      "requests_per_hour": 500,
+      "concurrent_max": 3,
+      "retry_after_seconds": 30,
+      "max_retries": 3
+    },
+    "anthropic": {
+      "requests_per_minute": 50,
+      "requests_per_hour": 1000,
       "concurrent_max": 5,
       "retry_after_seconds": 30,
       "max_retries": 3

@@ -4,12 +4,14 @@ from pathlib import Path
 from typing import Any
 
 from hw4.services.bug_detector import BugDetectorService
-from hw4.services.crew_runner import CrewRunnerService
-from hw4.services.fix_applier import FixApplierService, FixResult
+from hw4.services.crew_runner_v2 import CrewRunnerV2
+from hw4.services.generic_fix_applier import FixResult, GenericFixApplier
 from hw4.services.graph_builder import GraphBuilderService
 from hw4.services.verify_service import VerifyResult, VerifyService
 from hw4.shared.config import ConfigManager
 from hw4.shared.gatekeeper import ApiGatekeeper, RateLimitConfig
+from hw4.shared.llm_client import LlmClient
+from hw4.shared.provider import load_provider
 
 
 class HW4SDK:
@@ -22,7 +24,7 @@ class HW4SDK:
         )
 
     def _build_gatekeeper(self) -> ApiGatekeeper:
-        limits = self.config.get_rate_limit("openai")
+        limits = self.config.get_rate_limit(load_provider().rate_limit_key)
         return ApiGatekeeper(
             config=RateLimitConfig(
                 requests_per_minute=limits["requests_per_minute"],
@@ -42,7 +44,7 @@ class HW4SDK:
         self.graph_builder.sync_deliverables(graphify_out, artifacts)
 
     def run_agents(self) -> dict[str, Any]:
-        runner = CrewRunnerService(
+        runner = CrewRunnerV2(
             self.gatekeeper,
             self.config.get("agents"),
             self.config.get("paths"),
@@ -71,8 +73,9 @@ class HW4SDK:
         return [bug.to_dict() for bug in bugs]
 
     def apply_fix(self) -> FixResult:
-        applier = FixApplierService(self.gatekeeper, self.config.get("paths"))
-        return applier.apply_from_file()
+        llm = LlmClient(self.gatekeeper)
+        applier = GenericFixApplier(llm, self.gatekeeper, self.config.get("paths"))
+        return applier.apply_from_proposal()
 
     def verify(self) -> VerifyResult:
         return VerifyService(

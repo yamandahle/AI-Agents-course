@@ -79,3 +79,64 @@ def test_enrich_before_adds_bug_counts(tmp_path: Path) -> None:
     service = VerifyService(MagicMock(), {"hub_degree_threshold": 1}, {}, str(tmp_path))
     before = service._enrich_before(metrics, graph)
     assert "hub_count" in before
+
+
+def test_enrich_before_returns_early_when_spof_count_present(tmp_path: Path) -> None:
+    metrics = tmp_path / "metrics_before.json"
+    metrics.write_text('{"spof_count": 5, "hub_count": 2}', encoding="utf-8")
+    service = VerifyService(MagicMock(), {}, {}, str(tmp_path))
+    result = service._enrich_before(metrics, tmp_path / "irrelevant.json")
+    assert result["spof_count"] == 5
+    assert result["hub_count"] == 2
+
+
+def test_run_tests_passes(tmp_path: Path) -> None:
+    gk = MagicMock()
+    mock_result = MagicMock()
+    mock_result.returncode = 0
+    mock_result.stdout = "....\nTOTAL    200    10    95%\n"
+    gk.execute.return_value = mock_result
+
+    service = VerifyService(gk, {"hub_degree_threshold": 10}, {}, str(tmp_path))
+    passed, coverage = service._run_tests()
+    assert passed is True
+    assert coverage == 95.0
+
+
+def test_run_tests_fails(tmp_path: Path) -> None:
+    gk = MagicMock()
+    mock_result = MagicMock()
+    mock_result.returncode = 1
+    mock_result.stdout = "FAILED\nTOTAL    200    40    80%\n"
+    gk.execute.return_value = mock_result
+
+    service = VerifyService(gk, {"hub_degree_threshold": 10}, {}, str(tmp_path))
+    passed, coverage = service._run_tests()
+    assert passed is False
+    assert coverage == 80.0
+
+
+def test_run_tests_no_total_line(tmp_path: Path) -> None:
+    gk = MagicMock()
+    mock_result = MagicMock()
+    mock_result.returncode = 0
+    mock_result.stdout = "collected 0 items\n"
+    gk.execute.return_value = mock_result
+
+    service = VerifyService(gk, {}, {}, str(tmp_path))
+    passed, coverage = service._run_tests()
+    assert coverage == 0.0
+
+
+def test_run_ruff_clean(tmp_path: Path) -> None:
+    gk = MagicMock()
+    gk.execute.return_value = MagicMock(returncode=0)
+    service = VerifyService(gk, {}, {}, str(tmp_path))
+    assert service._run_ruff() is True
+
+
+def test_run_ruff_dirty(tmp_path: Path) -> None:
+    gk = MagicMock()
+    gk.execute.return_value = MagicMock(returncode=1)
+    service = VerifyService(gk, {}, {}, str(tmp_path))
+    assert service._run_ruff() is False
