@@ -8,9 +8,11 @@ from crewai import Agent, Crew, Process, Task
 
 from hw4.agents.bug_detector_agent import BugDetectorAgent
 from hw4.agents.fix_proposer import FixProposerAgent
+from hw4.agents.functional_bug_agent import FunctionalBugAgent
 from hw4.agents.graph_reader import GraphReaderAgent
 from hw4.agents.verifier import VerifierAgent
 from hw4.services.bug_detector import BugDetectorService
+from hw4.services.functional_bug_detector import FunctionalBugDetectorService
 from hw4.services.graph_builder import GraphBuilderService
 from hw4.shared.gatekeeper import ApiGatekeeper
 from hw4.shared.llm_client import LlmClient
@@ -50,6 +52,12 @@ class CrewRunnerService:
         bug_agent = BugDetectorAgent(detector, graph, self._llm)
         bugs = bug_agent.run(summary)
 
+        func_detector = FunctionalBugDetectorService(
+            self._gatekeeper,
+            repo_root=str(data / "cookiecutter"),
+        )
+        functional_bugs = FunctionalBugAgent(func_detector).run(summary)
+
         fix_agent = FixProposerAgent(str(repo_pkg.parent), self._llm)
         proposals = fix_agent.run(bugs, summary)
 
@@ -60,6 +68,7 @@ class CrewRunnerService:
         payload = {
             "graph_summary": summary.to_dict(),
             "bugs": [bug.to_dict() for bug in bugs],
+            "functional_bugs": [bug.to_dict() for bug in functional_bugs],
             "proposals": [p.to_dict() for p in proposals],
             "verification": report.to_dict(),
             "token_stats": token_stats,
@@ -108,6 +117,10 @@ class CrewRunnerService:
         )
         (results_dir / "bugs.json").write_text(
             json.dumps(payload["bugs"], indent=2),
+            encoding="utf-8",
+        )
+        (results_dir / "functional_bugs.json").write_text(
+            json.dumps(payload["functional_bugs"], indent=2),
             encoding="utf-8",
         )
         (results_dir / "fix_proposals.json").write_text(

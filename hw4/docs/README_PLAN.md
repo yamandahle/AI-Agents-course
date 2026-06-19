@@ -10,6 +10,8 @@ I write `README.md` at the end. I save artifacts below as I work and tick boxes 
 
 **Target repo:** `cookiecutter/cookiecutter` only.
 
+Legend: ✅ saved · ⬜ not yet
+
 ---
 
 ## README sections (final order)
@@ -19,12 +21,12 @@ I write `README.md` at the end. I save artifacts below as I work and tick boxes 
 3. Usage — Grphify, agents, verify, Obsidian vault
 4. Config — `config/setup.json`, `config/rate_limits.json`, `.env`
 5. Why cookiecutter — architecture hubs, graph quality, one focused fix
-6. Bug and root cause — SPOF or overloaded hub in `main.py` / `generate.py`
+6. Bug and root cause — HUB on `cookiecutter()` in `main.py`
 7. Architecture — block diagram, OOP schema, communities from graph
 8. Grphify + Obsidian — `index.md`, `hot.md`, edge types
 9. Agent workflow — graph first, code second, token comparison
 10. Fix — patch + short explanation
-11. Verification — hub metrics after code fix (not a scan comparison)
+11. Verification — hub metrics after code fix
 12. Tests — pytest ≥85%, ruff zero errors
 13. Extensions — one original idea
 14. License and credits
@@ -33,33 +35,36 @@ I write `README.md` at the end. I save artifacts below as I work and tick boxes 
 
 ## Submission rules (guidelines V3)
 
-- SDK entry point, ApiGatekeeper for external calls
-- Config in JSON, secrets in `.env`, no hardcoded values
-- Files ≤ 150 lines, version 1.00, `uv` only
-- `docs/PRD.md`, `docs/PLAN.md`, `docs/TODO.md`, mechanism PRDs
-- `docs/PROMPT_LOG.md` for AI prompts
-- Screenshots in `assets/`
+- [x] SDK entry point, ApiGatekeeper for external calls
+- [x] Config in JSON, secrets in `.env`, no hardcoded values
+- [x] Files ≤ 150 lines, version 1.00, `uv` only
+- [x] `docs/PRD.md`, `docs/TODO.md`, mechanism PRDs
+- [ ] `docs/PLAN.md` (umbrella — only `PLAN_*.md` exist so far)
+- [ ] `docs/PROMPT_LOG.md` filled with real entries
+- [x] Screenshots in `assets/` (partial — see below)
 
 ---
 
 ## Stage 0 — Docs
 
-| Save | Path |
-|------|------|
-| PRD | `docs/PRD.md` |
-| Plans | `docs/PLAN_*.md` |
-| Tasks | `docs/TODO.md` |
-| Mechanism PRDs | `docs/PRD_grphify.md`, `PRD_crew_agents.md`, `PRD_bug_fix.md` |
+| Save | Path | Status |
+|------|------|--------|
+| PRD | `docs/PRD.md` | ✅ |
+| Plans | `docs/PLAN_*.md` | ✅ |
+| Tasks | `docs/TODO.md` | ✅ |
+| Mechanism PRDs | `docs/PRD_grphify.md`, `PRD_crew_agents.md`, `PRD_bug_fix.md` | ✅ |
+| Umbrella plan | `docs/PLAN.md` | ⬜ |
+| Prompt log | `docs/PROMPT_LOG.md` | ⬜ template only |
 
 ---
 
 ## Stage 1 — Setup
 
-| Save | Path |
-|------|------|
-| Lock file | `uv.lock` |
-| Config | `config/setup.json`, `config/rate_limits.json` |
-| Env template | `.env-example` |
+| Save | Path | Status |
+|------|------|--------|
+| Lock file | `uv.lock` | ✅ |
+| Config | `config/setup.json`, `config/rate_limits.json` | ✅ |
+| Env template | `.env-example` | ✅ |
 
 ---
 
@@ -67,55 +72,61 @@ I write `README.md` at the end. I save artifacts below as I work and tick boxes 
 
 Package-only scan: `data/cookiecutter/cookiecutter/` (18 files). This is the working graph.
 
-| Save | Path |
-|------|------|
-| Graph | `artifacts/graph.json` |
-| Report + HTML | `artifacts/GRAPH_REPORT.md`, `artifacts/graph.html` |
-| Obsidian | `obsidian/index.md`, `obsidian/hot.md` |
-| Metrics (pre-fix baseline) | `results/metrics_before.json` |
-| Screenshot | `assets/obsidian_graph.png` |
+| Save | Path | Status |
+|------|------|--------|
+| Graph | `artifacts/graph.json` | ✅ |
+| Baseline copy | `artifacts/graph_before.json` | ✅ |
+| Report + HTML | `artifacts/GRAPH_REPORT.md`, `artifacts/graph.html` | ✅ |
+| Navigation | `artifacts/index.md`, `artifacts/hot.md` | ✅ |
+| Obsidian | `obsidian/index.md`, `obsidian/hot.md` | ✅ |
+| Metrics (pre-fix) | `results/metrics_before.json` | ✅ |
+| Screenshot | `assets/obsidian_graph.png` | ✅ |
+| Screenshot | `assets/graph_html.png` | ✅ |
 
 ---
 
 ## Stage 3 — Agents
 
-| Save | Path |
-|------|------|
-| Agent output | `results/agent_run.json` |
-| Bugs found | `results/bugs.json` |
-| Naive tokens | `results/token_naive.json` |
-| Graph-guided tokens | `results/token_graph_guided.json` |
-| Prompts | `docs/PROMPT_LOG.md` |
+| Save | Path | Status |
+|------|------|--------|
+| Agent output | `results/agent_run.json` | ✅ |
+| Bugs found | `results/bugs.json` | ✅ |
+| Fix proposals | `results/fix_proposals.json` | ✅ |
+| Token comparison | `results/token_stats.json` | ✅ (combined naive + graph-guided) |
+| Prompts | `docs/PROMPT_LOG.md` | ⬜ |
 
 ---
 
 ## Stage 4 — Fix
 
-| Save | Path |
-|------|------|
-| Proposal | `results/fix_proposal.json` |
-| Patch | `results/fix_diff.patch` |
-| Architecture report | `reports/architecture_analysis.md` |
-| Diagrams | `assets/block_diagram.png`, `assets/oop_schema.png` |
+| Save | Path | Status |
+|------|------|--------|
+| Chosen proposal | `results/fix_proposal.json` | ✅ |
+| Patch | `results/fix_diff.patch` | ✅ |
+| Architecture report | `reports/architecture_analysis.md` | ⬜ |
+| Diagrams | `assets/block_diagram.png`, `assets/oop_schema.png` | ⬜ |
+
+**Bug chosen:** HUB on `cookiecutter()` in `main.py` — extract to `orchestration.py`.
 
 ---
 
 ## Stage 5 — Verify (after code fix)
 
-Re-run Grphify on the edited package, then compare metrics to the pre-fix baseline.
-
-| Save | Path |
-|------|------|
-| Graph after fix | `artifacts/graph_after.json` |
-| Metrics | `results/metrics_after.json`, `results/metrics_comparison.json` |
-| Report | `reports/verification.md` |
-| Screenshot | `assets/tests_pass.png` |
+| Save | Path | Status |
+|------|------|--------|
+| Graph after fix | `artifacts/graph_after.json` | ✅ |
+| Metrics after | `results/metrics_after.json` | ✅ |
+| Comparison | `results/metrics_comparison.json` | ✅ |
+| Report | `reports/verification.md` | ✅ |
+| Screenshot | `assets/tests_pass.png` | ⬜ |
 
 ---
 
 ## Stage 6 — README
 
-I compile `README.md` from everything above.
+| Save | Path | Status |
+|------|------|--------|
+| Final README | `README.md` | ⬜ |
 
 ```bash
 uv run ruff check src/

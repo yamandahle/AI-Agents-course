@@ -5,6 +5,7 @@ from typing import Any, Literal
 
 BugType = Literal["SPOF", "HUB", "WEAK_BRIDGE"]
 Severity = Literal["HIGH", "MEDIUM", "LOW"]
+FunctionalBugStatus = Literal["OPEN", "CONFIRMED_HISTORICAL", "NOT_DETECTED"]
 
 
 @dataclass
@@ -30,6 +31,21 @@ class FixProposal:
         data = asdict(self)
         data["bug"] = self.bug.to_dict()
         return data
+
+
+@dataclass
+class FunctionalBug:
+    bugsinpy_id: int
+    source_file: str
+    description: str
+    severity: Severity
+    status: FunctionalBugStatus
+    graph_hub_match: bool
+    buggy_commit: str
+    test_file: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
 
 
 @dataclass
