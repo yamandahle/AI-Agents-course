@@ -1,0 +1,47 @@
+{
+  "_comment": "Model registry for HW5 evaluation pipeline. To use different models, replace hf_repo_id and ollama_tag. Both fields are intentionally left as hookable defaults chosen for 8 GB RAM / CPU-only hardware.",
+  "models": [
+    {
+      "name": "model_a",
+      "hf_repo_id": "Qwen/Qwen2.5-7B-Instruct",
+      "ollama_tag": "qwen2.5:7b",
+      "local_cache": "~/.cache/huggingface/hub",
+      "size_class": "large",
+      "param_count_b": 7.6,
+      "ollama_compatible": true,
+      "airllm_compatible": true,
+      "description": "Qwen 2.5 7B Instruct — large model; demonstrates AirLLM layer-streaming on 8 GB RAM",
+      "quant_ollama_tags": {
+        "Q2": "qwen2.5:7b-instruct-q2_K",
+        "Q4": "qwen2.5:7b-instruct-q4_K_M",
+        "Q8": "qwen2.5:7b-instruct-q8_0"
+      },
+      "quant_airllm_params": {
+        "Q2": "2bit",
+        "Q4": "4bit",
+        "Q8": "8bit"
+      }
+    },
+    {
+      "name": "model_b",
+      "hf_repo_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "ollama_tag": "qwen2.5:1.5b",
+      "local_cache": "~/.cache/huggingface/hub",
+      "size_class": "small",
+      "param_count_b": 1.5,
+      "ollama_compatible": true,
+      "airllm_compatible": true,
+      "description": "Qwen 2.5 1.5B Instruct — small model; fast baseline for comparison, fits comfortably in 8 GB RAM",
+      "quant_ollama_tags": {
+        "Q2": "qwen2.5:1.5b-instruct-q2_K",
+        "Q4": "qwen2.5:1.5b-instruct-q4_K_M",
+        "Q8": "qwen2.5:1.5b-instruct-q8_0"
+      },
+      "quant_airllm_params": {
+        "Q2": "2bit",
+        "Q4": "4bit",
+        "Q8": "8bit"
+      }
+    }
+  ]
+}
