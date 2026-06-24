@@ -22,9 +22,9 @@
 - [x] Save results to results/step2_results.json
 
 ## Step 3 — Baseline Failure
-- [ ] Load large model with standard transformers
-- [ ] Capture OOM error or slowness evidence
-- [ ] Save error log / screenshot as proof
+- [x] Load large model with standard transformers
+- [x] Capture OOM error or slowness evidence
+- [x] Save error log / screenshot as proof
 
 ## Step 4 — AirLLM Inference
 - [ ] Install airllm library
