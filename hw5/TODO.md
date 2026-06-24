@@ -14,10 +14,12 @@
 - [ ] Check VRAM requirements for both models
 
 ## Step 2 — Ollama Basic Inference
-- [ ] Install Ollama
-- [ ] Pull small model with `ollama pull`
-- [ ] Run test prompt and capture output
-- [ ] Confirm response is valid
+- [x] Install Ollama
+- [x] Pull small model with `ollama pull`
+- [x] Run test prompt and capture output
+- [x] Confirm response is valid
+- [x] Run via Ollama Python API with response time and token count
+- [x] Save results to results/step2_results.json
 
 ## Step 3 — Baseline Failure
 - [ ] Load large model with standard transformers
