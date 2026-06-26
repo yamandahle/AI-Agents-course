@@ -1,5 +1,0 @@
-{
-  "huggingface_download_rps": 5,
-  "ollama_infer_rps": 2,
-  "airllm_infer_rps": 1
-}
