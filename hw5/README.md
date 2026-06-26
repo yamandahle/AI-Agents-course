@@ -356,6 +356,64 @@ A **GPU setup breaks even at ~8,091 requests/month** (~270/day). Below that volu
 
 ---
 
+## Step 7 — TTFT & TPOT: Prefill vs Decode Latency
+
+**Script:** [`code/step7_ttft_tpot.py`](code/step7_ttft_tpot.py)
+
+### What Are TTFT and TPOT?
+
+| Metric | Stands For | What It Measures |
+|--------|-----------|-----------------|
+| **TTFT** | Time To First Token | Latency from sending prompt to receiving the very first output token (covers tokenization + prefill stage) |
+| **TPOT** | Time Per Output Token | Average time between each subsequent token after the first (decode stage throughput) |
+
+These two metrics matter because **prefill** and **decode** are fundamentally different operations:
+
+- **Prefill** is memory-bound: all input tokens are processed in one forward pass — the bottleneck is loading weights from disk, not arithmetic.
+- **Decode** is also memory-bound in AirLLM (worse than usual): because AirLLM does **not** keep the KV cache in RAM, it must reload all 40 transformer layers from disk for **every single output token**.
+
+### Measurement Method
+
+Two completed runs give us two equations with two unknowns:
+
+```
+TTFT + (3-1)  × TPOT = 130.56 s   [3-token run]
+TTFT + (20-1) × TPOT = 1108.91 s  [20-token run]
+```
+
+Solving:
+```
+17 × TPOT = 978.35 s
+TPOT      = 57.6 s/token
+TTFT      = 130.56 - 2 × 57.6 = 15.5 s
+```
+
+### Results
+
+| Metric | Value | Meaning |
+|--------|-------|---------|
+| TTFT | **15.5 s** | Time to complete prefill and emit token 1 |
+| TPOT | **57.6 s/token** | Time per additional decode token |
+| Decode throughput | **0.0174 tok/s** | Effective generation speed |
+
+The model fit is exact: predicted 20-token latency = 15.5 + 19 × 57.6 = **1,108.9 s** vs measured 1,108.91 s.
+
+### Why TPOT >> TTFT in AirLLM?
+
+Normal inference engines cache key-value states in GPU memory — decode is fast (~milliseconds per token).
+AirLLM discards cached states between tokens to keep RAM below 3 GB.
+Each decode step is equivalent to a fresh prefill of a 1-token sequence through all 40 layers, each loaded from disk.
+
+**TPOT ≈ 4× TTFT** because prefill is batched over all input tokens in one pass, while each decode step is a separate full layer traversal.
+
+### Chart
+
+![TTFT vs TPOT](figures/ttft_tpot.png)
+
+**Result file:** [`results/step7_ttft_tpot.json`](results/step7_ttft_tpot.json)
+
+---
+
 ## Summary
 
 | Question | Answer |
@@ -380,16 +438,20 @@ hw5/
 │   ├── step4_airllm_cpu.py          # AirLLM CPU inference (3 and 20 tokens)
 │   ├── step4b_cpu_quant.py          # INT8 quantization benchmark + inference
 │   ├── step5_comparison.py          # Final comparison table
-│   └── step6_economic_analysis.py   # On-Prem vs API cost analysis
+│   ├── step6_economic_analysis.py   # On-Prem vs API cost analysis
+│   └── step7_ttft_tpot.py           # TTFT & TPOT latency analysis
 ├── figures/
-│   └── break_even.png               # Break-even graph (On-Prem vs API)
+│   ├── break_even.png               # Break-even graph (On-Prem vs API)
+│   └── ttft_tpot.png                # TTFT vs TPOT bar chart
 ├── results/
 │   ├── step2_results.json
 │   ├── step4a_results.json          # 3-token run
 │   ├── step4a_20tokens_results.json # 20-token run
 │   ├── step4b_results.json          # INT8 benchmark + inference
 │   ├── step4_results.json           # Combined step3+4a+4b
-│   └── step5_comparison.json        # Final 3-way comparison
+│   ├── step5_comparison.json        # Final 3-way comparison
+│   ├── step6_economic_analysis.json # On-Prem vs API cost analysis
+│   └── step7_ttft_tpot.json         # TTFT & TPOT measurements
 ├── screenshots/
 │   ├── GPU.png                      # T4 GPU on Colab
 │   ├── step2_result.png             # phi3:mini response

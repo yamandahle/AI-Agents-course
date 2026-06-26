@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-06-26T23:01:49.855817",
+  "model": "huggyllama/llama-13b",
+  "hardware": "CPU only \u2014 Intel Iris Xe, no CUDA",
+  "method": "linear system from 3-token and 20-token measured runs",
+  "input_data": {
+    "run_3_tokens_sec": 130.56,
+    "run_20_tokens_sec": 1108.91
+  },
+  "ttft_sec": 15.46,
+  "tpot_sec": 57.55,
+  "decode_tok_per_sec": 0.01738,
+  "note": "TTFT covers tokenization + prefill (one fwd pass over all 40 layers for the input tokens). TPOT is one fwd pass per output token \u2014 AirLLM reloads all layers from disk for every decode step because KV cache is not kept in RAM between tokens."
+}
