@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-06-26T22:49:57.003379",
+  "assumptions": {
+    "input_tokens_per_request": 100,
+    "output_tokens_per_request": 200,
+    "electricity_usd_per_kwh": 0.15,
+    "hardware_lifetime_years": 3,
+    "api": "GPT-4o ($2.50 input / $10.00 output per 1M tokens)"
+  },
+  "cpu_on_prem": {
+    "hardware_cost_usd": 900,
+    "fixed_monthly_usd": 25.0,
+    "electricity_per_request_usd": 0.01389,
+    "tokens_per_sec": 0.018,
+    "inference_time_sec": 11111,
+    "break_even": "NEVER - electricity cost per request exceeds API price"
+  },
+  "gpu_on_prem": {
+    "hardware_cost_usd": 500,
+    "fixed_monthly_usd": 13.89,
+    "electricity_per_request_usd": 0.00053,
+    "tokens_per_sec": 5.0,
+    "inference_time_sec": 40,
+    "break_even_requests_per_month": 8090,
+    "break_even_requests_per_day": 269
+  },
+  "api_gpt4o": {
+    "cost_per_request_usd": 0.00225
+  },
+  "recommendation": "CPU-only AirLLM is NOT economically competitive with cloud API: electricity alone costs $0.0139/request vs API $0.0022/request. A GPU setup (RTX 3080) breaks even at ~8,090 requests/month. AirLLM's real value is CAPABILITY (running models APIs don't expose) and PRIVACY (data never leaves your machine)."
+}
