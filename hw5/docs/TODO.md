@@ -41,8 +41,42 @@
 - [x] Build comparison table
 - [x] Write latency vs memory tradeoff discussion
 
+## Step 6 — Economic Analysis
+- [x] Model cost per request for CPU on-prem, GPU on-prem, and cloud API (GPT-4o)
+- [x] Calculate break-even point for GPU setup (~8,091 req/month)
+- [x] Show CPU never breaks even (electricity > API cost per request)
+- [x] Generate break-even graph (figures/break_even.png)
+- [x] Save results to results/step6_economic_analysis.json
+
+## Step 7 — TTFT & TPOT
+- [x] Derive TTFT (Time To First Token) and TPOT (Time Per Output Token) from 3-token and 20-token runs
+- [x] Explain prefill vs decode stages and why TPOT >> TTFT in AirLLM
+- [x] TTFT = 15.5 s, TPOT = 57.6 s/token
+- [x] Generate TTFT/TPOT bar chart (figures/ttft_tpot.png)
+- [x] Save results to results/step7_ttft_tpot.json
+
+## Step 8 — Quantization Levels Comparison
+- [x] Benchmark FP32 vs INT8 vs INT4 on 3 real llama-13b layers
+- [x] Implement custom INT4 quantization (2 nibbles per byte)
+- [x] FP32=1210MB, INT8=302.5MB (4x), INT4=151.3MB (8x) per layer
+- [x] Measure reconstruction error (MSE) for INT8 and INT4
+- [x] Generate comparison chart (figures/quant_levels.png)
+- [x] Save results to results/step8_quant_levels.json
+
+## Step 9 — Dashboard
+- [x] Unified 4-panel matplotlib chart combining all key results
+- [x] Panels: RAM usage, tokens/sec, quantization memory, TTFT/TPOT
+- [x] Save to figures/dashboard.png
+
+## Step 10 — Original Extension: Scaling Projection
+- [x] Project AirLLM memory advantage across 7B / 13B / 30B / 70B / 405B models
+- [x] Show memory saving ratio grows from 7.8x (7B) to 48.2x (405B)
+- [x] Generate scaling chart (figures/scaling.png)
+- [x] Save results to results/step10_scaling.json
+
 ## Final
-- [x] Clean up notebook / script, add clear output cells
-- [x] Make sure no token or secret is exposed
+- [x] Clean up all scripts, keep every .py file under 150 lines
+- [x] Make sure no HF token or secret is exposed or committed
+- [x] Fix all git path case issues (HW5/ -> hw5/)
 - [x] Review against PRD success criteria
 - [x] Submit
