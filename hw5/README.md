@@ -414,6 +414,43 @@ Each decode step is equivalent to a fresh prefill of a 1-token sequence through 
 
 ---
 
+## Step 8 — Quantization Levels: FP32 vs INT8 vs INT4
+
+**Script:** [`code/step8_quant_levels.py`](code/step8_quant_levels.py)
+
+Three quantization levels benchmarked on 3 real llama-13b transformer layers loaded directly from disk.
+
+### How Each Level Works
+
+| Level | Bits per weight | How |
+|-------|----------------|-----|
+| **FP32** | 32 bits | Full precision float (baseline) |
+| **INT8** | 8 bits | `torch.quantize_per_tensor` — scale FP32 to [-127, 127] range |
+| **INT4** | 4 bits | Custom nibble packing — scale to [-8, 7], store 2 values per byte |
+
+### Results
+
+| Level | Size/layer | Full model (40 layers) | Compression | Reconstruction MSE |
+|-------|-----------|----------------------|-------------|-------------------|
+| FP32  | 1,210 MB  | ~47.3 GB             | 1×          | 0 (baseline)      |
+| INT8  | 302.5 MB  | ~11.8 GB             | **4×**      | 9.93 × 10⁻⁶       |
+| INT4  | 151.3 MB  | ~5.9 GB              | **8×**      | 4.12 × 10⁻⁴       |
+
+### The Tradeoff
+
+Going from FP32 → INT8 → INT4:
+- **Memory** is halved at each step (great for AirLLM: fewer bytes to load per layer per token)
+- **Error** grows roughly 40× per step (INT4 MSE is ~40× worse than INT8)
+- INT4 puts the full model under 6 GB — fits on a laptop without AirLLM's layer-by-layer trick
+
+### Chart
+
+![Quantization levels](figures/quant_levels.png)
+
+**Result file:** [`results/step8_quant_levels.json`](results/step8_quant_levels.json)
+
+---
+
 ## Summary
 
 | Question | Answer |
@@ -439,10 +476,12 @@ hw5/
 │   ├── step4b_cpu_quant.py          # INT8 quantization benchmark + inference
 │   ├── step5_comparison.py          # Final comparison table
 │   ├── step6_economic_analysis.py   # On-Prem vs API cost analysis
-│   └── step7_ttft_tpot.py           # TTFT & TPOT latency analysis
+│   ├── step7_ttft_tpot.py           # TTFT & TPOT latency analysis
+│   └── step8_quant_levels.py        # FP32 vs INT8 vs INT4 comparison
 ├── figures/
 │   ├── break_even.png               # Break-even graph (On-Prem vs API)
-│   └── ttft_tpot.png                # TTFT vs TPOT bar chart
+│   ├── ttft_tpot.png                # TTFT vs TPOT bar chart
+│   └── quant_levels.png             # FP32 vs INT8 vs INT4 comparison
 ├── results/
 │   ├── step2_results.json
 │   ├── step4a_results.json          # 3-token run
@@ -451,7 +490,8 @@ hw5/
 │   ├── step4_results.json           # Combined step3+4a+4b
 │   ├── step5_comparison.json        # Final 3-way comparison
 │   ├── step6_economic_analysis.json # On-Prem vs API cost analysis
-│   └── step7_ttft_tpot.json         # TTFT & TPOT measurements
+│   ├── step7_ttft_tpot.json         # TTFT & TPOT measurements
+│   └── step8_quant_levels.json      # FP32 vs INT8 vs INT4 benchmark
 ├── screenshots/
 │   ├── GPU.png                      # T4 GPU on Colab
 │   ├── step2_result.png             # phi3:mini response

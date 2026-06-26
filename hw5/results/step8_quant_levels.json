@@ -1,0 +1,59 @@
+{
+  "timestamp": "2026-06-26T23:10:15.084788",
+  "model": "huggyllama/llama-13b",
+  "layers_benchmarked": 3,
+  "per_layer": [
+    {
+      "layer": 0,
+      "fp32_mb": 1210.0,
+      "int8_mb": 302.5,
+      "int4_mb": 151.3,
+      "int8_ratio": 4.0,
+      "int4_ratio": 8.0,
+      "int8_ms": 1682.0,
+      "int4_ms": 2263.6,
+      "int8_mse": 6.67e-06,
+      "int4_mse": 0.00029706
+    },
+    {
+      "layer": 1,
+      "fp32_mb": 1210.0,
+      "int8_mb": 302.5,
+      "int4_mb": 151.3,
+      "int8_ratio": 4.0,
+      "int4_ratio": 8.0,
+      "int8_ms": 1518.0,
+      "int4_ms": 913.0,
+      "int8_mse": 5.59e-06,
+      "int4_mse": 0.00042387
+    },
+    {
+      "layer": 2,
+      "fp32_mb": 1210.0,
+      "int8_mb": 302.5,
+      "int4_mb": 151.3,
+      "int8_ratio": 4.0,
+      "int4_ratio": 8.0,
+      "int8_ms": 1636.8,
+      "int4_ms": 784.9,
+      "int8_mse": 1.752e-05,
+      "int4_mse": 0.00051614
+    }
+  ],
+  "averages": {
+    "fp32_mb": 1210.0,
+    "int8_mb": 302.5,
+    "int4_mb": 151.3,
+    "int8_ratio": 4.0,
+    "int4_ratio": 8.0,
+    "int8_ms": 1612.2667,
+    "int4_ms": 1320.5,
+    "int8_mse": 0.0,
+    "int4_mse": 0.0004
+  },
+  "full_model_estimate_gb": {
+    "fp32": 47.3,
+    "int8": 11.8,
+    "int4": 5.9
+  }
+}
