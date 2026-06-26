@@ -311,6 +311,51 @@ Reads all result JSON files and prints the full 3-way comparison.
 
 ---
 
+## Step 6 — Economic Analysis: On-Premises vs Cloud API
+
+**Script:** [`code/step6_economic_analysis.py`](code/step6_economic_analysis.py)
+
+Is it cheaper to run locally with AirLLM or to use a cloud API?
+This analysis compares three scenarios for the same request profile (100 input + 200 output tokens).
+
+### Assumptions
+
+| Parameter | Value |
+|-----------|-------|
+| Request profile | 100 input + 200 output tokens |
+| API pricing | GPT-4o — $2.50/1M input, $10.00/1M output |
+| Electricity | $0.15 per kWh |
+| Hardware lifetime | 3 years |
+| CPU laptop cost | $900 |
+| GPU (RTX 3080) cost | $500 used |
+
+### Cost Per Request
+
+| Method | Speed | Electricity/req | Fixed/month | Break-even |
+|--------|-------|----------------|-------------|------------|
+| API (GPT-4o) | instant | $0.00225 | $0 | — |
+| CPU On-Prem (AirLLM) | 0.018 tok/s | $0.01389 | $25.00 | **NEVER** |
+| GPU On-Prem (RTX 3080) | ~5 tok/s | $0.00053 | $13.89 | **8,091 req/month** |
+
+### Break-Even Graph
+
+![Break-even graph](figures/break_even.png)
+
+### Key Finding
+
+**CPU-only AirLLM is not economically competitive with cloud API** — the electricity cost per request ($0.0139) is 6x higher than GPT-4o ($0.0023) because inference takes ~3 hours per request at 0.018 tok/s.
+
+A **GPU setup breaks even at ~8,091 requests/month** (~270/day). Below that volume, API is cheaper; above it, On-Prem wins.
+
+**AirLLM's real value is not cost — it is:**
+1. **Capability** — running models that cloud APIs do not expose
+2. **Privacy** — sensitive data never leaves your machine
+3. **No rate limits** — no per-token billing regardless of volume
+
+**Result file:** [`results/step6_economic_analysis.json`](results/step6_economic_analysis.json)
+
+---
+
 ## Summary
 
 | Question | Answer |
@@ -334,7 +379,10 @@ hw5/
 │   ├── step3_baseline_failure.py    # GPU OOM baseline (run on Colab)
 │   ├── step4_airllm_cpu.py          # AirLLM CPU inference (3 and 20 tokens)
 │   ├── step4b_cpu_quant.py          # INT8 quantization benchmark + inference
-│   └── step5_comparison.py          # Final comparison table
+│   ├── step5_comparison.py          # Final comparison table
+│   └── step6_economic_analysis.py   # On-Prem vs API cost analysis
+├── figures/
+│   └── break_even.png               # Break-even graph (On-Prem vs API)
 ├── results/
 │   ├── step2_results.json
 │   ├── step4a_results.json          # 3-token run
