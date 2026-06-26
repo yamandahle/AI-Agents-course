@@ -23,7 +23,7 @@ Before writing any code, three planning files were created:
 |------|---------|
 | [docs/PRD.md](docs/PRD.md) | Product requirements — what we need to prove and how |
 | [docs/PLAN.md](docs/PLAN.md) | Step-by-step technical plan for all 5 steps |
-| [docs/TODO.md](docs/TODO.md) | Checklist of all tasks (see completed items at the bottom) |
+| [docs/TODO.md](docs/TODO.md) | Checklist of all tasks |
 
 ---
 
@@ -270,6 +270,8 @@ Peak RAM  : 3.34 GB
 
 **Result file:** [`results/step4b_results.json`](results/step4b_results.json)
 
+> **Quantization tradeoff:** INT8 reduces the amount of data loaded from disk per layer (4x smaller), which shortens inference time. However, this comes at a **cost of precision** — rounding 32-bit floats to 8-bit integers introduces small errors that can affect the accuracy of the model's responses.
+
 ---
 
 ## Step 5 — Final Comparison Table
@@ -347,6 +349,8 @@ hw5/
 │   ├── step4_a.png                  # AirLLM layers loading
 │   ├── step4_a (2-4).png            # AirLLM run results
 │   └── step4_b.png                  # INT8 quantization result
+├── [prompts/](prompts/)
+│   └── prompt1.png - prompt10.png   # Screenshots of session prompts
 ├── docs/
 │   ├── PRD.md                       # Requirements
 │   ├── PLAN.md                      # Technical plan
@@ -354,43 +358,3 @@ hw5/
 └── setup_hw5.bat                    # One-click environment setup
 ```
 
----
-
-## TODO Checklist (Final Status)
-
-### Setup
-- [x] Create virtual environment (uv, Python 3.11)
-- [x] Install base dependencies (transformers==4.38.2, torch, airllm, psutil, sentencepiece)
-- [x] Store HF token safely (env variable, never committed)
-
-### Step 1 — Model Selection
-- [x] Choose text generation task (Q&A)
-- [x] Select small model: `phi3:mini` via Ollama
-- [x] Select large model: `huggyllama/llama-13b` (~26 GB FP16)
-- [x] Verify no access token needed for llama-13b
-
-### Step 2 — Ollama Inference
-- [x] Install Ollama and pull `phi3:mini`
-- [x] Run prompt, capture response, time, tokens/sec
-- [x] Save to `results/step2_results.json`
-
-### Step 3 — Baseline Failure
-- [x] Attempt to load `huggyllama/llama-13b` on T4 GPU (Colab)
-- [x] Capture OOM crash at 58% loading
-- [x] Save screenshot as evidence
-
-### Step 4 — AirLLM Inference
-- [x] Install AirLLM and dependencies
-- [x] Run with `max_new_tokens=3`, confirm model works, peak RAM 2.47 GB
-- [x] Run with `max_new_tokens=20`, get full "Madrid" answer, peak RAM 2.42 GB
-- [x] INT8 quantization benchmark (4x layer compression)
-- [x] Save all results to JSON files
-
-### Step 5 — Comparison
-- [x] Build final 3-way comparison table
-- [x] Save to `results/step5_comparison.json`
-
-### Final
-- [x] No HF token in any committed file
-- [x] All Python files under 150 lines
-- [x] Pushed to branch `yamandahle-hw5`
