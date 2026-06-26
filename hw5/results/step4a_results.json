@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-06-24T23:46:16.164736",
+  "model": "huggyllama/llama-13b",
+  "mode": "no_compression",
+  "compression": null,
+  "hardware": "CPU only \u2014 Intel Iris Xe, no CUDA",
+  "gpu_used": false,
+  "cuda_available": false,
+  "prompt": "What is the capital of Spain?",
+  "response": "What is",
+  "load_time_sec": 4.9,
+  "inference_time_sec": 130.56,
+  "new_tokens": 3,
+  "tokens_per_sec": 0.023,
+  "peak_ram_gb": 2.47,
+  "system_ram_gb": 16.8,
+  "model_size_fp16_gb": 26.0,
+  "status": "success"
+}

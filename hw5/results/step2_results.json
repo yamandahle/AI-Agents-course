@@ -1,0 +1,12 @@
+[
+  {
+    "timestamp": "2026-06-24T13:32:07.444612",
+    "model": "phi3:mini",
+    "prompt": "What is the capital of Spain? Answer in one sentence.",
+    "response": "Madrid.",
+    "elapsed_sec": 2.83,
+    "prompt_tokens": 21,
+    "response_tokens": 4,
+    "tokens_per_sec": 1.42
+  }
+]

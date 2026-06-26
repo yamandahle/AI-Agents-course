@@ -1,0 +1,9 @@
+{
+  "status": "OOM_error",
+  "model": "huggyllama/llama-13b",
+  "gpu": "Tesla T4",
+  "vram_available_gb": 14.56,
+  "model_size_fp16_gb": 26,
+  "gap_gb": 11.44,
+  "error": "CUDA out of memory. Tried to allocate 136.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 91.81 MiB is free. Including non-PyTorch memory, this process has 14.47 GiB memory in use. Of the allocated memory 14.34 GiB is allocated by PyTorch, and 35.54 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)"
+}

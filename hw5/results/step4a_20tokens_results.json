@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-06-25T00:29:00.633415",
+  "model": "huggyllama/llama-13b",
+  "mode": "no_compression",
+  "compression": null,
+  "hardware": "CPU only — Intel Iris Xe, no CUDA",
+  "gpu_used": false,
+  "cuda_available": false,
+  "prompt": "What is the capital of Spain?",
+  "response": "What is the capital of Spain? Madrid\nWhat is the capital of Spain? Madrid is the",
+  "load_time_sec": 5.7,
+  "inference_time_sec": 1108.91,
+  "new_tokens": 20,
+  "tokens_per_sec": 0.018,
+  "peak_ram_gb": 2.42,
+  "system_ram_gb": 16.8,
+  "model_size_fp16_gb": 26.0,
+  "status": "success"
+}

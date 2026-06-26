@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-06-25T01:12:00.429972",
+  "model": "huggyllama/llama-13b",
+  "mode": "cpu_int8_quantization",
+  "hardware": "CPU only \u2014 Intel Iris Xe, no CUDA",
+  "gpu_used": false,
+  "method": "torch.quantize_dynamic (PyTorch native, no CUDA)",
+  "prompt": "What is the capital of Spain?",
+  "response": "What is",
+  "load_time_sec": 4.1,
+  "inference_time_sec": 180.75,
+  "new_tokens": 3,
+  "tokens_per_sec": 0.0166,
+  "peak_ram_gb": 3.34,
+  "compression_ratio": 4.0,
+  "full_model_int8_gb": 12.7,
+  "layer_benchmark": [
+    {
+      "layer": 0,
+      "fp32_mb": 1268.8,
+      "int8_mb": 317.2,
+      "ratio": 4.0,
+      "fp32_ms": 21.26,
+      "int8_ms": 14.7,
+      "speedup_x": 1.45
+    },
+    {
+      "layer": 1,
+      "fp32_mb": 1268.8,
+      "int8_mb": 317.2,
+      "ratio": 4.0,
+      "fp32_ms": 11.86,
+      "int8_ms": 11.93,
+      "speedup_x": 0.99
+    },
+    {
+      "layer": 2,
+      "fp32_mb": 1268.8,
+      "int8_mb": 317.2,
+      "ratio": 4.0,
+      "fp32_ms": 11.86,
+      "int8_ms": 12.26,
+      "speedup_x": 0.97
+    }
+  ],
+  "status": "success"
+}

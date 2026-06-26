@@ -1,0 +1,37 @@
+{
+  "step3_gpu_oom": {
+    "hardware": "T4 GPU (Google Colab)",
+    "model": "huggyllama/llama-13b",
+    "vram_gb": 14.56,
+    "model_size_gb": 26.0,
+    "compression": "none (FP16)",
+    "peak_mem": "14.56GB VRAM",
+    "status": "OOM at 58% loading",
+    "response": "N/A",
+    "tokens": "N/A",
+    "tokens_per_sec": "N/A",
+    "infer_time": "N/A"
+  },
+  "step4a_airllm_cpu_fp32": {
+    "model": "huggyllama/llama-13b",
+    "hardware": "CPU only \u05d2\u20ac\u201d Intel Iris Xe, no CUDA",
+    "peak_ram_gb": 2.42,
+    "response": "What is the capital of Spain? Madrid\nWhat is the capital of Spain? Madrid is the",
+    "new_tokens": 20,
+    "inference_time_sec": 1108.91,
+    "tokens_per_sec": 0.018,
+    "status": "success"
+  },
+  "step4b_airllm_cpu_int8bench": {
+    "model": "huggyllama/llama-13b",
+    "hardware": "CPU only \u2014 Intel Iris Xe, no CUDA",
+    "peak_ram_gb": 3.34,
+    "response": "What is",
+    "new_tokens": 3,
+    "inference_time_sec": 180.75,
+    "tokens_per_sec": 0.0166,
+    "compression_ratio": 4.0,
+    "full_model_int8_gb": 12.7,
+    "status": "success"
+  }
+}
