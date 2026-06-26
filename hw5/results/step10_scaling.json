@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-06-26T23:14:53.534682",
+  "description": "AirLLM scaling projection across model sizes",
+  "note": "Layer sizes estimated from known LLaMA architecture (MHA + MLP weights in FP32)",
+  "models": [
+    {
+      "model": "LLaMA-7B",
+      "params_b": 7,
+      "fp16_gb": 14,
+      "airllm_gb": 1.8,
+      "layer_gb": 1.0,
+      "memory_saving": 7.8
+    },
+    {
+      "model": "LLaMA-13B",
+      "params_b": 13,
+      "fp16_gb": 26,
+      "airllm_gb": 2.36,
+      "layer_gb": 1.56,
+      "memory_saving": 11.0
+    },
+    {
+      "model": "LLaMA-30B",
+      "params_b": 30,
+      "fp16_gb": 60,
+      "airllm_gb": 3.44,
+      "layer_gb": 2.64,
+      "memory_saving": 17.4
+    },
+    {
+      "model": "LLaMA-70B",
+      "params_b": 70,
+      "fp16_gb": 140,
+      "airllm_gb": 4.8,
+      "layer_gb": 4.0,
+      "memory_saving": 29.2
+    },
+    {
+      "model": "LLaMA-405B",
+      "params_b": 405,
+      "fp16_gb": 810,
+      "airllm_gb": 16.8,
+      "layer_gb": 16.0,
+      "memory_saving": 48.2
+    }
+  ]
+}

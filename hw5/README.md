@@ -451,6 +451,56 @@ Going from FP32 → INT8 → INT4:
 
 ---
 
+## Step 9 — Results Dashboard
+
+**Script:** [`code/step9_dashboard.py`](code/step9_dashboard.py)
+
+One unified chart combining all key results from the homework into four panels:
+
+| Panel | What it shows |
+|-------|--------------|
+| Top-left | Peak RAM: phi3-mini vs AirLLM FP32 vs AirLLM INT8, with GPU limit line |
+| Top-right | Tokens/sec on log scale: Ollama vs AirLLM FP32 vs AirLLM INT8 |
+| Bottom-left | Memory per layer at FP32/INT8/INT4 with MSE annotations |
+| Bottom-right | TTFT (15.5 s) vs TPOT (57.6 s/token) bar chart |
+
+![Dashboard](figures/dashboard.png)
+
+---
+
+## Step 10 — Original Extension: AirLLM Scaling Projection
+
+**Script:** [`code/step10_scaling.py`](code/step10_scaling.py)
+
+**The question:** How does AirLLM's memory advantage change as models get larger?
+
+Standard loading requires the full model in VRAM at once — a linear cost.
+AirLLM only ever holds one transformer layer in RAM — cost grows much more slowly.
+
+### Projection Across Model Sizes
+
+| Model | FP16 size | AirLLM RAM | Memory saving | Fits on T4 GPU? |
+|-------|-----------|------------|--------------|-----------------|
+| LLaMA-7B   | 14.0 GB   | 1.80 GB    | **7.8×**  | Yes (barely) |
+| LLaMA-13B  | 26.0 GB   | 2.36 GB    | **11×**   | No — OOM |
+| LLaMA-30B  | 60.0 GB   | 3.44 GB    | **17.4×** | No — OOM |
+| LLaMA-70B  | 140.0 GB  | 4.80 GB    | **29.2×** | No — OOM |
+| LLaMA-405B | 810.0 GB  | 16.80 GB   | **48.2×** | No — OOM |
+
+Layer sizes estimated from known LLaMA architecture (MHA + MLP weight matrices in FP32).
+
+### Key Insight
+
+The memory saving ratio keeps growing with model size because FP16 size scales linearly with parameters, while AirLLM RAM scales only with a single layer (which grows sub-linearly as architectures get wider). A 405B model that needs 810 GB of VRAM runs in ~17 GB of RAM with AirLLM — within reach of a workstation.
+
+### Chart
+
+![Scaling projection](figures/scaling.png)
+
+**Result file:** [`results/step10_scaling.json`](results/step10_scaling.json)
+
+---
+
 ## Summary
 
 | Question | Answer |
@@ -477,11 +527,15 @@ hw5/
 │   ├── step5_comparison.py          # Final comparison table
 │   ├── step6_economic_analysis.py   # On-Prem vs API cost analysis
 │   ├── step7_ttft_tpot.py           # TTFT & TPOT latency analysis
-│   └── step8_quant_levels.py        # FP32 vs INT8 vs INT4 comparison
+│   ├── step8_quant_levels.py        # FP32 vs INT8 vs INT4 comparison
+│   ├── step9_dashboard.py           # Unified results dashboard chart
+│   └── step10_scaling.py            # AirLLM scaling projection (original)
 ├── figures/
 │   ├── break_even.png               # Break-even graph (On-Prem vs API)
 │   ├── ttft_tpot.png                # TTFT vs TPOT bar chart
-│   └── quant_levels.png             # FP32 vs INT8 vs INT4 comparison
+│   ├── quant_levels.png             # FP32 vs INT8 vs INT4 comparison
+│   ├── dashboard.png                # Unified 4-panel results dashboard
+│   └── scaling.png                  # AirLLM scaling projection
 ├── results/
 │   ├── step2_results.json
 │   ├── step4a_results.json          # 3-token run
@@ -491,7 +545,8 @@ hw5/
 │   ├── step5_comparison.json        # Final 3-way comparison
 │   ├── step6_economic_analysis.json # On-Prem vs API cost analysis
 │   ├── step7_ttft_tpot.json         # TTFT & TPOT measurements
-│   └── step8_quant_levels.json      # FP32 vs INT8 vs INT4 benchmark
+│   ├── step8_quant_levels.json      # FP32 vs INT8 vs INT4 benchmark
+│   └── step10_scaling.json          # AirLLM scaling projection
 ├── screenshots/
 │   ├── GPU.png                      # T4 GPU on Colab
 │   ├── step2_result.png             # phi3:mini response
