@@ -19,7 +19,9 @@ from fastmcp import Client
 COP_URL      = "http://127.0.0.1:8001/mcp"
 THIEF_URL    = "http://127.0.0.1:8002/mcp"
 RESULTS_FILE = Path(__file__).parent.parent / "results" / "mcp_demo.json"
-AUTH         = {"authorization": "Bearer demo-token"}
+
+# Both start_*_demo.py servers set auth_token="demo-token" on their GameContext.
+AUTH = {"authorization": "Bearer demo-token"}
 
 log: list = []
 
