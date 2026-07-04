@@ -83,4 +83,36 @@ builder once it exists.
 
 ---
 
+## 2026-07-04 — Phase 5: GUI (built via nagham-hw6, same parallel-with-Phase-3 split)
+
+**Action:** Implemented `gui/game_state.py` (new `GameState` dataclass),
+`gui/screenshot.py` (`ScreenshotCapture`, injectable `grab_fn`), `gui/board_view.py`
+(tkinter Canvas grid renderer, cell-color logic separated from actual widget drawing),
+`gui/info_panel.py` (score/message/turn/move-counter, same pure-logic/widget split),
+and `gui/app.py` (`GuiApp`, wires the three together, headless-safe). TDD per
+`docs/TODO_phase5_gui.md`'s prescribed test list, all green, plus an extra
+`test_gui_app.py` for the headless path (not in the original list).
+
+**Deviation:** PRD_gui.md assumes `game_session.on_state_change(callback)`, which
+doesn't exist on `GameSession` yet (Phase 1 predates the GUI; Phase 3's game loop isn't
+built). Added `GuiApp.update(state: GameState)` as the integration seam instead of
+inventing a callback mechanism inside the already-signed-off game engine. Also dropped
+`GameState.board: list[list[CellState]]` from the PRD spec — the real `GameBoard`
+implementation never grew a `CellState`/`get_cell()` interface, so `BoardView` derives
+cell colors directly from `cop_position`/`thief_position`/`barriers` instead.
+
+**Environment note:** `PIL.ImageGrab.grab()` cannot actually capture the screen in this
+sandbox (`OSError: X get_image failed`), even though real `tkinter` `Tk()`
+windows/canvases genuinely can be created and rendered to here. Verified the full
+render path live (`GuiApp(config, ...).update(state)` with a real window, correct
+canvas sizing, no crash) — just couldn't produce real screenshot files or *see* the
+window. `ScreenshotCapture` takes an injectable `grab_fn` so its own logic is fully
+unit-tested regardless of what the real `ImageGrab.grab()` can do in a given
+environment.
+
+**Reason:** Same team split as Phase 4 — this side takes Phase 5 in parallel with
+teammate's Phase 3, per PLAN.md's Member 2 assignment (Q-table, GUI, experiments).
+
+---
+
 <!-- Add new entries below as development progresses -->
