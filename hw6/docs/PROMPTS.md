@@ -53,4 +53,34 @@ log and visual evidence trail complete without manual reminders each time.
 
 ---
 
+## 2026-07-04 — Phase 4: Q-Table Advisor (built via nagham-hw6 in parallel with Phase 3)
+
+**Action:** Implemented `sdk/q_table/trainer.py` (self-play Bellman/epsilon-greedy
+training) and `sdk/q_table/advisor.py` (loads the trained table, returns a
+natural-language hint), plus a shared `sdk/q_table/encoding.py` for state/action
+encoding. TDD per `docs/TODO_phase4_qtable.md`'s prescribed test list, all green.
+Trained for real: 10,000 self-play episodes, ~2s, saved to `config/q_table.npy`.
+
+**Bug found + fixed:** an unmasked epsilon-greedy policy let the Cop wall itself into a
+corner with its own barriers (3 barriers is enough to seal one off) — the base game
+engine has no stalemate rule for a fully-boxed-in agent, so this crashed the trainer
+with `InvalidMoveError` on a full 10,000-episode run (not caught by the small-grid unit
+tests). Fixed by masking action selection to the Cop's currently-legal moves only, and
+ending the episode cleanly (no Q-update) if that set is ever empty. Added 2 regression
+tests for this.
+
+**Performance proxy check** (real check needs Phase 3's orchestrator, which doesn't
+exist yet): 200 self-play games with a uniform-random Cop vs. 200 with a
+greedy-over-trained-Q-table Cop, both vs. a random Thief — cop win rate 62.0% →
+98.5%. Confirms the table is actually learning something useful, ahead of wiring it
+into the real LLM prompt in Phase 3's `PromptBuilder`.
+
+**Reason:** Student and teammate agreed to split remaining work in parallel — this side
+takes Phase 4, teammate takes Phase 3 — accepting the risk that Phase 4 formally depends
+on Phase 3's interfaces (per this file's own dependency graph) for the sake of pace.
+`QTableAdvisor.get_hint(cop_pos, thief_pos)` is ready to be called from Phase 3's prompt
+builder once it exists.
+
+---
+
 <!-- Add new entries below as development progresses -->
