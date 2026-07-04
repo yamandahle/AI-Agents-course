@@ -3,11 +3,10 @@
 import pytest
 
 from cop_thief.sdk.game_engine.board import (
-    Action,
+    BarrierLimitError,
     Direction,
     GameBoard,
     InvalidMoveError,
-    BarrierLimitError,
 )
 
 

@@ -1,10 +1,17 @@
 """Game session: runs num_games sub-games, accumulates scores and logs."""
 
+import logging
 import random
 from dataclasses import dataclass
 from typing import Callable
 
 from cop_thief.sdk.game_engine.sub_game import SubGame, SubGameResult
+
+logger = logging.getLogger(__name__)
+
+
+class TooManyCrashesError(Exception):
+    """Raised when a full game exceeds its crash-retry budget."""
 
 
 @dataclass
@@ -72,6 +79,12 @@ class GameSession:
             if not result.crashed:
                 valid_count += 1
 
+        if valid_count < self._num_games:
+            raise TooManyCrashesError(
+                f"Only {valid_count}/{self._num_games} valid sub-games completed "
+                f"after {len(results)} attempts (cap: {max_attempts})."
+            )
+
         valid_results = [r for r in results if not r.crashed]
         totals = {
             "cop": sum(r.cop_score for r in valid_results),
@@ -93,7 +106,8 @@ class GameSession:
             while not self._sub_game.is_terminal():
                 self._take_turn(action_provider)
             return self._sub_game.get_result()
-        except Exception:
+        except Exception as exc:
+            logger.warning("sub-game crashed: %s: %s", type(exc).__name__, exc)
             return SubGameResult(
                 winner="none",
                 cop_score=0,
