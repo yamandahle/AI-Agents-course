@@ -26,7 +26,11 @@ log: list = []
 def pr(section: str, data) -> None:
     """Print and record a result entry."""
     # list_tools() returns list of Tool objects (have .name but not .text)
-    if isinstance(data, list) and data and hasattr(data[0], "name") and not hasattr(data[0], "text"):
+    is_tool_list = (
+        isinstance(data, list) and data and hasattr(data[0], "name")
+        and not hasattr(data[0], "text")
+    )
+    if is_tool_list:
         parsed = [{"name": t.name, "description": t.description} for t in data]
     # call_tool() returns a CallToolResult with .data (parsed dict)
     elif hasattr(data, "data"):
