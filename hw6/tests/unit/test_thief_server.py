@@ -1,8 +1,9 @@
 """Unit tests for the Thief MCP server — TDD red phase."""
 
+from unittest.mock import MagicMock
+
 import pytest
 from fastmcp import Client
-from unittest.mock import MagicMock
 
 import cop_thief.mcp.thief_server as thief_server
 from cop_thief.mcp.tools import AuthError, GameContext, check_auth

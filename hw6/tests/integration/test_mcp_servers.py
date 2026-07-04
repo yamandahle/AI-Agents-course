@@ -1,15 +1,12 @@
 """Integration tests: both MCP servers working with a shared game context."""
 
-import json
 import pytest
 from fastmcp import Client
 
 import cop_thief.mcp.cop_server as cop_server
 import cop_thief.mcp.thief_server as thief_server
 from cop_thief.mcp.tools import GameContext
-from cop_thief.sdk.game_engine.game_session import GameSession
 from cop_thief.sdk.game_engine.sub_game import SubGame
-
 
 CONFIG = {
     "grid": {"rows": 5, "cols": 5},

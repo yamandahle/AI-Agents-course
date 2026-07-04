@@ -6,7 +6,6 @@ from cop_thief.sdk.game_engine.board import Action, Direction
 from cop_thief.sdk.game_engine.game_session import GameResult, GameSession
 from cop_thief.sdk.game_engine.sub_game import SubGameResult
 
-
 CONFIG = {
     "grid": {"rows": 5, "cols": 5},
     "game": {"max_moves": 25, "num_games": 3, "max_barriers": 5},
