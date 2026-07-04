@@ -50,7 +50,7 @@ async def test_cop_server_has_4_tools():
         assert len(tools) == 4
 
 
-# ── auth (tested via check_auth, which the server delegates to) ───────────────
+# ── auth: check_auth() in isolation ────────────────────────────────────────────
 
 def test_missing_token_returns_401():
     with pytest.raises(AuthError):
@@ -62,24 +62,66 @@ def test_invalid_token_returns_401():
         check_auth("Bearer wrong", "secret")
 
 
+# ── auth: enforced on the real FastMCP tool-call path ──────────────────────────
+
+async def test_tool_call_missing_token_raises():
+    cop_server.set_context(_mock_ctx())
+    async with Client(cop_server.mcp) as client:
+        with pytest.raises(Exception):
+            await client.call_tool("get_observation", {})
+
+
+async def test_tool_call_wrong_token_raises():
+    cop_server.set_context(_mock_ctx())
+    async with Client(cop_server.mcp) as client:
+        with pytest.raises(Exception):
+            await client.call_tool(
+                "get_observation", {"authorization": "Bearer wrong-token"}
+            )
+
+
+async def test_tool_call_valid_token_succeeds():
+    cop_server.set_context(_mock_ctx())
+    async with Client(cop_server.mcp) as client:
+        result = await client.call_tool(
+            "get_observation", {"authorization": "Bearer test-token"}
+        )
+    assert result is not None
+
+
+async def test_place_barrier_missing_token_raises():
+    """place_barrier is cop-only and must also be gated by auth."""
+    cop_server.set_context(_mock_ctx())
+    async with Client(cop_server.mcp) as client:
+        with pytest.raises(Exception):
+            await client.call_tool("place_barrier", {})
+
+
 # ── tool execution ────────────────────────────────────────────────────────────
 
 async def test_valid_context_get_observation_succeeds():
     cop_server.set_context(_mock_ctx())
     async with Client(cop_server.mcp) as client:
-        result = await client.call_tool("get_observation", {})
+        result = await client.call_tool(
+            "get_observation", {"authorization": "Bearer test-token"}
+        )
     assert result is not None
 
 
 async def test_no_context_raises_error():
     async with Client(cop_server.mcp) as client:
         with pytest.raises(Exception):
-            await client.call_tool("get_observation", {})
+            await client.call_tool(
+                "get_observation", {"authorization": "Bearer test-token"}
+            )
 
 
 async def test_send_message_stores_message():
     cop_server.set_context(_mock_ctx())
     async with Client(cop_server.mcp) as client:
-        await client.call_tool("send_message", {"message": "I see you!"})
+        await client.call_tool(
+            "send_message",
+            {"message": "I see you!", "authorization": "Bearer test-token"},
+        )
     ctx = cop_server._ctx
     assert ctx.message_store["thief"] == "I see you!"

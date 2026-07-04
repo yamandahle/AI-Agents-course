@@ -49,7 +49,7 @@ async def test_thief_server_has_3_tools():
         assert len(tools) == 3
 
 
-# ── auth (tested via check_auth, which the server delegates to) ───────────────
+# ── auth: check_auth() in isolation ────────────────────────────────────────────
 
 def test_missing_token_returns_401():
     with pytest.raises(AuthError):
@@ -60,16 +60,47 @@ def test_valid_token_passes():
     check_auth("Bearer secret", "secret")  # must not raise
 
 
+# ── auth: enforced on the real FastMCP tool-call path ──────────────────────────
+
+async def test_tool_call_missing_token_raises():
+    thief_server.set_context(_mock_ctx())
+    async with Client(thief_server.mcp) as client:
+        with pytest.raises(Exception):
+            await client.call_tool("get_observation", {})
+
+
+async def test_tool_call_wrong_token_raises():
+    thief_server.set_context(_mock_ctx())
+    async with Client(thief_server.mcp) as client:
+        with pytest.raises(Exception):
+            await client.call_tool(
+                "get_observation", {"authorization": "Bearer wrong-token"}
+            )
+
+
+async def test_tool_call_valid_token_succeeds():
+    thief_server.set_context(_mock_ctx())
+    async with Client(thief_server.mcp) as client:
+        result = await client.call_tool(
+            "get_observation", {"authorization": "Bearer test-token"}
+        )
+    assert result is not None
+
+
 # ── tool execution ────────────────────────────────────────────────────────────
 
 async def test_valid_context_get_observation_succeeds():
     thief_server.set_context(_mock_ctx())
     async with Client(thief_server.mcp) as client:
-        result = await client.call_tool("get_observation", {})
+        result = await client.call_tool(
+            "get_observation", {"authorization": "Bearer test-token"}
+        )
     assert result is not None
 
 
 async def test_no_context_raises_error():
     async with Client(thief_server.mcp) as client:
         with pytest.raises(Exception):
-            await client.call_tool("get_observation", {})
+            await client.call_tool(
+                "get_observation", {"authorization": "Bearer test-token"}
+            )

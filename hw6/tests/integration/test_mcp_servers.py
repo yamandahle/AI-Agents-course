@@ -68,17 +68,21 @@ async def test_full_tool_round_trip():
         message_store=store, max_message_chars=300, auth_token="tok",
     ))
 
+    auth = {"authorization": "Bearer tok"}
+
     async with Client(thief_server.mcp) as t_client:
-        obs = await t_client.call_tool("get_observation", {})
+        obs = await t_client.call_tool("get_observation", auth)
         assert obs is not None
-        await t_client.call_tool("send_message", {"message": "You can't catch me!"})
+        await t_client.call_tool(
+            "send_message", {"message": "You can't catch me!", **auth}
+        )
         assert store["cop"] == "You can't catch me!"
-        await t_client.call_tool("make_move", {"direction": "S"})
+        await t_client.call_tool("make_move", {"direction": "S", **auth})
 
     async with Client(cop_server.mcp) as c_client:
-        obs = await c_client.call_tool("get_observation", {})
+        obs = await c_client.call_tool("get_observation", auth)
         assert obs is not None
-        await c_client.call_tool("make_move", {"direction": "N"})
+        await c_client.call_tool("make_move", {"direction": "N", **auth})
 
 
 async def test_message_delivered_in_observation():
@@ -98,6 +102,39 @@ async def test_message_delivered_in_observation():
     thief_server.set_context(thief_ctx)
 
     async with Client(thief_server.mcp) as t_client:
-        await t_client.call_tool("send_message", {"message": "Going north!"})
+        await t_client.call_tool(
+            "send_message", {"message": "Going north!", "authorization": "Bearer tok"}
+        )
 
     assert store["cop"] == "Going north!"
+
+
+# ── auth enforced on the real tool-call path (not just check_auth in isolation) ─
+
+
+async def test_missing_token_rejected_on_real_tool_call():
+    """A tool call with no authorization at all must be rejected, both servers."""
+    sg = _make_sub_game()
+    store = {"cop": None, "thief": None}
+    cop_server.set_context(GameContext(
+        sub_game=sg, agent_id="cop",
+        message_store=store, max_message_chars=300, auth_token="tok",
+    ))
+    async with Client(cop_server.mcp) as client:
+        with pytest.raises(Exception):
+            await client.call_tool("get_observation", {})
+
+
+async def test_wrong_token_rejected_on_real_tool_call():
+    """A tool call with the wrong Bearer token must be rejected."""
+    sg = _make_sub_game()
+    store = {"cop": None, "thief": None}
+    thief_server.set_context(GameContext(
+        sub_game=sg, agent_id="thief",
+        message_store=store, max_message_chars=300, auth_token="tok",
+    ))
+    async with Client(thief_server.mcp) as client:
+        with pytest.raises(Exception):
+            await client.call_tool(
+                "get_observation", {"authorization": "Bearer wrong"}
+            )
