@@ -24,4 +24,33 @@ It is a graded requirement — update it after every meaningful decision.
 
 ---
 
+## 2026-07-04 — Phase 2 Verification: MCP Servers Over Real HTTP
+
+**Action:** Manually verified both MCP servers work over real network transport
+(not just in-process), using a 3-terminal test:
+- Terminal 1: `uv run python scripts/start_cop_demo.py` (cop server, port 8001)
+- Terminal 2: `uv run python scripts/start_thief_demo.py` (thief server, port 8002)
+- Terminal 3: `uv run python scripts/call_servers.py` (MCP client calling both)
+
+**Result:** All tool calls succeeded (`list_tools`, `get_observation`,
+`send_message`, `make_move`, `place_barrier`) — see
+`assets/screenshots/mcp_3terminal_test.png` and full call log in
+`results/mcp_demo.json`.
+
+**Reason:** Confirms the client/server MCP architecture (LLM will live in the
+orchestrator client, not in the servers) actually works across process
+boundaries before building Phase 3 on top of it.
+
+---
+
+## Working agreement — screenshots & prompt logging
+
+**Decision:** Claude proactively flags when a screenshot is worth capturing
+at each milestone/update, and logs important prompts/decisions into this
+file as they happen, rather than waiting to be asked.
+**Reason:** Student requested this on 2026-07-04 to keep the graded prompt
+log and visual evidence trail complete without manual reminders each time.
+
+---
+
 <!-- Add new entries below as development progresses -->
