@@ -37,3 +37,28 @@ def test_parse_invalid_returns_none():
 def test_parse_message_extracted():
     message, action = parse_response("MESSAGE: I am closing in!\nACTION: SE")
     assert message == "I am closing in!"
+
+
+# ── Markdown-formatted actions (Gap 6 regression) ──────────────────────────────
+
+
+def test_parse_action_with_bold_markdown():
+    """A real phi3:mini response used markdown bold directly against the colon."""
+    message, action = parse_response("**Message:** hi\n\n**Action:** NW")
+    assert action.direction == Direction.NW
+
+
+def test_parse_action_with_single_asterisk_and_lowercase():
+    message, action = parse_response("MESSAGE: hi\nACTION: *nw*")
+    assert action.direction == Direction.NW
+
+
+def test_parse_action_with_backticks():
+    message, action = parse_response("MESSAGE: hi\nACTION: `NW`")
+    assert action.direction == Direction.NW
+
+
+def test_parse_plain_action_unaffected():
+    """Plain, unformatted responses must keep working exactly as before."""
+    message, action = parse_response("MESSAGE: hi\nACTION: NW")
+    assert action.direction == Direction.NW
