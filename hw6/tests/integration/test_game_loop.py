@@ -5,13 +5,15 @@ genuinely mutate shared state, exactly like a live game. Only the LLM
 boundary (ApiGatekeeper) is mocked, per the PRD's test plan.
 """
 
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
 import cop_thief.mcp.cop_server as cop_server
 import cop_thief.mcp.thief_server as thief_server
+import cop_thief.orchestrator.game_loop as game_loop_module
 from cop_thief.mcp.tools import GameContext
+from cop_thief.orchestrator.fallback import random_starts
 from cop_thief.orchestrator.game_loop import GameLoop
 from cop_thief.orchestrator.mcp_client import McpClient
 from cop_thief.sdk.game_engine.game_session import TooManyCrashesError
@@ -60,7 +62,7 @@ def _make_loop(config, gatekeeper, starts=SAFE_STARTS):
     cop_client = McpClient(cop_server.mcp, auth_token=AUTH_TOKEN)
     thief_client = McpClient(thief_server.mcp, auth_token=AUTH_TOKEN)
     loop = GameLoop(config, sg, cop_client, thief_client, gatekeeper)
-    loop._random_starts = lambda: starts
+    game_loop_module.random_starts = lambda cfg: starts
     return loop, sg
 
 
@@ -263,13 +265,55 @@ async def test_message_truncated_to_configured_max_chars():
 
 def test_random_starts_returns_two_distinct_in_bounds_cells():
     config = _config(rows=4, cols=4)
-    gatekeeper = AsyncMock()
-    loop, sg = _make_loop(config, gatekeeper)
-    loop._random_starts = GameLoop._random_starts.__get__(loop)
 
-    cop_start, thief_start = loop._random_starts()
+    cop_start, thief_start = random_starts(config)
 
     assert cop_start != thief_start
     for row, col in (cop_start, thief_start):
         assert 0 <= row < 4
         assert 0 <= col < 4
+
+
+async def test_q_hint_injected_into_cop_prompt_only():
+    config = _config(max_moves=1)
+    gatekeeper = _fake_gatekeeper("MESSAGE: hi\nACTION: N", "MESSAGE: hi\nACTION: N")
+    advisor = MagicMock()
+    advisor.get_hint.return_value = "Position analysis suggests moving north."
+    sg = SubGame(
+        rows=config["grid"]["rows"], cols=config["grid"]["cols"],
+        max_moves=config["game"]["max_moves"],
+        max_barriers=config["game"]["max_barriers"],
+        cop_vision_radius=config["vision"]["cop_vision_radius"],
+        thief_vision_radius=config["vision"]["thief_vision_radius"],
+        scoring=config["scoring"],
+    )
+    store = {"cop": None, "thief": None}
+    cop_server.set_context(GameContext(sg, "cop", store, 300, AUTH_TOKEN))
+    thief_server.set_context(GameContext(sg, "thief", store, 300, AUTH_TOKEN))
+    cop_client = McpClient(cop_server.mcp, auth_token=AUTH_TOKEN)
+    thief_client = McpClient(thief_server.mcp, auth_token=AUTH_TOKEN)
+    loop = GameLoop(config, sg, cop_client, thief_client, gatekeeper, advisor=advisor)
+    game_loop_module.random_starts = lambda cfg: SAFE_STARTS
+
+    await loop.run()
+
+    prompts = [
+        call.args[1]["messages"][1]["content"]
+        for call in gatekeeper.call.await_args_list
+    ]
+    assert "Position analysis suggests moving north." not in prompts[0]  # thief
+    assert "Position analysis suggests moving north." in prompts[1]  # cop
+
+
+async def test_on_turn_hook_receives_game_state_each_turn():
+    config = _config(max_moves=1)
+    gatekeeper = _fake_gatekeeper("MESSAGE: hi\nACTION: N", "MESSAGE: hi\nACTION: N")
+    loop, sg = _make_loop(config, gatekeeper)
+    received = []
+
+    await loop.run(on_turn=received.append)
+
+    assert [s.current_turn for s in received] == ["thief", "cop"]
+    assert received[0].sub_game_number == 1
+    assert received[1].cop_position == sg.board.get_agent_pos("cop")
+    assert received[1].thief_position == sg.board.get_agent_pos("thief")

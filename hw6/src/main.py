@@ -13,11 +13,13 @@ from cop_thief.api_gatekeeper import ApiGatekeeper
 from cop_thief.gmail.auth import GmailAuth
 from cop_thief.gmail.report_builder import ReportBuilder
 from cop_thief.gmail.sender import GmailSender
+from cop_thief.gui.app import GuiApp
 from cop_thief.mcp.tools import GameContext
 from cop_thief.orchestrator.game_loop import GameLoop
 from cop_thief.orchestrator.mcp_client import build_client
 from cop_thief.sdk.game_engine.sub_game import SubGame
-from cop_thief.shared.config import load_config
+from cop_thief.sdk.q_table.advisor import QTableAdvisor
+from cop_thief.shared.config import PROJECT_ROOT, load_config
 
 logger = logging.getLogger(__name__)
 
@@ -81,17 +83,26 @@ async def run_game(config: dict) -> dict:
     ))
     await asyncio.sleep(0.5)  # let both servers finish binding before clients connect
 
+    advisor = QTableAdvisor(
+        config["q_table"]["enabled"], str(PROJECT_ROOT / "config" / "q_table.npy"),
+        config["grid"]["rows"], config["grid"]["cols"],
+    )
+    gui = GuiApp(config)
     try:
         gatekeeper = ApiGatekeeper(config["llm"], load_config("rate_limits.json"))
         cop_client = build_client("cop", config, auth_token=auth_token)
         thief_client = build_client("thief", config, auth_token=auth_token)
-        loop = GameLoop(config, sub_game, cop_client, thief_client, gatekeeper)
+        loop = GameLoop(
+            config, sub_game, cop_client, thief_client, gatekeeper, advisor=advisor
+        )
         result = await loop.run(
-            on_complete=lambda r: logger.info("Game finished: %s", r.totals)
+            on_complete=lambda r: logger.info("Game finished: %s", r.totals),
+            on_turn=gui.update,
         )
         await _send_report(result, config, gatekeeper)
         return result.to_dict()
     finally:
+        gui.close()
         cop_task.cancel()
         thief_task.cancel()
         await asyncio.gather(cop_task, thief_task, return_exceptions=True)
@@ -102,12 +113,15 @@ def main(argv: list[str] | None = None) -> None:
     load_dotenv()
     args = parse_args(argv)
     logging.basicConfig(level=logging.INFO)
-    if args.gui:
-        logger.warning("--gui is not implemented yet (Phase 5); running headless.")
     if args.case:
         logger.warning("--case is not implemented yet (Phase 7); ignoring.")
 
     config = load_config("config.json")
+    if args.gui:
+        config["gui"]["enabled"] = True
+    if args.headless:
+        config["gui"]["enabled"] = False
+
     result = asyncio.run(run_game(config))
     print(result)
 

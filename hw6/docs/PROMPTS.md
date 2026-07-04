@@ -343,4 +343,53 @@ teammate's Phase 3, per PLAN.md's Member 2 assignment (Q-table, GUI, experiments
 
 ---
 
+## 2026-07-04 — Merged Phase 4+5, Wired Q-Table + GUI Into the Orchestrator
+
+**Action:** Merged `feature/q-table-advisor-phase4` (Nagham's Phase 4 + Phase 5)
+into `yamandahle-hw6`. One trivial conflict in `docs/PROMPTS.md` (both sides
+appended entries independently); resolved by keeping both. 195 tests passing
+post-merge, 0 ruff violations, 89.71% coverage.
+
+**Gap found:** neither `QTableAdvisor` nor `GuiApp` was actually connected to
+`GameLoop`/`main.py` — both were built and fully tested in isolation on
+their own branch, but nothing in the running game ever called them.
+
+**Action:** Wired both in:
+1. `GameLoop` takes an optional `advisor: QTableAdvisor`. Before each Cop
+   turn, `fallback.get_q_hint()` computes the hint from the **true** board
+   positions (`sub_game.board.get_agent_pos`), not the Cop's own fog-of-war
+   observation — matching the PRD's `get_hint(cop_pos, thief_pos)` signature
+   exactly. This is a deliberate exception to fog-of-war: the advisor is a
+   strategic-assist layer, not part of the agent's in-character senses.
+2. `GameLoop.run()` takes an optional `on_turn` callback, invoked after every
+   successful turn with a `GameState` snapshot (built by a new
+   `orchestrator/live_state.py`) — `main.py` wires this straight to
+   `GuiApp.update`.
+3. `main.py`'s `--gui`/`--headless` flags now actually toggle
+   `config["gui"]["enabled"]` (previously no-ops that only logged a warning).
+
+**Refactor:** `game_loop.py` grew past the 150-code-line cap with this
+wiring. Split out `orchestrator/fallback.py` (Q-hint computation, the
+random-valid-action fallback, and random start-position picking — all
+decision-support helpers, not core loop logic) and
+`orchestrator/live_state.py` (GameState snapshot builder). `game_loop.py`
+itself is back to 149 lines, each new module under 35.
+
+**Live validation — the whole project confirmed working together in one
+run for the first time:** trained a real Q-table (`uv run python -m
+cop_thief.sdk.q_table.trainer`, 10k episodes, ~instant), enabled
+`q_table.enabled` and ran `--headless` — completed cleanly with the real
+trained table loaded and consulted every Cop turn (no crash, correct
+scores). Then ran again with `--gui` — a real tkinter window was created,
+updated every turn, and closed cleanly; no threading/Tcl errors. Both
+runs also re-confirmed the message-log fix (turns now show real message
+text) and real Gmail sending. Used a temporary test recipient +
+throwaway grid/move counts for these checks; config restored to
+production values (5x5, 6 games, 25 moves, real recipient,
+`q_table.enabled: false`) afterward.
+
+**Result:** 197 tests passing, 0 ruff violations, 89.59% overall coverage.
+
+---
+
 <!-- Add new entries below as development progresses -->
