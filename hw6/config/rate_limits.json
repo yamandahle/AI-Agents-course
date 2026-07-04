@@ -3,5 +3,9 @@
   "ollama": {
     "calls_per_minute": 30,
     "max_retries": 3
+  },
+  "gmail": {
+    "calls_per_minute": 10,
+    "max_retries": 3
   }
 }

@@ -48,6 +48,7 @@
   },
   "reporting": {
     "group_name": "",
+    "students": [],
     "github_repo": "https://github.com/yamandahle/AI-Agents-course",
     "timezone": "Asia/Jerusalem"
   },

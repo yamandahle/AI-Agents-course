@@ -178,4 +178,55 @@ startup code is validated by actually running it, not by mocks).
 
 ---
 
+## 2026-07-04 — Phase 6 (Gmail Report): Steps 1-4
+
+**Action:** Student completed the manual Google Cloud Console setup
+(project created, Gmail API + Calendar API enabled per lecturer's videos,
+OAuth consent screen configured External with `gmail.modify` +
+`calendar` scopes, test user added, Desktop OAuth Client created,
+`credentials.json` downloaded into `hw6/` — confirmed gitignored).
+
+**Gap found:** `config.json`'s `reporting` section had `group_name` but no
+`students` field, even though the PRD's JSON report schema requires a
+`students` array. Added `"students": []` as a placeholder — needs real
+names filled in before final submission.
+
+**Action:** Implemented Steps 2-4:
+1. `gmail/report_builder.py` — `ReportBuilder.build(game_result, config)`
+   converts a `GameResult` into the PRD's JSON schema, excluding crashed
+   sub-games and extracting `cop_messages`/`thief_messages` arrays from
+   each sub-game's turn log.
+2. `gmail/auth.py` — `GmailAuth.get_credentials()`, following the exact
+   load/refresh/first-run-browser-flow pattern from the lecturer's own
+   reference script in `google-api-guide.pdf` (page 15), adapted to a
+   config-driven class instead of hardcoded file paths.
+3. `gmail/sender.py` — `GmailSender.send(report, config)` builds the
+   email (JSON-only body, no free text, per PRD) and sends it via the
+   Gmail API.
+
+**Decision:** generalized `ApiGatekeeper` (built in Phase 3 for LLM calls
+only) with a new `call_sync(provider, func)` method, rather than building
+a second, separate gatekeeper for Gmail.
+**Reason:** CLAUDE.md requires *all* external API calls (LLM and Gmail)
+go through one central gatekeeper. The original `call()` was hardcoded to
+async `httpx` POSTs, but Gmail's `google-api-python-client` call is a
+synchronous, completely different shape. `call_sync` wraps any blocking
+callable (via `asyncio.to_thread`) under the same per-provider rate-limit/
+retry/logging policy, keyed by a `provider` string — added a `gmail`
+section to `config/rate_limits.json` alongside the existing `ollama` one.
+This kept the existing LLM-facing `call()` method and its tests
+untouched while making the "one gatekeeper for everything" rule literally
+true instead of nominal.
+
+**Result:** 161 tests passing, 0 ruff violations, 94.41% overall coverage.
+`report_builder.py`, `auth.py`, `sender.py`, and the regenerated
+`api_gatekeeper.py` are all at 100% coverage. All Google APIs are mocked
+in tests — no real sends happened yet.
+
+**Remaining for Phase 6:** Step 5 (first real OAuth browser flow, one-time
+manual, will create the real `token.json`), Step 6 (end-to-end test — a
+real game ending with a real email received), Step 7 sign-off.
+
+---
+
 <!-- Add new entries below as development progresses -->

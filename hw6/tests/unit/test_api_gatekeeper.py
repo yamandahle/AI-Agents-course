@@ -13,7 +13,10 @@ LLM_CONFIG = {
     "base_url": "http://localhost:11434",
     "timeout_seconds": 30,
 }
-RATE_LIMITS = {"ollama": {"calls_per_minute": 30, "max_retries": 3}}
+RATE_LIMITS = {
+    "ollama": {"calls_per_minute": 30, "max_retries": 3},
+    "gmail": {"calls_per_minute": 10, "max_retries": 3},
+}
 
 
 def _ok_response(data: dict) -> MagicMock:
@@ -75,7 +78,7 @@ async def test_throttle_sleeps_when_limit_exceeded(monkeypatch):
     mock_client.post = AsyncMock(return_value=_ok_response({"ok": True}))
     limits = {"ollama": {"calls_per_minute": 1, "max_retries": 3}}
     gatekeeper = ApiGatekeeper(LLM_CONFIG, limits, client=mock_client)
-    gatekeeper._call_times = [gatekeeper_module.time.monotonic()]
+    gatekeeper._call_times = {"ollama": [gatekeeper_module.time.monotonic()]}
 
     sleep_mock = AsyncMock()
     monkeypatch.setattr(gatekeeper_module.asyncio, "sleep", sleep_mock)
@@ -83,3 +86,41 @@ async def test_throttle_sleeps_when_limit_exceeded(monkeypatch):
     await gatekeeper.call("/api/chat", {})
 
     sleep_mock.assert_awaited_once()
+
+
+async def test_call_sync_succeeds_on_first_try():
+    mock_client = MagicMock()
+    gatekeeper = ApiGatekeeper(LLM_CONFIG, RATE_LIMITS, client=mock_client)
+
+    result = await gatekeeper.call_sync("gmail", lambda: {"id": "msg-1"})
+
+    assert result == {"id": "msg-1"}
+
+
+async def test_call_sync_retries_on_failure():
+    mock_client = MagicMock()
+    gatekeeper = ApiGatekeeper(LLM_CONFIG, RATE_LIMITS, client=mock_client)
+    attempts = {"n": 0}
+
+    def flaky():
+        attempts["n"] += 1
+        if attempts["n"] == 1:
+            raise RuntimeError("boom")
+        return {"id": "msg-1"}
+
+    result = await gatekeeper.call_sync("gmail", flaky)
+
+    assert result == {"id": "msg-1"}
+    assert attempts["n"] == 2
+
+
+async def test_call_sync_raises_after_max_retries():
+    mock_client = MagicMock()
+    limits = {**RATE_LIMITS, "gmail": {"calls_per_minute": 10, "max_retries": 2}}
+    gatekeeper = ApiGatekeeper(LLM_CONFIG, limits, client=mock_client)
+
+    def always_fails():
+        raise RuntimeError("boom")
+
+    with pytest.raises(ApiCallError):
+        await gatekeeper.call_sync("gmail", always_fails)

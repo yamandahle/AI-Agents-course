@@ -8,21 +8,21 @@
 
 ## 1. Google Cloud Setup (one-time, manual)
 
-- [ ] Go to https://console.cloud.google.com
-- [ ] Create a new project (e.g. `cop-thief-ex06`)
-- [ ] Enable **Gmail API**: APIs & Services → Enable APIs → search "Gmail API"
-- [ ] Enable **Google Calendar API** (required by scopes)
-- [ ] Go to **APIs & Services → OAuth consent screen**:
+- [x] Go to https://console.cloud.google.com
+- [x] Create a new project (e.g. `cop-thief-ex06`)
+- [x] Enable **Gmail API**: APIs & Services → Enable APIs → search "Gmail API"
+- [x] Enable **Google Calendar API** (required by scopes)
+- [x] Go to **APIs & Services → OAuth consent screen**:
   - User Type: External
   - App name: `Cop Thief EX06`
   - Add scopes: `gmail.modify`, `calendar`
   - Add test user: your Gmail address
-- [ ] Go to **APIs & Services → Credentials**:
+- [x] Go to **APIs & Services → Credentials**:
   - Create Credentials → OAuth client ID
   - Application type: **Desktop app**
   - Download JSON → rename to `credentials.json`
   - Place in `hw6/` root (git-ignored)
-- [ ] Verify `credentials.json` exists and is git-ignored
+- [x] Verify `credentials.json` exists and is git-ignored
 
 ---
 
@@ -46,36 +46,42 @@
 
 ## 3. Auth Module (TDD)
 
-- [ ] Write `tests/unit/test_auth.py` FIRST (red):
+- [x] Write `tests/unit/test_auth.py` FIRST (red):
   - `test_loads_credentials_from_file`
   - `test_refreshes_expired_token`
   - `test_saves_refreshed_token`
   - `test_missing_credentials_raises_error`
-- [ ] Implement `src/cop_thief/gmail/auth.py` (green):
+  - (added) `test_first_run_launches_browser_flow`
+- [x] Implement `src/cop_thief/gmail/auth.py` (green):
   - `GmailAuth.get_credentials() -> Credentials`
   - First run: browser OAuth flow → saves `token.json`
   - Subsequent runs: load `token.json`, refresh if expired
-- [ ] Refactor — keep file ≤ 150 code lines
-- [ ] `uv run ruff check` → 0 violations
+- [x] Refactor — keep file ≤ 150 code lines
+- [x] `uv run ruff check` → 0 violations
 
 ---
 
 ## 4. Sender (TDD)
 
-- [ ] Write `tests/unit/test_sender.py` FIRST (red):
+- [x] Write `tests/unit/test_sender.py` FIRST (red):
   - `test_email_sent_to_correct_recipient`
   - `test_email_body_is_json_only`
   - `test_email_sent_exactly_once`
   - `test_retry_on_api_failure`
   - `test_send_result_logged`
-- [ ] Implement `src/cop_thief/gmail/sender.py` (green):
+  - (added) `test_send_logs_failure_and_reraises`
+- [x] Implement `src/cop_thief/gmail/sender.py` (green):
   - `GmailSender.send(report_dict, config) -> None`
   - Uses ApiGatekeeper for the API call
   - Email body: `json.dumps(report_dict, indent=2)` — no free text
   - Logs send timestamp and status to `results/gmail_log.json`
-- [ ] All Gmail API calls mocked in tests — no real sends
-- [ ] Refactor — keep file ≤ 150 code lines
-- [ ] `uv run ruff check` → 0 violations
+- [x] All Gmail API calls mocked in tests — no real sends
+- [x] Refactor — keep file ≤ 150 code lines
+- [x] `uv run ruff check` → 0 violations
+- [x] Generalized `ApiGatekeeper` (Phase 3) with `call_sync(provider, func)` so
+  Gmail's blocking google-api-client call goes through the same central
+  gate as the LLM's async httpx call — added a `gmail` rate-limit section
+  to `config/rate_limits.json`.
 
 ---
 
