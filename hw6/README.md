@@ -69,6 +69,29 @@ Orchestrator (LLM client) ──MCP HTTP──► Cop server  (127.0.0.1:8001)
 
 All game parameters come from JSON config — no hardcoded grid size, moves, or vision radii.
 
+### LLM used
+
+| Setting | Value |
+|---------|--------|
+| **Provider** | Ollama (local) — **Approach 3** from the assignment (no cloud deploy required for EX06) |
+| **Model (experiments & official run)** | `qwen2.5:0.5b` — set in `config/experiments/*.json` |
+| **Model (base config)** | `phi3:mini` — in `config/config.json` (fallback if you run without `--config`) |
+| **Endpoint** | `http://localhost:11434` |
+
+Pull the model once:
+
+```powershell
+ollama pull qwen2.5:0.5b
+```
+
+The orchestrator sends prompts to Ollama each turn; MCP servers have **no LLM inside them** — they only expose game tools.
+
+### Cloud deployment?
+
+**Not required for this homework.** EX06 uses **Approach 3 (local/hybrid)**: Ollama + MCP servers on `localhost`. Your PRD marks full **cloud deployment** and **inter-group bonus competition** as optional / out of scope — those are typically for a **bonus or final project**, not this submission.
+
+The only “cloud” step you needed was **Google Cloud Console** for **Gmail OAuth** (sending the JSON report), not hosting the game online.
+
 ---
 
 ## 4. Results & analysis
@@ -192,21 +215,40 @@ Graph files: [results/graphs/](results/graphs/)
 
 ## 5. How to run
 
+### Prerequisites
+
+1. Install [Ollama](https://ollama.com) and run `ollama serve` in a separate terminal.
+2. Pull the model: `ollama pull qwen2.5:0.5b`
+3. From the `hw6/` folder: `uv sync`
+4. For Gmail (exp1 only): place `credentials.json` + `token.json` in `hw6/` (git-ignored).
+
+### Official submission run (5×5 + GUI + email)
+
 ```powershell
-ollama serve
-uv sync
-
-# Official 5×5 run (Gmail + GUI)
+cd hw6
 uv run python src/main.py --config experiments/exp1_full_5x5.json --gui
+```
 
-# One small-grid experiment
+Saves log to `results/exp1_full_5x5/result.json` and emails JSON report to the lecturer.
+
+### Experiments
+
+```powershell
+# One case with GUI
 uv run python -m cop_thief.experiments.runner --case exp2_small_blind_cop --gui
 
-# Rebuild summary.csv + graphs from saved JSON logs
+# All 3 cases sequentially
+uv run python -m cop_thief.experiments.runner --all --gui
+
+# Rebuild summary.csv + graphs (no re-run)
 uv run python -m cop_thief.experiments.runner --graphs-only
 ```
 
-## 6. Tests
+### Headless (no window)
+
+Add `--headless` to `src/main.py`, or omit `--gui` on the runner.
+
+### Tests
 
 ```powershell
 uv run pytest tests/ --cov
