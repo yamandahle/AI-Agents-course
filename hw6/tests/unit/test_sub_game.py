@@ -2,8 +2,8 @@
 
 import pytest
 
-from cop_thief.sdk.game_engine.board import Direction, Action, InvalidMoveError
-from cop_thief.sdk.game_engine.sub_game import SubGame, SubGameResult
+from cop_thief.sdk.game_engine.board import Action, Direction, InvalidMoveError
+from cop_thief.sdk.game_engine.sub_game import SubGame
 
 
 @pytest.fixture
@@ -26,7 +26,7 @@ def test_cop_wins_by_capture():
         cop_vision_radius=4, thief_vision_radius=4,
         scoring={"cop_win": 20, "thief_win": 10, "cop_loss": 5, "thief_loss": 5},
     )
-    # Cop at (1,1), thief at (1,3) → thief moves W to (1,2), cop moves E to (1,2) → CAPTURE
+    # Cop (1,1), thief (1,3): thief moves W to (1,2), cop moves E to (1,2) → CAPTURE
     g.reset(cop_start=(1, 1), thief_start=(1, 3))
     g.apply_thief_action(Action(Direction.W))  # thief → (1,2)
     g.apply_cop_action(Action(Direction.E))    # cop → (1,2) — CAPTURE

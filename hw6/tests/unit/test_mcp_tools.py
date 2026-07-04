@@ -1,7 +1,8 @@
 """Unit tests for shared MCP tool functions (tools.py) — TDD red phase."""
 
-import pytest
 from unittest.mock import MagicMock
+
+import pytest
 
 from cop_thief.mcp.tools import (
     AuthError,
