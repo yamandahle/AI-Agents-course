@@ -87,9 +87,10 @@
 
 ## 5. First-Run OAuth Flow (manual)
 
-- [ ] Run: `uv run python -c "from cop_thief.gmail.auth import GmailAuth; GmailAuth().get_credentials()"`
-  → Browser opens → sign in → consent → `token.json` created
-- [ ] Verify `token.json` exists and is git-ignored
+- [x] Run the OAuth flow → Browser opens → sign in → consent → `token.json` created
+  (hit `Error 403: access_denied` first — account wasn't correctly saved as
+  a Test user; fixed, then consent screen worked)
+- [x] Verify `token.json` exists and is git-ignored
 
 ---
 

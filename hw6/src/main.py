@@ -10,6 +10,9 @@ from dotenv import load_dotenv
 import cop_thief.mcp.cop_server as cop_server
 import cop_thief.mcp.thief_server as thief_server
 from cop_thief.api_gatekeeper import ApiGatekeeper
+from cop_thief.gmail.auth import GmailAuth
+from cop_thief.gmail.report_builder import ReportBuilder
+from cop_thief.gmail.sender import GmailSender
 from cop_thief.mcp.tools import GameContext
 from cop_thief.orchestrator.game_loop import GameLoop
 from cop_thief.orchestrator.mcp_client import build_client
@@ -42,6 +45,23 @@ def _build_sub_game(config: dict) -> SubGame:
     )
 
 
+async def _send_report(result, config: dict, gatekeeper: ApiGatekeeper) -> None:
+    """Build and send the Gmail report; log (don't crash) on failure.
+
+    A failed report send shouldn't hide a successful game run, so failures
+    are logged rather than propagated.
+    """
+    report = ReportBuilder.build(result, config)
+    gmail_auth = GmailAuth(
+        config["gmail"]["credentials_file"], config["gmail"]["token_file"]
+    )
+    sender = GmailSender(gmail_auth, gatekeeper)
+    try:
+        await sender.send(report, config)
+    except Exception as exc:
+        logger.error("Failed to send Gmail report: %s", exc)
+
+
 async def run_game(config: dict) -> dict:
     """Start both MCP servers and the orchestrator, then run one full game."""
     auth_token = os.environ.get("MCP_AUTH_TOKEN", "dev-token")
@@ -69,6 +89,7 @@ async def run_game(config: dict) -> dict:
         result = await loop.run(
             on_complete=lambda r: logger.info("Game finished: %s", r.totals)
         )
+        await _send_report(result, config, gatekeeper)
         return result.to_dict()
     finally:
         cop_task.cancel()

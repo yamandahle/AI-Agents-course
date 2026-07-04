@@ -149,3 +149,37 @@ def test_place_barrier_at_limit_raises_error():
     ctx.sub_game.apply_cop_action.side_effect = BarrierLimitError("at limit")
     with pytest.raises(BarrierLimitError):
         place_barrier_impl(ctx)
+
+
+# ── message -> turn-log wiring (regression: messages were silently dropped) ────
+
+def test_sent_message_flows_into_move_turn_log():
+    ctx = _make_ctx(agent_id="cop")
+    send_message_impl(ctx, "Closing in!")
+    make_move_impl(ctx, "N")
+    _, message_arg = ctx.sub_game.apply_cop_action.call_args.args
+    assert message_arg == "Closing in!"
+
+
+def test_sent_message_flows_into_barrier_turn_log():
+    ctx = _make_ctx(agent_id="cop")
+    send_message_impl(ctx, "Blocking you!")
+    place_barrier_impl(ctx)
+    _, message_arg = ctx.sub_game.apply_cop_action.call_args.args
+    assert message_arg == "Blocking you!"
+
+
+def test_pending_message_cleared_after_being_used():
+    ctx = _make_ctx(agent_id="thief")
+    send_message_impl(ctx, "Going north!")
+    make_move_impl(ctx, "N")
+    make_move_impl(ctx, "N")
+    _, message_arg = ctx.sub_game.apply_thief_action.call_args.args
+    assert message_arg == ""
+
+
+def test_no_message_sent_still_dispatches_empty_message():
+    ctx = _make_ctx(agent_id="thief")
+    make_move_impl(ctx, "N")
+    _, message_arg = ctx.sub_game.apply_thief_action.call_args.args
+    assert message_arg == ""

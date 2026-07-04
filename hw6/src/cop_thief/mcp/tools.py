@@ -27,6 +27,7 @@ class GameContext:
     message_store: dict       # {"cop": str|None, "thief": str|None}
     max_message_chars: int
     auth_token: str           # expected token (without "Bearer " prefix)
+    pending_message: str = ""  # this agent's message, staged for the next action
 
 
 def check_auth(authorization: str, expected_token: str) -> None:
@@ -57,7 +58,15 @@ def send_message_impl(ctx: GameContext, message: str) -> dict:
         )
     opponent = "thief" if ctx.agent_id == "cop" else "cop"
     ctx.message_store[opponent] = message
+    ctx.pending_message = message
     return {"status": "ok"}
+
+
+def _take_pending_message(ctx: GameContext) -> str:
+    """Read and clear this turn's staged message, for the turn log."""
+    message = ctx.pending_message
+    ctx.pending_message = ""
+    return message
 
 
 def make_move_impl(ctx: GameContext, direction: str) -> dict:
@@ -67,10 +76,11 @@ def make_move_impl(ctx: GameContext, direction: str) -> dict:
     except KeyError:
         raise InvalidMoveError(f"Unknown direction: {direction!r}")
     action = Action(dir_enum)
+    message = _take_pending_message(ctx)
     if ctx.agent_id == "thief":
-        ctx.sub_game.apply_thief_action(action)
+        ctx.sub_game.apply_thief_action(action, message)
     else:
-        ctx.sub_game.apply_cop_action(action)
+        ctx.sub_game.apply_cop_action(action, message)
     pos = ctx.sub_game.board.get_agent_pos(ctx.agent_id)
     return {"status": "ok", "new_position": list(pos)}
 
@@ -78,7 +88,8 @@ def make_move_impl(ctx: GameContext, direction: str) -> dict:
 def place_barrier_impl(ctx: GameContext) -> dict:
     """Place a barrier at the cop's current cell instead of moving."""
     pos = ctx.sub_game.board.get_agent_pos("cop")
-    ctx.sub_game.apply_cop_action(Action(direction=None))
+    message = _take_pending_message(ctx)
+    ctx.sub_game.apply_cop_action(Action(direction=None), message)
     return {
         "status": "ok",
         "barrier_placed_at": list(pos),

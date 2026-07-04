@@ -229,4 +229,56 @@ real game ending with a real email received), Step 7 sign-off.
 
 ---
 
+## 2026-07-04 — Phase 6 Step 5, Wired Gmail into main.py, Live Validation
+
+**Action:** Completed the real OAuth login (Step 5). First attempt hit
+`Error 403: access_denied` — the signed-in Google account wasn't correctly
+saved as a Test user on the OAuth consent screen; fixed on the student's
+side, then the consent flow completed and `token.json` was created and
+confirmed gitignored.
+
+**Action:** Wired `ReportBuilder`/`GmailAuth`/`GmailSender` into
+`main.py`'s `run_game()` — previously it only logged the result and never
+actually sent anything. A failed send is logged but doesn't crash the
+program, so a working game run is never hidden behind an email failure.
+
+**Live validation:** Ran a quick throwaway-config smoke test (3x2 grid, 1
+move, 1 sub-game) specifically to prove the real Gmail send path works
+end-to-end with the real token — succeeded (`results/gmail_log.json`:
+status "ok", timestamp logged), and the actual email reached the
+lecturer's real inbox (confirmed by the student pasting its exact body
+back). Note: this sent one small throwaway test report to
+`rmisegal+uoh26b@gmail.com` — acceptable but worth being aware a stray
+test email exists in the lecturer's inbox ahead of the real submission.
+
+**Bug found — confirmed by two live runs, not a mock:** every
+`cop_messages`/`thief_messages` array in every report was empty, across
+both the tiny smoke test and (more convincingly) the student's full real
+6-sub-game/25-move run — 88 turns, zero recorded messages. Root cause in
+`mcp/tools.py`: the architecture correctly splits each turn into two MCP
+tool calls (`send_message` then `make_move`/`place_barrier`, per the
+assignment spec), but `make_move_impl`/`place_barrier_impl` never
+received or forwarded the message into `SubGame.apply_cop_action(action,
+message)`/`apply_thief_action(...)` — those default `message=""` when the
+caller omits it, which the move/barrier tools always did. The message
+*did* reach the opponent correctly (via `message_store`, used for the
+next observation) — only the turn-log recording used for the Gmail
+report was broken.
+
+**Fix:** added a `pending_message` field to `GameContext`.
+`send_message_impl` stashes the message there; `make_move_impl`/
+`place_barrier_impl` read-and-clear it via a new `_take_pending_message()`
+helper and pass it into `apply_*_action`. Keeps the two-call tool
+architecture intact; backward compatible (new field defaults to `""`).
+Added 4 regression tests exercising the real (non-mocked)
+`send_message_impl`/`make_move_impl`/`place_barrier_impl` functions to
+catch this class of bug going forward. Did not re-trigger a live run to
+re-verify, to avoid sending yet another test email — the regression tests
+exercise the exact code path the bug was in.
+
+**Result:** 165 tests passing, 0 ruff violations, 93.40% overall coverage,
+`tools.py` back to 100%.
+
+---
+
 <!-- Add new entries below as development progresses -->
