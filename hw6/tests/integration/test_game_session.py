@@ -3,7 +3,11 @@
 import pytest
 
 from cop_thief.sdk.game_engine.board import Action, Direction
-from cop_thief.sdk.game_engine.game_session import GameResult, GameSession
+from cop_thief.sdk.game_engine.game_session import (
+    GameResult,
+    GameSession,
+    TooManyCrashesError,
+)
 from cop_thief.sdk.game_engine.sub_game import SubGameResult
 
 CONFIG = {
@@ -83,6 +87,17 @@ def test_crashed_sub_game_is_excluded():
     result = session.run(sometimes_crash, fixed_starts=SAFE_STARTS)
     valid = [sg for sg in result.sub_games if not sg.crashed]
     assert len(valid) == CONFIG["game"]["num_games"]
+
+
+def test_always_crashing_raises_instead_of_silent_truncation():
+    """If every sub-game crashes, run() must raise, never return a partial result."""
+
+    def always_crash(_agent_id, _observation):
+        raise RuntimeError("Simulated crash")
+
+    session = GameSession(CONFIG)
+    with pytest.raises(TooManyCrashesError):
+        session.run(always_crash, fixed_starts=SAFE_STARTS)
 
 
 def test_sub_game_log_has_turns(session):
