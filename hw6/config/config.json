@@ -47,8 +47,8 @@
     "max_retries": 3
   },
   "reporting": {
-    "group_name": "",
-    "students": [],
+    "group_name": "yamanagh",
+    "students": ["Yaman Dahle", "Nagham Manasra"],
     "github_repo": "https://github.com/yamandahle/AI-Agents-course",
     "timezone": "Asia/Jerusalem"
   },
