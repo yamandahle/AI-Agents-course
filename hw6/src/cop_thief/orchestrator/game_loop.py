@@ -1,6 +1,7 @@
 """Drives a full game: sub-games run via MCP tool calls and LLM decisions."""
 
 import logging
+from contextlib import AsyncExitStack
 from typing import Callable
 
 from fastmcp.exceptions import ToolError
@@ -14,7 +15,7 @@ from cop_thief.orchestrator.fallback import (
 )
 from cop_thief.orchestrator.live_state import build_game_state
 from cop_thief.orchestrator.prompt_builder import build_system_prompt, build_user_prompt
-from cop_thief.sdk.game_engine.board import Action
+from cop_thief.orchestrator.turn_io import call_llm, dispatch_action
 from cop_thief.sdk.game_engine.game_session import GameResult, TooManyCrashesError
 from cop_thief.sdk.game_engine.sub_game import SubGame, SubGameResult
 from cop_thief.sdk.q_table.advisor import QTableAdvisor
@@ -43,28 +44,38 @@ class GameLoop:
         on_complete: Callable[[GameResult], None] | None = None,
         on_turn: Callable[[GameState], None] | None = None,
     ) -> GameResult:
-        """Run all valid sub-games and return the aggregated GameResult."""
-        num_games = self._config["game"]["num_games"]
-        max_attempts = num_games * 5
-        results: list[SubGameResult] = []
-        valid = 0
-        while valid < num_games and len(results) < max_attempts:
-            result = await self._run_one_sub_game(len(results) + 1, on_turn)
-            results.append(result)
-            if not result.crashed:
-                valid += 1
-                self._totals["cop"] += result.cop_score
-                self._totals["thief"] += result.thief_score
-        if valid < num_games:
-            raise TooManyCrashesError(
-                f"Only {valid}/{num_games} valid sub-games "
-                f"after {len(results)} attempts."
-            )
-        valid_results = [r for r in results if not r.crashed]
-        game_result = GameResult(sub_games=valid_results, totals=dict(self._totals))
-        if on_complete:
-            on_complete(game_result)
-        return game_result
+        """Run all valid sub-games and return the aggregated GameResult.
+
+        Connects both agents' MCP clients once at the start and closes them once
+        at the end (even on crash) -- a single connection is reused for every
+        tool call across the whole game instead of reconnecting per call.
+        """
+        async with AsyncExitStack() as stack:
+            for client in self._clients.values():
+                await client.connect()
+                stack.push_async_callback(client.close)
+
+            num_games = self._config["game"]["num_games"]
+            max_attempts = num_games * 5
+            results: list[SubGameResult] = []
+            valid = 0
+            while valid < num_games and len(results) < max_attempts:
+                result = await self._run_one_sub_game(len(results) + 1, on_turn)
+                results.append(result)
+                if not result.crashed:
+                    valid += 1
+                    self._totals["cop"] += result.cop_score
+                    self._totals["thief"] += result.thief_score
+            if valid < num_games:
+                raise TooManyCrashesError(
+                    f"Only {valid}/{num_games} valid sub-games "
+                    f"after {len(results)} attempts."
+                )
+            valid_results = [r for r in results if not r.crashed]
+            game_result = GameResult(sub_games=valid_results, totals=dict(self._totals))
+            if on_complete:
+                on_complete(game_result)
+            return game_result
 
     async def _run_one_sub_game(
         self, sub_game_number: int, on_turn: Callable[[GameState], None] | None
@@ -104,8 +115,9 @@ class GameLoop:
         user_prompt = build_user_prompt(obs, agent_id, self._config, q_hint=q_hint)
         max_chars = self._config["communication"]["max_message_chars"]
 
+        model = self._config["llm"]["model"]
         for attempt in range(1, self._max_retries + 1):
-            text = await self._call_llm(system_prompt, user_prompt)
+            text = await call_llm(self._gatekeeper, model, system_prompt, user_prompt)
             message, action = parse_response(text)
             if action is None:
                 logger.warning(
@@ -114,7 +126,7 @@ class GameLoop:
                 )
                 continue
             try:
-                await self._dispatch(client, action, message[:max_chars])
+                await dispatch_action(client, action, message[:max_chars])
                 self._after_turn(
                     agent_id, message[:max_chars], sub_game_number, on_turn
                 )
@@ -129,7 +141,7 @@ class GameLoop:
         logger.warning(
             "All retries failed for %s; using fallback action %s", agent_id, action
         )
-        await self._dispatch(client, action, "")
+        await dispatch_action(client, action, "")
         self._after_turn(agent_id, "", sub_game_number, on_turn)
 
     def _after_turn(
@@ -146,24 +158,3 @@ class GameLoop:
         on_turn(build_game_state(
             self._sub_game, sub_game_number, self._totals, self._last_messages, agent_id
         ))
-
-    async def _dispatch(self, client, action: Action, message: str) -> None:
-        """Send the message, then apply the move or barrier, via MCP tool calls."""
-        await client.send_message(message)
-        if action.direction is None:
-            await client.place_barrier()
-        else:
-            await client.make_move(action.direction.name)
-
-    async def _call_llm(self, system_prompt: str, user_prompt: str) -> str:
-        """POST the prompt pair to the LLM via ApiGatekeeper; return raw text."""
-        payload = {
-            "model": self._config["llm"]["model"],
-            "messages": [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
-            ],
-            "stream": False,
-        }
-        result = await self._gatekeeper.call("/api/chat", payload)
-        return result["message"]["content"]

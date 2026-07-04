@@ -74,3 +74,25 @@ def test_build_client_uses_config_port():
     thief_client = build_client("thief", config, auth_token="tok")
     assert cop_client.base_url == "http://127.0.0.1:8001/mcp"
     assert thief_client.base_url == "http://127.0.0.1:8002/mcp"
+
+
+# ── Connection reuse (Gap 7 regression) ─────────────────────────────────────────
+
+
+async def test_connection_reused_across_multiple_calls(monkeypatch):
+    """One Client must be built and entered once, reused for several tool calls."""
+    client_class, instance = _mock_client({"status": "ok"})
+    monkeypatch.setattr(mcp_client_module, "Client", client_class)
+
+    client = McpClient("http://127.0.0.1:8001/mcp", auth_token="tok")
+    await client.connect()
+    await client.get_observation()
+    await client.send_message("hi")
+    await client.make_move("N")
+    await client.place_barrier()
+    await client.close()
+
+    client_class.assert_called_once_with("http://127.0.0.1:8001/mcp")
+    instance.__aenter__.assert_awaited_once()
+    instance.__aexit__.assert_awaited_once()
+    assert instance.call_tool.await_count == 4
