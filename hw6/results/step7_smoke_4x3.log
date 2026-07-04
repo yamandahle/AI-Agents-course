@@ -1,0 +1,21 @@
+INFO:cop_thief.api_gatekeeper:ApiGatekeeper call ok: /api/chat (attempt 1)
+WARNING:cop_thief.orchestrator.game_loop:Rejected action for thief (attempt 1/3): Error calling tool 'make_move': (4,1) is out of bounds.
+INFO:cop_thief.api_gatekeeper:ApiGatekeeper call ok: /api/chat (attempt 1)
+INFO:cop_thief.api_gatekeeper:ApiGatekeeper call ok: /api/chat (attempt 1)
+WARNING:cop_thief.orchestrator.game_loop:Unparseable LLM response for cop (attempt 1/3): 'Message to the thief (assuming their current position is at row 3, col 2): "I\'ve been eyeing a potential opportunity heading east and then south. Seems like an open path with fewer obstacles in my way right now."\nAction: ESE (East-Southeast)'
+INFO:cop_thief.api_gatekeeper:ApiGatekeeper call ok: /api/chat (attempt 1)
+INFO:cop_thief.api_gatekeeper:ApiGatekeeper call ok: /api/chat (attempt 1)
+INFO:cop_thief.api_gatekeeper:ApiGatekeeper call ok: /api/chat (attempt 1)
+INFO:cop_thief.api_gatekeeper:ApiGatekeeper call ok: /api/chat (attempt 1)
+WARNING:cop_thief.orchestrator.game_loop:Unparseable LLM response for thief (attempt 1/3): "**Message:** Hey there! It's always thrilling when the chase gets intense. I guess we both have some interesting plays in mind that got us this far. How about using those skills to create a little diversion? After all, it could open up new paths for me and keep you guessing my next move too!\n\n**Action:** Let's play W"
+WARNING:cop_thief.api_gatekeeper:ApiGatekeeper call failed: /api/chat (attempt 1/3): 
+INFO:cop_thief.api_gatekeeper:ApiGatekeeper call ok: /api/chat (attempt 2)
+WARNING:cop_thief.orchestrator.game_loop:Rejected action for thief (attempt 2/3): Error calling tool 'make_move': (4,0) is out of bounds.
+INFO:cop_thief.api_gatekeeper:ApiGatekeeper call ok: /api/chat (attempt 1)
+WARNING:cop_thief.orchestrator.game_loop:Rejected action for thief (attempt 3/3): Error calling tool 'make_move': (4,1) is out of bounds.
+WARNING:cop_thief.orchestrator.game_loop:All retries failed for thief; using fallback action Action(direction=<Direction.NE: (-1, 1)>)
+INFO:cop_thief.api_gatekeeper:ApiGatekeeper call ok: /api/chat (attempt 1)
+WARNING:cop_thief.orchestrator.game_loop:Unparseable LLM response for cop (attempt 1/3): "MESSAGE: Looks like we're close! Maybe I can corner you soon.\nACTION: Move North (N) to position row 1, col 0 as it seems the opponent is slightly away and will likely be in a similar direction given their last move was northward or due south towards me; keeping my options open for another barrier if needed after this turn' end."
+INFO:cop_thief.api_gatekeeper:ApiGatekeeper call ok: /api/chat (attempt 1)
+INFO:__main__:Game finished: {'cop': 5, 'thief': 10}
+{'sub_games': [{'sub_game_number': 1, 'winner': 'thief', 'moves_played': 3, 'cop_score': 5, 'thief_score': 10, 'barriers_placed': 0, 'turns': [{'turn': 1, 'thief_move': 'N', 'thief_message': '', 'cop_move': 'SE', 'cop_message': ''}, {'turn': 2, 'thief_move': 'S', 'thief_message': '', 'cop_move': 'SW', 'cop_message': ''}, {'turn': 3, 'thief_move': 'NE', 'thief_message': '', 'cop_move': 'SE', 'cop_message': ''}], 'crashed': False}], 'totals': {'cop': 5, 'thief': 10}}

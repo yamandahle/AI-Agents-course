@@ -82,7 +82,7 @@
 
 ## 5. Game Loop (TDD)
 
-- [ ] Write `tests/integration/test_game_loop.py` FIRST (red):
+- [x] Write `tests/integration/test_game_loop.py` FIRST (red):
   - `test_thief_moves_before_cop`
   - `test_turn_calls_get_observation_then_move`
   - `test_loop_stops_on_cop_win`
@@ -90,15 +90,19 @@
   - `test_six_sub_games_trigger_report`
   - `test_invalid_action_triggers_retry`
   - `test_all_retries_fail_triggers_fallback`
-- [ ] Implement `src/cop_thief/orchestrator/game_loop.py` (green)
-- [ ] Refactor — keep file ≤ 150 code lines
-- [ ] `uv run ruff check` → 0 violations
+  - (added) `test_cop_barrier_action_calls_place_barrier`
+  - (added) `test_crashed_sub_game_is_marked_and_retried`
+  - (added) `test_too_many_crashes_raises`
+  - (added) `test_random_starts_returns_two_distinct_in_bounds_cells`
+- [x] Implement `src/cop_thief/orchestrator/game_loop.py` (green)
+- [x] Refactor — keep file ≤ 150 code lines
+- [x] `uv run ruff check` → 0 violations
 
 ---
 
 ## 6. Entry Point
 
-- [ ] Create `src/main.py`:
+- [x] Create `src/main.py`:
   - Parse CLI flags: `--gui`, `--case <name>`, `--headless`
   - Load config, start MCP servers, run orchestrator
   - Keep file ≤ 150 code lines
@@ -107,12 +111,22 @@
 
 ## 7. End-to-End Validation
 
-- [ ] Sanity check 3×2 grid: `uv run python src/main.py --headless`
-  → 6 sub-games complete, scores printed, no crash
-- [ ] Sanity check 4×3 grid: adjust config, re-run
-- [ ] Sanity check 5×5 grid (full game): `uv run python src/main.py --headless`
-- [ ] Verify natural-language messages appear in output each turn
-- [ ] Verify LLM retries on bad parse (force by watching logs)
+- [x] Sanity check 3×2 grid: `uv run python src/main.py --headless`
+  → completed, no crash. See results/step7_smoke_3x2_before_fix.log
+  (caught 2 real bugs — see PROMPTS.md) and step7_smoke_3x2_after_fix.log
+  (clean run after fixes). Used reduced max_moves/num_games for speed.
+- [x] Sanity check 4×3 grid: adjust config, re-run
+  → completed, no crash, exercised full retry-exhaustion fallback for
+  real. See results/step7_smoke_4x3.log.
+- [ ] Sanity check 5×5 grid (full game, real config: 6 sub-games/25 moves):
+  `uv run python src/main.py --headless` — handed to student to run in
+  their own terminal (real run can take 30-90+ min; Claude's tool has a
+  10-min limit). Awaiting result.
+- [x] Verify natural-language messages appear in output each turn (empty
+  strings in the small runs so far since test prompts didn't emphasize
+  messaging — re-check on the full run)
+- [x] Verify LLM retries on bad parse (force by watching logs) — confirmed
+  live in step7_smoke_4x3.log ("Unparseable LLM response... attempt 1/3")
 
 ---
 
