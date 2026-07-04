@@ -14,17 +14,18 @@ from cop_thief.mcp.tools import GameContext
 from cop_thief.sdk.game_engine.sub_game import SubGame
 
 SCORING = {"cop_win": 20, "thief_win": 10, "cop_loss": 5, "thief_loss": 5}
+AUTH = {"authorization": "Bearer demo-token"}
 
 
 def show(label: str, result) -> None:
     print(f"\n{'='*50}")
     print(f"  {label}")
     print('='*50)
-    for item in result:
-        try:
-            print(json.dumps(json.loads(item.text), indent=2))
-        except Exception:
-            print(item)
+    if isinstance(result, list):
+        for tool in result:
+            print(f"{tool.name}: {tool.description}")
+    else:
+        print(json.dumps(result.data, indent=2))
 
 
 async def main() -> None:
@@ -46,29 +47,29 @@ async def main() -> None:
     async with Client(thief_server.mcp) as tc:
         show("THIEF list_tools()", await tc.list_tools())
 
-        show("THIEF get_observation()", await tc.call_tool("get_observation", {}))
+        show("THIEF get_observation()", await tc.call_tool("get_observation", AUTH))
 
         show("THIEF send_message('You will never catch me!')",
              await tc.call_tool("send_message",
-                                {"message": "You will never catch me!"}))
+                                {"message": "You will never catch me!", **AUTH}))
 
-        show("THIEF make_move('N') → moves to (3,4)",
-             await tc.call_tool("make_move", {"direction": "N"}))
+        show("THIEF make_move('N') -> moves to (3,4)",
+             await tc.call_tool("make_move", {"direction": "N", **AUTH}))
 
     # ── Cop turn ───────────────────────────────────────────────────────────────
     async with Client(cop_server.mcp) as cc:
         show("COP list_tools()", await cc.list_tools())
 
         show("COP get_observation()  (last_message = thief's taunt)",
-             await cc.call_tool("get_observation", {}))
+             await cc.call_tool("get_observation", AUTH))
 
-        show("COP make_move('S') → moves to (1,0)",
-             await cc.call_tool("make_move", {"direction": "S"}))
+        show("COP make_move('S') -> moves to (1,0)",
+             await cc.call_tool("make_move", {"direction": "S", **AUTH}))
 
         show("COP place_barrier()  (barrier at (1,0))",
-             await cc.call_tool("place_barrier", {}))
+             await cc.call_tool("place_barrier", AUTH))
 
-    print("\n✓ All tools called successfully.\n")
+    print("\nAll tools called successfully.\n")
 
 
 if __name__ == "__main__":

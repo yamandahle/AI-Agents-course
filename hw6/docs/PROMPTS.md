@@ -53,4 +53,43 @@ log and visual evidence trail complete without manual reminders each time.
 
 ---
 
+## 2026-07-04 — Merged Nagham's Gap Fixes + Phase 3 Started (Steps 1–4)
+
+**Action:** Fetched and merged Nagham's `fix/mcp-auth-and-gaps` branch (already
+on `main` via PR #18: Bearer token auth wired into both MCP servers, a ruff
+cleanup, and `TooManyCrashesError` handling) into `yamandahle-hw6`, fixed one
+leftover ruff violation, then fast-forward merged the combined branch into
+`main`. No conflicts; 86 tests green before and after.
+
+**Decision:** Switched `config.json` `llm.model` from `llama3` to `phi3:mini`.  
+**Reason:** Only `phi3:mini` was actually pulled in local Ollama; smaller/
+faster for iterative development, swappable via config later.
+
+**Action:** Began Phase 3 (orchestrator). Completed, in TDD order:
+1. `shared/config.py` — first-ever config-file loader in the repo (Phase 1–2
+   code took values as constructor args directly; nothing read `config.json`
+   until now).
+2. `api_gatekeeper.py` — single choke point for LLM calls: rate limiting
+   (sleeps rather than rejecting), retries, call logging, `ApiCallError`
+   after retries exhausted.
+3. `orchestrator/prompt_builder.py` — system + user prompt construction per
+   the PRD's format, fog-of-war-aware opponent description, optional
+   Q-table hint line.
+4. `orchestrator/mcp_client.py` — thin async wrapper calling the cop/thief
+   MCP servers as a client, attaching `authorization: Bearer <token>`.
+
+**Bug found & fixed:** Discovered while building the MCP client that
+Nagham's auth fix requires `authorization` as a **tool-call argument**, not
+an HTTP header. This broke the already-pushed Phase 2 demo scripts
+(`demo_mcp.py`, `scripts/call_servers.py`), which predate her fix. Fixed
+both to send the argument; also fixed a pre-existing, previously-unexercised
+bug in `demo_mcp.py`'s `show()` helper (assumed all results were iterable,
+which only holds for `list_tools()`) and a Windows console encoding crash
+from a `→`/`✓` character. Verified both scripts run cleanly end-to-end
+(in-process and over real HTTP) after the fixes.
+
+**Result:** 123 tests passing, 0 ruff violations, 97.64% coverage.
+
+---
+
 <!-- Add new entries below as development progresses -->
