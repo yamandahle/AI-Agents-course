@@ -1,0 +1,15 @@
+{
+  "case_name": "exp1_full_5x5",
+  "grid_label": "5x5",
+  "cop_vision": 2,
+  "thief_vision": 2,
+  "num_sub_games": 6,
+  "cop_wins": 4,
+  "thief_wins": 2,
+  "cop_win_rate": 0.667,
+  "cop_total_score": 90,
+  "thief_total_score": 40,
+  "avg_capture_turn": 13.5,
+  "avg_moves_per_subgame": 17.33,
+  "barriers_used_avg": 3.67
+}

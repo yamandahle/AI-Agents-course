@@ -1,0 +1,15 @@
+{
+  "case_name": "exp2_small_blind_cop",
+  "grid_label": "3x2",
+  "cop_vision": 0,
+  "thief_vision": 2,
+  "num_sub_games": 2,
+  "cop_wins": 1,
+  "thief_wins": 1,
+  "cop_win_rate": 0.5,
+  "cop_total_score": 25,
+  "thief_total_score": 15,
+  "avg_capture_turn": 5.0,
+  "avg_moves_per_subgame": 7.5,
+  "barriers_used_avg": 1.5
+}

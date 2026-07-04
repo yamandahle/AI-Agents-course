@@ -2,6 +2,7 @@
 
 import argparse
 import asyncio
+import json
 import logging
 import os
 
@@ -27,6 +28,10 @@ logger = logging.getLogger(__name__)
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     """Parse CLI flags for the game runner."""
     parser = argparse.ArgumentParser(description="Cop & Thief: dual AI agents via MCP")
+    parser.add_argument(
+        "--config", default="config.json",
+        help="Config file under config/ (default: config.json)",
+    )
     parser.add_argument(
         "--gui", action="store_true", help="Show the live GUI (Phase 5)"
     )
@@ -87,7 +92,12 @@ async def run_game(config: dict) -> dict:
         config["q_table"]["enabled"], str(PROJECT_ROOT / "config" / "q_table.npy"),
         config["grid"]["rows"], config["grid"]["cols"],
     )
-    gui = GuiApp(config)
+    gui = GuiApp(
+        config,
+        case_name=config.get("experiments", {}).get("name", "default"),
+    )
+    if config["gui"]["enabled"]:
+        gui.run_in_background()
     try:
         gatekeeper = ApiGatekeeper(config["llm"], load_config("rate_limits.json"))
         cop_client = build_client("cop", config, auth_token=auth_token)
@@ -99,13 +109,27 @@ async def run_game(config: dict) -> dict:
             on_complete=lambda r: logger.info("Game finished: %s", r.totals),
             on_turn=gui.update,
         )
-        await _send_report(result, config, gatekeeper)
+        if config.get("gmail", {}).get("enabled", True):
+            await _send_report(result, config, gatekeeper)
+        else:
+            logger.info("Gmail disabled in config; skipping report email.")
         return result.to_dict()
     finally:
         gui.close()
         cop_task.cancel()
         thief_task.cancel()
         await asyncio.gather(cop_task, thief_task, return_exceptions=True)
+
+
+def _save_result(result: dict, config: dict) -> None:
+    """Write the game result JSON under results/<experiment_name>/."""
+    name = config.get("experiments", {}).get("name")
+    if not name:
+        return
+    out_dir = PROJECT_ROOT / "results" / name
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "result.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
+    logger.info("Saved result to %s", out_dir / "result.json")
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -116,13 +140,14 @@ def main(argv: list[str] | None = None) -> None:
     if args.case:
         logger.warning("--case is not implemented yet (Phase 7); ignoring.")
 
-    config = load_config("config.json")
+    config = load_config(args.config)
     if args.gui:
         config["gui"]["enabled"] = True
     if args.headless:
         config["gui"]["enabled"] = False
 
     result = asyncio.run(run_game(config))
+    _save_result(result, config)
     print(result)
 
 

@@ -1,24 +1,9 @@
 {
   "version": "1.0",
-  "grid": {
-    "rows": 5,
-    "cols": 5
-  },
-  "game": {
-    "max_moves": 25,
-    "num_games": 6,
-    "max_barriers": 5
-  },
-  "scoring": {
-    "cop_win": 20,
-    "thief_win": 10,
-    "cop_loss": 5,
-    "thief_loss": 5
-  },
-  "vision": {
-    "cop_vision_radius": 2,
-    "thief_vision_radius": 2
-  },
+  "grid": { "rows": 3, "cols": 2 },
+  "game": { "max_moves": 10, "num_games": 2, "max_barriers": 3 },
+  "scoring": { "cop_win": 20, "thief_win": 10, "cop_loss": 5, "thief_loss": 5 },
+  "vision": { "cop_vision_radius": 0, "thief_vision_radius": 2 },
   "q_table": {
     "enabled": false,
     "alpha": 0.1,
@@ -28,20 +13,15 @@
   },
   "llm": {
     "provider": "ollama",
-    "model": "phi3:mini",
+    "model": "qwen2.5:0.5b",
     "base_url": "http://localhost:11434",
-    "timeout_seconds": 30,
-    "max_retries": 3
+    "timeout_seconds": 20,
+    "max_retries": 2
   },
-  "mcp": {
-    "cop_port": 8001,
-    "thief_port": 8002
-  },
-  "communication": {
-    "max_message_chars": 300
-  },
+  "mcp": { "cop_port": 8001, "thief_port": 8002 },
+  "communication": { "max_message_chars": 300 },
   "gmail": {
-    "enabled": true,
+    "enabled": false,
     "recipient": "rmisegal+uoh26b@gmail.com",
     "credentials_file": "credentials.json",
     "token_file": "token.json",
@@ -56,10 +36,12 @@
   "gui": {
     "enabled": false,
     "cell_size_px": 80,
-    "screenshot_dir": "assets/screenshots",
+    "screenshot_dir": "assets/screenshots/exp2_small_blind_cop",
     "framework": "tkinter"
   },
   "experiments": {
+    "name": "exp2_small_blind_cop",
+    "description": "3x2 quick run — cop blind (0), thief sees (2)",
     "thief_style": "honest",
     "placement": "random"
   }

@@ -2,7 +2,7 @@
 
 **Dependency:** Phase 2 complete. Ollama running locally with llama3 pulled.  
 **PRD:** [PRD_llm_orchestrator.md](PRD_llm_orchestrator.md)  
-**Status:** [ ] In progress — Steps 1-4 done, Step 5 (Game Loop) next
+**Status:** [x] Done
 
 ---
 
@@ -118,10 +118,8 @@
 - [x] Sanity check 4×3 grid: adjust config, re-run
   → completed, no crash, exercised full retry-exhaustion fallback for
   real. See results/step7_smoke_4x3.log.
-- [ ] Sanity check 5×5 grid (full game, real config: 6 sub-games/25 moves):
-  `uv run python src/main.py --headless` — handed to student to run in
-  their own terminal (real run can take 30-90+ min; Claude's tool has a
-  10-min limit). Awaiting result.
+- [x] Sanity check 5×5 grid (full game, real config: 6 sub-games/25 moves):
+  completed — `results/exp1_full_5x5/result.json` (Cop 90, Thief 40).
 - [x] Verify natural-language messages appear in output each turn (empty
   strings in the small runs so far since test prompts didn't emphasize
   messaging — re-check on the full run)
@@ -132,10 +130,10 @@
 
 ## 8. Phase 3 Sign-off
 
-- [ ] `uv run pytest tests/ --cov` → all green, coverage ≥ 85%
-- [ ] `uv run ruff check .` → 0 violations
-- [ ] Full 5×5 game runs end-to-end headlessly
-- [ ] All files have docstrings
+- [x] `uv run pytest tests/ --cov` → all green, coverage ≥ 85%
+- [x] `uv run ruff check .` → 0 violations
+- [x] Full 5×5 game runs end-to-end (with GUI)
+- [x] All files have docstrings
 - [ ] Commit: `git commit -m "ex06: phase 3 — orchestrator + LLM game loop"`
 - [ ] Push to `yamandahle-hw6`
-- [ ] Update [TODO.md](TODO.md) phase status to `[x] Done`
+- [x] Update [TODO.md](TODO.md) phase status to `[x] Done`

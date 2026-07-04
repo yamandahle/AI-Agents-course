@@ -393,3 +393,33 @@ production values (5x5, 6 games, 25 moves, real recipient,
 ---
 
 <!-- Add new entries below as development progresses -->
+
+---
+
+## 2026-07-04 — Fast 3-experiment submission path
+
+**Decision:** Minimal submission set — 1 full 5×5 (6 sub-games) + 2 small-grid
+vision comparisons (3×2, 2 sub-games each), instead of all 7 Phase-7 cases.
+
+**Speed choices:**
+- Model `qwen2.5:0.5b` in experiment configs (pulled via Ollama).
+- `gmail.enabled: false` on small runs; only Exp 1 emails the lecturer.
+- `--config experiments/<name>.json` flag on `main.py`; results auto-saved to
+  `results/<name>/result.json`.
+- Ollama rate limit raised to 120 calls/min for batch runs.
+
+**Smoke test:** Exp 2 completed in ~56 s (Cop 25, Thief 15).
+
+---
+
+## 2026-07-05 — Phase 7 reduced: 3 cases + graphs (no 7-case marathon)
+
+**Decision:** Experiments PRD/TODO updated to **3 vision-comparison cases**
+(exp1 5×5 baseline, exp2 blind cop 3×2, exp3 full vision 3×2) instead of
+7 full 5×5 cases A–G. Keeps comparison + 4 graphs (`win_rates`,
+`score_comparison`, `vision_vs_winrate`, `capture_turn_dist`).
+
+**Implementation:** `src/cop_thief/experiments/{cases,metrics,graphs,runner}.py`
++ tests. `--graphs-only` builds summary/charts from existing `result.json`.
+
+**Run order for student:** Exp 2 & 3 with `--gui`, then `--graphs-only`.

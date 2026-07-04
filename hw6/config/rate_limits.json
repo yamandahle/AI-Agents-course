@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "ollama": {
-    "calls_per_minute": 30,
+    "calls_per_minute": 120,
     "max_retries": 3
   },
   "gmail": {

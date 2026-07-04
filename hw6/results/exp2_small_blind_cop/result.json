@@ -1,0 +1,135 @@
+{
+  "sub_games": [
+    {
+      "sub_game_number": 1,
+      "winner": "thief",
+      "moves_played": 10,
+      "cop_score": 5,
+      "thief_score": 10,
+      "barriers_placed": 2,
+      "turns": [
+        {
+          "turn": 1,
+          "thief_move": "E",
+          "thief_message": "Your current observation.",
+          "cop_move": "BARRIER",
+          "cop_message": "I see the thief. Let's play a game of chase!"
+        },
+        {
+          "turn": 2,
+          "thief_move": "N",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "\"You are at the starting position. Your next move is 1 cell to the right.\""
+        },
+        {
+          "turn": 3,
+          "thief_move": "S",
+          "thief_message": "I need to move one cell to reach the opposite corner.",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 4,
+          "thief_move": "S",
+          "thief_message": "I am here to surrender and survive the rest of my turn.",
+          "cop_move": "BARRIER",
+          "cop_message": "I have noticed that you are moving your barrier on my position. Please move it back before we proceed."
+        },
+        {
+          "turn": 5,
+          "thief_move": "NW",
+          "thief_message": "\"I have noticed that you are moving your barrier on my position. Please move it back before we proceed.\"",
+          "cop_move": "BARRIER",
+          "cop_message": "\"I have noticed that you are moving your barrier on my position. Please move it back before we proceed.\""
+        },
+        {
+          "turn": 6,
+          "thief_move": "S",
+          "thief_message": "You have moved 5 cells and your barrier is on board. Please move it back before we proceed.",
+          "cop_move": "BARRIER",
+          "cop_message": "I have moved 5 cells and placed a barrier on my current cell. Please move it back before we proceed."
+        },
+        {
+          "turn": 7,
+          "thief_move": "N",
+          "thief_message": "",
+          "cop_move": "E",
+          "cop_message": ""
+        },
+        {
+          "turn": 8,
+          "thief_move": "E",
+          "thief_message": "",
+          "cop_move": "SW",
+          "cop_message": ""
+        },
+        {
+          "turn": 9,
+          "thief_move": "S",
+          "thief_message": "It looks like you're on the first row and column. Moving eight cells horizontally seems like a good start.",
+          "cop_move": "BARRIER",
+          "cop_message": "\"I have taken the initial move. I want to place my barrier in position (x,y).\""
+        },
+        {
+          "turn": 10,
+          "thief_move": "N",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "I have observed a barrier at position (0,0). You may place a barrier on your current cell instead."
+        }
+      ],
+      "crashed": false
+    },
+    {
+      "sub_game_number": 2,
+      "winner": "cop",
+      "moves_played": 5,
+      "cop_score": 20,
+      "thief_score": 5,
+      "barriers_placed": 1,
+      "turns": [
+        {
+          "turn": 1,
+          "thief_move": "S",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "What is your move? Can you place a barrier on your current cell to prevent me from moving?"
+        },
+        {
+          "turn": 2,
+          "thief_move": "NE",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "\"I have moved to your position. What is the next move?\""
+        },
+        {
+          "turn": 3,
+          "thief_move": "SW",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "\"You are about to move. Please provide your position on the grid.\""
+        },
+        {
+          "turn": 4,
+          "thief_move": "E",
+          "thief_message": "",
+          "cop_move": "NW",
+          "cop_message": ""
+        },
+        {
+          "turn": 5,
+          "thief_move": "NW",
+          "thief_message": "Please move one cell per turn and stay within your area.",
+          "cop_move": "N",
+          "cop_message": "What's the current position?"
+        }
+      ],
+      "crashed": false
+    }
+  ],
+  "totals": {
+    "cop": 25,
+    "thief": 15
+  }
+}

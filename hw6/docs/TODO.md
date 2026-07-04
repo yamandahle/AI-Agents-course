@@ -12,11 +12,11 @@
 |-------|------|--------|
 | 1 — Game Engine | [TODO_phase1_game_engine.md](TODO_phase1_game_engine.md) | [x] Done |
 | 2 — MCP Servers | [TODO_phase2_mcp.md](TODO_phase2_mcp.md) | [x] Done |
-| 3 — Orchestrator + LLM | [TODO_phase3_orchestrator.md](TODO_phase3_orchestrator.md) | [ ] Not started |
-| 4 — Q-Table Advisor | [TODO_phase4_qtable.md](TODO_phase4_qtable.md) | [~] Trainer + Advisor done; Integration/Performance blocked on Phase 3 |
-| 5 — GUI | [TODO_phase5_gui.md](TODO_phase5_gui.md) | [~] Screenshot/BoardView/InfoPanel/App done; manual validation blocked on Phase 3's main.py + a real display |
-| 6 — Gmail Report | [TODO_phase6_gmail.md](TODO_phase6_gmail.md) | [ ] Not started |
-| 7 — Experiments | [TODO_phase7_experiments.md](TODO_phase7_experiments.md) | [ ] Not started |
+| 3 — Orchestrator + LLM | [TODO_phase3_orchestrator.md](TODO_phase3_orchestrator.md) | [x] Done |
+| 4 — Q-Table Advisor | [TODO_phase4_qtable.md](TODO_phase4_qtable.md) | [x] Done (trainer + advisor; not used in final runs) |
+| 5 — GUI | [TODO_phase5_gui.md](TODO_phase5_gui.md) | [x] Done |
+| 6 — Gmail Report | [TODO_phase6_gmail.md](TODO_phase6_gmail.md) | [x] Done |
+| 7 — Experiments | [TODO_phase7_experiments.md](TODO_phase7_experiments.md) | [x] Done (3-case vision comparison) |
 
 ---
 
@@ -32,22 +32,22 @@
 - [x] docs/PRD_gui.md
 - [x] docs/PRD_gmail_report.md
 - [x] docs/PRD_experiments.md
-- [ ] docs/PROMPTS.md (fill as we go — graded)
+- [x] docs/PROMPTS.md
 
 ---
 
 ## Final Submission Checklist
 
-- [ ] `uv run pytest tests/ --cov` → all green, coverage ≥ 85%
-- [ ] `uv run ruff check .` → 0 violations
-- [ ] Full game runs end-to-end headlessly with Ollama
-- [ ] GUI shows live board with screenshots saved
-- [ ] Gmail report received by lecturer after game
-- [ ] All 7 experiment cases complete with graphs + notebook
-- [ ] No hardcoded parameters (all in config/config.json)
-- [ ] No secrets committed (.env git-ignored)
-- [ ] version.py starts at 1.00
-- [ ] Every function/class/module has a docstring
-- [ ] Each .py file ≤ 150 code lines
-- [ ] docs/PROMPTS.md filled with all significant prompts/decisions
-- [ ] README.md written in repo root
+- [x] `uv run pytest tests/ --cov` → all green, coverage ≥ 85%
+- [x] `uv run ruff check .` → 0 violations
+- [x] Full game runs end-to-end with Ollama (5×5, 6 sub-games)
+- [x] GUI shows live board (`--gui` used for official run)
+- [x] Gmail report sent to lecturer ([gmail_log.json](../results/gmail_log.json))
+- [x] All 3 experiment cases complete with graphs (see Phase 7)
+- [x] No hardcoded parameters (all in config/config.json)
+- [x] No secrets committed (.env git-ignored)
+- [x] version.py starts at 1.00
+- [x] Every function/class/module has a docstring
+- [x] Each .py file ≤ 150 code lines
+- [x] docs/PROMPTS.md filled with significant prompts/decisions
+- [x] README.md written in repo root

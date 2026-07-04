@@ -1,0 +1,79 @@
+{
+  "sub_games": [
+    {
+      "sub_game_number": 1,
+      "winner": "cop",
+      "moves_played": 4,
+      "cop_score": 20,
+      "thief_score": 5,
+      "barriers_placed": 1,
+      "turns": [
+        {
+          "turn": 1,
+          "thief_move": "N",
+          "thief_message": "I'm at the top-left corner. I'll move right and up.",
+          "cop_move": "BARRIER",
+          "cop_message": "You have moved 1 cell to the right. Keep an eye on your left and down."
+        },
+        {
+          "turn": 2,
+          "thief_move": "SW",
+          "thief_message": "I've reached the end of my move. Stay alert!",
+          "cop_move": "BARRIER",
+          "cop_message": "I'm on row 0, col 0. I've sent a message stating my position and the thief's location."
+        },
+        {
+          "turn": 3,
+          "thief_move": "E",
+          "thief_message": "",
+          "cop_move": "E",
+          "cop_message": "I'm on the right side. Let me move next!"
+        },
+        {
+          "turn": 4,
+          "thief_move": "N",
+          "thief_message": "",
+          "cop_move": "S",
+          "cop_message": ""
+        }
+      ],
+      "crashed": false
+    },
+    {
+      "sub_game_number": 2,
+      "winner": "cop",
+      "moves_played": 3,
+      "cop_score": 20,
+      "thief_score": 5,
+      "barriers_placed": 1,
+      "turns": [
+        {
+          "turn": 1,
+          "thief_move": "W",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "I am the thief and will not let you come here. You may place a barrier on your current cell instead of moving."
+        },
+        {
+          "turn": 2,
+          "thief_move": "S",
+          "thief_message": "\"I am the thief and will not let you come here. You may place a barrier on your current cell instead of moving.\"",
+          "cop_move": "BARRIER",
+          "cop_message": "Please continue sending instructions until the thief is caught."
+        },
+        {
+          "turn": 3,
+          "thief_move": "NE",
+          "thief_message": "",
+          "cop_move": "N",
+          "cop_message": ""
+        }
+      ],
+      "crashed": false
+    }
+  ],
+  "totals": {
+    "cop": 40,
+    "thief": 10
+  }
+}

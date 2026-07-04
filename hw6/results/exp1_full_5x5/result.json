@@ -1,0 +1,802 @@
+{
+  "sub_games": [
+    {
+      "sub_game_number": 1,
+      "winner": "cop",
+      "moves_played": 22,
+      "cop_score": 20,
+      "thief_score": 5,
+      "barriers_placed": 4,
+      "turns": [
+        {
+          "turn": 1,
+          "thief_move": "S",
+          "thief_message": "I need to move from my current position (row 0, col 2) to the next available cell on the grid.",
+          "cop_move": "BARRIER",
+          "cop_message": "\"The thief is at your position. You need to move to their cell.\""
+        },
+        {
+          "turn": 2,
+          "thief_move": "W",
+          "thief_message": "\"You should go west.\"",
+          "cop_move": "N",
+          "cop_message": "\"You are a detective. Move north.\""
+        },
+        {
+          "turn": 3,
+          "thief_move": "NW",
+          "thief_message": "You are a thief! Move north.",
+          "cop_move": "N",
+          "cop_message": "I need help moving between the 4x4 grid. Could you please tell me where your current position is? Also, could you provide more information about the environment around us?"
+        },
+        {
+          "turn": 4,
+          "thief_move": "E",
+          "thief_message": "I need help moving between the 4x4 grid. Could you please tell me where your current position is? Also, could you provide more information about the environment around us?",
+          "cop_move": "N",
+          "cop_message": "\"I need help moving between the 4x4 grid. Could you please tell me where your current position is? Also, could you provide more information about the environment around us?\""
+        },
+        {
+          "turn": 5,
+          "thief_move": "S",
+          "thief_message": "I need help moving between the 4x4 grid. Could you please tell me where your current position is? Also, could you provide more information about the environment around us?",
+          "cop_move": "N",
+          "cop_message": "I need help moving between the 4x4 grid. Could you please tell me where your current position is? Also, could you provide more information about the environment around us?"
+        },
+        {
+          "turn": 6,
+          "thief_move": "N",
+          "thief_message": "Your current position is row 1, col 1. You are facing northeast.",
+          "cop_move": "BARRIER",
+          "cop_message": "\"I'm on row 0, col 0. I need to move two cells in the next turn. Where do you want me to go?\""
+        },
+        {
+          "turn": 7,
+          "thief_move": "SE",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "\"I'm ready. Ready to move!\""
+        },
+        {
+          "turn": 8,
+          "thief_move": "NW",
+          "thief_message": "\"You can continue moving without being caught.\"",
+          "cop_move": "BARRIER",
+          "cop_message": "The thief is approximately 1 cell away. You can continue moving without being caught."
+        },
+        {
+          "turn": 9,
+          "thief_move": "E",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 10,
+          "thief_move": "W",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "\"OPONENT' s last message: \"\". TAKE"
+        },
+        {
+          "turn": 11,
+          "thief_move": "E",
+          "thief_message": "",
+          "cop_move": "E",
+          "cop_message": ""
+        },
+        {
+          "turn": 12,
+          "thief_move": "SW",
+          "thief_message": "You are approaching the board. Move 2 cells.",
+          "cop_move": "BARRIER",
+          "cop_message": "I am on row 0, col 1. I have moved one cell and am now at the board."
+        },
+        {
+          "turn": 13,
+          "thief_move": "S",
+          "thief_message": "\"I am on row 1, col 2. I have moved two cells and am now at the board.\"",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 14,
+          "thief_move": "SW",
+          "thief_message": "You have moved 13 cells and are at position (2,1). Your last move was NW.",
+          "cop_move": "BARRIER",
+          "cop_message": "\"I have moved 13 cells and am at position (2,2).\""
+        },
+        {
+          "turn": 15,
+          "thief_move": "N",
+          "thief_message": "I have moved 14 cells and am at position (3,0).",
+          "cop_move": "BARRIER",
+          "cop_message": "I have moved 14 cells and am at position (3,0)."
+        },
+        {
+          "turn": 16,
+          "thief_move": "S",
+          "thief_message": "I have moved 15 cells and am at position (2,4).",
+          "cop_move": "BARRIER",
+          "cop_message": "I have moved 15 cells and am at position (2,4). BARRIER"
+        },
+        {
+          "turn": 17,
+          "thief_move": "NE",
+          "thief_message": "\"I have moved 16 cells and am at position (2,5).\"",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 18,
+          "thief_move": "E",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "Move 17. You are on row 0, col 1."
+        },
+        {
+          "turn": 19,
+          "thief_move": "NE",
+          "thief_message": "I'll move right, but not at my current position.",
+          "cop_move": "SE",
+          "cop_message": "I have moved one cell to the right. Is there a barrier at your current position?"
+        },
+        {
+          "turn": 20,
+          "thief_move": "E",
+          "thief_message": "I will move to the left to prevent any barriers.",
+          "cop_move": "N",
+          "cop_message": "I am about to take a step forward."
+        },
+        {
+          "turn": 21,
+          "thief_move": "NW",
+          "thief_message": "I have taken the first move, but the enemy is moving faster. Let's see if we can get through this.",
+          "cop_move": "BARRIER",
+          "cop_message": "\"I have taken the first move. The enemy is moving faster. Let's see if we can get through this.\""
+        },
+        {
+          "turn": 22,
+          "thief_move": "S",
+          "thief_message": "\"I have taken the first move. The enemy is moving faster. Let's see if we can get through this.\"",
+          "cop_move": "SE",
+          "cop_message": ""
+        }
+      ],
+      "crashed": false
+    },
+    {
+      "sub_game_number": 2,
+      "winner": "thief",
+      "moves_played": 25,
+      "cop_score": 5,
+      "thief_score": 10,
+      "barriers_placed": 5,
+      "turns": [
+        {
+          "turn": 1,
+          "thief_move": "N",
+          "thief_message": "I need to find a way out before you can catch me.",
+          "cop_move": "BARRIER",
+          "cop_message": "You are on the 3rd row and 3rd column. I need to find a way out before you can catch me."
+        },
+        {
+          "turn": 2,
+          "thief_move": "SW",
+          "thief_message": "",
+          "cop_move": "NE",
+          "cop_message": "\"The thief is at (3,2). You have 25 turns. Move right, then left.\""
+        },
+        {
+          "turn": 3,
+          "thief_move": "S",
+          "thief_message": "\"You are at (1,3). The thief is at (3,2), you have 25 turns. Move right.\"",
+          "cop_move": "NW",
+          "cop_message": "I'm coming! Let's get that bad guy!"
+        },
+        {
+          "turn": 4,
+          "thief_move": "SW",
+          "thief_message": "You are being followed. Move 3 cells to the right.",
+          "cop_move": "N",
+          "cop_message": "Thank you for your message, but I am currently at row 1, col 3 and have moved 3 cells to the right. Your barrier should be placed to prevent me from moving further."
+        },
+        {
+          "turn": 5,
+          "thief_move": "SW",
+          "thief_message": "I have moved 3 cells to the right and placed my barrier to prevent you from moving further.",
+          "cop_move": "E",
+          "cop_message": ""
+        },
+        {
+          "turn": 6,
+          "thief_move": "E",
+          "thief_message": "\"You should move 2 moves to the left.\"",
+          "cop_move": "BARRIER",
+          "cop_message": "\"You are on row 0, column 4. You have moved 5 moves and placed a barrier on your current cell.\""
+        },
+        {
+          "turn": 7,
+          "thief_move": "W",
+          "thief_message": "",
+          "cop_move": "W",
+          "cop_message": ""
+        },
+        {
+          "turn": 8,
+          "thief_move": "N",
+          "thief_message": "",
+          "cop_move": "SW",
+          "cop_message": ""
+        },
+        {
+          "turn": 9,
+          "thief_move": "NW",
+          "thief_message": "Your turn. I have 25 moves left.",
+          "cop_move": "BARRIER",
+          "cop_message": "\"I need to move to the right. I have 25 moves left.\""
+        },
+        {
+          "turn": 10,
+          "thief_move": "S",
+          "thief_message": "\"You have moved to position (2,0).\"",
+          "cop_move": "BARRIER",
+          "cop_message": "\"I am on row 1, col 2. I see you are moving to position (3,0).\""
+        },
+        {
+          "turn": 11,
+          "thief_move": "S",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "\"You are on the left side. You can use any direction.\""
+        },
+        {
+          "turn": 12,
+          "thief_move": "N",
+          "thief_message": "Move 12.",
+          "cop_move": "NE",
+          "cop_message": ""
+        },
+        {
+          "turn": 13,
+          "thief_move": "SE",
+          "thief_message": "",
+          "cop_move": "S",
+          "cop_message": ""
+        },
+        {
+          "turn": 14,
+          "thief_move": "NE",
+          "thief_message": "You are now standing on row 4 and column 1. Your next move is NE.",
+          "cop_move": "BARRIER",
+          "cop_message": "You are now standing on row 4 and column 1. Your next move is NE."
+        },
+        {
+          "turn": 15,
+          "thief_move": "N",
+          "thief_message": "\"You are now standing on row 3 and column 2. Your next move is NE.\"",
+          "cop_move": "BARRIER",
+          "cop_message": "You have moved exactly one cell to capture the thief. NEEDED: landing on their exact cell."
+        },
+        {
+          "turn": 16,
+          "thief_move": "S",
+          "thief_message": "I need to move one cell to capture the thief.",
+          "cop_move": "S",
+          "cop_message": "Your turn. You should move 1 cell to the right."
+        },
+        {
+          "turn": 17,
+          "thief_move": "NW",
+          "thief_message": "I'm on your side. Move right.",
+          "cop_move": "W",
+          "cop_message": ""
+        },
+        {
+          "turn": 18,
+          "thief_move": "NW",
+          "thief_message": "I have taken action and am now moving forward. What do you want me to do next?",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 19,
+          "thief_move": "SE",
+          "thief_message": "",
+          "cop_move": "SW",
+          "cop_message": ""
+        },
+        {
+          "turn": 20,
+          "thief_move": "N",
+          "thief_message": "\"I'm here! Move 19 to move to the next cell.\"",
+          "cop_move": "S",
+          "cop_message": ""
+        },
+        {
+          "turn": 21,
+          "thief_move": "N",
+          "thief_message": "Your turn. Move 20 cells north.",
+          "cop_move": "E",
+          "cop_message": ""
+        },
+        {
+          "turn": 22,
+          "thief_move": "E",
+          "thief_message": "\"Your opponent has moved to (0,3) and they will be followed by their movement. You need to move to the closest unobstructed area.\"",
+          "cop_move": "N",
+          "cop_message": ""
+        },
+        {
+          "turn": 23,
+          "thief_move": "W",
+          "thief_message": "",
+          "cop_move": "NW",
+          "cop_message": "I'm moving 22 cells ahead. Can you move your barrier on board?"
+        },
+        {
+          "turn": 24,
+          "thief_move": "S",
+          "thief_message": "",
+          "cop_move": "S",
+          "cop_message": ""
+        },
+        {
+          "turn": 25,
+          "thief_move": "NW",
+          "thief_message": "\"Current observation indicates I am currently at row 1, col 1. Moving to position (1,4).",
+          "cop_move": "W",
+          "cop_message": ""
+        }
+      ],
+      "crashed": false
+    },
+    {
+      "sub_game_number": 3,
+      "winner": "cop",
+      "moves_played": 6,
+      "cop_score": 20,
+      "thief_score": 5,
+      "barriers_placed": 2,
+      "turns": [
+        {
+          "turn": 1,
+          "thief_move": "SW",
+          "thief_message": "You can move one cell in each direction.",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 2,
+          "thief_move": "NE",
+          "thief_message": "You should move N.",
+          "cop_move": "SW",
+          "cop_message": ""
+        },
+        {
+          "turn": 3,
+          "thief_move": "E",
+          "thief_message": "",
+          "cop_move": "N",
+          "cop_message": "Your action has been taken. Please follow the game instructions."
+        },
+        {
+          "turn": 4,
+          "thief_move": "S",
+          "thief_message": "Your natural-language message to opponent",
+          "cop_move": "BARRIER",
+          "cop_message": "Try to use the barriers and move towards the thief's cell."
+        },
+        {
+          "turn": 5,
+          "thief_move": "NW",
+          "thief_message": "Your current position is row 1, col 2. You have moved to the NW corner.",
+          "cop_move": "S",
+          "cop_message": ""
+        },
+        {
+          "turn": 6,
+          "thief_move": "E",
+          "thief_message": "You've detected a threat at (0,3) and (0,4). Please prepare accordingly.",
+          "cop_move": "NW",
+          "cop_message": "I've detected a threat at (0,3) and (0,4). Please prepare accordingly."
+        }
+      ],
+      "crashed": false
+    },
+    {
+      "sub_game_number": 4,
+      "winner": "cop",
+      "moves_played": 4,
+      "cop_score": 20,
+      "thief_score": 5,
+      "barriers_placed": 1,
+      "turns": [
+        {
+          "turn": 1,
+          "thief_move": "NW",
+          "thief_message": "\"I've detected a threat at (1,2) and (1,3). Please prepare accordingly.\"",
+          "cop_move": "NE",
+          "cop_message": "Try to anticipate the thief's movements and keep an eye on the potential sub-game."
+        },
+        {
+          "turn": 2,
+          "thief_move": "E",
+          "thief_message": "You can move to row 1, col 2.",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 3,
+          "thief_move": "S",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 4,
+          "thief_move": "E",
+          "thief_message": "I need a clear path out of here. Move 3 cells up.",
+          "cop_move": "N",
+          "cop_message": "You are on the first row and second column. You should move 2 cells up."
+        }
+      ],
+      "crashed": false
+    },
+    {
+      "sub_game_number": 5,
+      "winner": "cop",
+      "moves_played": 22,
+      "cop_score": 20,
+      "thief_score": 5,
+      "barriers_placed": 5,
+      "turns": [
+        {
+          "turn": 1,
+          "thief_move": "NW",
+          "thief_message": "I'm on the 4th row and 3rd column. Let's move 2 cells up.",
+          "cop_move": "BARRIER",
+          "cop_message": "I'm on the 4th row and 3rd column. Let's move 2 cells up."
+        },
+        {
+          "turn": 2,
+          "thief_move": "N",
+          "thief_message": "I'm on the 4th row and 3rd column. Let's move 2 cells up.",
+          "cop_move": "NE",
+          "cop_message": "\"I'm on the 4th row and 3rd column. Let's move 2 cells up.\""
+        },
+        {
+          "turn": 3,
+          "thief_move": "E",
+          "thief_message": "\"I'm on the second row and third column. Let's move 2 cells up.\"",
+          "cop_move": "BARRIER",
+          "cop_message": "\"You are on the third row and second column. I need to move 2 cells up.\""
+        },
+        {
+          "turn": 4,
+          "thief_move": "SW",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "\"What is your next move? I have coordinates and barriers.\""
+        },
+        {
+          "turn": 5,
+          "thief_move": "NE",
+          "thief_message": "You are safe. Let's continue the pursuit without any obstacles.",
+          "cop_move": "NW",
+          "cop_message": "I have spotted the thief moving towards you. Let's continue our pursuit without any obstacles."
+        },
+        {
+          "turn": 6,
+          "thief_move": "W",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "\"I have moved 5 cells. I will use my barrier on cell (3,0). \""
+        },
+        {
+          "turn": 7,
+          "thief_move": "S",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "You should place a barrier on your current cell instead of moving."
+        },
+        {
+          "turn": 8,
+          "thief_move": "NW",
+          "thief_message": "I've detected an opponent's movement. They are now at (2,3). You should place a barrier on your current cell instead of moving.",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 9,
+          "thief_move": "SE",
+          "thief_message": "",
+          "cop_move": "E",
+          "cop_message": ""
+        },
+        {
+          "turn": 10,
+          "thief_move": "NE",
+          "thief_message": "\"You are a thief! Keep your eyes open for the opportunity. Stay on guard and watch out for potential threats. Remember to always be prepared for the full sub-game. Have a good day!\"",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 11,
+          "thief_move": "SW",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 12,
+          "thief_move": "NW",
+          "thief_message": "You have moved one cell and are standing at row 1, col 3.",
+          "cop_move": "SW",
+          "cop_message": ""
+        },
+        {
+          "turn": 13,
+          "thief_move": "W",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "\"Your turn! Land on your cell or try to prevent the thief from moving. If you land exactly on their cell, you win. Otherwise, move.\""
+        },
+        {
+          "turn": 14,
+          "thief_move": "S",
+          "thief_message": "I have taken my position and moved one cell to the right.",
+          "cop_move": "SE",
+          "cop_message": ""
+        },
+        {
+          "turn": 15,
+          "thief_move": "NW",
+          "thief_message": "\"You have 14 turns remaining. I am on row 2, column 3.\"",
+          "cop_move": "S",
+          "cop_message": ""
+        },
+        {
+          "turn": 16,
+          "thief_move": "SE",
+          "thief_message": "",
+          "cop_move": "SW",
+          "cop_message": ""
+        },
+        {
+          "turn": 17,
+          "thief_move": "E",
+          "thief_message": "I'm safe. Keep moving.",
+          "cop_move": "NW",
+          "cop_message": "I am ready! Please send me your coordinates."
+        },
+        {
+          "turn": 18,
+          "thief_move": "NW",
+          "thief_message": "\"I have moved 17 cells and am within view. Let's continue! Please send me your coordinates.\"",
+          "cop_move": "SW",
+          "cop_message": ""
+        },
+        {
+          "turn": 19,
+          "thief_move": "SE",
+          "thief_message": "",
+          "cop_move": "N",
+          "cop_message": "You have moved 18 cells and are at row 4, col 1."
+        },
+        {
+          "turn": 20,
+          "thief_move": "N",
+          "thief_message": "\"Your coordinates indicate you are moving north. Try to escape from the opponent.\"",
+          "cop_move": "NW",
+          "cop_message": "I see a barrier on my current cell. Let me try another direction."
+        },
+        {
+          "turn": 21,
+          "thief_move": "SW",
+          "thief_message": "",
+          "cop_move": "N",
+          "cop_message": ""
+        },
+        {
+          "turn": 22,
+          "thief_move": "NW",
+          "thief_message": "\"You should move to the northwest and stay there. The barbed wire is too close for comfort.\"",
+          "cop_move": "N",
+          "cop_message": "\"I'm on row 1, column 0. I need to move to the northwest and stay there. The barbed wire is too close for comfort.\""
+        }
+      ],
+      "crashed": false
+    },
+    {
+      "sub_game_number": 6,
+      "winner": "thief",
+      "moves_played": 25,
+      "cop_score": 5,
+      "thief_score": 10,
+      "barriers_placed": 5,
+      "turns": [
+        {
+          "turn": 1,
+          "thief_move": "E",
+          "thief_message": "",
+          "cop_move": "N",
+          "cop_message": "\"You are currently at row 2 and column 0. Let's move on to the next cell.\""
+        },
+        {
+          "turn": 2,
+          "thief_move": "S",
+          "thief_message": "",
+          "cop_move": "NE",
+          "cop_message": "\"I see the thief is near. Let me start moving. \""
+        },
+        {
+          "turn": 3,
+          "thief_move": "NW",
+          "thief_message": "I see the thief is near. Let me start moving.",
+          "cop_move": "BARRIER",
+          "cop_message": "Please send a clear and concise action that allows us to capture the thief."
+        },
+        {
+          "turn": 4,
+          "thief_move": "W",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 5,
+          "thief_move": "SE",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 6,
+          "thief_move": "S",
+          "thief_message": "I see you have moved 5 cells forward. It looks like there are no barriers on your board yet.",
+          "cop_move": "BARRIER",
+          "cop_message": "\"I see you have moved 5 cells forward. It looks like there are no barriers on your board yet.\""
+        },
+        {
+          "turn": 7,
+          "thief_move": "NW",
+          "thief_message": "\"I see you have moved 5 cells forward. It looks like there are no barriers on your board yet.\"",
+          "cop_move": "BARRIER",
+          "cop_message": "\"I see you have moved 5 cells forward. It looks like there are no barriers on your board yet.\""
+        },
+        {
+          "turn": 8,
+          "thief_move": "SE",
+          "thief_message": "",
+          "cop_move": "SE",
+          "cop_message": ""
+        },
+        {
+          "turn": 9,
+          "thief_move": "NW",
+          "thief_message": "Stay left for the next move.",
+          "cop_move": "BARRIER",
+          "cop_message": "You are on the bottom-left corner. The thief is 2 cells away."
+        },
+        {
+          "turn": 10,
+          "thief_move": "E",
+          "thief_message": "",
+          "cop_move": "SW",
+          "cop_message": "You have moved 9 cells into position."
+        },
+        {
+          "turn": 11,
+          "thief_move": "NW",
+          "thief_message": "",
+          "cop_move": "N",
+          "cop_message": "\"You have 10 moves. Are you ready? I need an entry point for our battle!\""
+        },
+        {
+          "turn": 12,
+          "thief_move": "S",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "\"I need a clear path to the thief. Let's start moving.\""
+        },
+        {
+          "turn": 13,
+          "thief_move": "S",
+          "thief_message": "I have moved 12 cells in the current direction.",
+          "cop_move": "NW",
+          "cop_message": "I have moved 12 cells in the current direction."
+        },
+        {
+          "turn": 14,
+          "thief_move": "N",
+          "thief_message": "You are approaching my position with a strong defensive strategy. Stay back!",
+          "cop_move": "BARRIER",
+          "cop_message": "\"It looks like the thief is about to approach my position with a strong defensive strategy. Stay back!\""
+        },
+        {
+          "turn": 15,
+          "thief_move": "S",
+          "thief_message": "\"The thief has approached our position and is about to make a strong defensive move. Stay back!\"",
+          "cop_move": "BARRIER",
+          "cop_message": "\"I see the thief approaching from our position on row 0, col 0. Stay back! I'm sending a message, but this might be a bluff; watch your back. Do you understand? \""
+        },
+        {
+          "turn": 16,
+          "thief_move": "S",
+          "thief_message": "Stay back!",
+          "cop_move": "BARRIER",
+          "cop_message": "Try to anticipate my next move and place a barrier."
+        },
+        {
+          "turn": 17,
+          "thief_move": "E",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "\"You are the target. Move 16 cells in a direction that avoids barriers.\""
+        },
+        {
+          "turn": 18,
+          "thief_move": "NW",
+          "thief_message": "Try to avoid any obstacles you might encounter while moving.",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 19,
+          "thief_move": "N",
+          "thief_message": "\"You are a thief. Stay out of my way! Move 18 cells to the right and 2 cells down.\"",
+          "cop_move": "BARRIER",
+          "cop_message": "I've placed a barrier on my current cell. How should I proceed?"
+        },
+        {
+          "turn": 20,
+          "thief_move": "S",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "I have noticed a barrier on my current position. It is at row 1, column 2."
+        },
+        {
+          "turn": 21,
+          "thief_move": "SE",
+          "thief_message": "\"I've noticed a barrier on my current position. It is at row 1, column 2.\"",
+          "cop_move": "BARRIER",
+          "cop_message": ""
+        },
+        {
+          "turn": 22,
+          "thief_move": "NE",
+          "thief_message": "You are on the 3rd row and 1st column. Moving to the 2nd row and 1st column is currently your move.",
+          "cop_move": "BARRIER",
+          "cop_message": "Your move. I'm at row 0, col 0. Moving to the 1st row and 1st column."
+        },
+        {
+          "turn": 23,
+          "thief_move": "W",
+          "thief_message": "",
+          "cop_move": "S",
+          "cop_message": "\"You are on the same cell as me and my position is at row 0, col 0. I can see that you placed a barrier at (1,2). Can you move to this cell instead? \""
+        },
+        {
+          "turn": 24,
+          "thief_move": "SE",
+          "thief_message": "",
+          "cop_move": "BARRIER",
+          "cop_message": "\"The thief is at row 1, col 0. You must move exactly one cell north before landing on their exact cell.\""
+        },
+        {
+          "turn": 25,
+          "thief_move": "N",
+          "thief_message": "You should move 1 cell north before landing on the thief's position.",
+          "cop_move": "SE",
+          "cop_message": ""
+        }
+      ],
+      "crashed": false
+    }
+  ],
+  "totals": {
+    "cop": 90,
+    "thief": 40
+  }
+}

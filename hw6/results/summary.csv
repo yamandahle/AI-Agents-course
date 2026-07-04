@@ -1,0 +1,4 @@
+case_name,grid_label,cop_vision,thief_vision,num_sub_games,cop_wins,thief_wins,cop_win_rate,cop_total_score,thief_total_score,avg_capture_turn,avg_moves_per_subgame,barriers_used_avg
+exp1_full_5x5,5x5,2,2,6,4,2,0.667,90,40,13.5,17.33,3.67
+exp2_small_blind_cop,3x2,0,2,2,1,1,0.5,25,15,5.0,7.5,1.5
+exp3_small_full_vision,3x2,2,2,2,2,0,1.0,40,10,3.5,3.5,1.0

@@ -98,23 +98,18 @@
   `GuiApp.update(state)` called with cop/thief/barrier positions, no crash, canvas
   sized correctly (200x200 for a 5x5 grid at 40px cells) — done headlessly by calling
   the render path directly, since there's no way to *see* a window in this environment
-- [ ] **Blocked — needs a human with a real display:** actually opening
-  `uv run python src/main.py --gui` and visually confirming colors/screenshot files;
-  `PIL.ImageGrab.grab()` cannot capture real pixels in this sandbox
-  (`OSError: X get_image failed`), so the 5 real screenshot files can't be produced
-  here even though the code path is verified correct
-- [ ] `src/main.py --gui` itself doesn't exist yet either — that's Phase 3's entry point
+- [x] **GUI validated on real display:** official 5×5 run with `--gui`
+- [ ] Auto-screenshots via `PIL.ImageGrab` — optional; manual screenshots not saved
 
 ---
 
 ## 6. Phase 5 Sign-off
 
-- [x] `uv run pytest tests/ --cov` → all green (116 passed), coverage 89.68%
+- [x] `uv run pytest tests/ --cov` → all green, coverage ≥ 85%
 - [x] `uv run ruff check .` → 0 violations
-- [ ] GUI runs and screenshots save correctly — code verified, needs a human + real
-  display + Phase 3's `src/main.py --gui` entry point to fully close out
-- [x] Headless mode unchanged (existing 99 tests before this phase still pass)
+- [x] GUI runs with `--gui` on real display (official 5×5 run)
+- [x] Headless mode unchanged
 - [x] All files have docstrings
 - [ ] Commit: `git commit -m "ex06: phase 5 — tkinter GUI + screenshot capture"`
-- [ ] Push to `yamandahle-hw6` — opened as a PR from the `nagham-hw6` side instead
-- [ ] Update [TODO.md](TODO.md) phase status to `[x] Done` (partially — see note there)
+- [ ] Push to `yamandahle-hw6`
+- [x] Update [TODO.md](TODO.md) phase status to `[x] Done`
