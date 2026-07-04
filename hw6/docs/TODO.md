@@ -10,8 +10,8 @@
 
 | Phase | File | Status |
 |-------|------|--------|
-| 1 — Game Engine | [TODO_phase1_game_engine.md](TODO_phase1_game_engine.md) | [ ] Not started |
-| 2 — MCP Servers | [TODO_phase2_mcp.md](TODO_phase2_mcp.md) | [ ] Not started |
+| 1 — Game Engine | [TODO_phase1_game_engine.md](TODO_phase1_game_engine.md) | [x] Done |
+| 2 — MCP Servers | [TODO_phase2_mcp.md](TODO_phase2_mcp.md) | [x] Done |
 | 3 — Orchestrator + LLM | [TODO_phase3_orchestrator.md](TODO_phase3_orchestrator.md) | [ ] Not started |
 | 4 — Q-Table Advisor | [TODO_phase4_qtable.md](TODO_phase4_qtable.md) | [ ] Not started |
 | 5 — GUI | [TODO_phase5_gui.md](TODO_phase5_gui.md) | [ ] Not started |
