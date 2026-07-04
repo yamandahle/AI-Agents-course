@@ -20,6 +20,9 @@ COP_URL      = "http://127.0.0.1:8001/mcp"
 THIEF_URL    = "http://127.0.0.1:8002/mcp"
 RESULTS_FILE = Path(__file__).parent.parent / "results" / "mcp_demo.json"
 
+# Both start_*_demo.py servers set auth_token="demo-token" on their GameContext.
+AUTH = {"authorization": "Bearer demo-token"}
+
 log: list = []
 
 
@@ -52,13 +55,13 @@ async def demo_cop() -> None:
     async with Client(COP_URL) as c:
         pr("cop.list_tools()", await c.list_tools())
         pr("cop.get_observation()",
-           await c.call_tool("get_observation", {}))
+           await c.call_tool("get_observation", AUTH))
         pr("cop.send_message('I am closing in!')",
-           await c.call_tool("send_message", {"message": "I am closing in!"}))
+           await c.call_tool("send_message", {"message": "I am closing in!", **AUTH}))
         pr("cop.make_move('S')",
-           await c.call_tool("make_move", {"direction": "S"}))
+           await c.call_tool("make_move", {"direction": "S", **AUTH}))
         pr("cop.place_barrier()",
-           await c.call_tool("place_barrier", {}))
+           await c.call_tool("place_barrier", AUTH))
 
 
 async def demo_thief() -> None:
@@ -69,12 +72,12 @@ async def demo_thief() -> None:
         async with Client(THIEF_URL) as c:
             pr("thief.list_tools()", await c.list_tools())
             pr("thief.get_observation()",
-               await c.call_tool("get_observation", {}))
+               await c.call_tool("get_observation", AUTH))
             pr("thief.send_message('You will never catch me!')",
                await c.call_tool("send_message",
-                                 {"message": "You will never catch me!"}))
+                                 {"message": "You will never catch me!", **AUTH}))
             pr("thief.make_move('N')",
-               await c.call_tool("make_move", {"direction": "N"}))
+               await c.call_tool("make_move", {"direction": "N", **AUTH}))
     except Exception:
         print("  (Thief server not running on port 8002 -- skipped)")
         print("  Start it with: uv run python scripts/start_thief_demo.py")
