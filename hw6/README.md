@@ -73,7 +73,7 @@ All game parameters come from JSON config — no hardcoded grid size, moves, or 
 
 | Setting | Value |
 |---------|--------|
-| **Provider** | Ollama (local) — **Approach 3** from the assignment (no cloud deploy required for EX06) |
+| **Provider** | Ollama (local) |
 | **Model (experiments & official run)** | `qwen2.5:0.5b` — set in `config/experiments/*.json` |
 | **Model (base config)** | `phi3:mini` — in `config/config.json` (fallback if you run without `--config`) |
 | **Endpoint** | `http://localhost:11434` |
@@ -85,12 +85,6 @@ ollama pull qwen2.5:0.5b
 ```
 
 The orchestrator sends prompts to Ollama each turn; MCP servers have **no LLM inside them** — they only expose game tools.
-
-### Cloud deployment?
-
-**Not required for this homework.** EX06 uses **Approach 3 (local/hybrid)**: Ollama + MCP servers on `localhost`. Your PRD marks full **cloud deployment** and **inter-group bonus competition** as optional / out of scope — those are typically for a **bonus or final project**, not this submission.
-
-The only “cloud” step you needed was **Google Cloud Console** for **Gmail OAuth** (sending the JSON report), not hosting the game online.
 
 ---
 
