@@ -1,0 +1,28 @@
+# Secrets
+.env
+credentials.json
+token.json
+*.key
+
+# Q-table binary
+config/q_table.npy
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+*.egg-info/
+
+# uv
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db

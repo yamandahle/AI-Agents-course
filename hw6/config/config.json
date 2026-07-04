@@ -1,0 +1,64 @@
+{
+  "version": "1.0",
+  "grid": {
+    "rows": 5,
+    "cols": 5
+  },
+  "game": {
+    "max_moves": 25,
+    "num_games": 6,
+    "max_barriers": 5
+  },
+  "scoring": {
+    "cop_win": 20,
+    "thief_win": 10,
+    "cop_loss": 5,
+    "thief_loss": 5
+  },
+  "vision": {
+    "cop_vision_radius": 2,
+    "thief_vision_radius": 2
+  },
+  "q_table": {
+    "enabled": false,
+    "alpha": 0.1,
+    "gamma": 0.95,
+    "epsilon": 0.1,
+    "training_episodes": 10000
+  },
+  "llm": {
+    "provider": "ollama",
+    "model": "llama3",
+    "base_url": "http://localhost:11434",
+    "timeout_seconds": 30,
+    "max_retries": 3
+  },
+  "mcp": {
+    "cop_port": 8001,
+    "thief_port": 8002
+  },
+  "communication": {
+    "max_message_chars": 300
+  },
+  "gmail": {
+    "recipient": "rmisegal+uoh26b@gmail.com",
+    "credentials_file": "credentials.json",
+    "token_file": "token.json",
+    "max_retries": 3
+  },
+  "reporting": {
+    "group_name": "",
+    "github_repo": "https://github.com/yamandahle/AI-Agents-course",
+    "timezone": "Asia/Jerusalem"
+  },
+  "gui": {
+    "enabled": false,
+    "cell_size_px": 80,
+    "screenshot_dir": "assets/screenshots",
+    "framework": "tkinter"
+  },
+  "experiments": {
+    "thief_style": "honest",
+    "placement": "random"
+  }
+}
